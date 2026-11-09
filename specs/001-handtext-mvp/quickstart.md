@@ -2,11 +2,11 @@
 
 ## Aplicación Android
 
-Desde `frontend/`, ejecuta `flutter pub get`, `flutter analyze` y `flutter test`. Con el emulador iniciado, comprueba su identificador con `flutter devices` y ejecuta `flutter run -d <identificador>`. El proyecto inicial muestra la pantalla de ejemplo hasta integrar el flujo de documentos.
+Desde `frontend/`, ejecuta `flutter pub get`, `flutter analyze` y `flutter test`. Con el emulador iniciado, comprueba su identificador con `flutter devices` y ejecuta `flutter run -d <identificador>`. La bienvenida permite crear una cuenta y consultar los avisos de privacidad. Para comprobar ajustes y accesibilidad, sigue el [recorrido de interfaz](../../docs/PRUEBA_DE_INTERFAZ.md).
 
 ## API local
 
-Esta sección se ejecuta cuando estén integradas las dependencias del backend y `app.main`. Desde `backend/` en PowerShell:
+Desde `backend/` en PowerShell:
 
 ```powershell
 py -3.12 -m venv .venv

@@ -1,6 +1,8 @@
 # HandText AI · Trabajo en equipo
 
-Repositorio de planificación para una nueva fase de trabajo. Contiene 218 tareas pendientes, cuatro sprints y un prompt por integrante. Todavía no contiene la implementación de Flutter ni FastAPI.
+El repositorio organiza una nueva fase de HandText AI en 218 tareas, cuatro sprints y un prompt por integrante. La rama `samuel/implementacion` incorpora la app Android y la API local con las dependencias compartidas citadas en su historial.
+
+Consulta la [guía local](specs/001-handtext-mvp/quickstart.md), el [mapa del código](MAPA_DEL_CODIGO.md) y el [recorrido de ajustes y accesibilidad](docs/PRUEBA_DE_INTERFAZ.md).
 
 ## Antecedente
 
