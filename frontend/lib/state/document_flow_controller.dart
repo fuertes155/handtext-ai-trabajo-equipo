@@ -781,10 +781,11 @@ class DocumentFlowController extends ChangeNotifier {
     _hasUnexportedChanges = false;
     _step = FlowStep.editor;
     _status = const OperationStatus.info(StatusEvent.historyOpened);
+    final discard = _discardImages();
+    final clearDraft = _enqueueDraftWork(_drafts.delete);
     _notify();
-    await _discardImages(); // retención: como al empezar cualquier documento
-    // El texto anterior ya se reemplazó: su borrador se borra.
-    await _enqueueDraftWork(_drafts.delete);
+    await discard;
+    await clearDraft;
   }
 
   // ---------------------------------------------------------------------------

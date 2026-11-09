@@ -66,8 +66,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
       );
       if (!confirmed) return; // cancelar no cambia nada
     }
-    await _controller.openFromHistory(entry);
-    if (mounted) Navigator.of(context).pop();
+    if (!mounted || _controller.isBusy) return;
+    final cleanup = _controller.openFromHistory(entry);
+    Navigator.of(context).pop();
+    await cleanup;
   }
 
   /// [HD-H3-E1] Quita un documento del historial, con confirmación.
@@ -111,7 +113,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
       listenable: _controller.history,
       builder: (context, _) {
         final entries = _controller.history.entries;
-        final shown = entries.where((entry) => entry.matchesQuery(_query));
+        final shown = _query.trim().isEmpty
+            ? entries
+            : entries.where((entry) => entry.matchesQuery(_query)).toList();
         return AuroraScaffold(
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -148,19 +152,19 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     ? const _EmptyHistory()
                     : shown.isEmpty
                     ? _NoResults(query: _query.trim())
-                    : ListView(
+                    : ListView.separated(
                         padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-                        children: [
-                          for (final entry in shown) ...[
-                            _EntryCard(
-                              entry: entry,
-                              onOpen: () => _open(entry),
-                              onRename: () => _rename(entry),
-                              onDelete: () => _delete(entry),
-                            ),
-                            const SizedBox(height: 12),
-                          ],
-                        ],
+                        itemCount: shown.length,
+                        separatorBuilder: (_, _) => const SizedBox(height: 12),
+                        itemBuilder: (context, index) {
+                          final entry = shown[index];
+                          return _EntryCard(
+                            entry: entry,
+                            onOpen: () => _open(entry),
+                            onRename: () => _rename(entry),
+                            onDelete: () => _delete(entry),
+                          );
+                        },
                       ),
               ),
             ],

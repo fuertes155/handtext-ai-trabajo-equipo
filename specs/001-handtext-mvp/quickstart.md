@@ -14,10 +14,10 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m ruff check .
 .\.venv\Scripts\python.exe -m pytest
 Get-NetTCPConnection -State Listen -LocalPort 8001 -ErrorAction SilentlyContinue
-.\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8001
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8001 --no-access-log
 ```
 
-Si el puerto está ocupado, identifica el servicio antes de iniciar otra instancia. El emulador Android alcanza el equipo por `http://10.0.2.2:8001`. Cuando se integre el cliente de documentos, configúralo con `API_BASE_URL`. Si se habilita el acceso local de desarrollo, suministra el mismo secreto mediante la configuración local de ambos procesos. Ese modo solo autoriza documentos y debe quedar desactivado en distribución.
+Si el puerto está ocupado, identifica el servicio antes de iniciar otra instancia. El emulador Android alcanza el equipo por `http://10.0.2.2:8001`. Puedes cambiar ese destino con `API_BASE_URL`. Si habilitas el acceso local de desarrollo, configura `HANDTEXT_LOCAL_DEV_TOKEN` en el entorno de FastAPI y `LOCAL_DEV_API_TOKEN` en el archivo local de parámetros de Flutter, con el mismo valor. Guarda el archivo fuera del repositorio y pásalo con `flutter run -d <identificador> --dart-define-from-file=<ruta-local>`. Ese modo solo autoriza documentos y queda desactivado en distribución.
 
 Verifica registro, ingreso y cierre de sesión locales. Prueba que la API rechace reconocimiento y exportación sin autorización y que el texto exportado en Word y PDF coincida con la última revisión. Usa imágenes sintéticas o autorizadas y conserva el original. Anota qué pudo ejecutarse y qué quedó bloqueado.
 
