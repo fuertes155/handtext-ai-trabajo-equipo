@@ -24,6 +24,7 @@ import '../strings.dart';
 import '../widgets/aurora_header.dart';
 import '../widgets/aurora_scaffold.dart';
 import '../widgets/confirm_dialog.dart';
+import '../widgets/motion.dart';
 import '../widgets/surface_card.dart';
 
 /// Pantalla «Mis documentos»: lista, busca, abre, renombra y elimina los documentos
@@ -40,13 +41,28 @@ class HistoryScreen extends StatefulWidget {
     BuildContext context,
     DocumentFlowController controller,
   ) => Navigator.of(context).push(
-    MaterialPageRoute<void>(
-      builder: (_) => HistoryScreen(controller: controller),
+    _HistoryRoute(
+      controller,
+      duration: motionDuration(context, const Duration(milliseconds: 120)),
     ),
   );
 
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();
+}
+
+/// Keep Material navigation while making this frequently used route responsive.
+class _HistoryRoute extends MaterialPageRoute<void> {
+  _HistoryRoute(DocumentFlowController controller, {required this.duration})
+    : super(builder: (_) => HistoryScreen(controller: controller));
+
+  final Duration duration;
+
+  @override
+  Duration get transitionDuration => duration;
+
+  @override
+  Duration get reverseTransitionDuration => duration;
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {

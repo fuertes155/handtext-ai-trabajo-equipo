@@ -93,3 +93,7 @@ Cuenta prevista: `fuertes155`. Total: 73. Estado inicial: todas pendientes. La i
 - **T1101 y T1104.** En `emulator-5556`, el recorrido de integración pasó en 59,5 s con una cuenta temporal. Se creó la cuenta local, se seleccionó una hoja sintética, se corrigió el texto, se generó un DOCX con FastAPI local y se recuperó el documento después de cerrar e iniciar sesión. Se verificó el texto corregido dentro del archivo. El OCR y los selectores de Android se simularon. La exportación y el guardado privado sí se ejecutaron.
 - **T613 y T711.** En el emulador Android 16, se cargaron 50 entradas de prueba y se abrió el documento guardado desde la interfaz en inglés. La apertura bajó de 1.119 ms a 1.102 ms, por encima del límite de 1.000 ms de SC-705. Pasaron 32 pruebas dirigidas de historial después de la optimización. El recorrido imprime la medición y permite exigir el límite con `E2E_STRICT_HISTORY=true` en la configuración de Flutter.
 - **T809.** El APK de depuración x86_64 se compiló. Las pruebas del escáner simulan la fuente de imágenes. Queda por escanear una hoja física con ML Kit en un teléfono.
+
+### Revalidación de T613
+
+Con la transición de historial más corta y respetando la preferencia de reducir animaciones, el recorrido de «Mis documentos» al editor con 50 entradas tardó **870 ms** en `emulator-5556` (Android 16). Se ejecutó con `E2E_STRICT_HISTORY=true` y pasó el límite de SC-705. También pasaron el análisis de Flutter y las 32 pruebas dirigidas de historial, organización y flujo de documentos.
