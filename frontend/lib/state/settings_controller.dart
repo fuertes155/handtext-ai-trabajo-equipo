@@ -3,6 +3,8 @@
 // Guarda los ajustes elegidos y avisa a las pantallas para que cambien al instante
 // (tema de la app y tamaño de letra del editor). Si no se pueden guardar (por ejemplo,
 // sin espacio), los ajustes igual se aplican mientras la app esté abierta.
+// Spec 006: recuerda que los consejos para una buena foto ya se vieron.
+// Spec 008: el idioma de la interfaz.
 
 import 'package:flutter/foundation.dart';
 
@@ -34,6 +36,19 @@ class SettingsController extends ChangeNotifier {
   /// [AV-H1-E4] Tamaño de letra del editor.
   Future<void> setTextSize(EditorTextSize size) =>
       _update(_settings.copyWith(textSize: size));
+
+  /// Spec 011: guarda si el bloqueo con huella está activo. Lo llama
+  /// AppLockController después de verificar a la persona.
+  Future<void> setAppLock(bool enabled) =>
+      _update(_settings.copyWith(appLock: enabled));
+
+  /// [IE-H1-E2] [IE-H1-E4] [SC-804] Idioma de la interfaz; se aplica al instante.
+  Future<void> setLanguage(AppLanguage language) =>
+      _update(_settings.copyWith(language: language));
+
+  /// [PA-H1-E3] [PA-H1-E4] Los consejos ya se vieron o se saltaron: no vuelven a
+  /// aparecer solos [SC-601].
+  Future<void> markTipsSeen() => _update(_settings.copyWith(tipsSeen: true));
 
   Future<void> _update(AppSettings settings) async {
     _settings = settings;

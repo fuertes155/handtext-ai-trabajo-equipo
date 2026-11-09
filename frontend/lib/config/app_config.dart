@@ -14,8 +14,8 @@ abstract final class AppConfig {
   static const String appVersion = '1.0.0';
   static const int appBuild = 1;
 
-  /// Las cuentas de prueba se guardan en el teléfono en compilaciones debug.
-  static const bool usesLocalAccounts = kDebugMode;
+  /// Las cuentas de la app se guardan en el teléfono.
+  static const bool usesLocalAccounts = true;
 
   /// URL base de la API. Ejemplos:
   /// - Emulador de Android: `http://10.0.2.2:8001/` (valor por defecto; 10.0.2.2 es

@@ -3,6 +3,9 @@
 // Un archivo settings.json en la carpeta privada de soporte de la app, con escritura
 // atómica (como el borrador). No guarda datos personales ni documentos. Si el archivo
 // falta o está dañado, se usan los valores por omisión [AV-H1-E6].
+// Spec 006: el campo tipsSeen; si falta (ajustes de 005), vale false y los consejos se
+// muestran una vez [PA-H1-E1].
+// Spec 008: el campo language; si falta o es desconocido, español [IE-H1-E5].
 
 import 'dart:convert';
 import 'dart:io';
@@ -19,9 +22,13 @@ abstract interface class SettingsStore {
 }
 
 /// Convierte los ajustes a JSON:
+/// `{"theme": "dark", "textSize": "large", "tipsSeen": true}`.
 String encodeSettings(AppSettings settings) => jsonEncode({
   'theme': settings.theme.name,
   'textSize': settings.textSize.name,
+  'tipsSeen': settings.tipsSeen,
+  'language': settings.language.name,
+  'appLock': settings.appLock,
 });
 
 /// Lee los ajustes. Un valor desconocido o un JSON dañado vuelven al valor por omisión.
@@ -46,6 +53,10 @@ AppSettings decodeSettings(String content) {
       json['textSize'],
       EditorTextSize.normal,
     ),
+    tipsSeen: json['tipsSeen'] == true, // cualquier otro valor: no se vieron
+    language: byName(AppLanguage.values, json['language'], AppLanguage.spanish),
+    // Spec 011: cualquier valor que no sea true deja el bloqueo apagado.
+    appLock: json['appLock'] == true,
   );
 }
 
