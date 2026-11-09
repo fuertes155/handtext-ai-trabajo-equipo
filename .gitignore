@@ -18,3 +18,10 @@ local.properties
 key.properties
 .idea/
 .DS_Store
+
+# Python y archivos locales (T004).
+*.py[cod]
+.ruff_cache/
+venv/
+*.env
+Thumbs.db

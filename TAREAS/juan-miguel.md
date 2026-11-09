@@ -86,3 +86,12 @@ Cuenta prevista: `Juan-Miguel-Her-Del`. Total: 73. Estado inicial: todas pendien
 - [ ] [T907](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/205) · Spec 007 (Non-Goals), quickstart.md, README.md y MAPA_DEL_CODIGO.md · Dificultad Baja.
 - [ ] [T1002](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/208) · Pruebas del ajuste appLock (por omisión, guardar, JSON anterior) y de la pantalla de Ajustes (activar con verificación, cancelar, teléfono sin verificación) · Dificultad Media.
 - [ ] [T1007](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/213) · Privacidad, accesibilidad (006) e inglés (008) de la pantalla de bloqueo; quickstart.md, README.md y MAPA_DEL_CODIGO.md · Dificultad Baja.
+
+
+## Registro de integración desde documento_word
+
+Se trasladaron y verificaron archivos seleccionados del proyecto anterior conservando
+la implementación de Samuel. La relación de las 73 tareas, la procedencia, las pruebas
+y los pendientes se registra en [el informe](../docs/INTEGRACION_JUAN_MIGUEL.md).
+Las casillas iniciales no se marcan por reutilizar código: las issues conservan su
+estado hasta la revisión del equipo y la validación específica de cada tarea.

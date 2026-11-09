@@ -26,3 +26,24 @@ Verifica registro, ingreso y cierre de sesión locales. Prueba que la API rechac
 En un proyecto de Google Cloud autorizado, habilita Cloud Vision y configura una clave restringida para esa API según la política del proyecto. Suminístrala al proceso de FastAPI mediante `HANDTEXT_GOOGLE_VISION_API_KEY`. Consulta la [documentación de Cloud Vision](https://cloud.google.com/vision/docs/setup). La clave se configura fuera de Git y permanece en el equipo que ejecuta el backend.
 
 Usa al menos diez hojas autorizadas con sus transcripciones de referencia. Antes de medir, fija el mismo criterio de normalización para referencias y resultados. Compara el texto de OCR sin corregir y registra por hoja las sustituciones, omisiones e inserciones de caracteres. Calcula el CER global dividiendo la suma de errores entre la suma de caracteres de referencia. Contrasta el resultado con la meta del MVP de 10 %. Registra el corpus utilizado, la fecha, los fallos del proveedor y las condiciones de captura. Si falta la clave o el corpus, registra la medición como pendiente.
+
+
+### Herramienta de medición (T058/T059)
+
+Desde `backend/`, con la clave ya configurada por un canal local y una carpeta externa
+con pares de archivos `hoja.png` y `hoja.txt` autorizados:
+
+```powershell
+.\.venv\Scripts\python.exe -m tools.measure_ocr_quality --help
+.\.venv\Scripts\python.exe -m tools.measure_ocr_quality C:\ruta\hojas --acepto-enviar
+```
+
+La herramienta calcula CER, WER y la calidad de las marcas sin incluir el texto en el
+informe. Solo envía imágenes tras `--acepto-enviar`. Con menos de diez hojas, SC-010
+permanece pendiente aunque el CER sea cero. La integración usa muestras sintéticas;
+la medición real T061 sigue pendiente. Conserva corpus, transcripciones y credenciales
+fuera del repositorio.
+
+Si Windows impide usar la carpeta temporal predeterminada de pytest, ejecuta las
+pruebas con `--basetemp` apuntando a una ruta NUEVA dentro de `.venv`. No reutilices
+una carpeta con datos: pytest administra el contenido de esa ruta.

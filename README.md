@@ -33,3 +33,25 @@ El commit inicial solo contiene planificación preparada con asistencia de IA. C
 - [Todas las issues](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues)
 - [Cuatro sprints](https://github.com/fuertes155/handtext-ai-trabajo-equipo/milestones)
 - [Cómo completar las asignaciones tras aceptar invitaciones](docs/FLUJO_EQUIPO.md#asignaciones-pendientes)
+
+
+## Integración de Juan Miguel
+
+Las pruebas, herramientas, recursos Android y guías trasladados del proyecto anterior
+se describen con su procedencia, relación con las 73 tareas y resultados en el
+[informe de integración](docs/INTEGRACION_JUAN_MIGUEL.md). Se conserva la implementación
+actual de Samuel. Las tareas que requieren muestras reales, dispositivo o revisión
+del equipo permanecen pendientes.
+
+## Guías por funcionalidad
+
+- [Cuentas locales e identidad visual](specs/002-cuentas-de-usuario/quickstart.md)
+- [Palabras dudosas, recorte y compartir](specs/003-revision-recorte-compartir/quickstart.md)
+- [Documentos de varias páginas](specs/004-varias-paginas/quickstart.md)
+- [Ajustes, licencias y compilación](specs/005-ajustes-y-version-final/quickstart.md)
+- [Consejos y accesibilidad](specs/006-primer-uso-y-accesibilidad/quickstart.md)
+- [Historial por cuenta](specs/007-historial-de-documentos/quickstart.md)
+- [Español e inglés](specs/008-idioma-ingles/quickstart.md)
+- [Escáner de hojas](specs/009-escaner-de-documentos/quickstart.md)
+- [Nombres, búsqueda y organización](specs/010-organizar-documentos/quickstart.md)
+- [Bloqueo con verificación del dispositivo](specs/011-bloqueo-con-huella/quickstart.md)
