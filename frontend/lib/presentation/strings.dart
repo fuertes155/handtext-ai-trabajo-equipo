@@ -1,3 +1,6 @@
+import '../models/app_failure.dart';
+import '../models/operation_status.dart';
+
 abstract final class AppStrings {
   static const title = 'HandText AI';
   static const welcome = 'Digitaliza tus documentos manuscritos';
@@ -10,6 +13,25 @@ abstract final class AppStrings {
   static const skip = 'Saltar';
   static const cancel = 'Cancelar';
   static const accept = 'Autorizar';
+  static const tooManyPages = 'El documento contiene demasiadas páginas.';
+
+  static String? recognitionStatus(OperationStatus status) {
+    if (status.failure?.kind == FailureKind.tooManyPages) return tooManyPages;
+    if (status.event == StatusEvent.recognizing) {
+      final page = status.page;
+      final count = status.pageCount;
+      return page == null || count == null
+          ? 'Reconociendo texto…'
+          : 'Reconociendo la página $page de $count…';
+    }
+    if (status.event == StatusEvent.recognized &&
+        status.emptyPages.isNotEmpty) {
+      final pages = status.emptyPages.join(', ');
+      return 'No se encontró texto en las páginas $pages.';
+    }
+    return null;
+  }
+
   static const photoTips = [
     'Pon la hoja sobre una superficie plana y bien iluminada.',
     'Encuadra toda la hoja y evita sombras o reflejos.',
