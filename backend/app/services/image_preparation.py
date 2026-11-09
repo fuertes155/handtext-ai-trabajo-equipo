@@ -21,10 +21,7 @@ import io
 from PIL import Image, ImageOps, UnidentifiedImageError
 
 from app.config import OCR_IMAGE_JPEG_QUALITY, OCR_IMAGE_MAX_SIDE_PX
-
-
-class ImageUnreadableError(ValueError):
-    """An image could not be decoded for OCR."""
+from app.errors import AppError, ErrorCode
 
 
 def prepare_for_ocr(data: bytes) -> bytes:
@@ -47,7 +44,7 @@ def prepare_for_ocr(data: bytes) -> bytes:
         prepared.save(output, format="JPEG", quality=OCR_IMAGE_JPEG_QUALITY)
         return output.getvalue()
     except (Image.DecompressionBombError, UnidentifiedImageError, OSError, SyntaxError, ValueError):
-        raise ImageUnreadableError() from None
+        raise AppError(ErrorCode.IMAGE_UNREADABLE) from None
 
 
 def _flatten_to_rgb(image: Image.Image) -> Image.Image:

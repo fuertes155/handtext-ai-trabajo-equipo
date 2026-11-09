@@ -17,4 +17,4 @@ def test_limit_checks_actual_bytes_and_reports_request_id():
         assert client.post("/limited", content=b"abc").json() == {"size": 3}
         response = client.post("/limited", content=b"abcd", headers={"content-length": "1"})
         assert response.status_code == 413
-        assert response.json()["request_id"] == response.headers["x-request-id"]
+        assert response.json()["error"]["request_id"] == response.headers["x-request-id"]

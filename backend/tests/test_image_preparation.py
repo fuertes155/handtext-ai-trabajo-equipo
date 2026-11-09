@@ -3,7 +3,8 @@ import io
 import pytest
 from PIL import Image
 
-from app.services.image_preparation import ImageUnreadableError, prepare_for_ocr
+from app.errors import AppError, ErrorCode
+from app.services.image_preparation import prepare_for_ocr
 
 
 def test_preparation_respects_orientation_and_removes_metadata():
@@ -22,5 +23,6 @@ def test_preparation_respects_orientation_and_removes_metadata():
 
 
 def test_invalid_image_is_rejected():
-    with pytest.raises(ImageUnreadableError):
+    with pytest.raises(AppError) as error:
         prepare_for_ocr(b"invalid")
+    assert error.value.code == ErrorCode.IMAGE_UNREADABLE
