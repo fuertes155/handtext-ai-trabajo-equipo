@@ -276,9 +276,13 @@ void main() {
       final openTime = Stopwatch()..start();
       await tester.tap(historyButton);
       final entry = find.text('Apuntes de prueba');
-      await _waitFor(tester, entry);
+      await _waitFor(tester, entry, interval: const Duration(milliseconds: 16));
       await tester.tap(entry.first);
-      await _waitFor(tester, find.text(en.editorTitle));
+      await _waitFor(
+        tester,
+        find.text(en.editorTitle),
+        interval: const Duration(milliseconds: 16),
+      );
       openTime.stop();
       expect(
         find.textContaining('La célula es la unidad básica'),
@@ -314,10 +318,11 @@ Future<void> _waitFor(
   WidgetTester tester,
   Finder finder, {
   Duration timeout = const Duration(seconds: 30),
+  Duration interval = const Duration(milliseconds: 200),
 }) async {
   final end = DateTime.now().add(timeout);
   while (DateTime.now().isBefore(end)) {
-    await tester.pump(const Duration(milliseconds: 200));
+    await tester.pump(interval);
     if (finder.evaluate().isNotEmpty) return;
   }
   throw TestFailure('No apareció a tiempo: $finder (¿está encendida la API?)');
