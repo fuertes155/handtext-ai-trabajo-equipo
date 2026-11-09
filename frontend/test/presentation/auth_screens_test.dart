@@ -7,9 +7,9 @@ import 'package:handtext_ai/models/app_settings.dart';
 import 'package:handtext_ai/models/recognition_result.dart';
 import 'package:handtext_ai/presentation/strings.dart';
 
-import 'support/strings_es.dart';
-import 'support/app_tester.dart';
-import 'support/fakes.dart';
+import '../support/strings_es.dart';
+import '../support/app_tester.dart';
+import '../support/fakes.dart';
 
 Future<void> _fillRegistration(
   WidgetTester tester, {
