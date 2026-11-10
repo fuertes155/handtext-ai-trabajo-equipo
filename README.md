@@ -68,3 +68,5 @@ Se incorporaron los archivos y pruebas restantes conservando las mejoras actuale
 El [informe completo](docs/INTEGRACION_COMPLETA_DOCUMENTO_WORD.md) explica las fusiones,
 la procedencia, el inventario y las verificaciones. Las guías originales y el despliegue
 Render se conservan como referencia; para ejecutar, usa las guías locales vigentes.
+
+- [Conciliación de issues y pendientes tras la integración completa](docs/CONCILIACION_ISSUES_INTEGRACION.md).
