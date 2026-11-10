@@ -25,3 +25,6 @@ key.properties
 venv/
 *.env
 Thumbs.db
+
+# Patrones adicionales del proyecto de origen.
+backend/.venv/

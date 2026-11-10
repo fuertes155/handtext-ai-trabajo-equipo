@@ -31,3 +31,11 @@ La procedencia, las tareas y los resultados están en el
 | Ajustes, idioma, consejos y bloqueo | `frontend/lib/state/settings_controller.dart` | `frontend/test/state/settings_test.dart` y pruebas de pantallas existentes |
 | Nombre de la exportación | `suggestedFileName` en `document_flow_controller.dart` | `frontend/test/services/file_name_test.dart` |
 | Ícono Android | `frontend/tool/generate_launcher_icon.py`, `frontend/android/app/src/main/res/mipmap-*/` | Generación con Pillow y compilación Android |
+
+
+## Integración restante de documento_word
+
+Véase el [inventario completo](docs/INTEGRACION_COMPLETA_MANIFIESTO.json) y el
+[informe de integración](docs/INTEGRACION_COMPLETA_DOCUMENTO_WORD.md). Incluye las siete
+suites Flutter restantes, el contrato HTTP con PostgreSQL real, las pruebas completas de
+preparación de imágenes, privacidad Android y configuración local de firma y URL release.

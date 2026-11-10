@@ -60,3 +60,11 @@ del equipo permanecen pendientes.
 El [registro final de verificaciones](docs/CIERRE_VERIFICACIONES_JUAN_MIGUEL.md)
 distingue las pruebas ejecutadas, los recorridos confirmados por Juan Miguel y las
 dos tareas cerradas administrativamente sin acreditar su validación.
+
+
+## Integración completa del proyecto anterior
+
+Se incorporaron los archivos y pruebas restantes conservando las mejoras actuales.
+El [informe completo](docs/INTEGRACION_COMPLETA_DOCUMENTO_WORD.md) explica las fusiones,
+la procedencia, el inventario y las verificaciones. Las guías originales y el despliegue
+Render se conservan como referencia; para ejecutar, usa las guías locales vigentes.
