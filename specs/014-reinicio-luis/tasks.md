@@ -147,3 +147,10 @@ T025, T026, T045, T128, T134, T305: alcance técnico verificado. 58 pruebas apro
 y varias páginas. Análisis y formato del alcance correctos.
 
 Revisión del equipo pendiente. Total técnico: 48/72. Evidencia: `docs/VERIFICACION_RECONSTRUCCION_LUIS.md`.
+
+## Reconstrucción actual — lote 9 (2026-11-17)
+
+T404, T406, T503, T505, T604, T610: alcance técnico verificado. 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),
+incluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.
+
+Revisión del equipo pendiente. Total técnico: 54/72. Evidencia: `docs/VERIFICACION_RECONSTRUCCION_LUIS.md`.

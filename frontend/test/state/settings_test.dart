@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:handtext_ai/config/app_config.dart';
 import 'package:handtext_ai/models/app_settings.dart';
 import 'package:handtext_ai/services/settings_store.dart';
 import 'package:handtext_ai/state/settings_controller.dart';
@@ -12,6 +13,16 @@ class FailingSettingsStore extends InMemorySettingsStore {
 }
 
 void main() {
+  test('T406: versión y build visibles coinciden con pubspec.yaml', () {
+    final match = RegExp(
+      r'^version:\s*(\d+\.\d+\.\d+)\+(\d+)\s*$',
+      multiLine: true,
+    ).firstMatch(File('pubspec.yaml').readAsStringSync());
+    expect(match, isNotNull);
+    expect(AppConfig.appVersion, match!.group(1));
+    expect(AppConfig.appBuild, int.parse(match.group(2)!));
+  });
+
   test(
     'ajustes antiguos, dañados o desconocidos mantienen valores seguros',
     () {

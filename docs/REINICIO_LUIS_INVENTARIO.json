@@ -363,16 +363,18 @@
     {
       "task": "T404",
       "issue": 142,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Pantalla de Ajustes en frontend/lib/presentation/screens/settings_screen.dart y tamaño de letra en el editor · Dificultad Media."
+      "description": "Pantalla de Ajustes en frontend/lib/presentation/screens/settings_screen.dart y tamaño de letra en el editor · Dificultad Media.",
+      "verification": "Lote 9: 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),\nincluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T406",
       "issue": 144,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Prueba de la versión contra pubspec.yaml y pruebas de pantalla de «Acerca de» · Dificultad Media."
+      "description": "Prueba de la versión contra pubspec.yaml y pruebas de pantalla de «Acerca de» · Dificultad Media.",
+      "verification": "Lote 9: 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),\nincluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T409",
@@ -391,16 +393,18 @@
     {
       "task": "T503",
       "issue": 154,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Pruebas de pantalla de los consejos (primera vez, Siguiente, Empezar, Saltar, atrás, cambio de cuenta, abrir desde el inicio y Ajustes) en frontend/test/presentation/tips_screen_test.dart · Dificultad Media."
+      "description": "Pruebas de pantalla de los consejos (primera vez, Siguiente, Empezar, Saltar, atrás, cambio de cuenta, abrir desde el inicio y Ajustes) en frontend/test/presentation/tips_screen_test.dart · Dificultad Media.",
+      "verification": "Lote 9: 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),\nincluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T505",
       "issue": 156,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Consejos la primera vez en frontend/lib/presentation/screens/app_root.dart; enlaces en start_screen.dart y settings_screen.dart; arnés de pruebas con tipsSeen · Dificultad Media."
+      "description": "Consejos la primera vez en frontend/lib/presentation/screens/app_root.dart; enlaces en start_screen.dart y settings_screen.dart; arnés de pruebas con tipsSeen · Dificultad Media.",
+      "verification": "Lote 9: 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),\nincluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T507",
@@ -429,9 +433,10 @@
     {
       "task": "T604",
       "issue": 169,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
-      "description": "Pruebas del controlador: registrar al guardar, actualizar sin duplicar, no registrar cancelados ni fallidos, fallo del historial sin afectar el guardado, en frontend/test/state/history_flow_test.dart · Dificultad Media."
+      "description": "Pruebas del controlador: registrar al guardar, actualizar sin duplicar, no registrar cancelados ni fallidos, fallo del historial sin afectar el guardado, en frontend/test/state/history_flow_test.dart · Dificultad Media.",
+      "verification": "Lote 9: 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),\nincluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T606",
@@ -443,9 +448,10 @@
     {
       "task": "T610",
       "issue": 175,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
-      "description": "Pruebas de eliminar, borrar todo, cancelar y eliminar la cuenta · Dificultad Media."
+      "description": "Pruebas de eliminar, borrar todo, cancelar y eliminar la cuenta · Dificultad Media.",
+      "verification": "Lote 9: 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),\nincluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T612",

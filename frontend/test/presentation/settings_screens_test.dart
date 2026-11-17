@@ -116,10 +116,7 @@ void main() {
         if (!segmented) {
           expect(
             tester.getSemantics(find.text(es.themeDark)),
-            containsSemantics(
-              isInMutuallyExclusiveGroup: true,
-              isChecked: true,
-            ),
+            isSemantics(isInMutuallyExclusiveGroup: true, isChecked: true),
           );
         }
         handle.dispose();

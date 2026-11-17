@@ -163,6 +163,11 @@ void main() {
     await tester.tap(find.byTooltip(es.historyClearAll));
     await tester.pumpAndSettle();
     expect(find.text(es.historyClearMessage(2)), findsOneWidget);
+    await tapText(tester, es.cancel);
+    expect(h.historyStore.stored, hasLength(2));
+    expect(h.historyStore.deletes, 0);
+    await tester.tap(find.byTooltip(es.historyClearAll));
+    await tester.pumpAndSettle();
     await tapText(tester, es.historyClearConfirm);
 
     expect(find.text(es.historyEmptyTitle), findsOneWidget);

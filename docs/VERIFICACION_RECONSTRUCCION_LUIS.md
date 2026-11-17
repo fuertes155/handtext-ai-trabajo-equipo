@@ -352,3 +352,33 @@ dart format --output=none --set-exit-if-changed test/state/document_flow_control
 Son pruebas con fakes/datos sintéticos; cámara y TalkBack físicos pendientes.
 Las issues permanecen abiertas por la revisión del equipo exigida en sus criterios.
 
+
+## Lote 9: T404, T406, T503, T505, T604, T610
+
+40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),
+incluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.
+
+Los consejos se muestran una vez por teléfono, persisten al terminar/saltar/atrás,
+se reabren desde inicio y Ajustes y no reaparecen al cambiar de cuenta. Se añadió
+PopScope a TipsScreen para cumplir Atrás de Android; se usa sendAnnouncement con
+la vista actual (API de accesibilidad vigente). Las pruebas usan la app completa,
+menos animaciones y cuatro páginas; no solicitan cámara ni envían imágenes.
+
+Se comprueba versión/build de AppConfig contra pubspec.yaml, «Acerca de», licencias
+y privacidad, cambio de tema y escala del editor 1.4. Solo se actualiza el matcher
+deprecado containsSemantics a su equivalente isSemantics, conservando condiciones.
+Se conserva y revisa la suite compartida del historial: guardado correcto, no
+duplicar, cancelación/fallo no registrar, historial sin espacio no rompe el archivo,
+abrir sin perder borrador indebidamente y separación entre cerrar/eliminar cuenta.
+Borrar todo también prueba cancelar antes de confirmar. Ninguna eliminación de
+prueba toca datos reales: almacenes sintéticos. No se reutilizó código histórico.
+
+Comandos desde frontend:
+
+```bash
+flutter test --no-pub --reporter expanded test/presentation/tips_screen_test.dart test/state/settings_test.dart test/presentation/settings_screens_test.dart test/state/history_flow_test.dart test/presentation/history_screen_test.dart
+flutter analyze --no-pub lib/presentation/screens/tips_screen.dart test/presentation/tips_screen_test.dart test/state/settings_test.dart test/presentation/settings_screens_test.dart
+dart format --output=none --set-exit-if-changed lib/presentation/screens/tips_screen.dart test/presentation/tips_screen_test.dart test/state/settings_test.dart test/presentation/settings_screens_test.dart test/presentation/history_screen_test.dart
+```
+
+Revisión formal y verificaciones Android físicas pendientes.
