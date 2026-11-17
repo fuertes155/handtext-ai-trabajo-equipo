@@ -182,3 +182,11 @@ APK debug generado; release falla por falta de clave, sin fallback debug.
 Pendientes: T409/T411 (clave/firma/instalación release), T908 (teléfono físico) y
 T1008 (PIN/huella y teléfono). Revisión formal pendiente en las 72 issues, que siguen
 abiertas. [Detalle por tarea](../docs/ESTADO_TAREAS_LUIS.md).
+
+## Integración con main solicitada por Luis
+
+Conflictos de la devolución e8f1289 resueltos conservando reconstrucción y siete
+casos compartidos. 358 pruebas Flutter sin omisiones, análisis/formato y APK debug
+correctos. Milestones actualizados con recuento formal y avance técnico separados.
+[Registro de integración](../docs/INTEGRACION_LUIS_MAIN.md). Las verificaciones pendientes y la revisión
+formal de las issues mantienen su estado.

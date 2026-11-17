@@ -97,3 +97,11 @@ al exportar de nuevo. Eliminar/Borrar todo piden confirmación y no borran archi
 exportados. Cerrar sesión conserva el historial; eliminar la cuenta lo borra.
 Copiar todo usa el texto actual: otras apps pueden leerlo desde el portapapeles.
 [Pruebas y recorrido pendiente](specs/007-historial-de-documentos/quickstart.md).
+
+## Integración con main solicitada por Luis
+
+Conflictos de la devolución e8f1289 resueltos conservando reconstrucción y siete
+casos compartidos. 358 pruebas Flutter sin omisiones, análisis/formato y APK debug
+correctos. Milestones actualizados con recuento formal y avance técnico separados.
+[Registro de integración](docs/INTEGRACION_LUIS_MAIN.md). Las verificaciones pendientes y la revisión
+formal de las issues mantienen su estado.

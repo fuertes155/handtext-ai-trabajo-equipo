@@ -90,3 +90,11 @@ local confirmada de Luis; no se alteraron autores ni fechas anteriores.
 | [T1008 · #214](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/214) | Pendiente de verificación | Controlador/widgets de bloqueo verificados en la suite. Falta recorrido con PIN/huella simulada configurados y comprobación física. No se modificó PIN ni seguridad del teléfono. |
 | [T1102 · #216](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/216) | Verificada; revisión pendiente | [Lote final](VERIFICACION_RECONSTRUCCION_LUIS.md#lote-final--verificación-android-y-cierre-del-registro-2026-11-17) |
 | [T1103 · #217](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/217) | Verificada; revisión pendiente | [9d748cf](https://github.com/fuertes155/handtext-ai-trabajo-equipo/commit/9d748cf) |
+
+## Integración con main solicitada por Luis
+
+Conflictos de la devolución e8f1289 resueltos conservando reconstrucción y siete
+casos compartidos. 358 pruebas Flutter sin omisiones, análisis/formato y APK debug
+correctos. Milestones actualizados con recuento formal y avance técnico separados.
+[Registro de integración](INTEGRACION_LUIS_MAIN.md). Las verificaciones pendientes y la revisión
+formal de las issues mantienen su estado.

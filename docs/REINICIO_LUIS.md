@@ -162,3 +162,11 @@ Las verificaciones físicas y la firma real no se acreditan con las pruebas sint
 No quedan cuerpos UnimplementedError/NotImplementedError del reinicio. Los resultados
 históricos no se cuentan. Las 72 issues siguen abiertas mientras falte la revisión
 exigida de otro integrante. El inventario distingue verificación técnica de cierre.
+
+## Integración con main solicitada por Luis
+
+Conflictos de la devolución e8f1289 resueltos conservando reconstrucción y siete
+casos compartidos. 358 pruebas Flutter sin omisiones, análisis/formato y APK debug
+correctos. Milestones actualizados con recuento formal y avance técnico separados.
+[Registro de integración](INTEGRACION_LUIS_MAIN.md). Las verificaciones pendientes y la revisión
+formal de las issues mantienen su estado.

@@ -59,7 +59,8 @@ flutter analyze --no-pub
 HANDTEXT_API_URL=http://127.0.0.1:8765/ flutter test --no-pub --reporter expanded
 ```
 
-351 pruebas aprobadas sin omisiones. Sin HANDTEXT_API_URL, nueve contratos existentes
+358 pruebas aprobadas sin omisiones tras integrar siete casos compartidos de main
+(351 en la reconstrucción anterior). Sin HANDTEXT_API_URL, nueve contratos existentes
 se omiten: esa ejecución parcial no sustituye el resultado completo anterior.
 Se corrigió un 401 sin Bearer: informa falta de autenticación remota sin expulsar una
 cuenta local. Con Bearer rechazado pide iniciar sesión; se comprueba incluso si el
@@ -146,3 +147,5 @@ cancelar conserva texto y sesión. [Estado de las 72 tareas](ESTADO_TAREAS_LUIS.
 El APK instrumentado del recorrido se conserva separado en
 `/home/luisdaca/Escritorio/handtext-ai-trabajo-equipo/frontend/build/verification/handtext-e2e-debug-20261117.apk`.
 Contiene un robot de pruebas, no es la aplicación normal ni una entrega.
+
+[Integración posterior con main y APK correspondiente](INTEGRACION_LUIS_MAIN.md).
