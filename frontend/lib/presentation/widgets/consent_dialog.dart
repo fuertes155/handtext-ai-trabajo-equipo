@@ -1,7 +1,7 @@
 // Diálogo de autorización de envío (tarea T042; spec 001, módulo 6; research.md, R13).
 //
 // [H1-E3] Antes de enviar la imagen, se informa al usuario que irá al servidor de
-// HandText AI y a Google Cloud Vision, y se le pide autorización. Se pregunta antes
+// HandText AI y cómo se procesa según el proveedor configurado. Se pregunta antes
 // de CADA envío (supuesto 5). Si no autoriza, devuelve false y nada se envía [H1-E4].
 // Spec 004 (tarea T307): con varias páginas, dice cuántas imágenes se enviarán
 // [VP-H1-E3].

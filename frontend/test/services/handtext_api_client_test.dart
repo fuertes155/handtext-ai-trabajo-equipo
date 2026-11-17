@@ -141,7 +141,7 @@ void main() {
         FailureKind.imageDimensionsOutOfRange,
       ),
       ('OCR_NOT_CONFIGURED', 503, FailureKind.serviceUnavailable),
-      ('OCR_TIMEOUT', 504, FailureKind.recognitionTimeout),
+      ('OCR_TIMEOUT', 504, FailureKind.ocrProviderTimeout),
       ('OCR_PROVIDER_ERROR', 502, FailureKind.recognitionFailed),
       ('OCR_INVALID_RESPONSE', 502, FailureKind.recognitionFailed),
     ];

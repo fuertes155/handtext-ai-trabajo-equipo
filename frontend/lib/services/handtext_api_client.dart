@@ -9,9 +9,11 @@
 // - Spec 003: la respuesta de reconocimiento trae también las palabras dudosas.
 
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 
 import '../config/app_config.dart';
 import '../models/app_failure.dart';
@@ -39,7 +41,11 @@ class HandTextApiClient implements HandTextApi {
   }) : _baseUrl = baseUrl,
        _tokenProvider = tokenProvider,
        _localDevToken = localDevToken,
-       _client = httpClient ?? http.Client(),
+       _client =
+           httpClient ??
+           IOClient(
+             HttpClient()..connectionTimeout = AppConfig.apiConnectionTimeout,
+           ),
        _recognitionTimeout = recognitionTimeout,
        _exportTimeout = exportTimeout;
 

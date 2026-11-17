@@ -12,7 +12,7 @@ App Flutter para Android que captura o selecciona manuscritos, permite reconocim
 - API únicamente en el computador para la prueba, preparada para el puerto 8001. Inspeccionar puertos y procesos antes de iniciarla. No detener servicios desconocidos ni ocupar 8000 por suposición.
 - `API_BASE_URL` configurable. El acceso de desarrollo exige `LOCAL_DEV_API_TOKEN` en la app y `HANDTEXT_LOCAL_DEV_TOKEN` en la API, configurados por canales locales seguros.
 - Acceso de desarrollo desactivado por defecto y no habilitado en compilaciones para distribuir. Ese token solo puede autorizar reconocimiento/exportación. Nunca las rutas de cuentas.
-- El OCR real requiere credenciales ya configuradas de Google Cloud Vision. Gemini Plus no aporta esa clave. No pedir secretos en el chat ni afirmar que OCR funciona sin validación.
+- El OCR en el computador requiere los modelos de RapidOCR instalados localmente. Si se selecciona un proveedor externo, sus credenciales se suministran al backend. No pedir secretos en el chat ni afirmar que OCR funciona sin validación.
 - No desplegar la API. No subir claves, tokens, `.env`, archivos de credenciales o datos personales. Usar muestras sintéticas o autorizadas.
 - No borrar datos ni desinstalar apps sin permiso. Si falta espacio, informar primero. Usar el emulador mientras no haya dispositivo disponible.
 - Ejecutar pruebas pertinentes de Flutter/backend, análisis y formato. Compilar APK x86_64 cuando exista una implementación que pueda compilarse.

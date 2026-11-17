@@ -63,7 +63,7 @@ AppFailure failureFromResponse(
       FailureKind.imageDimensionsOutOfRange,
     ),
     'OCR_NOT_CONFIGURED' => const AppFailure(FailureKind.serviceUnavailable),
-    'OCR_TIMEOUT' => const AppFailure(FailureKind.recognitionTimeout),
+    'OCR_TIMEOUT' => const AppFailure(FailureKind.ocrProviderTimeout),
     'OCR_PROVIDER_ERROR' ||
     'OCR_INVALID_RESPONSE' => const AppFailure(FailureKind.recognitionFailed),
     // Exportación (spec 001).

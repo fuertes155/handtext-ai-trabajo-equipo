@@ -4,6 +4,8 @@ El repositorio organiza una nueva fase de HandText AI en 218 tareas, cuatro spri
 
 Consulta la [guía local](specs/001-handtext-mvp/quickstart.md), el [mapa del código](MAPA_DEL_CODIGO.md) y el [recorrido de ajustes y accesibilidad](docs/PRUEBA_DE_INTERFAZ.md).
 
+La guía local incluye el [reconocimiento en el computador](specs/001-handtext-mvp/quickstart.md#reconocimiento-en-el-computador) y la [configuración de OpenAI](specs/001-handtext-mvp/quickstart.md#reconocimiento-con-openai).
+
 ## Antecedente
 
 Se parte de los requisitos y del reparto de tareas del [proyecto anterior](https://github.com/Juan-Miguel-Her-Del/documento_word/tree/356ff82297820bccfac9f5049ea020c9f40f0001). Su historial permanece intacto. El código o documentación que se reutilice debe citar su procedencia en el pull request. Las nuevas tareas no acreditan autoría retroactiva sobre el trabajo anterior.

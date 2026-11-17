@@ -1,8 +1,7 @@
 """Mide la calidad del reconocimiento con hojas reales (tarea T059; spec 001, SC-010;
 research.md de 001, R15).
 
-Uso (desde la carpeta backend, con la clave de Google en la variable de entorno):
-    $env:HANDTEXT_GOOGLE_VISION_API_KEY = "<su clave>"
+Uso (desde la carpeta backend, con el proveedor configurado según quickstart.md):
     .venv\\Scripts\\python -m tools.measure_ocr_quality C:\\ruta\\a\\mis_hojas --acepto-enviar
 
 La carpeta tiene pares de archivos con el mismo nombre:
@@ -10,8 +9,7 @@ La carpeta tiene pares de archivos con el mismo nombre:
 - hoja1.txt: lo que dice la hoja, escrito por una persona (la transcripción correcta).
 
 Para cada hoja:
-1. Pasa la imagen por la misma validación, preparación y adaptador de Google Cloud
-   Vision que usa la API.
+1. Pasa la imagen por la misma validación, preparación y adaptador de OCR que usa la API.
 2. Compara el texto reconocido con la transcripción y calcula:
    - CER, la tasa de error de caracteres;
    - WER, la tasa de error de palabras;
@@ -267,22 +265,29 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument(
         "--acepto-enviar",
         action="store_true",
-        help="autoriza enviar las imágenes a Google Cloud Vision",
+        help="autoriza enviar las imágenes al proveedor de OCR configurado",
     )
     args = parser.parse_args(argv)
 
+    settings = Settings.from_environment()
+    provider_name = {
+        "google_vision": "Google Cloud Vision",
+        "openai": "OpenAI",
+        "local": "OCR en el computador",
+    }[settings.ocr_provider]
     if not args.acepto_enviar:
-        print(
-            "Las imágenes se enviarán a Google Cloud Vision para reconocerlas. "
-            "Si está de acuerdo, vuelva a ejecutar el comando con --acepto-enviar."
-        )
+        if settings.ocr_provider == "local":
+            print("Las imágenes se procesarán en este computador.")
+        else:
+            print(f"Las imágenes se enviarán a {provider_name} para reconocerlas.")
+        print("Si está de acuerdo, vuelva a ejecutar el comando con --acepto-enviar.")
         return 2
     if not args.carpeta.is_dir():
         print(f"No existe la carpeta {args.carpeta}.")
         return 2
-    provider = build_ocr_provider(Settings.from_environment())
+    provider = build_ocr_provider(settings)
     if provider is None:
-        print("Falta la clave: defina HANDTEXT_GOOGLE_VISION_API_KEY (ver quickstart.md).")
+        print(f"Falta configurar {provider_name}. Consulte quickstart.md.")
         return 2
 
     results, skipped = asyncio.run(measure_folder(args.carpeta, provider))

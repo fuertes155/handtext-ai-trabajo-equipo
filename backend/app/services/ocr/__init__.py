@@ -1,7 +1,7 @@
 """Reconocimiento de texto (OCR): contrato, errores y fábrica del proveedor (tarea T030).
 
-`build_ocr_provider` decide qué proveedor usa la API según la configuración: si no hay
-clave de Google Cloud Vision devuelve None, y la ruta responde 503 OCR_NOT_CONFIGURED.
+`build_ocr_provider` usa el proveedor seleccionado explícitamente en la configuración.
+Sin la configuración correspondiente, la ruta responde 503 OCR_NOT_CONFIGURED.
 """
 
 from __future__ import annotations
@@ -16,6 +16,8 @@ from app.services.ocr.base import (
     OcrTimeoutError,
 )
 from app.services.ocr.google_vision import GoogleVisionOcrProvider
+from app.services.ocr.local_ocr import LocalOcrProvider
+from app.services.ocr.openai_vision import OpenAIVisionOcrProvider
 
 __all__ = [
     "GoogleVisionOcrProvider",
@@ -30,7 +32,15 @@ __all__ = [
 
 
 def build_ocr_provider(settings: Settings) -> OcrProvider | None:
-    """Crea el proveedor configurado, o None si falta la clave."""
+    """Crea el proveedor seleccionado sin recurrir a otro si falta configuración."""
+    if settings.ocr_provider == "local":
+        if settings.local_ocr_models is None:
+            return None
+        return LocalOcrProvider(settings.local_ocr_models, OCR_TIMEOUT_SECONDS)
+    if settings.ocr_provider == "openai":
+        if settings.openai_api_key is None:
+            return None
+        return OpenAIVisionOcrProvider(settings.openai_api_key, OCR_TIMEOUT_SECONDS)
     if settings.google_vision_api_key is None:
         return None
     return GoogleVisionOcrProvider(

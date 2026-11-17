@@ -38,7 +38,7 @@ class AppStringsEn extends AppStrings {
   String get welcomePrivacyNote =>
       'Your images are only sent to the recognition API with your permission and '
       'are not stored on the server. Recognition and Word/PDF generation require '
-      'a backend connection. OCR uses Google Vision.';
+      'a server connection.';
   @override
   String get back => 'Back';
 
@@ -147,8 +147,10 @@ class AppStringsEn extends AppStrings {
   List<(String, String)> get privacySections => <(String, String)>[
     (
       'Images',
-      'If you allow it, the HandText AI server processes the photo in memory '
-          'and sends it to Google Cloud Vision to read the handwriting. On the '
+      'If you allow it, the HandText AI server processes the photo in memory. '
+          'Depending on its configuration, the server reads the text on the computer '
+          'or sends the image to OpenAI or Google Cloud Vision. External services '
+          'apply their own retention rules. On the '
           'phone, the app works with copies that it deletes when '
           'it finishes, when you cancel or when you sign out; the original photo is '
           'never changed. The document scanner works on the phone and sends '
@@ -513,8 +515,9 @@ class AppStringsEn extends AppStrings {
   String get consentTitle => 'Allow sending the image?';
   @override
   String get consentMessage =>
-      'If you allow it, the HandText AI server will process the image in memory '
-      'and send it to Google Cloud Vision, an external service that reads the text.';
+      'If you allow it, HandText AI will receive the image. Depending on the '
+      'server configuration, the text will be read on the computer or by OpenAI '
+      'or Google Cloud Vision.';
 
   /// Spec 004: la autorización dice cuántas imágenes se enviarán.
   @override
@@ -524,9 +527,9 @@ class AppStringsEn extends AppStrings {
   String consentMessageFor(int images) => images == 1
       ? consentMessage
       : 'To read the text, the $images images will be sent one by one to the '
-            'HandText AI server and to Google Cloud Vision, an external recognition '
-            'service. They are only used to get the text and neither of them stores '
-            'them. Without your permission, none is sent.';
+            'HandText AI server. Depending on the server configuration, the text '
+            'will be read on the computer or by OpenAI or Google Cloud Vision. '
+            'Without your permission, none is sent.';
   @override
   String get consentAccept => 'Allow and send';
   @override
@@ -696,12 +699,14 @@ class AppStringsEn extends AppStrings {
     FailureKind.cameraUnavailable =>
       'The camera could not be opened. Try again or choose a saved image.',
     FailureKind.noConnection =>
-      'There is no connection to the server. Check your internet connection and '
-          'try again.',
+      'Could not connect to the server. Make sure it is running and reachable '
+          'from your phone.',
     FailureKind.recognitionTimeout =>
       'Recognition took more than 60 seconds and was canceled. Try again.',
+    FailureKind.ocrProviderTimeout =>
+      'The recognition provider did not respond in time. Try again.',
     FailureKind.serviceUnavailable =>
-      'The recognition service is not available right now. Try again later.',
+      'Text recognition has not been configured on the server yet.',
     FailureKind.recognitionFailed =>
       'The recognition service could not process the image. Try again or choose '
           'another image.',

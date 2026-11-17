@@ -38,7 +38,7 @@ class AppStringsEs extends AppStrings {
   String get welcomePrivacyNote =>
       'Sus imágenes solo se envían a la API de reconocimiento cuando lo autoriza '
       'y no se guardan en el servidor. El reconocimiento y la generación de '
-      'Word/PDF requieren conexión con el backend. El OCR usa Google Vision.';
+      'Word/PDF requieren conexión con el servidor.';
   @override
   String get back => 'Volver';
 
@@ -147,7 +147,9 @@ class AppStringsEs extends AppStrings {
     (
       'Imágenes',
       'Si usted autoriza el envío, el servidor de HandText AI procesa la foto en '
-          'memoria y la envía a Google Cloud Vision para reconocer la escritura. '
+          'memoria. Puede reconocer el texto en el computador o enviar la imagen '
+          'a OpenAI o Google Cloud Vision, según la configuración del servidor. '
+          'Los servicios externos aplican sus propias reglas de conservación. '
           'En el teléfono, la app trabaja con copias que borra al terminar, al '
           'cancelar o al cerrar sesión; la foto original nunca se modifica. El '
           'escáner de documentos trabaja en el teléfono y no envía nada.',
@@ -516,9 +518,8 @@ class AppStringsEs extends AppStrings {
   String get consentTitle => '¿Autoriza el envío de la imagen?';
   @override
   String get consentMessage =>
-      'Si autoriza el envío, el servidor de HandText AI procesará la imagen en '
-      'memoria y la enviará a Google Cloud Vision, un servicio externo que '
-      'reconoce el texto.';
+      'Si autoriza el envío, HandText AI recibirá la imagen. Según la configuración, '
+      'el texto se reconocerá en el computador o mediante OpenAI o Google Cloud Vision.';
 
   /// Spec 004: la autorización dice cuántas imágenes se enviarán.
   @override
@@ -528,9 +529,9 @@ class AppStringsEs extends AppStrings {
   String consentMessageFor(int images) => images == 1
       ? consentMessage
       : 'Para reconocer el texto, las $images imágenes se enviarán una por una al '
-            'servidor de HandText AI y a Google Cloud Vision, un servicio externo de '
-            'reconocimiento. Solo se usan para obtener el texto y ninguno de los dos '
-            'las guarda. Sin su autorización, no se envía ninguna.';
+            'servidor de HandText AI. El reconocimiento se realizará en el '
+            'computador o mediante OpenAI o Google Cloud Vision, según la '
+            'configuración. Sin su autorización, no se envía ninguna.';
   @override
   String get consentAccept => 'Autorizar y enviar';
   @override
@@ -705,14 +706,15 @@ class AppStringsEs extends AppStrings {
       'No se pudo abrir la cámara. Inténtelo de nuevo o elija una imagen '
           'guardada.',
     FailureKind.noConnection =>
-      'No hay conexión con el servidor. Revise su conexión a internet y vuelva '
-          'a intentarlo.',
+      'No se pudo conectar con el servidor. Compruebe que esté encendido y que '
+          'el teléfono pueda conectarse a él.',
     FailureKind.recognitionTimeout =>
       'El reconocimiento tardó más de 60 segundos y se canceló. Vuelva a '
           'intentarlo.',
+    FailureKind.ocrProviderTimeout =>
+      'El proveedor de reconocimiento no respondió a tiempo. Vuelva a intentarlo.',
     FailureKind.serviceUnavailable =>
-      'El servicio de reconocimiento no está disponible en este momento. '
-          'Inténtelo más tarde.',
+      'El servidor todavía no tiene configurado el reconocimiento de texto.',
     FailureKind.recognitionFailed =>
       'El servicio de reconocimiento no pudo procesar la imagen. Vuelva a '
           'intentarlo o elija otra imagen.',

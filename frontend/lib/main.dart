@@ -1,7 +1,7 @@
 // Punto de entrada de HandText AI (tareas T044 y T127).
 //
 // Aquí se «arma» la app con los servicios reales:
-// - Cuentas y sesión: autenticación local en el dispositivo.
+// - Cuentas y sesión: autenticación local o del servidor, según la compilación.
 // - Documentos (spec 001): galería, cámara, permisos, red, guardado y borrador. Cada
 //   cuenta recibe su propio controlador y su propio archivo de borrador [SC-206].
 // - Spec 003: editor de recorte (uCrop) y compartir (selector de Android).
@@ -30,6 +30,7 @@ import 'package:path_provider/path_provider.dart';
 import 'app.dart';
 import 'config/app_config.dart';
 import 'presentation/strings.dart';
+import 'services/auth_api_client.dart';
 import 'services/camera_permission_service.dart';
 import 'services/device_authenticator.dart';
 import 'services/document_scanner_service.dart';
@@ -63,14 +64,23 @@ Future<void> main() async {
   );
   await settings.load();
 
+  final baseUrl = AppConfig.apiBaseUrl;
+  const usesLocalAccounts = AppConfig.usesLocalAccounts;
   final auth = AuthController(
-    api: LocalAuthApi(accounts: SecureLocalAccountStore()),
-    sessions: SecureSessionStore(),
+    api: usesLocalAccounts
+        ? LocalAuthApi(accounts: SecureLocalAccountStore())
+        : AuthApiClient(baseUrl: baseUrl),
+    sessions: usesLocalAccounts
+        ? SecureSessionStore()
+        : SecureSessionStore(key: 'handtext_hosted_session:$baseUrl'),
   );
 
   // El secreto local opt-in da acceso solo a OCR/export en el backend de desarrollo;
   // nunca se usa como sesión ni se envía a los endpoints de cuentas.
-  final documentsApi = HandTextApiClient(baseUrl: AppConfig.apiBaseUrl);
+  final documentsApi = HandTextApiClient(
+    baseUrl: baseUrl,
+    tokenProvider: usesLocalAccounts ? null : () => auth.token,
+  );
 
   runApp(
     HandTextApp(
