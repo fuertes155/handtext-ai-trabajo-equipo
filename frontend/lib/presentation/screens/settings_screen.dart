@@ -11,6 +11,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/app_settings.dart';
+import '../../models/app_failure.dart';
 import '../../theme/aurora.dart';
 import '../app_lock_scope.dart';
 import '../settings_scope.dart';
@@ -31,123 +32,79 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = SettingsScope.of(context);
     final settings = controller.settings;
-    final textTheme = Theme.of(context).textTheme;
-    final sectionStyle = textTheme.titleMedium?.copyWith(color: Colors.white);
-    final hintStyle = textTheme.bodySmall?.copyWith(
-      color: Aurora.textSecondary,
+    final strings = context.strings;
+    Widget heading(String title) => Padding(
+      padding: const EdgeInsets.only(top: 24, bottom: 12),
+      child: Semantics(
+        header: true,
+        child: Text(
+          title,
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(color: Aurora.textPrimary),
+        ),
+      ),
     );
-
     return AuroraScaffold(
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AuroraHeader(title: context.strings.settingsTitle),
+          AuroraHeader(title: strings.settingsTitle),
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
               children: [
-                // [IE-H1-E2] Idioma: Español, English o el del teléfono.
-                SurfaceCard(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        context.strings.languageSection,
-                        style: sectionStyle,
-                      ),
-                      const SizedBox(height: 12),
-                      _OptionGroup<AppLanguage>(
-                        options: languageOptions(context.strings),
-                        selected: settings.language,
-                        onSelected: controller.setLanguage,
-                      ),
-                      const SizedBox(height: 10),
-                      Text(context.strings.languageHint, style: hintStyle),
-                    ],
+                heading(strings.themeSection),
+                _OptionGroup<ThemePreference>(
+                  options: [
+                    (ThemePreference.system, strings.themeSystem),
+                    (ThemePreference.light, strings.themeLight),
+                    (ThemePreference.dark, strings.themeDark),
+                  ],
+                  selected: settings.theme,
+                  onSelected: controller.setTheme,
+                ),
+                const SizedBox(height: 8),
+                Text(strings.themeHint),
+                heading(strings.textSizeSection),
+                _OptionGroup<EditorTextSize>(
+                  options: [
+                    (EditorTextSize.normal, strings.textSizeNormal),
+                    (EditorTextSize.large, strings.textSizeLarge),
+                    (EditorTextSize.extraLarge, strings.textSizeExtraLarge),
+                  ],
+                  selected: settings.textSize,
+                  onSelected: controller.setTextSize,
+                ),
+                const SizedBox(height: 12),
+                Builder(
+                  builder: (context) => SurfaceCard(
+                    child: Text(
+                      strings.textSizePreview,
+                      style: editorTextStyle(context, settings.textSize),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 16),
-                SurfaceCard(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(context.strings.themeSection, style: sectionStyle),
-                      const SizedBox(height: 12),
-                      _OptionGroup<ThemePreference>(
-                        options: [
-                          (ThemePreference.system, context.strings.themeSystem),
-                          (ThemePreference.light, context.strings.themeLight),
-                          (ThemePreference.dark, context.strings.themeDark),
-                        ],
-                        selected: settings.theme,
-                        onSelected: controller.setTheme,
-                      ),
-                      const SizedBox(height: 10),
-                      Text(context.strings.themeHint, style: hintStyle),
-                    ],
-                  ),
+                heading(strings.languageSection),
+                _OptionGroup<AppLanguage>(
+                  options: languageOptions(strings),
+                  selected: settings.language,
+                  onSelected: controller.setLanguage,
                 ),
-                const SizedBox(height: 16),
-                SurfaceCard(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        context.strings.textSizeSection,
-                        style: sectionStyle,
-                      ),
-                      const SizedBox(height: 12),
-                      _OptionGroup<EditorTextSize>(
-                        options: [
-                          (
-                            EditorTextSize.normal,
-                            context.strings.textSizeNormal,
-                          ),
-                          (EditorTextSize.large, context.strings.textSizeLarge),
-                          (
-                            EditorTextSize.extraLarge,
-                            context.strings.textSizeExtraLarge,
-                          ),
-                        ],
-                        selected: settings.textSize,
-                        onSelected: controller.setTextSize,
-                      ),
-                      const SizedBox(height: 14),
-                      // Muestra con el tamaño elegido, como se verá en el editor.
-                      Container(
-                        padding: const EdgeInsets.all(14),
-                        decoration: BoxDecoration(
-                          color: Aurora.fieldFill,
-                          borderRadius: BorderRadius.circular(
-                            Aurora.radiusSmall,
-                          ),
-                          border: Border.all(color: Aurora.surfaceBorder),
-                        ),
-                        child: Text(
-                          context.strings.textSizePreview,
-                          style: editorTextStyle(
-                            context,
-                            settings.textSize,
-                          )?.copyWith(color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-                const _AppLockCard(), // spec 011
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
+                Text(strings.languageHint),
+                const SizedBox(height: 24),
+                const _AppLockCard(),
+                const SizedBox(height: 24),
                 ActionTile(
                   icon: Icons.lightbulb_outline,
-                  title: context.strings.tipsLink,
-                  subtitle: context.strings.tipsLinkHint,
+                  title: strings.tipsLink,
+                  subtitle: strings.tipsLinkHint,
                   onTap: () => TipsScreen.open(context),
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  context.strings.settingsSavedHint,
-                  textAlign: TextAlign.center,
-                  style: hintStyle,
+                  strings.settingsSavedHint,
+                  style: const TextStyle(color: Aurora.textMuted),
                 ),
               ],
             ),
@@ -181,20 +138,24 @@ class _OptionGroup<T> extends StatelessWidget {
 
   /// ¿Cada texto cabe en una línea dentro de su segmento, con la letra actual?
   bool _fitsInSegments(BuildContext context, double width) {
-    final style = Theme.of(context).textTheme.labelLarge;
-    final scaler = MediaQuery.textScalerOf(context);
-    final available = width / options.length - _segmentInsets;
-    return options.every((option) {
+    final slot = width / options.length - _segmentInsets;
+    for (final (_, text) in options) {
       final painter = TextPainter(
-        text: TextSpan(text: option.$2, style: style),
+        text: TextSpan(
+          text: text,
+          style: Theme.of(context).textTheme.labelLarge,
+        ),
         textDirection: Directionality.of(context),
-        textScaler: scaler,
-        maxLines: 1,
-      )..layout();
-      final fits = painter.width <= available;
-      painter.dispose();
-      return fits;
-    });
+        textScaler: MediaQuery.textScalerOf(context),
+      );
+      try {
+        painter.layout();
+        if (painter.width > slot) return false;
+      } finally {
+        painter.dispose();
+      }
+    }
+    return true;
   }
 
   @override
@@ -203,40 +164,37 @@ class _OptionGroup<T> extends StatelessWidget {
       builder: (context, constraints) {
         if (_fitsInSegments(context, constraints.maxWidth)) {
           return SegmentedButton<T>(
+            showSelectedIcon: false,
             segments: [
               for (final (value, label) in options)
                 ButtonSegment(value: value, label: Text(label)),
             ],
             selected: {selected},
-            showSelectedIcon: false,
-            onSelectionChanged: (selection) => onSelected(selection.single),
+            onSelectionChanged: (values) => onSelected(values.single),
           );
         }
-        return Column(
-          children: [
-            for (final (value, label) in options)
-              // TalkBack lo lee como un botón de opción: «Oscuro, marcado».
-              MergeSemantics(
-                child: Semantics(
-                  inMutuallyExclusiveGroup: true,
-                  checked: value == selected,
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    selected: value == selected,
-                    textColor: Aurora.textPrimary,
-                    iconColor: Aurora.textMuted,
-                    selectedColor: Aurora.blueLight,
-                    leading: Icon(
-                      value == selected
-                          ? Icons.radio_button_checked
-                          : Icons.radio_button_unchecked,
+        return SurfaceCard(
+          padding: EdgeInsets.zero,
+          child: Column(
+            children: [
+              for (final (value, label) in options)
+                MergeSemantics(
+                  child: Semantics(
+                    checked: selected == value,
+                    inMutuallyExclusiveGroup: true,
+                    child: ListTile(
+                      title: Text(label),
+                      leading: Icon(
+                        selected == value
+                            ? Icons.radio_button_checked
+                            : Icons.radio_button_unchecked,
+                      ),
+                      onTap: () => onSelected(value),
                     ),
-                    title: Text(label),
-                    onTap: () => onSelected(value),
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
         );
       },
     );
@@ -252,7 +210,9 @@ class _AppLockCard extends StatefulWidget {
   const _AppLockCard();
 
   @override
-  State<_AppLockCard> createState() => _AppLockCardState();
+  State<_AppLockCard> createState() {
+    return _AppLockCardState();
+  }
 }
 
 class _AppLockCardState extends State<_AppLockCard> {
@@ -264,36 +224,42 @@ class _AppLockCardState extends State<_AppLockCard> {
   @override
   Widget build(BuildContext context) {
     final lock = AppLockScope.of(context);
-    final enabled = SettingsScope.of(context).settings.appLock;
     final strings = context.strings;
     return FutureBuilder<bool>(
       future: _available,
       builder: (context, snapshot) {
-        final available = snapshot.data ?? false;
+        final available = snapshot.data == true;
         return SurfaceCard(
+          padding: EdgeInsets.zero,
           child: SwitchListTile(
-            contentPadding: EdgeInsets.zero,
-            value: enabled,
-            secondary: const Icon(Icons.fingerprint, color: Aurora.blueLight),
-            title: Text(
-              strings.appLockTitle,
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium?.copyWith(color: Colors.white),
-            ),
+            title: Text(strings.appLockTitle),
             subtitle: Text(
-              available || enabled
-                  ? strings.appLockHint
-                  : strings.appLockUnavailable,
-              style: Theme.of(
-                context,
-              ).textTheme.bodySmall?.copyWith(color: Aurora.textSecondary),
+              available ? strings.appLockHint : strings.appLockUnavailable,
             ),
-            onChanged: !available && !enabled
-                ? null
-                : (value) => value
-                      ? lock.enable(strings.enableLockReason)
-                      : lock.disable(),
+            value: SettingsScope.of(context).settings.appLock,
+            onChanged: available
+                ? (enabled) async {
+                    try {
+                      if (enabled) {
+                        await lock.enable(strings.enableLockReason);
+                      } else {
+                        await lock.disable();
+                      }
+                    } catch (_) {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              strings.failureText(
+                                const AppFailure(FailureKind.unexpected),
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                    }
+                  }
+                : null,
           ),
         );
       },
@@ -306,7 +272,7 @@ class _AppLockCardState extends State<_AppLockCard> {
 TextStyle? editorTextStyle(BuildContext context, EditorTextSize size) {
   final base = Theme.of(context).textTheme.bodyLarge;
   return base?.copyWith(
-    height: 1.5,
     fontSize: (base.fontSize ?? 16) * size.scale,
+    height: 1.5,
   );
 }

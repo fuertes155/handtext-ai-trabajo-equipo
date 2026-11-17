@@ -16,3 +16,6 @@ key.properties
 # Patrones adicionales del proyecto de origen.
 /build/
 hs_err_pid*.log
+
+# Volcados de memoria de la JVM, nunca versionar.
+*.hprof

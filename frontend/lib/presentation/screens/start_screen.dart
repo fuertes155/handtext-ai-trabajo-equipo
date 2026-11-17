@@ -42,43 +42,19 @@ class StartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final busy =
-        controller.isBusy; // [SC-008] acciones inactivas mientras tanto
+    final strings = context.strings;
+    final busy = controller.isBusy;
     final status = controller.status;
-    final textTheme = Theme.of(context).textTheme;
-    final firstName = auth.user?.firstName ?? '';
-
     return AuroraScaffold(
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
+        padding: const EdgeInsets.all(20),
         children: [
-          // Encabezado: saludo y avatar con el menú de la cuenta.
           Row(
             children: [
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      context.strings.greeting(firstName),
-                      style: textTheme.titleMedium?.copyWith(
-                        color: Aurora.textSecondary,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    // [PA-H2-E5] Título como encabezado para TalkBack.
-                    Semantics(
-                      // Nodo propio: no se mezcla con los botones vecinos.
-                      container: true,
-                      header: true,
-                      child: Text(
-                        context.strings.startHeadline,
-                        style: textTheme.headlineSmall?.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  strings.greeting(auth.user?.firstName ?? ''),
+                  style: const TextStyle(color: Aurora.textSecondary),
                 ),
               ),
               AccountButton(auth: auth, documents: controller),
@@ -87,125 +63,90 @@ class StartScreen extends StatelessWidget {
           const SizedBox(height: 20),
           SurfaceCard(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const ScannerLogo(size: 96),
-                const SizedBox(height: 12),
-                Text(
-                  context.strings.startTitle,
-                  textAlign: TextAlign.center,
-                  style: textTheme.titleLarge?.copyWith(color: Colors.white),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  context.strings.startDescription,
-                  textAlign: TextAlign.center,
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: Aurora.textSecondary,
+                const Center(child: ScannerLogo(size: 88)),
+                const SizedBox(height: 16),
+                Semantics(
+                  container: true,
+                  header: true,
+                  child: Text(
+                    strings.startHeadline,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  strings.startDescription,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Aurora.textSecondary),
                 ),
               ],
             ),
           ),
+          const SizedBox(height: 20),
           if (status != null) ...[
-            const SizedBox(height: 16),
             StatusBanner(
               status: status,
               onAurora: true,
               actionLabel: status.action == StatusAction.takePhoto
-                  ? context.strings.takePhoto
+                  ? strings.takePhoto
                   : null,
               onAction: status.action == StatusAction.takePhoto && !busy
                   ? controller.takePhoto
                   : null,
             ),
+            const SizedBox(height: 16),
           ],
-          const SizedBox(height: 16),
-          // [ED-H1-E1] El escáner endereza la hoja: la opción recomendada.
+          if (controller.hasDocument) ...[
+            Text(strings.keepCurrentTextNotice),
+            TextButton(
+              onPressed: busy ? null : controller.returnToDocument,
+              child: Text(strings.backToCurrentText),
+            ),
+            const SizedBox(height: 12),
+          ],
           ActionTile(
             icon: Icons.document_scanner_outlined,
-            title: context.strings.scanDocument,
-            subtitle: context.strings.scanDocumentSubtitle,
+            title: strings.scanDocument,
+            subtitle: strings.scanDocumentSubtitle,
             onTap: busy ? null : controller.scanDocument,
           ),
           const SizedBox(height: 12),
           ActionTile(
             icon: Icons.photo_camera_outlined,
-            title: context.strings.takePhoto,
-            subtitle: context.strings.takePhotoSubtitle,
+            title: strings.takePhoto,
+            subtitle: strings.takePhotoSubtitle,
             onTap: busy ? null : controller.takePhoto,
           ),
           const SizedBox(height: 12),
           ActionTile(
             icon: Icons.photo_library_outlined,
-            title: context.strings.pickFromGallery,
-            subtitle: context.strings.pickFromGallerySubtitle,
+            title: strings.pickFromGallery,
+            subtitle: strings.pickFromGallerySubtitle,
             onTap: busy ? null : controller.pickFromGallery,
           ),
           const SizedBox(height: 12),
+          ActionTile(
+            icon: Icons.folder_outlined,
+            title: strings.historyTitle,
+            subtitle: strings.historyCount(controller.history.entries.length),
+            onTap: busy ? null : () => HistoryScreen.open(context, controller),
+          ),
+          const SizedBox(height: 20),
           Text(
-            context.strings.imageRequirements,
-            textAlign: TextAlign.center,
-            style: textTheme.bodySmall?.copyWith(color: Aurora.textMuted),
+            strings.imageRequirements,
+            style: const TextStyle(color: Aurora.textMuted),
           ),
-          Center(
-            child: TextButton.icon(
-              onPressed: busy ? null : () => TipsScreen.open(context),
-              icon: const Icon(Icons.lightbulb_outline),
-              label: Text(context.strings.tipsLink),
-            ),
+          TextButton.icon(
+            onPressed: () => TipsScreen.open(context),
+            icon: const Icon(Icons.lightbulb_outline),
+            label: Text(strings.tipsLink),
           ),
-          const SizedBox(height: 8),
-          // [HD-H1-E4] El subtítulo cambia cuando se guarda un documento.
-          ListenableBuilder(
-            listenable: controller.history,
-            builder: (context, _) => ActionTile(
-              icon: Icons.history,
-              title: context.strings.historyTitle,
-              subtitle: context.strings.historyCount(
-                controller.history.entries.length,
-              ),
-              onTap: busy
-                  ? null
-                  : () => HistoryScreen.open(context, controller),
-            ),
-          ),
-          if (controller.hasDocument) ...[
-            const SizedBox(height: 20),
-            SurfaceCard(
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.edit_note, color: Aurora.blueLight),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          context.strings.documentInProgress,
-                          style: textTheme.titleMedium?.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    context.strings.keepCurrentTextNotice,
-                    style: textTheme.bodySmall?.copyWith(
-                      color: Aurora.textSecondary,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: busy ? null : controller.returnToDocument,
-                      child: Text(context.strings.backToCurrentText),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
         ],
       ),
     );

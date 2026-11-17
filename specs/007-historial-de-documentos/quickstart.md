@@ -1,21 +1,27 @@
-# Historial por cuenta
+# Historial por cuenta — reconstrucción actual
 
-Arranca la app y la API siguiendo la [guía local del MVP](../001-handtext-mvp/quickstart.md).
-Las cuentas son locales al dispositivo. La API se usa para reconocer y exportar;
-PostgreSQL solo interviene en las rutas de cuentas del servidor y sus pruebas de contrato.
-Se mantienen los requisitos de [la fase actual](../../docs/REQUISITOS_ACTUALES.md).
+Verificación automática del 2026-11-17; no sustituye pruebas Android físicas ni la
+revisión del PR #221. Desde la raíz:
 
-
-Desde `frontend/`:
-
-```powershell
-flutter test test/services/history_store_test.dart test/state/history_flow_test.dart test/presentation/history_screen_test.dart test/services/storage_test.dart
+```bash
+cd frontend
+flutter test --no-pub test/services/history_store_test.dart test/state/history_flow_test.dart test/presentation/history_screen_test.dart test/presentation/organize_test.dart test/services/storage_test.dart
 ```
 
-Exporta un documento, ábrelo desde «Mis documentos», corrígelo y vuelve a guardarlo:
-debe actualizarse la misma entrada. Comprueba la confirmación si hay cambios sin
-exportar, el borrador con `historyId`, eliminar y borrar todo. Se conserva la carga
-asíncrona del historial incorporada por Samuel.
+La entrega vigente requiere cuentas del servidor y HTTPS; las cuentas locales se
+conservan para desarrollo explícito. Consulte [requisitos actuales](../../docs/REQUISITOS_ACTUALES.md).
+Ambos modos guardan el historial en el teléfono, separado por ID de cuenta; no se
+sincroniza con el servidor. Guarda texto/título/fecha/formatos de hasta 50 documentos,
+no fotos ni los archivos DOCX/PDF. Cerrar sesión conserva el historial; eliminar la
+cuenta lo borra en este teléfono. El borrador y temporales se limpian al cerrar sesión.
+Los archivos exportados por el usuario permanecen en el lugar elegido.
 
-Buscar y renombrar forman parte de la evolución 010; véase el [alcance vigente](spec.md).
-El historial guarda texto y metadatos en el teléfono, sin sincronización al servidor.
+Para la prueba manual con datos sintéticos: exporte un documento, ábralo desde Mis
+documentos, corríjalo y guárdelo en ambos formatos; debe actualizar la misma entrada.
+Busque por título/texto ignorando mayúsculas/tildes. Renombre (1..60 puntos Unicode),
+cancele un cambio y confirme otro: no debe cambiar el texto ni archivos anteriores;
+al volver a exportar se conserva el nombre. Pruebe cancelar Eliminar/Borrar todo antes
+de confirmar sobre documentos de prueba. Cambie de cuenta y compruebe aislamiento.
+Repita nombres y botones de 48 dp al 100/200 % y TalkBack. **Recorrido físico pendiente**.
+
+[Resultados actuales, procedencia y límites](../../docs/VERIFICACION_RECONSTRUCCION_LUIS.md).

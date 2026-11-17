@@ -24,56 +24,41 @@ class ReviewTextController extends TextEditingController {
     TextStyle? style,
     required bool withComposing,
   }) {
-    final ranges = validRanges(text, uncertainRanges());
-    if (ranges.isEmpty) {
+    if (withComposing &&
+        value.composing.isValid &&
+        !value.composing.isCollapsed) {
       return super.buildTextSpan(
         context: context,
         style: style,
         withComposing: withComposing,
       );
     }
-
+    final ranges = validRanges(text, uncertainRanges());
     final dark = Theme.of(context).brightness == Brightness.dark;
-    final marked = TextStyle(
-      backgroundColor: dark
-          ? Aurora.uncertainFillDark
-          : Aurora.uncertainFillLight,
-      decoration: TextDecoration.underline,
-      decorationStyle: TextDecorationStyle.wavy,
-      decorationColor: dark
-          ? Aurora.uncertainUnderlineDark
-          : Aurora.uncertainUnderlineLight,
-    );
-    // El teclado subraya la palabra que está componiendo; se respeta ese subrayado.
-    final composing = withComposing && value.isComposingRangeValid
-        ? value.composing
-        : null;
-
-    // Se corta el texto en cada borde de una marca o de la composición, y cada
-    // trozo recibe su estilo.
-    final cuts = <int>{
-      0,
-      text.length,
-      for (final range in ranges) ...[range.start, range.end],
-      if (composing != null) ...[composing.start, composing.end],
-    }.toList()..sort();
-    final children = <TextSpan>[];
-    for (var i = 0; i < cuts.length - 1; i++) {
-      final start = cuts[i];
-      final end = cuts[i + 1];
-      final isMarked = ranges.any((r) => r.start <= start && end <= r.end);
-      final isComposing =
-          composing != null && composing.start <= start && end <= composing.end;
-      TextStyle? pieceStyle = isMarked ? marked : null;
-      if (isComposing) {
-        pieceStyle = (pieceStyle ?? const TextStyle()).merge(
-          const TextStyle(decoration: TextDecoration.underline),
-        );
+    final spans = <InlineSpan>[];
+    var cursor = 0;
+    for (final range in ranges) {
+      if (cursor < range.start) {
+        spans.add(TextSpan(text: text.substring(cursor, range.start)));
       }
-      children.add(
-        TextSpan(text: text.substring(start, end), style: pieceStyle),
+      spans.add(
+        TextSpan(
+          text: text.substring(range.start, range.end),
+          style: TextStyle(
+            backgroundColor: dark
+                ? Aurora.uncertainFillDark
+                : Aurora.uncertainFillLight,
+            decoration: TextDecoration.underline,
+            decorationStyle: TextDecorationStyle.wavy,
+            decorationColor: dark
+                ? Aurora.uncertainUnderlineDark
+                : Aurora.uncertainUnderlineLight,
+          ),
+        ),
       );
+      cursor = range.end;
     }
-    return TextSpan(style: style, children: children);
+    if (cursor < text.length) spans.add(TextSpan(text: text.substring(cursor)));
+    return TextSpan(style: style, children: spans);
   }
 }

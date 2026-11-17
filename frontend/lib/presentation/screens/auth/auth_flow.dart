@@ -24,7 +24,9 @@ class AuthFlow extends StatefulWidget {
   final AuthController auth;
 
   @override
-  State<AuthFlow> createState() => _AuthFlowState();
+  State<AuthFlow> createState() {
+    return _AuthFlowState();
+  }
 }
 
 class _AuthFlowState extends State<AuthFlow> {
@@ -33,7 +35,7 @@ class _AuthFlowState extends State<AuthFlow> {
       : _AuthPage.welcome;
 
   void _go(_AuthPage page) {
-    // El error de una pantalla no se arrastra a otra.
+    if (widget.auth.isBusy) return;
     widget.auth.clearFailure();
     setState(() => _page = page);
   }
@@ -46,22 +48,22 @@ class _AuthFlowState extends State<AuthFlow> {
         if (!didPop) _go(_AuthPage.welcome);
       },
       child: AnimatedSwitcher(
-        duration: motionDuration(context, const Duration(milliseconds: 350)),
+        duration: motionDuration(context, const Duration(milliseconds: 220)),
         child: switch (_page) {
           _AuthPage.welcome => WelcomeScreen(
-            key: const ValueKey(_AuthPage.welcome),
+            key: const ValueKey('welcome'),
             auth: widget.auth,
             onCreateAccount: () => _go(_AuthPage.register),
             onSignIn: () => _go(_AuthPage.login),
           ),
           _AuthPage.login => LoginScreen(
-            key: const ValueKey(_AuthPage.login),
+            key: const ValueKey('login'),
             auth: widget.auth,
             onBack: () => _go(_AuthPage.welcome),
             onCreateAccount: () => _go(_AuthPage.register),
           ),
           _AuthPage.register => RegisterScreen(
-            key: const ValueKey(_AuthPage.register),
+            key: const ValueKey('register'),
             auth: widget.auth,
             onBack: () => _go(_AuthPage.welcome),
             onSignIn: () => _go(_AuthPage.login),

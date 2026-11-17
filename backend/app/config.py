@@ -19,6 +19,7 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass, field
 from datetime import timedelta
+from pathlib import Path
 
 # --- Límites de imagen acordados en el spec (módulo 1) -------------------------------
 MAX_IMAGE_BYTES = 10 * 1024 * 1024  # 10 MB
@@ -54,6 +55,9 @@ MAX_AUTH_BODY_BYTES = 16 * 1024  # 16 KB: los formularios de cuenta son pequeño
 
 # Nombres de las variables de entorno con los secretos de la API.
 GOOGLE_VISION_API_KEY_ENV = "HANDTEXT_GOOGLE_VISION_API_KEY"
+OCR_PROVIDER_ENV = "HANDTEXT_OCR_PROVIDER"
+OPENAI_API_KEY_ENV = "OPENAI_API_KEY"
+LOCAL_OCR_MODELS_ENV = "HANDTEXT_LOCAL_OCR_MODELS"
 DATABASE_URL_ENV = "HANDTEXT_DATABASE_URL"
 LOCAL_DEV_TOKEN_ENV = "HANDTEXT_LOCAL_DEV_TOKEN"
 
@@ -62,8 +66,7 @@ LOCAL_DEV_TOKEN_ENV = "HANDTEXT_LOCAL_DEV_TOKEN"
 class Settings:
     """Valores del entorno donde corre la API; los secretos no se guardan en código."""
 
-    # Clave de Google Cloud Vision. Si falta, el reconocimiento responde 503
-    # OCR_NOT_CONFIGURED en lugar de fallar de forma confusa.
+    # Clave del proveedor de reconocimiento predeterminado.
     google_vision_api_key: str | None = field(repr=False)
     # Conexión a PostgreSQL, por ejemplo
     # postgresql://handtext:clave@localhost:5432/handtext. Si falta, las cuentas
@@ -72,17 +75,33 @@ class Settings:
     # Secreto opt-in para probar OCR y exportación con cuentas guardadas en el teléfono.
     # No debe configurarse en una API accesible públicamente.
     local_dev_token: str | None = field(default=None, repr=False)
+    ocr_provider: str = "google_vision"
+    openai_api_key: str | None = field(default=None, repr=False)
+    local_ocr_models: Path | None = None
 
     @classmethod
     def from_environment(cls) -> Settings:
         """Lee la configuración desde las variables de entorno del proceso."""
-        key = os.environ.get(GOOGLE_VISION_API_KEY_ENV, "").strip()
+        ocr_provider = os.environ.get(OCR_PROVIDER_ENV, "").strip() or "google_vision"
+        if ocr_provider not in ("google_vision", "openai", "local"):
+            raise ValueError(f"{OCR_PROVIDER_ENV} debe ser google_vision, openai o local.")
+        key_name = {
+            "google_vision": GOOGLE_VISION_API_KEY_ENV,
+            "openai": OPENAI_API_KEY_ENV,
+        }.get(ocr_provider)
+        key = (os.environ.get(key_name, "").strip() or None) if key_name else None
+        models = os.environ.get(LOCAL_OCR_MODELS_ENV, "").strip() if ocr_provider == "local" else ""
         database_url = os.environ.get(DATABASE_URL_ENV, "").strip()
         local_dev_token = os.environ.get(LOCAL_DEV_TOKEN_ENV, "").strip()
+        if local_dev_token and os.environ.get("RAILWAY_PROJECT_ID"):
+            raise ValueError("El acceso local de desarrollo no se permite en Railway.")
         if local_dev_token and len(local_dev_token) < 32:
             raise ValueError(f"{LOCAL_DEV_TOKEN_ENV} debe tener al menos 32 caracteres.")
         return cls(
-            google_vision_api_key=key or None,
+            google_vision_api_key=key if ocr_provider == "google_vision" else None,
             database_url=database_url or None,
             local_dev_token=local_dev_token or None,
+            ocr_provider=ocr_provider,
+            openai_api_key=key if ocr_provider == "openai" else None,
+            local_ocr_models=Path(models) if models else None,
         )

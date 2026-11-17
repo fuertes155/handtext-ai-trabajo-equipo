@@ -16,37 +16,28 @@ Future<bool> showConfirmDialog(
   required String confirmLabel,
   bool destructive = false,
 }) async {
-  final confirmed = await showDialog<bool>(
-    context: context,
-    builder: (context) {
-      final colors = Theme.of(context).colorScheme;
-      return AlertDialog(
-        title: Text(title),
-        content: Text(message),
-        // Si los botones no caben en una fila, se apilan centrados y con la
-        // acción principal arriba.
-        actionsOverflowAlignment: OverflowBarAlignment.center,
-        actionsOverflowDirection: VerticalDirection.up,
-        actionsOverflowButtonSpacing: 8,
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(context.strings.cancel),
-          ),
-          FilledButton(
-            // Las acciones que borran algo se pintan con el color de error.
-            style: destructive
-                ? FilledButton.styleFrom(
-                    backgroundColor: colors.error,
-                    foregroundColor: colors.onError,
-                  )
-                : null,
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text(confirmLabel),
-          ),
-        ],
-      );
-    },
-  );
-  return confirmed ?? false;
+  return await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          scrollable: true,
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text(context.strings.cancel),
+            ),
+            FilledButton(
+              style: destructive
+                  ? FilledButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.error,
+                    )
+                  : null,
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text(confirmLabel),
+            ),
+          ],
+        ),
+      ) ??
+      false;
 }

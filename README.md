@@ -1,10 +1,26 @@
 # HandText AI · Trabajo en equipo
 
-> Estado al 17 de noviembre de 2026. Once tareas se devuelven a Luis Miguel para su revisión e integración. El [informe de entrega](docs/ENTREGA_LUIS_MIGUEL.md) describe el estado actual y los pendientes. Los resultados anteriores corresponden al código previo a esa devolución.
+> **Reconstrucción actual · 2026-11-17.** **68/72 tareas verificadas técnicamente**, cuatro pendientes de firma o dispositivo; [estado de las 72](docs/ESTADO_TAREAS_LUIS.md). Código de Luis repuesto y suites actuales registradas en [el informe](docs/VERIFICACION_RECONSTRUCCION_LUIS.md). [Comandos reproducibles](docs/QUICKSTART_RECONSTRUCCION_LUIS.md). Hay APK debug; release exige clave propia, cuentas del servidor y HTTPS. PR #221 en borrador; revisión del equipo y verificaciones nativas pendientes. Los APK y resultados del 16 de noviembre son históricos y no validan estos cambios.
 
-El repositorio organiza una nueva fase de HandText AI en 218 tareas, cuatro sprints y un prompt por integrante. La rama `samuel/implementacion` incorpora la app Android y la API local con las dependencias compartidas citadas en su historial.
+HandText AI es una aplicación Flutter Android que escanea hojas, reconoce texto, permite corregirlo y exporta Word/PDF. La entrega conecta el APK por HTTPS con FastAPI y PostgreSQL en Railway. RapidOCR procesa las imágenes con modelos ONNX en el servidor.
+
+## Entrega histórica del 16 de noviembre
+
+- [Instalación, despliegue y compilación](docs/ENTREGA_FINAL.md).
+- [Verificaciones y límites conocidos](docs/VERIFICACION_ENTREGA.md).
+- [Pruebas del APK en Samsung y evidencias](docs/PRUEBAS_DISPOSITIVO_ENTREGA.md).
+- [Especificación del despliegue](specs/013-entrega-railway/spec.md).
+- [Presentación para la exposición](docs/presentacion/HandText-AI-entrega-final.pptx).
+- [Descargar APK firmado y materiales de preentrega](https://github.com/fuertes155/handtext-ai-trabajo-equipo/releases/tag/entrega-20261116).
+- [Salud de la API](https://handtext-api-production.up.railway.app/health).
+
+La compilación de entrega usa `HOSTED_ACCOUNTS=true` y requiere crear una cuenta del servidor. Las cuentas de la prueba local permanecen en el teléfono. Historial y borradores se conservan por cuenta en el dispositivo. El APK entregado requiere Android ARM64 e Internet para cuentas, reconocimiento y exportación.
+
+El proyecto organiza 218 tareas en cuatro sprints. Los informes históricos conservan los resultados y la procedencia de cada integración.
 
 Consulta la [guía local](specs/001-handtext-mvp/quickstart.md), el [mapa del código](MAPA_DEL_CODIGO.md) y el [recorrido de ajustes y accesibilidad](docs/PRUEBA_DE_INTERFAZ.md).
+
+La guía local incluye el [reconocimiento en el computador](specs/001-handtext-mvp/quickstart.md#reconocimiento-en-el-computador) y la [configuración de OpenAI](specs/001-handtext-mvp/quickstart.md#reconocimiento-con-openai).
 
 ## Antecedente
 
@@ -69,6 +85,23 @@ dos tareas cerradas administrativamente sin acreditar su validación.
 Se incorporaron los archivos y pruebas restantes conservando las mejoras actuales.
 El [informe completo](docs/INTEGRACION_COMPLETA_DOCUMENTO_WORD.md) explica las fusiones,
 la procedencia, el inventario y las verificaciones. Las guías originales y el despliegue
-Render se conservan como referencia; para ejecutar, usa las guías locales vigentes.
+Render se conservan como referencia; para la entrega usa la guía final y para desarrollo las guías locales.
 
 - [Conciliación de issues y pendientes tras la integración completa](docs/CONCILIACION_ISSUES_INTEGRACION.md).
+
+## Historial y organización — reconstrucción 2026-11-17
+
+«Mis documentos» conserva hasta 50 textos por cuenta en este teléfono. Buscar filtra
+por título/contenido sin tildes ni mayúsculas; Renombrar conserva el texto y se respeta
+al exportar de nuevo. Eliminar/Borrar todo piden confirmación y no borran archivos
+exportados. Cerrar sesión conserva el historial; eliminar la cuenta lo borra.
+Copiar todo usa el texto actual: otras apps pueden leerlo desde el portapapeles.
+[Pruebas y recorrido pendiente](specs/007-historial-de-documentos/quickstart.md).
+
+## Integración con main solicitada por Luis
+
+Conflictos de la devolución e8f1289 resueltos conservando reconstrucción y siete
+casos compartidos. 358 pruebas Flutter sin omisiones, análisis/formato y APK debug
+correctos. Milestones actualizados con recuento formal y avance técnico separados.
+[Registro de integración](docs/INTEGRACION_LUIS_MAIN.md). Las verificaciones pendientes y la revisión
+formal de las issues mantienen su estado.

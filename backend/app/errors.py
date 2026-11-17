@@ -16,13 +16,13 @@ separados (constitución §4).
 from __future__ import annotations
 
 import logging
-import traceback
+import uuid
 from enum import StrEnum
-from pathlib import Path
 
 from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
-from starlette.exceptions import HTTPException as StarletteHTTPException
+from starlette.exceptions import HTTPException
 
 from app.persistence.user_store import StoreUnavailableError
 
@@ -65,61 +65,45 @@ class ErrorCode(StrEnum):
 # 413 carga excesiva, 415 tipo no admitido, 422 esquema, 5xx fallos internos o de
 # dependencias. 429 (demasiados intentos) es el estándar HTTP para el bloqueo de ingreso.
 _CATALOG: dict[ErrorCode, tuple[int, str]] = {
-    ErrorCode.VALIDATION_ERROR: (422, "La solicitud no tiene el formato esperado."),
-    ErrorCode.IMAGE_TOO_LARGE: (413, "La imagen supera el tamaño máximo permitido de 10 MB."),
-    ErrorCode.UNSUPPORTED_IMAGE_TYPE: (415, "El archivo no es una imagen JPEG o PNG."),
-    ErrorCode.IMAGE_UNREADABLE: (
-        400,
-        "No se pudo abrir la imagen. Puede estar dañada o incompleta.",
-    ),
+    ErrorCode.VALIDATION_ERROR: (422, "Revisa los datos enviados e inténtalo de nuevo."),
+    ErrorCode.IMAGE_TOO_LARGE: (413, "La imagen supera el límite de 10 MB."),
+    ErrorCode.UNSUPPORTED_IMAGE_TYPE: (415, "Selecciona una imagen JPEG o PNG."),
+    ErrorCode.IMAGE_UNREADABLE: (400, "No se pudo abrir la imagen. Elige otra o repite la foto."),
     ErrorCode.IMAGE_DIMENSIONS_OUT_OF_RANGE: (
         400,
-        "La imagen debe medir entre 600 y 10 000 píxeles por lado.",
+        "La imagen debe medir entre 600 y 10000 px por lado.",
     ),
     ErrorCode.OCR_NOT_CONFIGURED: (
         503,
-        "El servicio de reconocimiento no está disponible en este momento.",
+        "El reconocimiento no está disponible. Inténtalo más tarde.",
     ),
-    ErrorCode.OCR_TIMEOUT: (504, "El servicio de reconocimiento tardó demasiado en responder."),
-    ErrorCode.OCR_PROVIDER_ERROR: (
-        502,
-        "El servicio de reconocimiento no pudo procesar la imagen.",
-    ),
-    ErrorCode.OCR_INVALID_RESPONSE: (
-        502,
-        "El servicio de reconocimiento devolvió una respuesta no válida.",
-    ),
-    ErrorCode.EMPTY_TEXT: (
-        400,
-        "No se puede exportar un texto vacío o compuesto solo por espacios.",
-    ),
-    ErrorCode.TEXT_TOO_LARGE: (413, "El texto supera el tamaño máximo que se puede exportar."),
+    ErrorCode.OCR_TIMEOUT: (504, "El reconocimiento tardó demasiado. Inténtalo de nuevo."),
+    ErrorCode.OCR_PROVIDER_ERROR: (502, "No se pudo reconocer la imagen. Inténtalo de nuevo."),
+    ErrorCode.OCR_INVALID_RESPONSE: (502, "No se obtuvo un resultado válido. Inténtalo de nuevo."),
+    ErrorCode.EMPTY_TEXT: (400, "Escribe o reconoce texto antes de exportar."),
+    ErrorCode.TEXT_TOO_LARGE: (413, "El texto supera el límite de 200000 caracteres."),
     ErrorCode.UNSUPPORTED_CHARACTERS: (
         400,
-        "El texto contiene caracteres que no se pueden incluir en el archivo.",
+        "El texto contiene caracteres que no se pueden exportar.",
     ),
-    ErrorCode.NOT_FOUND: (404, "El recurso solicitado no existe."),
-    ErrorCode.METHOD_NOT_ALLOWED: (405, "Método no permitido para este recurso."),
-    ErrorCode.INTERNAL_ERROR: (500, "Ocurrió un error interno. Intente de nuevo más tarde."),
-    ErrorCode.REQUEST_TOO_LARGE: (413, "La solicitud es demasiado grande."),
-    ErrorCode.UNAUTHENTICATED: (401, "Su sesión no es válida o venció. Inicie sesión de nuevo."),
-    # [CU-H1-E7] [SC-203] Un solo mensaje: no revela si el correo existe.
-    ErrorCode.INVALID_CREDENTIALS: (401, "Correo o contraseña incorrectos."),
-    ErrorCode.TOO_MANY_ATTEMPTS: (
-        429,
-        "Demasiados intentos fallidos. Intente de nuevo en 15 minutos.",
-    ),
+    ErrorCode.NOT_FOUND: (404, "El recurso solicitado no está disponible."),
+    ErrorCode.METHOD_NOT_ALLOWED: (405, "Esta operación no está disponible para ese recurso."),
+    ErrorCode.INTERNAL_ERROR: (500, "Ocurrió un error. Inténtalo de nuevo."),
+    ErrorCode.REQUEST_TOO_LARGE: (413, "La solicitud supera el tamaño permitido."),
+    ErrorCode.UNAUTHENTICATED: (401, "Inicia sesión para continuar."),
+    ErrorCode.INVALID_CREDENTIALS: (401, "El correo o la contraseña son incorrectos."),
+    ErrorCode.TOO_MANY_ATTEMPTS: (429, "Demasiados intentos. Espera 15 minutos antes de ingresar."),
     ErrorCode.EMAIL_ALREADY_REGISTERED: (409, "Ya existe una cuenta con ese correo."),
-    ErrorCode.INVALID_EMAIL: (400, "El correo electrónico no es válido."),
+    ErrorCode.INVALID_EMAIL: (400, "Escribe un correo válido de hasta 254 caracteres."),
     ErrorCode.INVALID_DISPLAY_NAME: (400, "El nombre debe tener entre 1 y 60 caracteres."),
     ErrorCode.WEAK_PASSWORD: (400, "La contraseña debe tener entre 8 y 128 caracteres."),
     ErrorCode.DATA_POLICY_NOT_ACCEPTED: (
         400,
-        "Debe autorizar el tratamiento de sus datos para crear la cuenta.",
+        "Autoriza el tratamiento de datos para crear la cuenta.",
     ),
     ErrorCode.ACCOUNTS_UNAVAILABLE: (
         503,
-        "El servicio de cuentas no está disponible en este momento.",
+        "El servicio de cuentas no está disponible. Reintenta luego.",
     ),
 }
 
@@ -134,72 +118,65 @@ class AppError(Exception):
     def __init__(self, code: ErrorCode, message: str | None = None) -> None:
         self.code = code
         self.status_code, default_message = _CATALOG[code]
-        self.message = message or default_message
-        super().__init__(code.value)
+        self.message = message if message is not None else default_message
+        super().__init__(self.message)
 
 
 def request_id_of(request: Request) -> str:
-    """Devuelve el request_id que el middleware de main.py guardó en la solicitud."""
-    return getattr(request.state, "request_id", "desconocido")
+    return getattr(request.state, "request_id", None) or uuid.uuid4().hex
 
 
 def error_response(error: AppError, request_id: str) -> JSONResponse:
-    """Construye la respuesta JSON común a todos los errores."""
-    # El estándar HTTP pide indicar en los 401 cómo autenticarse: con un token Bearer.
-    headers = {"WWW-Authenticate": "Bearer"} if error.status_code == 401 else None
+    headers = {"X-Request-ID": request_id}
+    if error.status_code == 401:
+        headers["WWW-Authenticate"] = "Bearer"
     return JSONResponse(
         status_code=error.status_code,
-        content={
-            "error": {
-                "code": error.code.value,
-                "message": error.message,
-                "request_id": request_id,
-            }
-        },
+        content={"error": {"code": error.code, "message": error.message, "request_id": request_id}},
         headers=headers,
     )
 
 
 def log_unexpected_error(exc: BaseException, request_id: str) -> None:
-    """Registra un error inesperado sin su mensaje ni sus valores.
-
-    Solo se guarda el tipo de excepción y el archivo:línea donde ocurrió. Así se puede
-    localizar la falla sin escribir en los registros contenido del documento
-    (constitución §5: diagnósticos sin el contenido del documento).
-    """
-    frames = traceback.extract_tb(exc.__traceback__)
-    where = f"{Path(frames[-1].filename).name}:{frames[-1].lineno}" if frames else "desconocido"
+    traceback = exc.__traceback__
+    while traceback is not None and traceback.tb_next is not None:
+        traceback = traceback.tb_next
+    # Solo ubicación y tipo: ni str(exc), ni variables locales, ni cuerpo enviado.
+    location = (
+        f"{traceback.tb_frame.f_code.co_name}:{traceback.tb_lineno}" if traceback else "unknown"
+    )
     logger.error(
-        "unexpected_error type=%s where=%s request_id=%s",
+        "unexpected_error type=%s location=%s request_id=%s",
         type(exc).__name__,
-        where,
+        location,
         request_id,
     )
 
 
 def install_error_handlers(app: FastAPI) -> None:
-    """Registra en la app los manejadores que convierten excepciones en JSON."""
-
-    @app.exception_handler(AppError)
-    async def handle_app_error(request: Request, exc: AppError) -> JSONResponse:
-        # Errores esperados (imagen inválida, texto vacío, fallos del OCR, etc.).
-        return error_response(exc, request_id_of(request))
-
     @app.exception_handler(StoreUnavailableError)
-    async def handle_store_unavailable(
-        request: Request, exc: StoreUnavailableError
-    ) -> JSONResponse:
-        # La base de datos no responde: 503 sin detalles técnicos (constitución §5).
-        logger.error("accounts_store_unavailable request_id=%s", request_id_of(request))
+    async def unavailable_store(request: Request, exc: StoreUnavailableError) -> JSONResponse:
         return error_response(AppError(ErrorCode.ACCOUNTS_UNAVAILABLE), request_id_of(request))
 
-    @app.exception_handler(StarletteHTTPException)
-    async def handle_http_error(request: Request, exc: StarletteHTTPException) -> JSONResponse:
-        # Rutas inexistentes (404) o métodos no permitidos (405), con el mismo formato.
-        if exc.status_code == 404:
-            error = AppError(ErrorCode.NOT_FOUND)
-        elif exc.status_code == 405:
-            error = AppError(ErrorCode.METHOD_NOT_ALLOWED)
-        else:
-            error = AppError(ErrorCode.INTERNAL_ERROR)
-        return error_response(error, request_id_of(request))
+    @app.exception_handler(AppError)
+    async def domain_error(request: Request, exc: AppError) -> JSONResponse:
+        return error_response(exc, request_id_of(request))
+
+    @app.exception_handler(RequestValidationError)
+    async def validation_error(request: Request, exc: RequestValidationError) -> JSONResponse:
+        return error_response(AppError(ErrorCode.VALIDATION_ERROR), request_id_of(request))
+
+    @app.exception_handler(HTTPException)
+    async def http_error(request: Request, exc: HTTPException) -> JSONResponse:
+        code = {
+            404: ErrorCode.NOT_FOUND,
+            405: ErrorCode.METHOD_NOT_ALLOWED,
+            401: ErrorCode.UNAUTHENTICATED,
+        }.get(exc.status_code, ErrorCode.INTERNAL_ERROR)
+        return error_response(AppError(code), request_id_of(request))
+
+    @app.exception_handler(Exception)
+    async def unexpected_error(request: Request, exc: Exception) -> JSONResponse:
+        request_id = request_id_of(request)
+        log_unexpected_error(exc, request_id)
+        return error_response(AppError(ErrorCode.INTERNAL_ERROR), request_id)

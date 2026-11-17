@@ -36,9 +36,18 @@ class AppLockGate extends StatelessWidget {
       builder: (context, _) {
         final locked = lock.isLocked;
         return Stack(
+          fit: StackFit.expand,
           children: [
-            // [BL-H2-E1] Bloqueada, no se ve ni se lee ningún documento.
-            Offstage(offstage: locked, child: child),
+            Offstage(
+              offstage: locked,
+              child: ExcludeFocus(
+                excluding: locked,
+                child: ExcludeSemantics(
+                  excluding: locked,
+                  child: TickerMode(enabled: !locked, child: child),
+                ),
+              ),
+            ),
             if (locked) LockScreen(lock: lock),
           ],
         );
@@ -55,62 +64,77 @@ class LockScreen extends StatefulWidget {
   final AppLockController lock;
 
   @override
-  State<LockScreen> createState() => _LockScreenState();
+  State<LockScreen> createState() {
+    return _LockScreenState();
+  }
 }
 
 class _LockScreenState extends State<LockScreen> {
   @override
   void initState() {
     super.initState();
-    // Pide la huella apenas aparece, como las apps de banco.
-    WidgetsBinding.instance.addPostFrameCallback((_) => _unlock());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _unlock();
+    });
   }
 
   Future<void> _unlock() async {
-    if (!mounted) return;
     await widget.lock.unlock(context.strings.unlockReason);
   }
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final strings = context.strings;
     return AuroraScaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const ScannerLogo(size: 96),
-              const SizedBox(height: 20),
-              BrandTitle(style: textTheme.headlineMedium),
-              const SizedBox(height: 24),
-              Semantics(
-                container: true,
-                header: true,
-                child: Text(
-                  context.strings.lockedTitle,
-                  textAlign: TextAlign.center,
-                  style: textTheme.titleLarge?.copyWith(color: Colors.white),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: (constraints.maxHeight - 48).clamp(
+                  0,
+                  double.infinity,
                 ),
               ),
-              const SizedBox(height: 8),
-              Text(
-                context.strings.lockedMessage,
-                textAlign: TextAlign.center,
-                style: textTheme.bodyMedium?.copyWith(
-                  color: Aurora.textSecondary,
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 440),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Center(child: ScannerLogo(size: 100)),
+                      const SizedBox(height: 24),
+                      const BrandTitle(),
+                      const SizedBox(height: 24),
+                      Semantics(
+                        header: true,
+                        child: Text(
+                          strings.lockedTitle,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        strings.lockedMessage,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Aurora.textSecondary),
+                      ),
+                      const SizedBox(height: 24),
+                      PrimaryButton(
+                        label: strings.unlock,
+                        onPressed: _unlock,
+                        icon: Icons.lock_open,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              const SizedBox(height: 32),
-              PrimaryButton(
-                label: context.strings.unlock,
-                icon: Icons.fingerprint,
-                onPressed: _unlock,
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -1,3 +1,9 @@
+> **Reconstrucción actual · 2026-11-17:** use primero
+> [la guía reproducible](../../docs/QUICKSTART_RECONSTRUCCION_LUIS.md).
+> Los pasos y evidencias anteriores que siguen requieren su configuración indicada;
+> no acreditan pruebas físicas ni una firma de la revisión actual. Release exige
+> cuentas del servidor, HTTPS y clave propia; no admite firma debug ni HTTP local.
+
 # Pruebas de punta a punta en Android
 
 Se conserva `frontend/integration_test/flujo_completo_test.dart`, ampliado en handtext

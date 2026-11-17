@@ -14,27 +14,32 @@ abstract final class AppConfig {
   static const String appVersion = '1.0.0';
   static const int appBuild = 1;
 
-  /// Las cuentas de la app se guardan en el teléfono.
-  static const bool usesLocalAccounts = true;
+  /// Usa cuentas del servidor con `--dart-define=HOSTED_ACCOUNTS=true`.
+  static const bool usesLocalAccounts = !bool.fromEnvironment(
+    'HOSTED_ACCOUNTS',
+  );
 
   /// URL base de la API. Ejemplos:
   /// - Emulador de Android: `http://10.0.2.2:8001/` (valor por defecto; 10.0.2.2 es
   ///   el computador visto desde el emulador).
-  /// - Teléfono real en la misma red Wi-Fi: `http://192.168.1.50:8001/`.
+  /// - Teléfono con adb reverse: `http://127.0.0.1:8001/`.
   ///
   /// Se cambia al ejecutar:
-  /// `flutter run --dart-define=API_BASE_URL=http://192.168.1.50:8001/`
-  static final Uri apiBaseUrl = _withTrailingSlash(
+  /// `flutter run --dart-define=API_BASE_URL=http://127.0.0.1:8001/`
+  static final Uri apiBaseUrl = _parseApiBaseUrl(
     const String.fromEnvironment(
       'API_BASE_URL',
-      defaultValue: 'http://10.0.2.2:8001/',
+      defaultValue: usesLocalAccounts ? 'http://10.0.2.2:8001/' : '',
     ),
   );
 
   /// Secreto de uso exclusivo para desarrollo local; vacío por defecto.
-  static const String localDevApiToken = kDebugMode
+  static const String localDevApiToken = kDebugMode && usesLocalAccounts
       ? String.fromEnvironment('LOCAL_DEV_API_TOKEN')
       : '';
+
+  /// Límite para abrir la conexión, independiente del tiempo de OCR.
+  static const Duration apiConnectionTimeout = Duration(seconds: 5);
 
   /// Tiempo máximo de espera del reconocimiento (SC-009).
   static const Duration recognitionTimeout = Duration(seconds: 60);
@@ -62,7 +67,29 @@ abstract final class AppConfig {
   /// Pausa tras la última tecla antes de guardar el borrador (research.md, R7).
   static const Duration draftSaveDelay = Duration(milliseconds: 400);
 
-  /// `Uri.resolve` necesita la barra final para conservar la ruta base.
-  static Uri _withTrailingSlash(String url) =>
-      Uri.parse(url.endsWith('/') ? url : '$url/');
+  static Uri _parseApiBaseUrl(String url) {
+    final uri = Uri.parse(url);
+    if (!uri.hasAuthority ||
+        !const ['http', 'https'].contains(uri.scheme) ||
+        uri.host.isEmpty ||
+        uri.userInfo.isNotEmpty ||
+        uri.hasQuery ||
+        uri.hasFragment) {
+      throw StateError(
+        'API_BASE_URL debe ser una URL HTTP(S) sin credenciales.',
+      );
+    }
+    if (!usesLocalAccounts &&
+        (uri.scheme != 'https' ||
+            uri.host.isEmpty ||
+            uri.userInfo.isNotEmpty ||
+            uri.hasQuery ||
+            uri.hasFragment)) {
+      throw StateError(
+        'HOSTED_ACCOUNTS requiere una API_BASE_URL HTTPS válida.',
+      );
+    }
+    // Uri.resolve necesita la barra final para conservar la ruta base.
+    return uri.path.endsWith('/') ? uri : uri.replace(path: '${uri.path}/');
+  }
 }

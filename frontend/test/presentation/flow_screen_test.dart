@@ -4,7 +4,10 @@
 // archivos) y una sesión ya iniciada (spec 002). Cada prueba indica el escenario del
 // spec que verifica.
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:handtext_ai/presentation/widgets/scan_overlay.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:handtext_ai/models/export_format.dart';
 import 'package:handtext_ai/services/camera_permission_service.dart';
@@ -39,6 +42,26 @@ Future<void> _openMenuItem(WidgetTester tester, String item) async {
 }
 
 void main() {
+  testWidgets('T134: escaneo visible solo mientras OCR está en curso', (
+    tester,
+  ) async {
+    final h = await _pumpApp(tester);
+    final gate = h.api.recognitionGate = Completer<void>();
+    await _tap(tester, es.pickFromGallery);
+    expect(find.byType(ScanOverlay), findsNothing);
+    await _tap(tester, es.acceptAndRecognize);
+    // No pumpAndSettle: mientras hay OCR el indicador es indeterminado.
+    await tester.tap(find.text(es.consentAccept));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(find.byType(ScanOverlay), findsOneWidget);
+    expect(h.api.recognizedImages, hasLength(1));
+    gate.complete();
+    await tester.pumpAndSettle();
+    expect(find.byType(ScanOverlay), findsNothing);
+    expect(find.text(es.editorTitle), findsOneWidget);
+  });
+
   testWidgets(
     '[ED-H1-E1] el inicio ofrece las tres formas de obtener el documento',
     (tester) async {

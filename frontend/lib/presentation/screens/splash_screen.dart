@@ -13,15 +13,20 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AuroraScaffold(
+    return const AuroraScaffold(
       body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const ScannerLogo(size: 120),
-            const SizedBox(height: 20),
-            BrandTitle(style: Theme.of(context).textTheme.headlineMedium),
-          ],
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ScannerLogo(),
+              SizedBox(height: 24),
+              BrandTitle(),
+              SizedBox(height: 24),
+              CircularProgressIndicator(),
+            ],
+          ),
         ),
       ),
     );

@@ -75,29 +75,25 @@ String suggestedFileName(
   DateTime moment, {
   String? title,
 }) {
-  final name = _cleanFileName(title ?? '');
-  if (name.isNotEmpty) return '$name.${format.extension}';
-  String twoDigits(int value) => value.toString().padLeft(2, '0');
+  final clean = _cleanFileName(title ?? '');
+  if (clean.isNotEmpty) return '$clean.${format.extension}';
+  String two(int value) => value.toString().padLeft(2, '0');
   final date =
-      '${moment.year}${twoDigits(moment.month)}${twoDigits(moment.day)}';
-  final time = '${twoDigits(moment.hour)}${twoDigits(moment.minute)}';
-  return 'HandText_${date}_$time.${format.extension}';
+      '${moment.year.toString().padLeft(4, '0')}${two(moment.month)}${two(moment.day)}';
+  return 'HandText_${date}_${two(moment.hour)}${two(moment.minute)}.${format.extension}';
 }
 
 /// [OR-H1-E2] [SC-1001] Quita lo que Android no acepta en un nombre de archivo
 /// (`/ \ : * ? " < > |` y caracteres de control), junta los espacios, corta en 60
 /// caracteres y quita los puntos y espacios del final.
 String _cleanFileName(String title) {
-  var name = title
-      .replaceAll(RegExp(r'[\\/:*?"<>|]'), '')
-      .replaceAll(RegExp(r'[\x00-\x1F\x7F]'), ' ')
+  final cleaned = title
       .replaceAll(RegExp(r'\s+'), ' ')
+      .replaceAll(RegExp(r'[\\/:*?"<>|\x00-\x1f\x7f]'), '')
       .trim();
-  final characters = name.runes.toList();
-  if (characters.length > 60) {
-    name = String.fromCharCodes(characters.take(60));
-  }
-  return name.replaceAll(RegExp(r'[.\s]+$'), '');
+  return String.fromCharCodes(
+    cleaned.runes.take(60),
+  ).replaceAll(RegExp(r'[. ]+$'), '').trim();
 }
 
 class DocumentFlowController extends ChangeNotifier {
@@ -250,6 +246,8 @@ class DocumentFlowController extends ChangeNotifier {
     }
     if (draft != null && draft.text.trim().isNotEmpty) {
       _documentText = draft.text;
+      // Es un borrador sin exportar: cerrar sesión requiere confirmar su pérdida.
+      _hasUnexportedChanges = true;
       // [EX-H1-E7] Las marcas que quedaban vuelven con el borrador.
       _uncertainRanges = validRanges(draft.text, draft.uncertainRanges);
       // [HD-H2-E4] Un borrador abierto desde el historial sigue unido a su entrada.
@@ -277,8 +275,9 @@ class DocumentFlowController extends ChangeNotifier {
 
   /// [ED-H1-E2] [ED-H1-E3] Spec 009: escanear una o varias hojas. Empieza un documento
   /// nuevo.
-  Future<void> scanDocument() =>
-      _addImages(ImageOrigin.scanner, _AddMode.newDocument);
+  Future<void> scanDocument() {
+    return _addImages(ImageOrigin.scanner, _AddMode.newDocument);
+  }
 
   /// [VP-H1-E2] Agrega páginas al final, desde la galería o la cámara.
   Future<void> addPages(ImageOrigin origin) =>

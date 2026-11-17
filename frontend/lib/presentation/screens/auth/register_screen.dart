@@ -38,7 +38,9 @@ class RegisterScreen extends StatefulWidget {
   final VoidCallback onSignIn;
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<RegisterScreen> createState() {
+    return _RegisterScreenState();
+  }
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
@@ -59,7 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<void> _submit() async {
-    FocusScope.of(context).unfocus();
+    if (widget.auth.isBusy) return;
     final failure = validateRegistrationForm(
       displayName: _name.text,
       email: _email.text,
@@ -68,7 +70,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       acceptsDataPolicy: _acceptsDataPolicy,
     );
     setState(() => _formFailure = failure);
-    if (failure != null) return; // [CU-H1-E4] [CU-H1-E5] no se envía nada
+    if (failure != null) return;
+    FocusScope.of(context).unfocus();
     await widget.auth.register(
       displayName: _name.text,
       email: _email.text,
@@ -79,141 +82,143 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return ListenableBuilder(
-      listenable: widget.auth,
-      builder: (context, _) {
-        final failure = _formFailure ?? widget.auth.failure;
-        return AuroraScaffold(
-          body: ListView(
-            padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  tooltip: context.strings.back,
-                  icon: const Icon(Icons.arrow_back, color: Colors.white),
-                  onPressed: widget.onBack,
-                ),
-              ),
-              const SizedBox(height: 12),
-              // [PA-H2-E5] Título como encabezado para TalkBack.
-              Semantics(
-                // Nodo propio: no se mezcla con los botones vecinos.
-                container: true,
-                header: true,
-                child: Text(
-                  context.strings.registerTitle,
-                  style: textTheme.headlineMedium?.copyWith(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                context.strings.registerSubtitle,
-                style: textTheme.bodyLarge?.copyWith(
-                  color: Aurora.textSecondary,
-                ),
-              ),
-              const SizedBox(height: 24),
-              SurfaceCard(
-                child: AutofillGroup(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      TextField(
-                        controller: _name,
-                        textCapitalization: TextCapitalization.words,
-                        autofillHints: const [AutofillHints.name],
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          labelText: context.strings.nameLabel,
-                          prefixIcon: Icon(Icons.person_outline),
+    return AuroraScaffold(
+      body: ListenableBuilder(
+        listenable: widget.auth,
+        builder: (context, _) {
+          final strings = context.strings;
+          final failure = _formFailure ?? widget.auth.failure;
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 480),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          tooltip: strings.back,
+                          onPressed: widget.auth.isBusy ? null : widget.onBack,
+                          icon: const Icon(Icons.arrow_back),
                         ),
-                      ),
-                      const SizedBox(height: 14),
-                      TextField(
-                        controller: _email,
-                        keyboardType: TextInputType.emailAddress,
-                        autocorrect: false,
-                        autofillHints: const [AutofillHints.email],
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          labelText: context.strings.emailLabel,
-                          prefixIcon: Icon(Icons.alternate_email),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Semantics(
+                            header: true,
+                            child: Text(
+                              strings.registerTitle,
+                              style: Theme.of(context).textTheme.headlineMedium,
+                            ),
+                          ),
                         ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      strings.registerSubtitle,
+                      style: const TextStyle(color: Aurora.textSecondary),
+                    ),
+                    const SizedBox(height: 24),
+                    if (failure != null) ...[
+                      StatusBanner(
+                        status: OperationStatus.failure(failure),
+                        onAurora: true,
                       ),
-                      const SizedBox(height: 14),
-                      PasswordField(
-                        controller: _password,
-                        label: context.strings.passwordLabel,
-                        showStrength: true,
-                        autofillHints: const [AutofillHints.newPassword],
-                        textInputAction: TextInputAction.next,
-                      ),
-                      const SizedBox(height: 14),
-                      PasswordField(
-                        controller: _confirmation,
-                        label: context.strings.confirmPasswordLabel,
-                        textInputAction: TextInputAction.done,
-                      ),
-                      const SizedBox(height: 8),
-                      // [CU-H1-E5] Autorización expresa del tratamiento de datos.
-                      CheckboxListTile(
-                        value: _acceptsDataPolicy,
-                        onChanged: (value) =>
-                            setState(() => _acceptsDataPolicy = value ?? false),
-                        controlAffinity: ListTileControlAffinity.leading,
-                        contentPadding: EdgeInsets.zero,
-                        title: Text(
-                          context.strings.dataPolicyConsent,
-                          style: textTheme.bodySmall?.copyWith(
-                            color: Aurora.textSecondary,
+                      const SizedBox(height: 16),
+                    ],
+                    SurfaceCard(
+                      child: AutofillGroup(
+                        child: AbsorbPointer(
+                          absorbing: widget.auth.isBusy,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              TextField(
+                                controller: _name,
+                                textCapitalization: TextCapitalization.words,
+                                autofillHints: const [AutofillHints.name],
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: strings.nameLabel,
+                                  prefixIcon: const Icon(Icons.person_outline),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              TextField(
+                                controller: _email,
+                                keyboardType: TextInputType.emailAddress,
+                                autofillHints: const [AutofillHints.email],
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: strings.emailLabel,
+                                  prefixIcon: const Icon(Icons.email_outlined),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              PasswordField(
+                                controller: _password,
+                                label: strings.passwordLabel,
+                                showStrength: true,
+                                autofillHints: const [
+                                  AutofillHints.newPassword,
+                                ],
+                                textInputAction: TextInputAction.next,
+                              ),
+                              const SizedBox(height: 20),
+                              PasswordField(
+                                controller: _confirmation,
+                                label: strings.confirmPasswordLabel,
+                                autofillHints: const [
+                                  AutofillHints.newPassword,
+                                ],
+                                textInputAction: TextInputAction.done,
+                                onSubmitted: (_) => _submit(),
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                strings.passwordHint,
+                                style: const TextStyle(color: Aurora.textMuted),
+                              ),
+                              const SizedBox(height: 12),
+                              CheckboxListTile(
+                                contentPadding: EdgeInsets.zero,
+                                controlAffinity:
+                                    ListTileControlAffinity.leading,
+                                value: _acceptsDataPolicy,
+                                onChanged: (value) => setState(
+                                  () => _acceptsDataPolicy = value ?? false,
+                                ),
+                                title: Text(strings.dataPolicyConsent),
+                              ),
+                              const SizedBox(height: 20),
+                              PrimaryButton(
+                                label: strings.createAccount,
+                                onPressed: widget.auth.isBusy ? null : _submit,
+                                isLoading: widget.auth.isBusy,
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                      if (failure != null) ...[
-                        const SizedBox(height: 8),
-                        StatusBanner(
-                          status: OperationStatus.failure(failure),
-                          onAurora: true,
-                        ),
-                      ],
-                      const SizedBox(height: 20),
-                      PrimaryButton(
-                        label: context.strings.createAccount,
-                        icon: Icons.person_add_alt_1_outlined,
-                        isLoading: widget.auth.isBusy,
-                        onPressed: _submit,
-                      ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      strings.haveAccountQuestion,
+                      textAlign: TextAlign.center,
+                    ),
+                    TextButton(
+                      onPressed: widget.auth.isBusy ? null : widget.onSignIn,
+                      child: Text(strings.signIn),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 16),
-              // Wrap pasa el enlace a otra línea si no cabe (pantallas angostas o letra
-              // grande de accesibilidad).
-              Wrap(
-                alignment: WrapAlignment.center,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  Text(
-                    context.strings.haveAccountQuestion,
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: Aurora.textSecondary,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: widget.onSignIn,
-                    child: Text(context.strings.signIn),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
+            ),
+          );
+        },
+      ),
     );
   }
 }

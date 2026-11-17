@@ -37,6 +37,7 @@ import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 
 import '../../models/operation_status.dart';
+import '../../models/app_failure.dart';
 import '../../state/auth_controller.dart';
 import '../../state/document_flow_controller.dart';
 import '../../theme/aurora.dart';
@@ -81,7 +82,30 @@ class _EditorScreenState extends State<EditorScreen> {
   final FocusNode _textFocus = FocusNode();
 
   @override
+  void initState() {
+    super.initState();
+    _textController.addListener(_selectionChanged);
+  }
+
+  void _selectionChanged() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void didUpdateWidget(covariant EditorScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final text = widget.controller.documentText ?? '';
+    if (_textController.text != text) {
+      _textController.value = TextEditingValue(
+        text: text,
+        selection: TextSelection.collapsed(offset: text.length),
+      );
+    }
+  }
+
+  @override
   void dispose() {
+    _textController.removeListener(_selectionChanged);
     _textController.dispose();
     _textFocus.dispose();
     super.dispose();
@@ -91,7 +115,7 @@ class _EditorScreenState extends State<EditorScreen> {
   TextRange? _selectedUncertainWord(TextSelection selection) {
     if (!selection.isValid) return null;
     for (final range in widget.controller.uncertainRanges) {
-      if (range.start <= selection.start && selection.end <= range.end) {
+      if (selection.start >= range.start && selection.end <= range.end) {
         return range;
       }
     }
@@ -102,24 +126,25 @@ class _EditorScreenState extends State<EditorScreen> {
   /// última, vuelve a la primera.
   void _selectNextUncertainWord() {
     final ranges = widget.controller.uncertainRanges;
-    if (ranges.isEmpty) return;
-    final selection = _textController.selection;
-    final from = selection.isValid ? selection.end : 0;
-    final next = ranges.firstWhere(
-      (range) => range.start >= from,
-      orElse: () => ranges.first,
-    );
+    if (ranges.isEmpty || widget.controller.isBusy) return;
+    final end = _textController.selection.isValid
+        ? _textController.selection.end
+        : 0;
+    final next =
+        ranges.where((range) => range.start >= end).firstOrNull ?? ranges.first;
     _textController.selection = TextSelection(
       baseOffset: next.start,
       extentOffset: next.end,
     );
-    _textFocus.requestFocus(); // muestra la selección y la lleva a la vista
-    // [PA-H2-E3] El resaltado no se ve con TalkBack: se lee la palabra elegida.
-    SemanticsService.announce(
-      context.strings.uncertainWordAnnouncement(
-        _textController.text.substring(next.start, next.end),
+    _textFocus.requestFocus();
+    unawaited(
+      SemanticsService.sendAnnouncement(
+        View.of(context),
+        context.strings.uncertainWordAnnouncement(
+          next.textInside(_textController.text),
+        ),
+        Directionality.of(context),
       ),
-      Directionality.of(context),
     );
   }
 
@@ -130,6 +155,7 @@ class _EditorScreenState extends State<EditorScreen> {
   }
 
   Future<void> _export() async {
+    FocusScope.of(context).unfocus();
     final format = await showExportFormatSheet(context);
     if (format == null) return; // cerró la hoja sin elegir
     await widget.controller.export(format);
@@ -159,10 +185,28 @@ class _EditorScreenState extends State<EditorScreen> {
   /// [OR-H2-E1] [SC-1002] Copia el texto tal cual está, sin las marcas de palabras
   /// dudosas (research.md de 010, R2).
   Future<void> _copyAll() async {
-    final messenger = ScaffoldMessenger.of(context);
-    final copied = context.strings.textCopied;
-    await Clipboard.setData(ClipboardData(text: _textController.text));
-    messenger.showSnackBar(SnackBar(content: Text(copied)));
+    final text = widget.controller.documentText ?? '';
+    if (text.isEmpty) return;
+    try {
+      await Clipboard.setData(ClipboardData(text: text));
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.strings.textCopied)));
+      }
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              context.strings.failureText(
+                const AppFailure(FailureKind.unexpected),
+              ),
+            ),
+          ),
+        );
+      }
+    }
   }
 
   void _onMenuSelected(_EditorAction action) {
@@ -179,215 +223,172 @@ class _EditorScreenState extends State<EditorScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = widget.controller;
+    final strings = context.strings;
+    final text = controller.documentText ?? '';
     final busy = controller.isBusy;
     final status = controller.status;
-    final textTheme = Theme.of(context).textTheme;
-    // [PA-H3-E2] ¿Letra del sistema muy grande? Entonces el encabezado se acorta.
-    final largeText = MediaQuery.textScalerOf(context).scale(1) > 1.3;
-
+    final large = MediaQuery.textScalerOf(context).scale(16) > 16 * 1.3;
+    final selected = _selectedUncertainWord(_textController.selection);
+    final words = text.trim().isEmpty
+        ? 0
+        : text.trim().split(RegExp(r'\s+')).length;
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Encabezado azul marino, como el fondo de las pantallas Aurora.
-          AnnotatedRegion<SystemUiOverlayStyle>(
-            value: SystemUiOverlayStyle.light,
-            child: DecoratedBox(
-              decoration: const BoxDecoration(color: Aurora.backgroundBottom),
-              child: SafeArea(
-                bottom: false,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 8, 8, 20),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // [PA-H2-E5] Título como encabezado para TalkBack.
-                            // [PA-H3-E2] Crece hasta el 150 %, como los títulos con
-                            // la escala no lineal de Android 14 (research.md de 006,
-                            // R5).
-                            MediaQuery.withClampedTextScaling(
-                              maxScaleFactor: 1.5,
-                              child: Semantics(
-                                // Nodo propio: no se mezcla con los botones vecinos.
-                                container: true,
-                                header: true,
-                                child: Text(
-                                  context.strings.editorTitle,
-                                  style: textTheme.headlineSmall?.copyWith(
-                                    color: Colors.white,
-                                  ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            ColoredBox(
+              color: Aurora.backgroundBottom,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MediaQuery.withClampedTextScaling(
+                            maxScaleFactor: 1.5,
+                            child: Semantics(
+                              container: true,
+                              header: true,
+                              child: Text(
+                                strings.editorTitle,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
                             ),
-                            // Con la letra muy grande se omite: la advertencia de
-                            // abajo dice lo mismo y el texto gana espacio.
-                            if (!largeText)
-                              Text(
-                                context.strings.editorSubtitle,
-                                style: textTheme.bodyMedium?.copyWith(
-                                  color: Aurora.textSecondary,
-                                ),
+                          ),
+                          if (!large)
+                            Text(
+                              strings.editorSubtitle,
+                              style: const TextStyle(
+                                color: Aurora.textSecondary,
+                                fontSize: 12,
                               ),
+                            ),
+                        ],
+                      ),
+                    ),
+                    AccountButton(auth: widget.auth, documents: controller),
+                    PopupMenuButton<_EditorAction>(
+                      tooltip: strings.moreActionsTooltip,
+                      enabled: !busy,
+                      icon: const Icon(Icons.more_vert, color: Colors.white),
+                      onSelected: _onMenuSelected,
+                      itemBuilder: (_) => [
+                        if (text.isNotEmpty)
+                          PopupMenuItem(
+                            value: _EditorAction.copyAll,
+                            child: Text(strings.copyAllText),
+                          ),
+                        PopupMenuItem(
+                          value: _EditorAction.processAnotherImage,
+                          child: Text(strings.processAnotherImage),
+                        ),
+                        PopupMenuItem(
+                          value: _EditorAction.discard,
+                          child: Text(strings.discardText),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: LayoutBuilder(
+                builder: (context, constraints) => Column(
+                  children: [
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxHeight: constraints.maxHeight * 0.45,
+                      ),
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const _RecognitionWarning(),
+                            if (status != null) ...[
+                              const SizedBox(height: 10),
+                              StatusBanner(
+                                status: status,
+                                actionLabel:
+                                    status.action == StatusAction.shareExport
+                                    ? strings.share
+                                    : null,
+                                onAction:
+                                    !busy &&
+                                        status.action ==
+                                            StatusAction.shareExport
+                                    ? controller.shareLastExport
+                                    : null,
+                              ),
+                            ],
+                            if (controller.uncertainRanges.isNotEmpty) ...[
+                              const SizedBox(height: 10),
+                              _ReviewBar(
+                                count: controller.uncertainRanges.length,
+                                onNext: busy ? null : _selectNextUncertainWord,
+                                onAccept: busy || selected == null
+                                    ? null
+                                    : _acceptSelectedWord,
+                              ),
+                            ],
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              child: Text(
+                                strings.textStats(words, text.runes.length),
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                      PopupMenuButton<_EditorAction>(
-                        tooltip: context.strings.moreActionsTooltip,
-                        enabled: !busy,
-                        icon: const Icon(Icons.more_vert, color: Colors.white),
-                        onSelected: _onMenuSelected,
-                        itemBuilder: (context) => [
-                          // [OR-H2-E2] Solo si hay texto.
-                          if (_textController.text.trim().isNotEmpty)
-                            PopupMenuItem(
-                              value: _EditorAction.copyAll,
-                              child: Text(context.strings.copyAllText),
-                            ),
-                          PopupMenuItem(
-                            value: _EditorAction.processAnotherImage,
-                            child: Text(context.strings.processAnotherImage),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: TextField(
+                          controller: _textController,
+                          focusNode: _textFocus,
+                          readOnly: busy,
+                          maxLines: null,
+                          expands: true,
+                          textAlignVertical: TextAlignVertical.top,
+                          style: editorTextStyle(
+                            context,
+                            SettingsScope.of(context).settings.textSize,
                           ),
-                          PopupMenuItem(
-                            value: _EditorAction.discard,
-                            child: Text(context.strings.discardText),
+                          decoration: InputDecoration(
+                            labelText: strings.editorLabel,
+                            hintText: strings.editorHint,
+                            alignLabelWithHint: true,
                           ),
-                        ],
+                          onChanged: controller.updateText,
+                        ),
                       ),
-                      AccountButton(auth: widget.auth, documents: controller),
-                      const SizedBox(width: 8),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: SafeArea(
-              top: false,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: LayoutBuilder(
-                  builder: (context, constraints) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // [PA-H3-E2] Avisos de arriba: con la letra normal caben enteros;
-                      // con la letra grande se desplazan en hasta el 45 % del alto, y el
-                      // campo de texto sigue en el mismo lugar (no pierde el foco).
-                      ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: constraints.maxHeight * 0.45,
-                        ),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              const _RecognitionWarning(),
-                              if (status != null) ...[
-                                const SizedBox(height: 12),
-                                StatusBanner(
-                                  status: status,
-                                  // [EX-H3-E1] «Compartir» el archivo recién guardado.
-                                  actionLabel:
-                                      status.action == StatusAction.shareExport
-                                      ? context.strings.share
-                                      : null,
-                                  onAction:
-                                      status.action ==
-                                              StatusAction.shareExport &&
-                                          !busy
-                                      ? controller.shareLastExport
-                                      : null,
-                                ),
-                              ],
-                              // [EX-H1-E9] La barra solo aparece si quedan palabras dudosas.
-                              if (controller.uncertainRanges.isNotEmpty) ...[
-                                const SizedBox(height: 12),
-                                ValueListenableBuilder<TextEditingValue>(
-                                  valueListenable: _textController,
-                                  builder: (context, value, _) => _ReviewBar(
-                                    count: controller.uncertainRanges.length,
-                                    onNext: busy
-                                        ? null
-                                        : _selectNextUncertainWord,
-                                    onAccept:
-                                        busy ||
-                                            _selectedUncertainWord(
-                                                  value.selection,
-                                                ) ==
-                                                null
-                                        ? null
-                                        : _acceptSelectedWord,
-                                  ),
-                                ),
-                              ],
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Expanded(
-                        child: Card(
-                          margin: EdgeInsets.zero,
-                          clipBehavior: Clip.antiAlias,
-                          child: TextField(
-                            controller: _textController,
-                            focusNode: _textFocus,
-                            readOnly: busy,
-                            expands: true,
-                            maxLines: null,
-                            minLines: null,
-                            keyboardType: TextInputType.multiline,
-                            textAlignVertical: TextAlignVertical.top,
-                            // [AV-H1-E4] Tamaño de letra de Ajustes.
-                            style: editorTextStyle(
-                              context,
-                              SettingsScope.of(context).settings.textSize,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: context.strings.editorHint,
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.all(18),
-                            ),
-                            onChanged: controller.updateText,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      // Contador de palabras y caracteres, se actualiza al escribir.
-                      ValueListenableBuilder<TextEditingValue>(
-                        valueListenable: _textController,
-                        builder: (context, value, _) {
-                          final trimmed = value.text.trim();
-                          final words = trimmed.isEmpty
-                              ? 0
-                              : trimmed.split(RegExp(r'\s+')).length;
-                          return Text(
-                            context.strings.textStats(
-                              words,
-                              value.text.runes.length,
-                            ),
-                            textAlign: TextAlign.end,
-                            style: textTheme.labelMedium,
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 12),
-                      PrimaryButton(
-                        label: context.strings.export,
-                        icon: Icons.file_download_outlined,
-                        isLoading: busy,
-                        onPressed: busy ? null : _export,
-                      ),
-                    ],
-                  ),
-                ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              child: PrimaryButton(
+                label: strings.export,
+                onPressed: busy ? null : _export,
+                isLoading: status?.event == StatusEvent.exporting,
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -410,67 +411,38 @@ class _ReviewBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-    return Container(
-      padding: const EdgeInsets.fromLTRB(14, 10, 10, 6),
-      decoration: BoxDecoration(
-        color: colors.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(Aurora.radius),
-        border: Border.all(color: colors.outlineVariant),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Semantics(
-            liveRegion: true, // el lector de pantalla anuncia cuántas quedan
-            child: Row(
-              children: [
-                Icon(Icons.rate_review_outlined, color: colors.primary),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        context.strings.uncertainWordsCount(count),
-                        style: textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Text(
-                        onAccept == null
-                            ? context.strings.uncertainWordsHint
-                            : context.strings.acceptUncertainWordHint,
-                        style: textTheme.bodySmall?.copyWith(
-                          color: colors.onSurfaceVariant,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+    final strings = context.strings;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Semantics(
+          liveRegion: true,
+          child: Text(
+            strings.uncertainWordsCount(count),
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+        ),
+        Text(
+          onAccept == null
+              ? strings.uncertainWordsHint
+              : strings.acceptUncertainWordHint,
+        ),
+        Wrap(
+          spacing: 8,
+          children: [
+            TextButton.icon(
+              onPressed: onNext,
+              icon: const Icon(Icons.navigate_next),
+              label: Text(strings.nextUncertainWord),
             ),
-          ),
-          // Wrap: si no caben en una fila (letra grande), los botones bajan.
-          Wrap(
-            alignment: WrapAlignment.end,
-            spacing: 8,
-            children: [
-              TextButton.icon(
-                onPressed: onAccept,
-                icon: const Icon(Icons.check),
-                label: Text(context.strings.acceptUncertainWord),
-              ),
-              TextButton.icon(
-                onPressed: onNext,
-                icon: const Icon(Icons.arrow_forward),
-                label: Text(context.strings.nextUncertainWord),
-              ),
-            ],
-          ),
-        ],
-      ),
+            TextButton.icon(
+              onPressed: onAccept,
+              icon: const Icon(Icons.check),
+              label: Text(strings.acceptUncertainWord),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
@@ -481,27 +453,18 @@ class _RecognitionWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = Theme.of(context).brightness == Brightness.dark;
-    final foreground = dark ? Aurora.warning : const Color(0xFF7A4D00);
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Aurora.warning.withValues(alpha: dark ? 0.14 : 0.22),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Aurora.warning.withValues(alpha: 0.5)),
-      ),
-      child: Row(
-        children: [
-          Icon(Icons.warning_amber_rounded, color: foreground),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              context.strings.recognitionWarning,
-              style: TextStyle(color: foreground),
-            ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ExcludeSemantics(
+          child: Icon(
+            Icons.fact_check_outlined,
+            color: Theme.of(context).colorScheme.primary,
           ),
-        ],
-      ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(child: Text(context.strings.recognitionWarning)),
+      ],
     );
   }
 }

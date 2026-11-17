@@ -2,6 +2,8 @@
 #   pytest -> ejecuta las pruebas automatizadas de backend/tests
 #   pypdf  -> lee los PDF generados para comprobar su texto en las pruebas
 #   ruff   -> formateador y analizador de estilo
+# Entorno verificado en el reinicio: Python 3.12.16, Linux x86_64.
+# pgserver 0.1.4 no publica wheel para Python 3.14; usar 3.12 para esta suite.
 #   pgserver -> PostgreSQL embebido para probar la persistencia sin instalar nada (spec 002)
 -r requirements.txt
 colorama==0.4.6 ; sys_platform == "win32"

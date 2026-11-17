@@ -182,7 +182,7 @@ void main() {
     // el saludo ni el título de al lado ni se vuelve encabezado.
     expect(
       tester.getSemantics(find.byTooltip(es.accountTooltip)),
-      containsSemantics(
+      isSemantics(
         tooltip: es.accountTooltip,
         label: '',
         hasTapAction: true,
@@ -205,7 +205,7 @@ void main() {
     final status = h.controller.status!;
     expect(
       tester.getSemantics(find.text(es.statusText(status))),
-      containsSemantics(isLiveRegion: true),
+      isSemantics(isLiveRegion: true),
     );
     handle.dispose();
   });
@@ -230,7 +230,7 @@ void main() {
   ) async {
     final handle = tester.ensureSemantics();
     // Un encabezado es un nodo propio y no se puede tocar (no se mezcla con un botón).
-    Matcher header() => containsSemantics(isHeader: true, hasTapAction: false);
+    Matcher header() => isSemantics(isHeader: true, hasTapAction: false);
     final h = TestHarness(signedIn: false)..api.recognitionResult = _recognized;
     await pumpHandTextApp(tester, h);
     expect(tester.getSemantics(find.text(es.appName)), header());

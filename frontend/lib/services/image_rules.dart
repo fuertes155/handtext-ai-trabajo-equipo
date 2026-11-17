@@ -41,17 +41,19 @@ class ImageCheck {
 /// Identifica el formato por la firma de los primeros bytes. Devuelve null si no es
 /// JPEG ni PNG, aunque el archivo se llame «foto.jpg».
 ImageFormat? detectImageFormat(Uint8List bytes) {
-  bool startsWith(List<int> signature) {
-    if (bytes.length < signature.length) return false;
-    for (var i = 0; i < signature.length; i++) {
-      if (bytes[i] != signature[i]) return false;
-    }
-    return true;
-  }
-
-  if (startsWith(const [0xFF, 0xD8, 0xFF])) return ImageFormat.jpeg;
-  if (startsWith(const [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A])) {
+  const png = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
+  if (bytes.length >= png.length &&
+      List.generate(
+        png.length,
+        (i) => bytes[i] == png[i],
+      ).every((same) => same)) {
     return ImageFormat.png;
+  }
+  if (bytes.length >= 3 &&
+      bytes[0] == 0xff &&
+      bytes[1] == 0xd8 &&
+      bytes[2] == 0xff) {
+    return ImageFormat.jpeg;
   }
   return null;
 }
@@ -67,18 +69,14 @@ Future<ImageCheck> validateSelectedImage(
   if (bytes.length > AppConfig.maxImageBytes) {
     throw const AppFailure(FailureKind.imageTooLarge);
   }
-
   final format = detectImageFormat(bytes);
   if (format == null) throw const AppFailure(FailureKind.unsupportedImageType);
-
   final ImageDimensions dimensions;
   try {
     dimensions = await readDimensions(bytes);
   } catch (_) {
-    // Si el encabezado no se puede leer, la imagen no se puede abrir.
     throw const AppFailure(FailureKind.imageUnreadable);
   }
-
   if (!_isAllowedSide(dimensions.width) || !_isAllowedSide(dimensions.height)) {
     throw const AppFailure(FailureKind.imageDimensionsOutOfRange);
   }
@@ -89,21 +87,21 @@ Future<ImageCheck> validateSelectedImage(
   );
 }
 
-bool _isAllowedSide(int pixels) =>
-    pixels >= AppConfig.minImageSidePx && pixels <= AppConfig.maxImageSidePx;
+bool _isAllowedSide(int pixels) {
+  return pixels >= AppConfig.minImageSidePx &&
+      pixels <= AppConfig.maxImageSidePx;
+}
 
 /// Lee ancho y alto con el motor de Flutter. Solo interpreta el encabezado, sin
 /// decodificar los píxeles: es rápido y casi no usa memoria.
 Future<ImageDimensions> readImageDimensionsWithEngine(Uint8List bytes) async {
   final buffer = await ui.ImmutableBuffer.fromUint8List(bytes);
+  ui.ImageDescriptor? descriptor;
   try {
-    final descriptor = await ui.ImageDescriptor.encoded(buffer);
-    try {
-      return ImageDimensions(descriptor.width, descriptor.height);
-    } finally {
-      descriptor.dispose();
-    }
+    descriptor = await ui.ImageDescriptor.encoded(buffer);
+    return ImageDimensions(descriptor.width, descriptor.height);
   } finally {
+    descriptor?.dispose();
     buffer.dispose();
   }
 }

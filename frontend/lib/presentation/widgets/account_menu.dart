@@ -22,6 +22,7 @@ import '../screens/about_screen.dart';
 import '../screens/settings_screen.dart';
 import '../strings.dart';
 import 'confirm_dialog.dart';
+import 'password_field.dart';
 
 enum _AccountAction { settings, about, signOut, deleteAccount }
 
@@ -38,126 +39,98 @@ class AccountButton extends StatelessWidget {
   final DocumentFlowController documents;
 
   Future<void> _signOut(BuildContext context) async {
-    if (documents.hasUnexportedChanges) {
-      final confirmed = await showConfirmDialog(
-        context,
-        title: context.strings.signOutTitle,
-        message: context.strings.signOutUnexportedMessage,
-        confirmLabel: context.strings.signOut,
-        destructive: true,
-      );
-      if (!confirmed) return; // cancelar conserva todo
+    if (auth.isBusy || documents.isBusy) return;
+    final strings = context.strings;
+    if (documents.hasUnexportedChanges &&
+        !await showConfirmDialog(
+          context,
+          title: strings.signOutTitle,
+          message: strings.signOutUnexportedMessage,
+          confirmLabel: strings.signOut,
+          destructive: true,
+        )) {
+      return;
     }
     await auth.signOut(beforeSignOut: documents.clearLocalData);
+    final failure = auth.failure;
+    if (failure != null && context.mounted) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(strings.failureText(failure))));
+    }
   }
 
   Future<void> _deleteAccount(BuildContext context) async {
-    final messenger = ScaffoldMessenger.of(context);
-    final strings = context.strings; // antes de esperar: el menú puede cerrarse
+    if (auth.isBusy || documents.isBusy) return;
     final password = await showDeleteAccountDialog(context);
     if (password == null) return;
-    final deleted = await auth.deleteAccount(
+    final ok = await auth.deleteAccount(
       password,
-      // Spec 007: eliminar la cuenta también borra su historial [HD-H3-E4].
       beforeSignOut: () => documents.clearLocalData(deleteHistory: true),
     );
-    if (!deleted) {
-      // [CU-H2-E4] Contraseña incorrecta u otro problema: la cuenta se conserva.
-      messenger.showSnackBar(
-        SnackBar(
-          content: Text(
-            strings.failureText(
-              auth.failure ?? const AppFailure(FailureKind.unexpected),
-            ),
-          ),
-        ),
+    if (!ok && context.mounted) {
+      final failure = auth.failure ?? const AppFailure(FailureKind.unexpected);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.strings.failureText(failure))),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final user = auth.user;
-    // Nodo propio para TalkBack: «Cuenta, botón», sin absorber el saludo ni el título
-    // que tiene al lado [PA-H2-E1].
+    final strings = context.strings;
+    // Un nodo propio evita que el saludo o el título vecinos se mezclen con Cuenta.
     return Semantics(
       container: true,
       child: PopupMenuButton<_AccountAction>(
-        tooltip: context.strings.accountTooltip,
-        enabled: !documents.isBusy && !auth.isBusy,
-        position: PopupMenuPosition.under,
-        onSelected: (action) => switch (action) {
-          _AccountAction.settings => unawaited(
-            Navigator.of(context).push(
-              MaterialPageRoute<void>(builder: (_) => const SettingsScreen()),
-            ),
-          ),
-          _AccountAction.about => unawaited(AboutScreen.open(context)),
-          _AccountAction.signOut => unawaited(_signOut(context)),
-          _AccountAction.deleteAccount => unawaited(_deleteAccount(context)),
+        tooltip: strings.accountTooltip,
+        enabled: !auth.isBusy && !documents.isBusy,
+        padding: EdgeInsets.zero,
+        onSelected: (action) {
+          switch (action) {
+            case _AccountAction.settings:
+              unawaited(
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (_) => const SettingsScreen(),
+                  ),
+                ),
+              );
+            case _AccountAction.about:
+              unawaited(
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(builder: (_) => const AboutScreen()),
+                ),
+              );
+            case _AccountAction.signOut:
+              unawaited(_signOut(context));
+            case _AccountAction.deleteAccount:
+              unawaited(_deleteAccount(context));
+          }
         },
-        itemBuilder: (context) => [
-          if (user != null)
-            PopupMenuItem<_AccountAction>(
-              // Encabezado informativo: no se puede tocar, pero se lee con colores
-              // normales (no en gris de «desactivado»).
-              enabled: false,
-              child: ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text(
-                  user.displayName,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurface,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                subtitle: Text(
-                  user.email,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-                ),
-              ),
-            ),
-          const PopupMenuDivider(),
+        itemBuilder: (_) => [
           PopupMenuItem(
             value: _AccountAction.settings,
-            child: ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: Icon(Icons.tune),
-              title: Text(context.strings.settingsTitle),
-            ),
+            child: Text(strings.settingsTitle),
           ),
           PopupMenuItem(
             value: _AccountAction.about,
-            child: ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: Icon(Icons.info_outline),
-              title: Text(context.strings.aboutTitle),
-            ),
+            child: Text(strings.aboutTitle),
           ),
           const PopupMenuDivider(),
           PopupMenuItem(
             value: _AccountAction.signOut,
-            child: ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: Icon(Icons.logout),
-              title: Text(context.strings.signOut),
-            ),
+            child: Text(strings.signOut),
           ),
           PopupMenuItem(
             value: _AccountAction.deleteAccount,
-            child: ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: Icon(
-                Icons.delete_forever_outlined,
-                color: Theme.of(context).colorScheme.error,
-              ),
-              title: Text(context.strings.deleteAccount),
-            ),
+            child: Text(strings.deleteAccount),
           ),
         ],
-        child: _Avatar(initial: user?.initial ?? '?'),
+        child: Semantics(
+          button: true,
+          child: _Avatar(initial: auth.user?.initial ?? '?'),
+        ),
       ),
     );
   }
@@ -172,23 +145,23 @@ class _Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 48,
-      height: 48,
-      padding: const EdgeInsets.all(2),
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        color: Aurora.surfaceBorder,
-      ),
-      child: CircleAvatar(
-        backgroundColor: Aurora.blue,
-        // TalkBack lee el nombre del botón («Cuenta»), no la letra suelta.
-        child: ExcludeSemantics(
-          child: Text(
-            initial,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
+    return ExcludeSemantics(
+      child: SizedBox.square(
+        dimension: 48,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Aurora.blue,
+            border: Border.all(color: Aurora.blueLight),
+          ),
+          child: Center(
+            child: Text(
+              initial,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ),
@@ -198,17 +171,20 @@ class _Avatar extends StatelessWidget {
 }
 
 /// Pide la contraseña para eliminar la cuenta. Devuelve null si se cancela.
-Future<String?> showDeleteAccountDialog(BuildContext context) =>
-    showDialog<String>(
-      context: context,
-      builder: (_) => const _DeleteAccountDialog(),
-    );
+Future<String?> showDeleteAccountDialog(BuildContext context) {
+  return showDialog<String>(
+    context: context,
+    builder: (_) => const _DeleteAccountDialog(),
+  );
+}
 
 class _DeleteAccountDialog extends StatefulWidget {
   const _DeleteAccountDialog();
 
   @override
-  State<_DeleteAccountDialog> createState() => _DeleteAccountDialogState();
+  State<_DeleteAccountDialog> createState() {
+    return _DeleteAccountDialogState();
+  }
 }
 
 class _DeleteAccountDialogState extends State<_DeleteAccountDialog> {
@@ -222,49 +198,40 @@ class _DeleteAccountDialogState extends State<_DeleteAccountDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
+    final strings = context.strings;
     return AlertDialog(
-      // Con la letra grande, el mensaje y el campo se desplazan (research.md de
-      // 006, R6).
       scrollable: true,
-      icon: Icon(Icons.warning_amber_rounded, color: colors.error, size: 40),
-      title: Text(context.strings.deleteAccountTitle),
-      // Botones apilados centrados si no caben, con la acción principal arriba.
-      actionsOverflowAlignment: OverflowBarAlignment.center,
-      actionsOverflowDirection: VerticalDirection.up,
-      actionsOverflowButtonSpacing: 8,
+      title: Text(strings.deleteAccountTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(context.strings.deleteAccountMessage),
-          const SizedBox(height: 16),
-          TextField(
+          Text(strings.deleteAccountMessage),
+          const SizedBox(height: 20),
+          PasswordField(
             controller: _password,
-            obscureText: true,
-            autofocus: true,
-            decoration: InputDecoration(
-              labelText: context.strings.passwordLabel,
-              prefixIcon: Icon(Icons.lock_outline),
-            ),
+            label: strings.passwordLabel,
+            textInputAction: TextInputAction.done,
+            onSubmitted: (password) {
+              if (password.isNotEmpty) Navigator.of(context).pop(password);
+            },
           ),
         ],
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(context.strings.cancel),
+          child: Text(strings.cancel),
         ),
         ValueListenableBuilder<TextEditingValue>(
           valueListenable: _password,
           builder: (context, value, _) => FilledButton(
             style: FilledButton.styleFrom(
-              backgroundColor: colors.error,
-              foregroundColor: colors.onError,
+              backgroundColor: Theme.of(context).colorScheme.error,
             ),
             onPressed: value.text.isEmpty
                 ? null
                 : () => Navigator.of(context).pop(value.text),
-            child: Text(context.strings.deleteAccountConfirm),
+            child: Text(strings.deleteAccountConfirm),
           ),
         ),
       ],

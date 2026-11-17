@@ -9,7 +9,8 @@
 from __future__ import annotations
 
 from argon2 import PasswordHasher
-from argon2.exceptions import InvalidHashError, VerificationError, VerifyMismatchError
+from argon2.exceptions import InvalidHashError, VerificationError
+from argon2.low_level import Type
 
 
 class PasswordService:
@@ -17,19 +18,17 @@ class PasswordService:
 
     def __init__(self, hasher: PasswordHasher | None = None) -> None:
         # Parámetros predeterminados de argon2-cffi (Argon2id, perfil de RFC 9106).
-        self._hasher = hasher or PasswordHasher()
-        self._dummy_hash = self._hasher.hash("contraseña-ficticia-para-igualar-tiempos")
+        self._hasher = hasher if hasher is not None else PasswordHasher(type=Type.ID)
+        self._dummy_hash = self._hasher.hash("synthetic-unregistered-account")
 
     def hash(self, password: str) -> str:
         return self._hasher.hash(password)
 
     def verify(self, password_hash: str, password: str) -> bool:
-        """True solo si la contraseña corresponde al hash."""
         try:
             return self._hasher.verify(password_hash, password)
-        except (VerifyMismatchError, VerificationError, InvalidHashError):
+        except (InvalidHashError, VerificationError):
             return False
 
     def verify_dummy(self, password: str) -> None:
-        """Gasta el mismo tiempo que una verificación real (correo inexistente)."""
         self.verify(self._dummy_hash, password)

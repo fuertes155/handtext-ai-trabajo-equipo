@@ -1,23 +1,27 @@
-# Ajustes, licencias y compilación
+# Ajustes, versión y firma — reconstrucción actual
 
-Arranca la app y la API siguiendo la [guía local del MVP](../001-handtext-mvp/quickstart.md).
-Las cuentas son locales al dispositivo. La API se usa para reconocer y exportar;
-PostgreSQL solo interviene en las rutas de cuentas del servidor y sus pruebas de contrato.
-Se mantienen los requisitos de [la fase actual](../../docs/REQUISITOS_ACTUALES.md).
+[Entorno y comandos completos](../../docs/QUICKSTART_RECONSTRUCCION_LUIS.md).
+Desde frontend, ejecute las suites de ajustes y «Acerca de»:
 
-
-Desde `frontend/`:
-
-```powershell
-flutter test test/state/settings_test.dart test/presentation/settings_screens_test.dart
-flutter build apk --debug --target-platform android-x64
+```bash
+flutter test --no-pub test/state/settings_test.dart test/presentation/settings_screens_test.dart
 ```
 
-Revisa que tema, tamaño, idioma y consejos se conserven; abre «Acerca de» y «Licencias».
-Regenera el ícono con `backend/.venv/Scripts/python.exe frontend/tool/generate_launcher_icon.py`
-desde la raíz, con Pillow instalado. Las imágenes generadas están versionadas.
+La versión/build de AppConfig coincide con pubspec.yaml (1.0.0+1). Los ajustes se
+guardan en el teléfono y se conservan al cambiar de cuenta; el bloqueo solo se anuncia
+activo después de verificar identidad y persistir. Licencias accesibles sin sesión.
 
-La clave de distribución y `frontend/android/key.properties` permanecen fuera de Git.
-Esta integración no crea una clave ni configura la firma de distribución: el APK de
-prueba no acredita una entrega firmada. El idioma español/inglés forma parte del
-alcance vigente, descrito en [spec.md](spec.md).
+Para distribución, configure **su clave autorizada existente** fuera del repositorio,
+referida por frontend/android/key.properties (archivo ignorado). Campos: storeFile,
+storePassword, keyAlias, keyPassword. No publique ni envíe esos valores al chat.
+No se genera una clave nueva para reemplazar la del proyecto.
+
+```bash
+flutter build apk --release --split-per-abi --dart-define=HOSTED_ACCOUNTS=true --dart-define=API_BASE_URL=https://SU-API-AUTORIZADA/
+```
+
+Gradle rechaza HTTP, datos de acceso dentro de la URL, tokens locales, cuentas locales,
+clave ausente/inválida o certificado debug. No hay fallback debug. La prueba actual
+por arquitectura se detiene con SIGNING_REQUIRED; no se ha producido un APK release.
+Las diez pruebas con certificados sintéticos comprueban la política, no una firma
+real del proyecto ni instalación/arranque. La entrega histórica está en quickstart.origen.md.

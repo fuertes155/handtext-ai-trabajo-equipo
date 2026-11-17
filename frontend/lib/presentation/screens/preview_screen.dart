@@ -84,254 +84,176 @@ class PreviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final strings = context.strings;
     final image = controller.pendingImage;
-    if (image == null) return const SizedBox.shrink();
+    if (image == null) {
+      return AuroraScaffold(
+        body: Center(child: Text(strings.imagePreviewUnavailable)),
+      );
+    }
     final busy = controller.isBusy;
     final status = controller.status;
-    final recognizing = busy && status?.event == StatusEvent.recognizing;
-    final replaceLabel = context.strings.replaceImageLabel(image.origin);
-    final textTheme = Theme.of(context).textTheme;
-    final pageCount = controller.pages.length;
-    final pageNumber = controller.selectedPageIndex + 1;
-    final manyPages = pageCount > 1;
-
+    final recognizing = status?.event == StatusEvent.recognizing;
     return AuroraScaffold(
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Barra superior: cerrar (cancelar la selección) y título.
           Padding(
-            padding: const EdgeInsets.fromLTRB(8, 4, 16, 4),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
             child: Row(
               children: [
                 IconButton(
-                  tooltip: context.strings.cancelSelectionTooltip,
-                  icon: const Icon(Icons.close, color: Colors.white),
+                  tooltip: strings.cancelSelectionTooltip,
                   onPressed: busy ? null : controller.cancelPreview,
+                  icon: const Icon(Icons.close),
                 ),
-                const SizedBox(width: 4),
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // [PA-H2-E5] Título como encabezado para TalkBack.
-                      Semantics(
-                        // Nodo propio: no se mezcla con los botones vecinos.
-                        container: true,
-                        header: true,
-                        child: Text(
-                          context.strings.previewTitle,
-                          style: textTheme.titleLarge?.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
+                  child: Semantics(
+                    container: true,
+                    header: true,
+                    child: Text(
+                      strings.previewTitle,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
                       ),
-                      if (manyPages)
-                        Text(
-                          context.strings.pageOf(pageNumber, pageCount),
-                          style: textTheme.bodySmall?.copyWith(
-                            color: Aurora.textSecondary,
-                          ),
-                        ),
-                    ],
+                    ),
                   ),
                 ),
-                // [VP-H2-E2] [VP-H2-E3] Acciones de la página elegida; con una sola
-                // página no se muestran [VP-H2-E5]. Desactivadas se ven en gris.
-                if (manyPages) ...[
+                if (controller.pages.length > 1) ...[
                   IconButton(
-                    tooltip: context.strings.movePageBefore,
-                    icon: const Icon(Icons.chevron_left),
-                    color: Colors.white,
-                    disabledColor: Aurora.textMuted.withValues(alpha: 0.4),
-                    onPressed: busy || pageNumber == 1
+                    tooltip: strings.movePageBefore,
+                    onPressed: busy || controller.selectedPageIndex == 0
                         ? null
                         : () => controller.moveSelectedPage(-1),
+                    icon: const Icon(Icons.arrow_back),
                   ),
                   IconButton(
-                    tooltip: context.strings.movePageAfter,
-                    icon: const Icon(Icons.chevron_right),
-                    color: Colors.white,
-                    disabledColor: Aurora.textMuted.withValues(alpha: 0.4),
-                    onPressed: busy || pageNumber == pageCount
+                    tooltip: strings.movePageAfter,
+                    onPressed:
+                        busy ||
+                            controller.selectedPageIndex ==
+                                controller.pages.length - 1
                         ? null
                         : () => controller.moveSelectedPage(1),
+                    icon: const Icon(Icons.arrow_forward),
                   ),
                   IconButton(
-                    tooltip: context.strings.removePage,
-                    icon: const Icon(Icons.delete_outline),
-                    color: Colors.white,
-                    disabledColor: Aurora.textMuted.withValues(alpha: 0.4),
+                    tooltip: strings.removePage,
                     onPressed: busy ? null : controller.removeSelectedPage,
+                    icon: const Icon(Icons.delete_outline),
                   ),
                 ],
               ],
             ),
           ),
-          // La imagen, con la animación de escaneo mientras se reconoce.
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(Aurora.radiusLarge),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    const ColoredBox(color: Color(0x33000000)),
-                    InteractiveViewer(
-                      // Permite acercar la imagen con dos dedos para revisarla.
-                      child: Image.memory(
-                        image.bytes,
-                        fit: BoxFit.contain,
-                        cacheWidth:
-                            1600, // ahorra memoria con fotos muy grandes
-                        errorBuilder: (context, error, stackTrace) => Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(24),
-                            child: Text(
-                              context.strings.imagePreviewUnavailable,
-                              textAlign: TextAlign.center,
-                              style: textTheme.bodyMedium?.copyWith(
-                                color: Aurora.textSecondary,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    if (recognizing) ...[
-                      const ScanOverlay(),
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        bottom: 18,
-                        child: Center(
-                          child: _ReadingChip(
-                            text: context.strings.readingHandwriting,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ],
+            child: ListView(
+              padding: const EdgeInsets.only(bottom: 24),
+              children: [
+                PageStrip(
+                  pages: controller.pages,
+                  selectedIndex: controller.selectedPageIndex,
+                  onSelect: busy ? null : controller.selectPage,
+                  onAdd: busy || !controller.canAddPages
+                      ? null
+                      : () => _addPage(context),
                 ),
-              ),
-            ),
-          ),
-          // [VP-H1-E1] Miniaturas de las páginas y «Agregar página».
-          const SizedBox(height: 12),
-          PageStrip(
-            pages: controller.pages,
-            selectedIndex: controller.selectedPageIndex,
-            onSelect: busy ? null : controller.selectPage,
-            onAdd: busy ? null : () => _addPage(context),
-          ),
-          // Panel inferior: datos, avisos y acciones.
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-            child: SurfaceCard(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    busy
-                        ? context.strings.recognizingHint
-                        : manyPages
-                        ? '${context.strings.pageOf(pageNumber, pageCount)} · '
-                              '${context.strings.imageDetails(image)}'
-                        : context.strings.imageDetails(image),
-                    textAlign: TextAlign.center,
-                    style: textTheme.bodySmall?.copyWith(
-                      color: Aurora.textSecondary,
-                    ),
-                  ),
-                  if (status != null && !busy) ...[
-                    const SizedBox(height: 12),
-                    StatusBanner(
-                      status: status,
-                      onAurora: true,
-                      actionLabel: switch (status.action) {
-                        StatusAction.retryRecognition => context.strings.retry,
-                        StatusAction.replaceImage => replaceLabel,
-                        // Spec 009: sin escáner, se agrega una fotografía.
-                        StatusAction.takePhoto => context.strings.takePhoto,
-                        // Compartir solo existe en el editor (spec 003).
-                        StatusAction.shareExport || null => null,
-                      },
-                      onAction: switch (status.action) {
-                        StatusAction.retryRecognition =>
-                          () => _acceptAndRecognize(context),
-                        StatusAction.replaceImage => controller.replaceImage,
-                        StatusAction.takePhoto => () => controller.addPages(
-                          ImageOrigin.camera,
-                        ),
-                        StatusAction.shareExport || null => null,
-                      },
-                    ),
-                  ],
-                  const SizedBox(height: 14),
-                  PrimaryButton(
-                    label: manyPages
-                        ? context.strings.recognizePages(pageCount)
-                        : context.strings.acceptAndRecognize,
-                    icon: Icons.auto_awesome,
-                    isLoading: recognizing,
-                    onPressed: busy ? null : () => _acceptAndRecognize(context),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      // [EX-H2-E1] Recortar o girar antes de reconocer.
-                      Expanded(
-                        child: OutlinedButton.icon(
-                          onPressed: busy ? null : controller.editImage,
-                          icon: const Icon(Icons.crop_rotate),
-                          label: Text(
-                            context.strings.editImage,
-                            textAlign: TextAlign.center,
+                      if (controller.pages.length > 1) ...[
+                        Text(
+                          strings.pageOf(
+                            controller.selectedPageIndex + 1,
+                            controller.pages.length,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                      ],
+                      SurfaceCard(
+                        padding: const EdgeInsets.all(8),
+                        child: SizedBox(
+                          height: 280,
+                          child: Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Image.memory(
+                                image.bytes,
+                                fit: BoxFit.contain,
+                                cacheWidth: 1200,
+                                errorBuilder: (context, _, _) => Center(
+                                  child: Text(strings.imagePreviewUnavailable),
+                                ),
+                              ),
+                              if (recognizing) ...[
+                                const ScanOverlay(),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: _ReadingChip(
+                                    text: strings.readingHandwriting,
+                                  ),
+                                ),
+                              ],
+                            ],
                           ),
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: busy ? null : controller.replaceImage,
-                          child: Text(
-                            replaceLabel,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
+                      const SizedBox(height: 12),
+                      Text(
+                        strings.imageDetails(image),
+                        style: const TextStyle(color: Aurora.textSecondary),
                       ),
-                    ],
-                  ),
-                  // «Usar la imagen original» solo si ya se recortó [EX-H2-E5].
-                  Row(
-                    children: [
-                      // Toma todo el espacio libre, para que el texto quepa en una
-                      // línea; sin él, «Cancelar» queda a la derecha.
+                      const SizedBox(height: 16),
+                      if (status != null) ...[
+                        StatusBanner(
+                          status: status,
+                          onAurora: true,
+                          actionLabel:
+                              status.action == StatusAction.retryRecognition
+                              ? strings.retry
+                              : null,
+                          onAction:
+                              !busy &&
+                                  status.action == StatusAction.retryRecognition
+                              ? () => _acceptAndRecognize(context)
+                              : null,
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+                      PrimaryButton(
+                        label: controller.pages.length == 1
+                            ? strings.acceptAndRecognize
+                            : strings.recognizePages(controller.pages.length),
+                        onPressed: busy
+                            ? null
+                            : () => _acceptAndRecognize(context),
+                        isLoading: busy,
+                      ),
+                      const SizedBox(height: 12),
+                      OutlinedButton.icon(
+                        onPressed: busy ? null : controller.replaceImage,
+                        icon: const Icon(Icons.image_outlined),
+                        label: Text(strings.replaceImageLabel(image.origin)),
+                      ),
+                      const SizedBox(height: 12),
+                      OutlinedButton.icon(
+                        onPressed: busy ? null : controller.editImage,
+                        icon: const Icon(Icons.crop_rotate),
+                        label: Text(strings.editImage),
+                      ),
                       if (controller.canRestoreOriginalImage)
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: TextButton.icon(
-                              onPressed: busy
-                                  ? null
-                                  : controller.restoreOriginalImage,
-                              icon: const Icon(Icons.undo),
-                              label: Text(context.strings.restoreOriginalImage),
-                            ),
-                          ),
-                        )
-                      else
-                        const Spacer(),
-                      TextButton(
-                        onPressed: busy ? null : controller.cancelPreview,
-                        child: Text(context.strings.cancel),
-                      ),
+                        TextButton(
+                          onPressed: busy
+                              ? null
+                              : controller.restoreOriginalImage,
+                          child: Text(strings.restoreOriginalImage),
+                        ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
@@ -348,22 +270,17 @@ class _ReadingChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SurfaceCard(
-      radius: 30,
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(Icons.auto_awesome, color: Aurora.sky, size: 18),
-          const SizedBox(width: 8),
-          Text(
-            text,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: Aurora.backgroundTop,
+          borderRadius: BorderRadius.circular(Aurora.radiusSmall),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Text(text, style: const TextStyle(color: Aurora.textPrimary)),
+        ),
       ),
     );
   }

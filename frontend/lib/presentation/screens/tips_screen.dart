@@ -80,7 +80,8 @@ class _TipsScreenState extends State<TipsScreen> {
     setState(() => _page = page);
     // [PA-H2-E4] TalkBack lee el consejo nuevo sin mover el foco del botón.
     final (title, _) = context.strings.tips[page];
-    SemanticsService.announce(
+    SemanticsService.sendAnnouncement(
+      View.of(context),
       '${context.strings.tipOf(page + 1, context.strings.tips.length)}. $title',
       Directionality.of(context),
     );
@@ -90,60 +91,66 @@ class _TipsScreenState extends State<TipsScreen> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final count = context.strings.tips.length;
-    return AuroraScaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 8, 8, 0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    context.strings.tipsLink,
-                    style: textTheme.titleMedium?.copyWith(
-                      color: Aurora.textSecondary,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) widget.onDone();
+      },
+      child: AuroraScaffold(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 8, 8, 0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      context.strings.tipsLink,
+                      style: textTheme.titleMedium?.copyWith(
+                        color: Aurora.textSecondary,
+                      ),
                     ),
                   ),
-                ),
-                TextButton(
-                  onPressed: widget.onDone, // [PA-H1-E3]
-                  child: Text(context.strings.tipsSkip),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: PageView(
-              controller: _pages,
-              onPageChanged: _onPageChanged,
-              children: [
-                for (final (index, (title, body))
-                    in context.strings.tips.indexed)
-                  _TipPage(
-                    icon: _tipIcons[index],
-                    step: context.strings.tipOf(index + 1, count),
-                    title: title,
-                    body: body,
+                  TextButton(
+                    onPressed: widget.onDone, // [PA-H1-E3]
+                    child: Text(context.strings.tipsSkip),
                   ),
-              ],
+                ],
+              ),
             ),
-          ),
-          // Los puntos repiten «Consejo 2 de 4»: TalkBack no los lee.
-          ExcludeSemantics(
-            child: _Dots(count: count, current: _page),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-            child: PrimaryButton(
-              label: _isLast
-                  ? context.strings.tipsStart
-                  : context.strings.tipsNext,
-              icon: _isLast ? Icons.check : Icons.arrow_forward,
-              onPressed: _next,
+            Expanded(
+              child: PageView(
+                controller: _pages,
+                onPageChanged: _onPageChanged,
+                children: [
+                  for (final (index, (title, body))
+                      in context.strings.tips.indexed)
+                    _TipPage(
+                      icon: _tipIcons[index],
+                      step: context.strings.tipOf(index + 1, count),
+                      title: title,
+                      body: body,
+                    ),
+                ],
+              ),
             ),
-          ),
-        ],
+            // Los puntos repiten «Consejo 2 de 4»: TalkBack no los lee.
+            ExcludeSemantics(
+              child: _Dots(count: count, current: _page),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
+              child: PrimaryButton(
+                label: _isLast
+                    ? context.strings.tipsStart
+                    : context.strings.tipsNext,
+                icon: _isLast ? Icons.check : Icons.arrow_forward,
+                onPressed: _next,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

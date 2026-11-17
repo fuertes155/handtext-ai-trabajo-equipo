@@ -18,6 +18,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/history_entry.dart';
+import '../../models/app_failure.dart';
 import '../../state/document_flow_controller.dart';
 import '../../theme/aurora.dart';
 import '../strings.dart';
@@ -102,11 +103,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   /// [OR-H3-E3] Pide el nombre nuevo; cancelar no cambia nada.
   Future<void> _rename(HistoryEntry entry) async {
-    final name = await showDialog<String>(
+    final title = await showDialog<String>(
       context: context,
       builder: (_) => _RenameDialog(initial: entry.title),
     );
-    if (name != null) await _controller.history.rename(entry.id, name);
+    if (!mounted || title == null || _controller.isBusy) return;
+    await _controller.history.rename(entry.id, title);
   }
 
   /// [HD-H3-E2] Vacía el historial, con confirmación.
@@ -153,12 +155,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
               // [OR-H3-E1] Búsqueda, solo si hay documentos.
               if (entries.isNotEmpty)
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                   child: TextField(
                     onChanged: (value) => setState(() => _query = value),
                     textInputAction: TextInputAction.search,
                     decoration: InputDecoration(
-                      hintText: context.strings.historySearchHint,
+                      labelText: context.strings.historySearchHint,
                       prefixIcon: const Icon(Icons.search),
                     ),
                   ),
@@ -302,16 +304,29 @@ class _RenameDialogState extends State<_RenameDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final name = _name.text.trim();
+    final valid = name.isNotEmpty && name.runes.length <= 60;
+    void submit() {
+      if (valid) Navigator.of(context).pop(name);
+    }
+
     return AlertDialog(
-      scrollable: true, // letra grande (spec 006)
+      scrollable: true,
       title: Text(context.strings.historyRenameTitle),
       content: TextField(
         controller: _name,
         autofocus: true,
-        maxLength: 60,
         textInputAction: TextInputAction.done,
+        onSubmitted: (_) => submit(),
+        onChanged: (_) => setState(() {}),
         decoration: InputDecoration(
           labelText: context.strings.historyRenameLabel,
+          errorText: valid
+              ? null
+              : context.strings.failureText(
+                  const AppFailure(FailureKind.invalidDisplayName),
+                ),
+          counterText: '${name.runes.length}/60',
         ),
       ),
       actions: [
@@ -319,15 +334,9 @@ class _RenameDialogState extends State<_RenameDialog> {
           onPressed: () => Navigator.of(context).pop(),
           child: Text(context.strings.cancel),
         ),
-        ValueListenableBuilder<TextEditingValue>(
-          valueListenable: _name,
-          builder: (context, value, _) => FilledButton(
-            // Un nombre de solo espacios no se acepta (caso límite).
-            onPressed: value.text.trim().isEmpty
-                ? null
-                : () => Navigator.of(context).pop(value.text.trim()),
-            child: Text(context.strings.historyRenameConfirm),
-          ),
+        FilledButton(
+          onPressed: valid ? submit : null,
+          child: Text(context.strings.historyRenameConfirm),
         ),
       ],
     );

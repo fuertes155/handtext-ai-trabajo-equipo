@@ -18,6 +18,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:handtext_ai/app.dart';
@@ -110,6 +111,8 @@ void main() {
 
     final page = await _syntheticPage();
     final saver = _PrivateFolderSaver(saved);
+    final picker = _SyntheticPicker(page);
+    late DocumentFlowController documents;
     final settings = SettingsController(
       store: FileSettingsStore(directory: () async => support),
     );
@@ -138,8 +141,8 @@ void main() {
           authenticator: LocalDeviceAuthenticator(),
         ),
         createDocumentController: (user, onSessionExpired) =>
-            DocumentFlowController(
-              imageSource: _SyntheticPicker(page),
+            documents = DocumentFlowController(
+              imageSource: picker,
               cameraPermission: const HandlerCameraPermissionService(),
               readImageDimensions: readImageDimensionsWithEngine,
               workingCopies: WorkingCopyService(
@@ -234,16 +237,25 @@ void main() {
 
     // [PP-H2-E1] Cerrar sesión, volver a entrar y encontrarlo.
     await step('cerrar sesión, volver y encontrarlo', () async {
+      // El historial pertenece al ID, no a la instancia del controlador.
+      final previousId = auth.user!.id;
       await _tapTooltip(tester, es.accountTooltip);
       await _tap(tester, es.signOut);
       await _waitFor(tester, find.text(es.haveAccount));
+      expect(auth.token, isNull);
+      expect(await sessions.read(), isNull);
       await _tap(tester, es.haveAccount);
       await _type(tester, es.emailLabel, email);
       await _type(tester, es.passwordLabel, password);
-      await _tap(tester, es.signIn, last: true);
+      await _tap(tester, es.signIn);
       await _waitFor(tester, find.text(es.greeting('Robot')));
+      expect(auth.user!.id, previousId);
       await _tap(tester, es.historyTitle);
       await _waitFor(tester, find.text('Apuntes de prueba'));
+      expect(history.entries.single.text, _corrected);
+      expect(history.entries.single.formats, {ExportFormat.docx});
+      // Releer el archivo evita confundir estado de memoria con persistencia.
+      expect((await historyStore.load()).single.text, _corrected);
     });
 
     final documentFlowDuration = total.elapsed;
@@ -296,6 +308,68 @@ void main() {
       }
     });
 
+    await step('buscar, renombrar y copiar en Android', () async {
+      await _tapTooltip(tester, en.moreActionsTooltip);
+      await _tap(tester, en.processAnotherImage);
+      await _tap(tester, en.replaceTextConfirm);
+      await _tap(tester, en.historyTitle);
+      await _type(tester, en.historySearchHint, 'CELULA');
+      await tester.pumpAndSettle();
+      expect(find.text('Apuntes de prueba'), findsOneWidget);
+      expect(find.text('Documento de prueba 1'), findsNothing);
+      await _tapTooltip(tester, en.historyRename('Apuntes de prueba'));
+      await _type(tester, en.historyRenameLabel, 'Synthetic renamed');
+      await _tap(tester, en.historyRenameConfirm);
+      await _waitFor(tester, find.text('Synthetic renamed'));
+      expect((await historyStore.load()).first.text, _corrected);
+      await _tap(tester, 'Synthetic renamed');
+      await _tapTooltip(tester, en.moreActionsTooltip);
+      await _tap(tester, en.copyAllText);
+      expect((await Clipboard.getData(Clipboard.kTextPlain))?.text, _corrected);
+      expect(documents.documentText, _corrected);
+    });
+
+    await step('varias páginas, reordenar, quitar y exportar PDF', () async {
+      await _tapTooltip(tester, en.moreActionsTooltip);
+      await _tap(tester, en.processAnotherImage);
+      await _tap(tester, en.replaceTextConfirm);
+      picker.pages = [
+        page,
+        await _syntheticPage(width: 1300),
+        await _syntheticPage(width: 1400),
+      ];
+      await _tap(tester, en.pickFromGallery);
+      await _waitFor(tester, find.text(en.recognizePages(3)));
+      expect(documents.pages.map((p) => p.image.width), [1200, 1300, 1400]);
+      await _tapTooltip(tester, en.movePageAfter);
+      expect(documents.pages.map((p) => p.image.width), [1300, 1200, 1400]);
+      await _tapTooltip(tester, en.removePage);
+      expect(documents.pages.map((p) => p.image.width), [1300, 1400]);
+      await _tap(tester, en.recognizePages(2));
+      await _tap(tester, en.consentAccept);
+      await _waitFor(tester, find.text(en.editorTitle));
+      expect(documents.documentText, '$_recognizedText\n\n$_recognizedText');
+      expect(documents.pages, isEmpty);
+      await _tap(tester, en.export);
+      await _tap(tester, en.pdfOption);
+      await _waitFor(
+        tester,
+        find.text(
+          en.statusText(
+            const OperationStatus.success(
+              StatusEvent.saved,
+              format: ExportFormat.pdf,
+            ),
+          ),
+        ),
+      );
+      expect(saver.files.last.path, endsWith('.pdf'));
+      expect(
+        ExportFormat.pdf.matchesContent(await saver.files.last.readAsBytes()),
+        isTrue,
+      );
+    });
+
     // Cierra la sesión de prueba.
     await _tapTooltip(tester, en.accountTooltip);
     await _tap(tester, en.signOut);
@@ -330,6 +404,9 @@ Future<void> _waitFor(
 
 /// Toca el texto (desplazando si hace falta) y espera.
 Future<void> _tap(WidgetTester tester, String text, {bool last = false}) async {
+  // El teclado Android real puede cubrir la casilla/botón tras escribir.
+  FocusManager.instance.primaryFocus?.unfocus();
+  await tester.pumpAndSettle();
   final finder = find.text(text);
   if (finder.evaluate().isEmpty) {
     await tester.scrollUntilVisible(
@@ -372,11 +449,11 @@ Future<void> _type(WidgetTester tester, String label, String value) async {
 }
 
 /// R3: una hoja sintética de 1200 × 1600 px, blanca y con líneas, en PNG.
-Future<Uint8List> _syntheticPage() async {
+Future<Uint8List> _syntheticPage({int width = 1200}) async {
   final recorder = ui.PictureRecorder();
   final canvas = Canvas(recorder);
   canvas.drawRect(
-    const Rect.fromLTWH(0, 0, 1200, 1600),
+    Rect.fromLTWH(0, 0, width.toDouble(), 1600),
     Paint()..color = Colors.white,
   );
   final ink = Paint()
@@ -386,7 +463,7 @@ Future<Uint8List> _syntheticPage() async {
     final y = 200.0 + line * 100;
     canvas.drawLine(Offset(120, y), Offset(1080 - line * 30, y), ink);
   }
-  final image = await recorder.endRecording().toImage(1200, 1600);
+  final image = await recorder.endRecording().toImage(width, 1600);
   final data = await image.toByteData(format: ui.ImageByteFormat.png);
   return data!.buffer.asUint8List();
 }
@@ -417,19 +494,20 @@ String _docxText(Uint8List zip) {
 
 /// Selector de fotos de prueba: entrega la hoja sintética (R2).
 class _SyntheticPicker implements ImageSourceService {
-  _SyntheticPicker(this.page);
+  _SyntheticPicker(Uint8List page) : pages = [page];
 
-  final Uint8List page;
+  List<Uint8List> pages;
 
   XFile get _file =>
-      XFile.fromData(page, name: 'hoja.png', mimeType: 'image/png');
+      XFile.fromData(pages.first, name: 'hoja.png', mimeType: 'image/png');
 
   @override
   Future<XFile?> pickFromGallery() async => _file;
 
   @override
   Future<List<XFile>> pickMultipleFromGallery({required int limit}) async => [
-    _file,
+    for (final page in pages.take(limit))
+      XFile.fromData(page, name: 'hoja.png', mimeType: 'image/png'),
   ];
 
   @override

@@ -39,83 +39,65 @@ class StatusBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-    final icon = switch (status.kind) {
-      StatusKind.failure => Icons.error_outline,
-      StatusKind.success => Icons.check_circle_outline,
-      StatusKind.inProgress => Icons.hourglass_top,
-      StatusKind.info => Icons.info_outline,
+    final scheme = Theme.of(context).colorScheme;
+    final color = switch (status.kind) {
+      StatusKind.success => onAurora ? Aurora.success : const Color(0xFF166534),
+      StatusKind.failure => onAurora ? Aurora.danger : scheme.error,
+      _ => onAurora ? Aurora.blueLight : scheme.primary,
     };
-    final Color background;
-    final Color border;
-    final Color foreground;
-    if (onAurora) {
-      final accent = switch (status.kind) {
-        StatusKind.failure => Aurora.danger,
-        StatusKind.success => Aurora.success,
-        StatusKind.inProgress => Aurora.sky,
-        StatusKind.info => Aurora.blueLight,
-      };
-      background = accent.withValues(alpha: 0.14);
-      border = accent.withValues(alpha: 0.45);
-      foreground = Colors.white;
-    } else {
-      (background, foreground) = switch (status.kind) {
-        StatusKind.failure => (colors.errorContainer, colors.onErrorContainer),
-        StatusKind.success => (
-          colors.primaryContainer,
-          colors.onPrimaryContainer,
-        ),
-        StatusKind.inProgress => (
-          colors.secondaryContainer,
-          colors.onSecondaryContainer,
-        ),
-        StatusKind.info => (colors.surfaceContainerHighest, colors.onSurface),
-      };
-      border = Colors.transparent;
-    }
-    final label = actionLabel;
-
+    final icon = switch (status.kind) {
+      StatusKind.success => Icons.check_circle_outline,
+      StatusKind.failure => Icons.error_outline,
+      _ => Icons.info_outline,
+    };
     return Semantics(
+      container: true,
       liveRegion: true,
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+      child: DecoratedBox(
         decoration: BoxDecoration(
-          color: background,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: border),
+          color: color.withValues(alpha: 0.10),
+          border: Border.all(color: color),
+          borderRadius: BorderRadius.circular(Aurora.radiusSmall),
         ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _PopIn(
-              enabled: status.kind == StatusKind.success,
-              child: Icon(icon, color: foreground),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    context.strings.statusText(status),
-                    style: TextStyle(color: foreground),
+                  ExcludeSemantics(
+                    child: _PopIn(
+                      enabled: status.kind == StatusKind.success,
+                      child: status.kind == StatusKind.inProgress
+                          ? SizedBox.square(
+                              dimension: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: color,
+                              ),
+                            )
+                          : Icon(icon, color: color),
+                    ),
                   ),
-                  if (label != null && onAction != null)
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: foreground,
-                        ),
-                        onPressed: onAction,
-                        child: Text(label),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      context.strings.statusText(status),
+                      style: TextStyle(
+                        color: onAurora ? Aurora.textPrimary : scheme.onSurface,
                       ),
                     ),
+                  ),
                 ],
               ),
-            ),
-          ],
+              if (actionLabel != null && onAction != null) ...[
+                const SizedBox(height: 8),
+                TextButton(onPressed: onAction, child: Text(actionLabel!)),
+              ],
+            ],
+          ),
         ),
       ),
     );
@@ -131,11 +113,11 @@ class _PopIn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!enabled) return child;
+    if (!enabled || !decorativeMotionEnabled(context)) return child;
     return TweenAnimationBuilder<double>(
-      tween: Tween(begin: 0.4, end: 1),
-      duration: motionDuration(context, const Duration(milliseconds: 500)),
-      curve: Curves.elasticOut,
+      tween: Tween(begin: 0.8, end: 1),
+      duration: motionDuration(context, const Duration(milliseconds: 220)),
+      curve: Curves.easeOutBack,
       builder: (context, scale, child) =>
           Transform.scale(scale: scale, child: child),
       child: child,

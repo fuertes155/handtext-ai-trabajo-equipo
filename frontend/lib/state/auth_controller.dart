@@ -33,61 +33,78 @@ class AuthController extends ChangeNotifier {
   StatusEvent? _notice;
   bool _isDisposed = false;
 
-  AuthStatus get status => _status;
+  AuthStatus get status {
+    return _status;
+  }
 
   /// Cuenta con sesión (null sin sesión).
-  UserAccount? get user => _session?.user;
+  UserAccount? get user {
+    return _session?.user;
+  }
 
   /// Token para la cabecera Authorization (lo lee HandTextApiClient).
-  String? get token => _session?.token;
+  String? get token {
+    return _session?.token;
+  }
 
   /// [SC-008] Hay una operación de cuenta en curso.
-  bool get isBusy => _isBusy;
+  bool get isBusy {
+    return _isBusy;
+  }
 
   /// Último fallo del registro, el ingreso o la eliminación (para mostrarlo).
-  AppFailure? get failure => _failure;
+  AppFailure? get failure {
+    return _failure;
+  }
 
   /// Aviso para la bienvenida: sesión vencida, sesión cerrada o cuenta eliminada.
-  StatusEvent? get notice => _notice;
+  StatusEvent? get notice {
+    return _notice;
+  }
 
   /// Al abrir la app, comprueba la sesión guardada con el servicio de autenticación.
   Future<void> initialize() async {
-    StoredSession? stored;
+    if (_isBusy || _isDisposed) return;
+    _isBusy = true;
+    _failure = null;
     try {
-      stored = await _sessions.read();
-    } on Exception {
-      stored = null;
-    }
-    if (stored == null) {
-      _status = AuthStatus.signedOut;
-      _notify();
-      return;
-    }
-
-    _session = stored;
-    try {
-      final user = await _api.me(stored.token);
-      _session = StoredSession(token: stored.token, user: user);
-      await _saveQuietly(_session!);
-      _status = AuthStatus.signedIn;
-    } on AppFailure catch (failure) {
-      if (failure.kind == FailureKind.sessionExpired) {
-        // [CU-H2-E5] El servidor ya no reconoce la sesión: se pide ingresar de nuevo.
-        await _clearQuietly();
-        _session = null;
+      final saved = await _sessions.read();
+      if (saved == null) {
         _status = AuthStatus.signedOut;
-        _notice = StatusEvent.sessionExpired;
-      } else if (failure.kind == FailureKind.noConnection) {
-        // Caso límite de la spec 002: sin conexión se entra con los datos guardados.
-        _status = AuthStatus.signedIn;
-      } else {
-        await _clearQuietly();
-        _session = null;
-        _status = AuthStatus.signedOut;
-        _failure = failure;
+        return;
       }
+      try {
+        final account = await _api.me(saved.token);
+        // Un token nunca debe cambiar de propietario al recuperar una sesión.
+        if (account.id != saved.user.id) {
+          throw const AppFailure(FailureKind.sessionExpired);
+        }
+        _session = StoredSession(token: saved.token, user: account);
+        await _saveQuietly(_session!);
+        _status = AuthStatus.signedIn;
+      } on AppFailure catch (error) {
+        if (error.kind == FailureKind.noConnection ||
+            error.kind == FailureKind.accountsUnavailable) {
+          _session = saved;
+          _status = AuthStatus.signedIn;
+        } else {
+          _session = null;
+          _status = AuthStatus.signedOut;
+          if (error.kind == FailureKind.sessionExpired) {
+            _notice = StatusEvent.sessionExpired;
+          }
+          _failure = error;
+          await _clearQuietly();
+        }
+      }
+    } catch (_) {
+      _session = null;
+      _status = AuthStatus.signedOut;
+      _failure = const AppFailure(FailureKind.unexpected);
+    } finally {
+      _isBusy = false;
+      _notify();
     }
-    _notify();
   }
 
   /// [CU-H1-E2] Crea la cuenta e inicia la sesión. Devuelve true si lo logró.
@@ -96,37 +113,44 @@ class AuthController extends ChangeNotifier {
     required String email,
     required String password,
     required bool acceptsDataPolicy,
-  }) => _startSession(
-    () => _api.register(
-      displayName: displayName,
-      email: email,
-      password: password,
-      acceptsDataPolicy: acceptsDataPolicy,
-    ),
-  );
+  }) {
+    return _startSession(
+      () => _api.register(
+        displayName: displayName.trim().split(RegExp(r'\s+')).join(' '),
+        email: email.trim().toLowerCase(),
+        password: password,
+        acceptsDataPolicy: acceptsDataPolicy,
+      ),
+    );
+  }
 
   /// [CU-H1-E6] Inicia sesión con correo y contraseña.
-  Future<bool> signIn({required String email, required String password}) =>
-      _startSession(() => _api.login(email: email, password: password));
+  Future<bool> signIn({required String email, required String password}) {
+    return _startSession(
+      () => _api.login(email: email.trim().toLowerCase(), password: password),
+    );
+  }
 
   Future<bool> _startSession(Future<AuthResult> Function() request) async {
-    if (_isBusy) return false;
+    if (_isBusy || _isDisposed) return false;
     _isBusy = true;
     _failure = null;
+    _notice = null;
     _notify();
     try {
-      final result = await request();
-      final session = StoredSession(token: result.token, user: result.user);
-      // [CU-H1-E9] La sesión debe persistirse antes de entrar.
-      await _sessions.save(session);
+      final grant = await request();
+      if (grant.token.isEmpty || grant.user.id.isEmpty) {
+        throw const AppFailure(FailureKind.invalidServerResponse);
+      }
+      final session = StoredSession(token: grant.token, user: grant.user);
+      await _saveQuietly(session);
       _session = session;
       _status = AuthStatus.signedIn;
-      _notice = null;
       return true;
-    } on AppFailure catch (failure) {
-      _failure = failure; // [CU-H1-E3] [CU-H1-E7] [CU-H1-E8]
+    } on AppFailure catch (error) {
+      _failure = error;
       return false;
-    } on Exception {
+    } catch (_) {
       _failure = const AppFailure(FailureKind.unexpected);
       return false;
     } finally {
@@ -138,24 +162,31 @@ class AuthController extends ChangeNotifier {
   /// [CU-H2-E1] Cierra la sesión. [beforeSignOut] borra antes los datos locales de la
   /// cuenta (el borrador), si la pantalla lo pidió con confirmación [CU-H2-E2].
   Future<void> signOut({Future<void> Function()? beforeSignOut}) async {
-    if (_isBusy) return;
-    final token = this.token;
+    if (_isBusy || _isDisposed || _session == null) return;
     _isBusy = true;
+    _failure = null;
     _notify();
     try {
       await beforeSignOut?.call();
-      if (token != null) {
-        try {
-          await _api.logout(token); // el token deja de servir en el servidor
-        } on Exception {
-          // Sin conexión: la sesión local se borra igual y vencerá en el servidor.
+      try {
+        await _api.logout(_session!.token);
+      } on AppFailure catch (error) {
+        // Sin red se puede cerrar la sesión del teléfono. La sesión del servidor
+        // mantiene su vencimiento habitual; nunca se inventa una revocación remota.
+        if (error.kind != FailureKind.noConnection &&
+            error.kind != FailureKind.sessionExpired) {
+          rethrow;
         }
       }
-    } finally {
-      await _clearQuietly();
+      await _sessions.clear();
       _session = null;
       _status = AuthStatus.signedOut;
       _notice = StatusEvent.signedOut;
+    } on AppFailure catch (error) {
+      _failure = error;
+    } catch (_) {
+      _failure = const AppFailure(FailureKind.unexpected);
+    } finally {
       _isBusy = false;
       _notify();
     }
@@ -167,23 +198,34 @@ class AuthController extends ChangeNotifier {
     String password, {
     Future<void> Function()? beforeSignOut,
   }) async {
-    final token = this.token;
-    if (token == null || _isBusy) return false;
+    if (_isBusy || _isDisposed || _session == null) return false;
     _isBusy = true;
     _failure = null;
+    var deletedRemotely = false;
     _notify();
     try {
-      await _api.deleteAccount(token, password);
-      await beforeSignOut?.call(); // borra el borrador de esta persona
-      await _clearQuietly();
+      await _api.deleteAccount(_session!.token, password);
+      deletedRemotely = true;
+      await beforeSignOut?.call();
+      await _sessions.clear();
       _session = null;
       _status = AuthStatus.signedOut;
       _notice = StatusEvent.accountDeleted;
       return true;
-    } on AppFailure catch (failure) {
-      _failure = failure;
+    } on AppFailure catch (error) {
+      _failure = error;
+      return false;
+    } catch (_) {
+      _failure = const AppFailure(FailureKind.unexpected);
       return false;
     } finally {
+      if (deletedRemotely && _status != AuthStatus.signedOut) {
+        // La cuenta ya no existe: un fallo de limpieza local se informa, pero no
+        // se mantiene una sesión ficticia ni se anuncia la eliminación completa.
+        _session = null;
+        _status = AuthStatus.signedOut;
+        await _clearQuietly();
+      }
       _isBusy = false;
       _notify();
     }
@@ -192,34 +234,34 @@ class AuthController extends ChangeNotifier {
   /// [CU-H2-E5] La API rechazó la sesión (401): se vuelve a la bienvenida. El borrador
   /// de esta persona se conserva y se recupera cuando vuelva a ingresar.
   void handleSessionExpired() {
-    if (_status != AuthStatus.signedIn) return;
     _session = null;
     _status = AuthStatus.signedOut;
     _notice = StatusEvent.sessionExpired;
-    _notify();
     unawaited(_clearQuietly());
+    _notify();
   }
 
   /// Borra el fallo mostrado (por ejemplo, al cambiar de pantalla).
   void clearFailure() {
-    if (_failure == null) return;
     _failure = null;
     _notify();
   }
 
   Future<void> _saveQuietly(StoredSession session) async {
+    // No registrar errores del almacenamiento seguro: pueden incluir datos privados.
     try {
       await _sessions.save(session);
-    } on Exception catch (error) {
-      debugPrint('No se pudo guardar la sesión: ${error.runtimeType}');
+    } catch (_) {
+      throw const AppFailure(FailureKind.unexpected);
     }
   }
 
   Future<void> _clearQuietly() async {
     try {
       await _sessions.clear();
-    } on Exception catch (error) {
-      debugPrint('No se pudo borrar la sesión: ${error.runtimeType}');
+    } catch (_) {
+      _failure = const AppFailure(FailureKind.unexpected);
+      _notify();
     }
   }
 

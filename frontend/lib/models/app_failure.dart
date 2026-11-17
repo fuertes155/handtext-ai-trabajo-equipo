@@ -36,7 +36,10 @@ enum FailureKind {
   /// El reconocimiento tardó más de 60 segundos y se canceló.
   recognitionTimeout,
 
-  /// El servicio de reconocimiento de Google no está disponible ahora.
+  /// El servidor no recibió un resultado del proveedor de OCR a tiempo.
+  ocrProviderTimeout,
+
+  /// El servidor no tiene configurado el proveedor de reconocimiento.
   serviceUnavailable,
 
   /// El servicio de reconocimiento no pudo procesar la imagen.
@@ -136,6 +139,7 @@ class AppFailure implements Exception {
   bool get isRetryable => switch (kind) {
     FailureKind.noConnection ||
     FailureKind.recognitionTimeout ||
+    FailureKind.ocrProviderTimeout ||
     FailureKind.serviceUnavailable ||
     FailureKind.recognitionFailed ||
     FailureKind.invalidServerResponse ||

@@ -55,7 +55,6 @@ AppSettings decodeSettings(String content) {
     ),
     tipsSeen: json['tipsSeen'] == true, // cualquier otro valor: no se vieron
     language: byName(AppLanguage.values, json['language'], AppLanguage.spanish),
-    // Spec 011: cualquier valor que no sea true deja el bloqueo apagado.
     appLock: json['appLock'] == true,
   );
 }

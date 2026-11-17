@@ -76,8 +76,8 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                 onTap: enabled ? widget.onPressed : null,
                 onHighlightChanged: (pressed) =>
                     setState(() => _pressed = pressed),
-                child: SizedBox(
-                  height: 54,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(minHeight: 54),
                   child: Center(
                     child: widget.isLoading
                         ? const SizedBox.square(
@@ -95,10 +95,16 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                                 const SizedBox(width: 10),
                               ],
                               Flexible(
-                                child: Text(
-                                  widget.label,
-                                  style: textStyle,
-                                  overflow: TextOverflow.ellipsis,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 12,
+                                  ),
+                                  child: Text(
+                                    widget.label,
+                                    style: textStyle,
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
                               ),
                             ],

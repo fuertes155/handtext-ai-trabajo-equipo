@@ -80,8 +80,8 @@ class FakeImageSource implements ImageSourceService {
   Future<List<XFile>> pickMultipleFromGallery({required int limit}) async {
     galleryCalls++;
     lastLimit = limit;
-    final single = galleryResult;
-    return galleryResults ?? [?single];
+    return galleryResults ??
+        (galleryResult == null ? <XFile>[] : [galleryResult!]);
   }
 
   @override

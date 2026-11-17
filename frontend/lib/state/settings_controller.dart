@@ -39,12 +39,22 @@ class SettingsController extends ChangeNotifier {
 
   /// Spec 011: guarda si el bloqueo con huella está activo. Lo llama
   /// AppLockController después de verificar a la persona.
-  Future<void> setAppLock(bool enabled) =>
-      _update(_settings.copyWith(appLock: enabled));
+  Future<void> setAppLock(bool enabled) {
+    return _setPersistentLock(enabled);
+  }
+
+  Future<void> _setPersistentLock(bool enabled) async {
+    final updated = _settings.copyWith(appLock: enabled);
+    // Un ajuste de seguridad solo se anuncia activo tras persistir correctamente.
+    await _store.save(updated);
+    _settings = updated;
+    notifyListeners();
+  }
 
   /// [IE-H1-E2] [IE-H1-E4] [SC-804] Idioma de la interfaz; se aplica al instante.
-  Future<void> setLanguage(AppLanguage language) =>
-      _update(_settings.copyWith(language: language));
+  Future<void> setLanguage(AppLanguage language) {
+    return _update(_settings.copyWith(language: language));
+  }
 
   /// [PA-H1-E3] [PA-H1-E4] Los consejos ya se vieron o se saltaron: no vuelven a
   /// aparecer solos [SC-601].

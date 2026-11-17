@@ -11,10 +11,9 @@ import secrets
 
 
 def new_session_token() -> str:
-    """Token impredecible, seguro para usar en una cabecera HTTP."""
     return secrets.token_urlsafe(32)
 
 
 def hash_session_token(token: str) -> str:
-    """Huella SHA-256 del token: es lo único que se guarda en sessions.token_hash."""
+    # SHA-256 es apropiado para tokens aleatorios de 256 bits, nunca para contraseñas.
     return hashlib.sha256(token.encode("utf-8")).hexdigest()

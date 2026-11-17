@@ -101,9 +101,7 @@ class _HandTextAppState extends State<HandTextApp> {
             // [IE-H1-E3] Inglés si el teléfono está en inglés; español en cualquier
             // otro caso (research.md de 008, R5).
             localeResolutionCallback: (locale, _) =>
-                locale?.languageCode == 'en'
-                ? const Locale('en')
-                : const Locale('es'),
+                Locale(locale?.languageCode == 'en' ? 'en' : 'es'),
             // [BL-H2-E1] La pantalla de bloqueo tapa todo, también Ajustes y los
             // diálogos (research.md de 011, R4).
             builder: (context, child) =>

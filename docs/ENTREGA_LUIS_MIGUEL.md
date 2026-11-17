@@ -1,3 +1,8 @@
+> **Registro histórico de la devolución e8f1289.** Los recuentos y retiros de
+> este documento corresponden a ese commit, no a la reconstrucción actual.
+> Consulte [el estado actual de las 72 tareas](ESTADO_TAREAS_LUIS.md) y
+> [la integración con main](INTEGRACION_LUIS_MAIN.md).
+
 # Entrega de tareas a Luis Miguel
 
 Fecha de la devolución: 17 de noviembre de 2026.

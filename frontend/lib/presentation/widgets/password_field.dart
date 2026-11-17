@@ -40,7 +40,9 @@ class PasswordField extends StatefulWidget {
   final ValueChanged<String>? onSubmitted;
 
   @override
-  State<PasswordField> createState() => _PasswordFieldState();
+  State<PasswordField> createState() {
+    return _PasswordFieldState();
+  }
 }
 
 class _PasswordFieldState extends State<PasswordField> {
@@ -48,41 +50,40 @@ class _PasswordFieldState extends State<PasswordField> {
 
   @override
   Widget build(BuildContext context) {
+    final strings = context.strings;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         TextField(
           controller: widget.controller,
           obscureText: _obscured,
-          autocorrect: false,
           enableSuggestions: false,
+          autocorrect: false,
           autofillHints: widget.autofillHints,
           textInputAction: widget.textInputAction,
           onSubmitted: widget.onSubmitted,
           decoration: InputDecoration(
             labelText: widget.label,
-            hintText: widget.showStrength ? context.strings.passwordHint : null,
             prefixIcon: const Icon(Icons.lock_outline),
             suffixIcon: IconButton(
-              tooltip: _obscured
-                  ? context.strings.showPassword
-                  : context.strings.hidePassword,
+              tooltip: _obscured ? strings.showPassword : strings.hidePassword,
+              onPressed: () => setState(() => _obscured = !_obscured),
               icon: Icon(
                 _obscured
                     ? Icons.visibility_outlined
                     : Icons.visibility_off_outlined,
               ),
-              onPressed: () => setState(() => _obscured = !_obscured),
             ),
           ),
         ),
-        if (widget.showStrength)
+        if (widget.showStrength) ...[
+          const SizedBox(height: 8),
           ValueListenableBuilder<TextEditingValue>(
             valueListenable: widget.controller,
-            builder: (context, value, _) => value.text.isEmpty
-                ? const SizedBox.shrink()
-                : _StrengthMeter(level: passwordStrength(value.text)),
+            builder: (context, value, _) =>
+                _StrengthMeter(level: passwordStrength(value.text)),
           ),
+        ],
       ],
     );
   }
@@ -96,31 +97,34 @@ class _StrengthMeter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const colors = [Aurora.danger, Aurora.warning, Aurora.success];
-    return Padding(
-      padding: const EdgeInsets.only(top: 8, left: 4, right: 4),
-      child: Row(
-        children: [
-          for (var i = 0; i < 3; i++) ...[
-            Expanded(
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 250),
-                height: 5,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  color: i <= level ? colors[level] : Aurora.surfaceBorder,
-                ),
-              ),
+    final label = context.strings.passwordStrength(level);
+    final color = [
+      Aurora.danger,
+      Aurora.warning,
+      Aurora.success,
+    ][level.clamp(0, 2)];
+    return Semantics(
+      label: label,
+      child: ExcludeSemantics(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                for (var i = 0; i < 3; i++)
+                  Expanded(
+                    child: Container(
+                      height: 4,
+                      margin: const EdgeInsets.symmetric(horizontal: 2),
+                      color: i <= level ? color : Aurora.surfaceBorder,
+                    ),
+                  ),
+              ],
             ),
-            const SizedBox(width: 6),
+            const SizedBox(height: 4),
+            Text(label, style: const TextStyle(color: Aurora.textMuted)),
           ],
-          Text(
-            context.strings.passwordStrength(level),
-            style: Theme.of(
-              context,
-            ).textTheme.labelSmall?.copyWith(color: Aurora.textSecondary),
-          ),
-        ],
+        ),
       ),
     );
   }

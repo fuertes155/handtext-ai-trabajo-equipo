@@ -13,16 +13,17 @@ Cuentas (spec 002):
 
 from __future__ import annotations
 
-import io
+import random
 import struct
 import zlib
 from collections.abc import Callable, Iterator
 from datetime import datetime
+from io import BytesIO
 
 import pytest
 from argon2 import PasswordHasher
 from fastapi.testclient import TestClient
-from PIL import Image, ImageDraw
+from PIL import Image
 
 from app.config import Settings
 from app.main import create_app
@@ -55,7 +56,7 @@ class FakeOcrProvider:
         self.text = text
         self.error = error
         self.uncertain = uncertain
-        self.received: list[bytes] = []  # imágenes que «recibió», para comprobarlas
+        self.received: list[bytes] = []
 
     async def recognize(self, image_jpeg: bytes) -> OcrResult:
         self.received.append(image_jpeg)
@@ -122,30 +123,29 @@ def make_image_bytes(
     color: str | tuple[int, ...] = "white",
     exif: Image.Exif | None = None,
 ) -> bytes:
-    """Genera una imagen sintética (una hoja con una palabra) en memoria."""
-    image = Image.new(mode, (width, height), color)
-    if mode == "RGB":
-        ImageDraw.Draw(image).text((10, 10), "Apuntes", fill="black")
-    buffer = io.BytesIO()
-    extra = {"exif": exif} if exif is not None else {}
-    image.save(buffer, format=image_format, **extra)
-    return buffer.getvalue()
+    with Image.new(mode, (width, height), color) as image, BytesIO() as output:
+        options = {"exif": exif} if exif is not None else {}
+        image.save(output, format=image_format, **options)
+        return output.getvalue()
 
 
 def make_noisy_jpeg(width: int = 800, height: int = 800) -> bytes:
-    """JPEG con ruido: pesa bastante, útil para simular un archivo cortado a la mitad."""
-    image = Image.effect_noise((width, height), 64).convert("RGB")
-    buffer = io.BytesIO()
-    image.save(buffer, format="JPEG", quality=95)
-    return buffer.getvalue()
+    # Semilla fija: muestra reproducible, suficientemente grande para truncar su JPEG.
+    pixels = random.Random(10).randbytes(width * height * 3)
+    with Image.frombytes("RGB", (width, height), pixels) as image, BytesIO() as output:
+        image.save(output, format="JPEG", quality=90)
+        return output.getvalue()
 
 
 def make_png_header_only(width: int, height: int) -> bytes:
-    """PNG que solo declara sus dimensiones (sin píxeles); sirve para probar límites."""
-
-    def chunk(kind: bytes, data: bytes) -> bytes:
-        crc = zlib.crc32(kind + data) & 0xFFFFFFFF
-        return struct.pack(">I", len(data)) + kind + data + struct.pack(">I", crc)
-
-    header = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
-    return b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", header) + chunk(b"IEND", b"")
+    # IHDR válido sin asignar una imagen enorme: prueba de defensa contra bombas.
+    payload = b"IHDR" + struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+    return (
+        b"\x89PNG\r\n\x1a\n"
+        + struct.pack(">I", 13)
+        + payload
+        + struct.pack(">I", zlib.crc32(payload))
+        + struct.pack(">I", 0)
+        + b"IDAT"
+        + struct.pack(">I", zlib.crc32(b"IDAT"))
+    )

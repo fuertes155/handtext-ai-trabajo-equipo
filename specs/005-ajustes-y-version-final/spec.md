@@ -1,3 +1,5 @@
+> Entrega 2026-11-16. La [especificación 013](../013-entrega-railway/spec.md) amplía este alcance para Railway, HTTPS y cuentas del servidor. Consultar la [guía final](../../docs/ENTREGA_FINAL.md). El modo local conserva su configuración de desarrollo.
+
 > Documento heredado de [documento_word](https://github.com/Juan-Miguel-Her-Del/documento_word/tree/a0b7dd315ebad9cbf4decf0fddcc7968d49d655b). En esta fase prevalecen [los requisitos actuales](../../docs/REQUISITOS_ACTUALES.md). Los estados de tareas de origen son históricos y no sustituyen las issues de handtext.
 
 ## Features principales

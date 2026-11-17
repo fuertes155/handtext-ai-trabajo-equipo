@@ -15,8 +15,7 @@ Future<ExportFormat?> showExportFormatSheet(BuildContext context) {
   return showModalBottomSheet<ExportFormat>(
     context: context,
     showDragHandle: true,
-    isScrollControlled:
-        true, // puede pasar de 9/16 de la pantalla si lo necesita
+    isScrollControlled: true,
     builder: (context) => SafeArea(
       child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),

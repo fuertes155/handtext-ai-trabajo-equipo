@@ -1,92 +1,192 @@
-# Tareas de Luis Miguel
+# Tareas de Luis Miguel David Campo
 
-Cuenta prevista: `LUISDACA`. Total: 72. Estado inicial: todas pendientes. La issue es la fuente de estado actual.
+Cuenta: `LUISDACA`. Total: 72. Reinicio solicitado el 2026-11-17: todas pendientes de implementación o verificación por Luis. Ver [alcance y contratos conservados](../docs/REINICIO_LUIS.md). Las integraciones anteriores son históricas y no acreditan autoría individual.
 
 ## Sprint 1
 
-- [x] [T002](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/2) · Fijar las dependencias exactas en backend/requirements.txt y backend/requirements-dev.txt · Dificultad Baja.
-- [x] [T006](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/6) · Catálogo de errores con código, mensaje y request_id, y sus manejadores, en backend/app/errors.py · Dificultad Media.
-- [x] [T010](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/10) · Utilidades de prueba (imágenes sintéticas y OCR falso) en backend/tests/conftest.py · Dificultad Media.
-- [x] [T012](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/12) · Configuración de la app (URL del backend, tiempos y límites) en frontend/lib/config/app_config.dart · Dificultad Baja.
-- [x] [T013](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/13) · Tema centralizado en frontend/lib/theme/app_theme.dart · Dificultad Media.
+- [ ] [T002](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/2) · Fijar las dependencias exactas en backend/requirements.txt y backend/requirements-dev.txt · Dificultad Baja.
+- [ ] [T006](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/6) · Catálogo de errores con código, mensaje y request_id, y sus manejadores, en backend/app/errors.py · Dificultad Media.
+- [ ] [T010](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/10) · Utilidades de prueba (imágenes sintéticas y OCR falso) en backend/tests/conftest.py · Dificultad Media.
+- [ ] [T012](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/12) · Configuración de la app (URL del backend, tiempos y límites) en frontend/lib/config/app_config.dart · Dificultad Baja.
+- [ ] [T013](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/13) · Tema centralizado en frontend/lib/theme/app_theme.dart · Dificultad Media.
 - [ ] [T016](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/16) · Manifiestos Android (Internet, sin copias de seguridad y HTTP solo en debug) en frontend/android/app/src/main/AndroidManifest.xml, frontend/android/app/src/main/res/xml/data_extraction_rules.xml y frontend/android/app/src/debug/AndroidManifest.xml · Dificultad Media.
-- [x] [T021](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/21) · Exportación Word (contenido, párrafos, caracteres, texto vacío) en backend/tests/test_exports_docx.py · Dificultad Media.
+- [ ] [T021](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/21) · Exportación Word (contenido, párrafos, caracteres, texto vacío) en backend/tests/test_exports_docx.py · Dificultad Media.
 - [ ] [T022](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/22) · Reglas de imagen de la app en frontend/test/services/image_rules_test.dart · Dificultad Media.
-- [x] [T025](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/25) · Controlador del flujo (autorización, duplicados, fallos y borrador) en frontend/test/state/document_flow_controller_test.dart · Dificultad Alta.
-- [x] [T026](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/26) · Pantallas y diálogos del flujo en frontend/test/presentation/flow_screen_test.dart · Dificultad Media.
-- [x] [T032](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/32) · Reglas del texto exportable (vacío, tamaño y caracteres XML) en backend/app/services/documents/text_rules.py · Dificultad Media.
-- [x] [T035](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/35) · Reglas y lectura de dimensiones de imagen en frontend/lib/services/image_rules.dart · Dificultad Media.
-- [x] [T038](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/38) · Cliente de la API en frontend/lib/services/handtext_api_client.dart · Dificultad Media.
-- [x] [T042](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/42) · Widgets de estado, autorización y confirmación en frontend/lib/presentation/widgets/ (status_message.dart, consent_dialog.dart, confirm_dialog.dart) · Dificultad Media.
-- [x] [T043](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/43) · Pantallas en frontend/lib/presentation/screens/ (flow_screen.dart, start_screen.dart, preview_screen.dart, editor_screen.dart) · Dificultad Alta.
+- [ ] [T025](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/25) · Controlador del flujo (autorización, duplicados, fallos y borrador) en frontend/test/state/document_flow_controller_test.dart · Dificultad Alta.
+- [ ] [T026](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/26) · Pantallas y diálogos del flujo en frontend/test/presentation/flow_screen_test.dart · Dificultad Media.
+- [ ] [T032](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/32) · Reglas del texto exportable (vacío, tamaño y caracteres XML) en backend/app/services/documents/text_rules.py · Dificultad Media.
+- [ ] [T035](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/35) · Reglas y lectura de dimensiones de imagen en frontend/lib/services/image_rules.dart · Dificultad Media.
+- [ ] [T038](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/38) · Cliente de la API en frontend/lib/services/handtext_api_client.dart · Dificultad Media.
+- [ ] [T042](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/42) · Widgets de estado, autorización y confirmación en frontend/lib/presentation/widgets/ (status_message.dart, consent_dialog.dart, confirm_dialog.dart) · Dificultad Media.
+- [ ] [T043](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/43) · Pantallas en frontend/lib/presentation/screens/ (flow_screen.dart, start_screen.dart, preview_screen.dart, editor_screen.dart) · Dificultad Alta.
 - [ ] [T045](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/45) · Pruebas de captura y permisos en frontend/test/state/camera_flow_test.dart · Dificultad Media.
-- [x] [T050](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/50) · Fuente DejaVu Sans y su licencia en backend/app/assets/fonts/ · Dificultad Baja.
-- [x] [T051](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/51) · Generador de PDF en backend/app/services/documents/pdf_builder.py · Dificultad Media.
-- [x] [T054](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/54) · Mapa de requisitos → código → pruebas en MAPA_DEL_CODIGO.md · Dificultad Baja.
-- [x] [T057](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/57) · Compilar el APK de depuración con flutter build apk --debug en frontend/ · Dificultad Baja.
+- [ ] [T050](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/50) · Fuente DejaVu Sans y su licencia en backend/app/assets/fonts/ · Dificultad Baja.
+- [ ] [T051](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/51) · Generador de PDF en backend/app/services/documents/pdf_builder.py · Dificultad Media.
+- [ ] [T054](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/54) · Mapa de requisitos → código → pruebas en MAPA_DEL_CODIGO.md · Dificultad Baja.
+- [ ] [T057](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/57) · Compilar el APK de depuración con flutter build apk --debug en frontend/ · Dificultad Baja.
 
 ## Sprint 2
 
-- [x] [T104](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/65) · Configuración de la base, la duración de la sesión, el bloqueo y los límites en backend/app/config.py · Dificultad Baja.
-- [x] [T108](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/69) · Ejecutor de migraciones en backend/app/persistence/migrations.py · Dificultad Media.
-- [x] [T110](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/71) · Colores, degradados y temas Aurora en frontend/lib/theme/aurora.dart y frontend/lib/theme/app_theme.dart · Dificultad Media.
-- [x] [T114](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/75) · Contraseñas Argon2id y tokens en backend/app/services/accounts/passwords.py y backend/app/services/accounts/tokens.py · Dificultad Alta.
-- [x] [T118](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/79) · Protección de reconocimiento y exportación en backend/app/api/recognitions.py y backend/app/api/exports.py · Dificultad Media.
+- [ ] [T104](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/65) · Configuración de la base, la duración de la sesión, el bloqueo y los límites en backend/app/config.py · Dificultad Baja.
+- [ ] [T108](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/69) · Ejecutor de migraciones en backend/app/persistence/migrations.py · Dificultad Media.
+- [ ] [T110](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/71) · Colores, degradados y temas Aurora en frontend/lib/theme/aurora.dart y frontend/lib/theme/app_theme.dart · Dificultad Media.
+- [ ] [T114](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/75) · Contraseñas Argon2id y tokens en backend/app/services/accounts/passwords.py y backend/app/services/accounts/tokens.py · Dificultad Alta.
+- [ ] [T118](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/79) · Protección de reconocimiento y exportación en backend/app/api/recognitions.py y backend/app/api/exports.py · Dificultad Media.
 - [ ] [T119](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/80) · Pruebas de la app en frontend/test/services/auth_api_client_test.dart, frontend/test/services/account_rules_test.dart y frontend/test/state/auth_controller_test.dart · Dificultad Media.
-- [x] [T124](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/85) · Reglas de formulario en frontend/lib/services/account_rules.dart · Dificultad Media.
-- [x] [T125](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/86) · Controlador de sesión en frontend/lib/state/auth_controller.dart · Dificultad Alta.
-- [x] [T126](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/87) · Pantallas de presentación, bienvenida, ingreso y registro en frontend/lib/presentation/screens/auth/ · Dificultad Alta.
-- [x] [T128](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/89) · Pruebas de pantallas de cuentas en frontend/test/presentation/auth_screens_test.dart · Dificultad Media.
-- [x] [T130](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/91) · Menú de cuenta y diálogo de eliminación en frontend/lib/presentation/widgets/account_menu.dart · Dificultad Media.
-- [x] [T134](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/95) · Animación de escaneo sobre la imagen en frontend/lib/presentation/widgets/scan_overlay.dart · Dificultad Media.
-- [x] [T137](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/98) · Formateadores, analizadores y todas las pruebas; registro de verificación al final de este archivo · Dificultad Baja.
+- [ ] [T124](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/85) · Reglas de formulario en frontend/lib/services/account_rules.dart · Dificultad Media.
+- [ ] [T125](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/86) · Controlador de sesión en frontend/lib/state/auth_controller.dart · Dificultad Alta.
+- [ ] [T126](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/87) · Pantallas de presentación, bienvenida, ingreso y registro en frontend/lib/presentation/screens/auth/ · Dificultad Alta.
+- [ ] [T128](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/89) · Pruebas de pantallas de cuentas en frontend/test/presentation/auth_screens_test.dart · Dificultad Media.
+- [ ] [T130](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/91) · Menú de cuenta y diálogo de eliminación en frontend/lib/presentation/widgets/account_menu.dart · Dificultad Media.
+- [ ] [T134](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/95) · Animación de escaneo sobre la imagen en frontend/lib/presentation/widgets/scan_overlay.dart · Dificultad Media.
+- [ ] [T137](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/98) · Formateadores, analizadores y todas las pruebas; registro de verificación al final de este archivo · Dificultad Baja.
 - [ ] [T139](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/100) · Prueba de contraste de la paleta [SC-208] en frontend/test/theme/aurora_contrast_test.dart · Dificultad Media.
-- [x] [T142](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/103) · Logo-escáner, animación de escaneo, avisos, menú de cuenta, diálogo de autorización y campo de contraseña con la nueva paleta en frontend/lib/presentation/widgets/ · Dificultad Media.
-- [x] [T201](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/108) · Dependencias image_cropper 12.2.1 y share_plus 12.0.2 en frontend/pubspec.yaml; UCropActivity en frontend/android/app/src/main/AndroidManifest.xml · Dificultad Baja.
-- [x] [T205](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/112) · Campo uncertain_words en backend/app/schemas.py y backend/app/api/recognitions.py, con su prueba en backend/tests/test_recognitions_api.py · Dificultad Media.
+- [ ] [T142](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/103) · Logo-escáner, animación de escaneo, avisos, menú de cuenta, diálogo de autorización y campo de contraseña con la nueva paleta en frontend/lib/presentation/widgets/ · Dificultad Media.
+- [ ] [T201](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/108) · Dependencias image_cropper 12.2.1 y share_plus 12.0.2 en frontend/pubspec.yaml; UCropActivity en frontend/android/app/src/main/AndroidManifest.xml · Dificultad Baja.
+- [ ] [T205](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/112) · Campo uncertain_words en backend/app/schemas.py y backend/app/api/recognitions.py, con su prueba en backend/tests/test_recognitions_api.py · Dificultad Media.
 - [ ] [T206](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/113) · Pruebas de conversión, validación y ajuste de marcas en frontend/test/services/uncertain_ranges_test.dart · Dificultad Media.
-- [x] [T210](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/117) · ReviewTextController en frontend/lib/presentation/widgets/review_text_controller.dart y barra de revisión en frontend/lib/presentation/screens/editor_screen.dart, con pruebas de pantalla · Dificultad Alta.
-- [x] [T213](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/120) · Acciones «Recortar o girar» y «Usar la imagen original» en frontend/lib/presentation/screens/preview_screen.dart, con pruebas de pantalla · Dificultad Media.
-- [x] [T216](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/123) · Botón «Compartir» en el aviso de éxito del editor, con prueba de pantalla · Dificultad Media.
+- [ ] [T210](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/117) · ReviewTextController en frontend/lib/presentation/widgets/review_text_controller.dart y barra de revisión en frontend/lib/presentation/screens/editor_screen.dart, con pruebas de pantalla · Dificultad Alta.
+- [ ] [T213](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/120) · Acciones «Recortar o girar» y «Usar la imagen original» en frontend/lib/presentation/screens/preview_screen.dart, con pruebas de pantalla · Dificultad Media.
+- [ ] [T216](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/123) · Botón «Compartir» en el aviso de éxito del editor, con prueba de pantalla · Dificultad Media.
 
 ## Sprint 3
 
-- [x] [T303](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/129) · pickMultipleFromGallery en frontend/lib/services/image_source_service.dart y en el servicio falso de las pruebas · Dificultad Media.
+- [ ] [T303](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/129) · pickMultipleFromGallery en frontend/lib/services/image_source_service.dart y en el servicio falso de las pruebas · Dificultad Media.
 - [ ] [T305](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/131) · Pruebas del controlador con varias páginas en frontend/test/state/pages_flow_test.dart · Dificultad Media.
 - [ ] [T312](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/138) · Formateadores, analizadores, todas las pruebas, APK y recorrido en el emulador; registro de verificación al final de este archivo · Dificultad Baja.
 - [ ] [T401](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/139) · Pruebas del almacén y del controlador de ajustes en frontend/test/state/settings_test.dart · Dificultad Media.
-- [x] [T404](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/142) · Pantalla de Ajustes en frontend/lib/presentation/screens/settings_screen.dart y tamaño de letra en el editor · Dificultad Media.
+- [ ] [T404](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/142) · Pantalla de Ajustes en frontend/lib/presentation/screens/settings_screen.dart y tamaño de letra en el editor · Dificultad Media.
 - [ ] [T406](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/144) · Prueba de la versión contra pubspec.yaml y pruebas de pantalla de «Acerca de» · Dificultad Media.
 - [ ] [T409](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/147) · Firma con key.properties y HTTP según el tipo de compilación en frontend/android/app/build.gradle.kts y en el manifiesto · Dificultad Alta.
 - [ ] [T411](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/149) · Compilar la versión final por procesador, instalarla y medir el arranque (SC-504) · Dificultad Baja.
 - [ ] [T503](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/154) · Pruebas de pantalla de los consejos (primera vez, Siguiente, Empezar, Saltar, atrás, cambio de cuenta, abrir desde el inicio y Ajustes) en frontend/test/presentation/tips_screen_test.dart · Dificultad Media.
-- [x] [T505](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/156) · Consejos la primera vez en frontend/lib/presentation/screens/app_root.dart; enlaces en start_screen.dart y settings_screen.dart; arnés de pruebas con tipsSeen · Dificultad Media.
-- [x] [T507](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/158) · Avatar sin la inicial en la lectura (R9) en frontend/lib/presentation/widgets/account_menu.dart · Dificultad Baja.
-- [x] [T511](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/162) · Avatar de 48 dp (R9) y diálogo de eliminar cuenta desplazable (R6) en frontend/lib/presentation/widgets/account_menu.dart · Dificultad Baja.
-- [x] [T512](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/163) · Avisos del editor en un área desplazable y encabezado más corto con letra grande (R5) en frontend/lib/presentation/screens/editor_screen.dart; hoja de exportar desplazable (R6) en frontend/lib/presentation/widgets/export_format_sheet.dart · Dificultad Media.
-- [x] [T604](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/169) · Pruebas del controlador: registrar al guardar, actualizar sin duplicar, no registrar cancelados ni fallidos, fallo del historial sin afectar el guardado, en frontend/test/state/history_flow_test.dart · Dificultad Media.
-- [x] [T606](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/171) · Pruebas de pantalla (lista, vacío, orden, otra cuenta) en frontend/test/presentation/history_screen_test.dart · Dificultad Media.
-- [x] [T610](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/175) · Pruebas de eliminar, borrar todo, cancelar y eliminar la cuenta · Dificultad Media.
-- [x] [T612](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/177) · Privacidad («Historial»), quickstart.md, README.md y MAPA_DEL_CODIGO.md; guías de accesibilidad de 006 (nombres y 48 dp, al 100 % y al 200 %) en history_screen_test.dart · Dificultad Baja.
+- [ ] [T505](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/156) · Consejos la primera vez en frontend/lib/presentation/screens/app_root.dart; enlaces en start_screen.dart y settings_screen.dart; arnés de pruebas con tipsSeen · Dificultad Media.
+- [ ] [T507](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/158) · Avatar sin la inicial en la lectura (R9) en frontend/lib/presentation/widgets/account_menu.dart · Dificultad Baja.
+- [ ] [T511](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/162) · Avatar de 48 dp (R9) y diálogo de eliminar cuenta desplazable (R6) en frontend/lib/presentation/widgets/account_menu.dart · Dificultad Baja.
+- [ ] [T512](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/163) · Avisos del editor en un área desplazable y encabezado más corto con letra grande (R5) en frontend/lib/presentation/screens/editor_screen.dart; hoja de exportar desplazable (R6) en frontend/lib/presentation/widgets/export_format_sheet.dart · Dificultad Media.
+- [ ] [T604](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/169) · Pruebas del controlador: registrar al guardar, actualizar sin duplicar, no registrar cancelados ni fallidos, fallo del historial sin afectar el guardado, en frontend/test/state/history_flow_test.dart · Dificultad Media.
+- [ ] [T606](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/171) · Pruebas de pantalla (lista, vacío, orden, otra cuenta) en frontend/test/presentation/history_screen_test.dart · Dificultad Media.
+- [ ] [T610](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/175) · Pruebas de eliminar, borrar todo, cancelar y eliminar la cuenta · Dificultad Media.
+- [ ] [T612](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/177) · Privacidad («Historial»), quickstart.md, README.md y MAPA_DEL_CODIGO.md; guías de accesibilidad de 006 (nombres y 48 dp, al 100 % y al 200 %) en history_screen_test.dart · Dificultad Baja.
 
 ## Sprint 4
 
-- [x] [T704](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/182) · AppLanguage en AppSettings, almacén y controlador; locale y resolución en frontend/lib/app.dart · Dificultad Media.
+- [ ] [T704](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/182) · AppLanguage en AppSettings, almacén y controlador; locale y resolución en frontend/lib/app.dart · Dificultad Media.
 - [ ] [T708](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/186) · Recorrido de todas las pantallas en inglés al 100 % y al 200 % sin textos en español (SC-802, SC-805), fallos y títulos de servicios · Dificultad Media.
-- [x] [T803](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/192) · ImageOrigin.scanner, scanDocument y el origen en _addImages en frontend/lib/state/document_flow_controller.dart; conexión en frontend/lib/main.dart · Dificultad Media.
-- [x] [T806](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/195) · scannerUnavailable y scannerFailed, StatusAction.takePhoto y el aviso con acción en el inicio · Dificultad Media.
-- [x] [T902](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/200) · suggestedFileName con el título y su uso en DocumentFlowController.export (frontend/lib/state/document_flow_controller.dart) · Dificultad Media.
-- [x] [T903](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/201) · «Copiar todo el texto» en el menú del editor (frontend/lib/presentation/screens/editor_screen.dart), textos en español e inglés y privacidad; pruebas de pantalla en frontend/test/presentation/organize_test.dart · Dificultad Baja.
-- [x] [T906](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/204) · Búsqueda y «Renombrar» en frontend/lib/presentation/screens/history_screen.dart · Dificultad Media.
+- [ ] [T803](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/192) · ImageOrigin.scanner, scanDocument y el origen en _addImages en frontend/lib/state/document_flow_controller.dart; conexión en frontend/lib/main.dart · Dificultad Media.
+- [ ] [T806](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/195) · scannerUnavailable y scannerFailed, StatusAction.takePhoto y el aviso con acción en el inicio · Dificultad Media.
+- [ ] [T902](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/200) · suggestedFileName con el título y su uso en DocumentFlowController.export (frontend/lib/state/document_flow_controller.dart) · Dificultad Media.
+- [ ] [T903](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/201) · «Copiar todo el texto» en el menú del editor (frontend/lib/presentation/screens/editor_screen.dart), textos en español e inglés y privacidad; pruebas de pantalla en frontend/test/presentation/organize_test.dart · Dificultad Baja.
+- [ ] [T906](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/204) · Búsqueda y «Renombrar» en frontend/lib/presentation/screens/history_screen.dart · Dificultad Media.
 - [ ] [T908](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/206) · Formateador, analizador, todas las pruebas y recorrido en el emulador; registro de verificación al final de este archivo (parcial: falta el recorrido en un teléfono; ver el registro) · Dificultad Baja.
-- [x] [T1003](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/209) · appLock en AppSettings, almacén y controlador; interruptor en frontend/lib/presentation/screens/settings_screen.dart · Dificultad Media.
-- [x] [T1005](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/211) · AppLockController (R3) en frontend/lib/state/app_lock_controller.dart, pantalla frontend/lib/presentation/screens/lock_screen.dart y AppLockGate en frontend/lib/app.dart (R4); textos en español e inglés · Dificultad Alta.
-- [x] [T1006](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/212) · Prueba: al desactivarlo, la app deja de bloquearse · Dificultad Baja.
+- [ ] [T1003](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/209) · appLock en AppSettings, almacén y controlador; interruptor en frontend/lib/presentation/screens/settings_screen.dart · Dificultad Media.
+- [ ] [T1005](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/211) · AppLockController (R3) en frontend/lib/state/app_lock_controller.dart, pantalla frontend/lib/presentation/screens/lock_screen.dart y AppLockGate en frontend/lib/app.dart (R4); textos en español e inglés · Dificultad Alta.
+- [ ] [T1006](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/212) · Prueba: al desactivarlo, la app deja de bloquearse · Dificultad Baja.
 - [ ] [T1008](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/214) · Formateador, analizador, todas las pruebas y recorrido en el emulador con PIN y huella simulada; registro de verificación al final de este archivo (parcial: falta el recorrido en un teléfono; ver el registro) · Dificultad Baja.
-- [x] [T1102](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/216) · Cerrar sesión, volver a entrar y encontrar el documento, en el mismo recorrido · Dificultad Media.
-- [x] [T1103](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/217) · quickstart.md (el comando), README.md y MAPA_DEL_CODIGO.md · Dificultad Baja.
+- [ ] [T1102](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/216) · Cerrar sesión, volver a entrar y encontrar el documento, en el mismo recorrido · Dificultad Media.
+- [ ] [T1103](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/217) · quickstart.md (el comando), README.md y MAPA_DEL_CODIGO.md · Dificultad Baja.
 
 <!-- handtext-team-reconciliation -->
-## Entrega a Luis Miguel · 17 de noviembre de 2026
+## Conciliación histórica anterior al reinicio
 
-Se devuelven once tareas integradas por Juan Miguel y se conservan las cinco pendientes anteriores. Luis tiene 16 issues abiertas y 56 cerradas. El [informe de entrega](../docs/ENTREGA_LUIS_MIGUEL.md) identifica los cambios, la procedencia y el material preparado para su revisión e integración. Las casillas reflejan seguimiento técnico y no acreditan autoría individual.
+Antes del reinicio, las casillas reflejaban el estado conciliado con GitHub al 10 de noviembre de 2026. Las casillas actuales se reinician a pendiente por petición del propietario. Los cierres técnicos por integración y los recorridos pendientes se detallan en [el informe de conciliación](../docs/CONCILIACION_ISSUES_INTEGRACION.md). No acreditan autoría individual ni revisión formal de PR.
+
+## Reconstrucción actual — lote 1 (2026-11-17)
+
+T002, T006, T010, T104, T108 y T114: implementación o revisión técnica verificada,
+87 pruebas aprobadas con PostgreSQL temporal real; Ruff y formato aprobados.
+Las casillas siguen pendientes porque las issues exigen revisión de otro integrante.
+Ver [registro de reconstrucción](../docs/VERIFICACION_RECONSTRUCCION_LUIS.md).
+
+## Reconstrucción actual — lote 2 (2026-11-17)
+
+T021, T032, T050, T051, T118 y T205: alcance técnico verificado. Suite completa
+del backend: 218 pruebas aprobadas, sin skips; Ruff y formato completos correctos.
+Autorización definitiva instalada y comprobada; release sigue bloqueada.
+Las issues siguen abiertas por revisión del equipo. Total técnico: 12/72.
+
+## Reconstrucción actual — lote 3 (2026-11-17)
+
+T012, T013, T022, T035, T110 y T201: alcance técnico verificado; 10 pruebas
+Flutter y tres escenarios de configuración aprobados; análisis y formato del
+alcance correctos. Temas/paleta de Samuel conservados y revisados. No certifica
+todavía pantallas completas ni APK. Revisión del equipo pendiente. Total: 18/72.
+
+## Reconstrucción actual — lote 4 (2026-11-17)
+
+T038, T119, T124, T125, T206 y T303: alcance técnico verificado con 60 pruebas
+Flutter de servicios, sesión, galería y autenticación local. Se conserva Argon2id
+de Samuel; solo se unifica el cómputo Unicode de límites con el backend. Análisis
+y formato del alcance correctos. Revisión del equipo pendiente. Total: 24/72.
+
+## Reconstrucción actual — lote 5 (2026-11-17)
+
+T139, T401, T704, T1003, T1005 y T1006: verificación técnica con 44 pruebas
+Flutter de persistencia, idioma, contraste y bloqueo (controlador y widgets).
+Análisis/formato del alcance correctos. Sin certificación de biometría física.
+Se incluyen dependencias parciales T404/T126/T142, todavía sin contarlas terminadas.
+Revisión del equipo pendiente. Total técnico: 30/72.
+
+## Reconstrucción actual — lote 6 (2026-11-17)
+
+T042, T126, T130, T142, T507 y T511: componentes verificados con 25 pruebas de
+widgets/sesión y 8 escenarios compartidos de privacidad y formularios. Análisis
+y formato del alcance correctos. El flujo completo y TalkBack físico siguen
+pendientes. T134 queda implementada como dependencia, pendiente de integrar/verificar
+en la vista previa. Revisión del equipo pendiente. Total técnico: 36/72.
+
+## Reconstrucción actual — lote 7 (2026-11-17)
+
+T043, T210, T213, T216, T512 y T902: flujo de pantallas, revisión, recorte,
+compartir y nombres verificados con 38 pruebas, incluidas guías de accesibilidad
+al 100 % y 200 %. Análisis/formato del alcance correctos. T505/T803/T806/T903
+quedan implementadas como dependencias, pendientes de su revisión y suites propias.
+Sin verificación nativa física. Revisión del equipo pendiente. Total: 42/72.
+
+## Reconstrucción actual — lote 8 (2026-11-17)
+
+T025, T026, T045, T128, T134, T305: alcance técnico verificado. 58 pruebas aprobadas: controlador, permisos/captura, pantallas de flujo y cuentas,
+y varias páginas. Análisis y formato del alcance correctos.
+
+Revisión del equipo pendiente. Total técnico: 48/72. Evidencia: `docs/VERIFICACION_RECONSTRUCCION_LUIS.md`.
+
+## Reconstrucción actual — lote 9 (2026-11-17)
+
+T404, T406, T503, T505, T604, T610: alcance técnico verificado. 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),
+incluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.
+
+Revisión del equipo pendiente. Total técnico: 54/72. Evidencia: `docs/VERIFICACION_RECONSTRUCCION_LUIS.md`.
+
+## Reconstrucción actual — lote 10 (2026-11-17)
+
+T803, T806, T903, T906, T606, T612: alcance técnico verificado. 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento
+por cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.
+
+Revisión del equipo pendiente. Total técnico: 60/72. Evidencia: `docs/VERIFICACION_RECONSTRUCCION_LUIS.md`.
+
+## Reconstrucción actual — lote 11 (2026-11-17)
+
+T016, T054, T057, T137, T708, T1103: alcance técnico verificado. Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.
+Flutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin
+incidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.
+
+Revisión del equipo pendiente. Total técnico: 66/72. Evidencia: `docs/VERIFICACION_RECONSTRUCCION_LUIS.md`.
+
+## Estado final de esta ejecución (2026-11-17)
+
+68/72 tareas verificadas técnicamente (20/20, 21/21, 15/17, 12/14 por sprint).
+T312 y T1102 completan el lote final de dos tareas: recorrido Android automatizado
+ampliado aprobado en 30,3 s, recuperación tras reingreso y varias páginas con PDF real.
+351 pruebas Flutter sin omisiones; 218 backend; siete checks; diez políticas Gradle.
+APK debug generado; release falla por falta de clave, sin fallback debug.
+Pendientes: T409/T411 (clave/firma/instalación release), T908 (teléfono físico) y
+T1008 (PIN/huella y teléfono). Revisión formal pendiente en las 72 issues, que siguen
+abiertas. [Detalle por tarea](../docs/ESTADO_TAREAS_LUIS.md).
+
+## Integración con main solicitada por Luis
+
+Conflictos de la devolución e8f1289 resueltos conservando reconstrucción y siete
+casos compartidos. 358 pruebas Flutter sin omisiones, análisis/formato y APK debug
+correctos. Milestones actualizados con recuento formal y avance técnico separados.
+[Registro de integración](../docs/INTEGRACION_LUIS_MAIN.md). Las verificaciones pendientes y la revisión
+formal de las issues mantienen su estado.

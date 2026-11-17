@@ -17,6 +17,9 @@ class AppLockScope extends InheritedNotifier<AppLockController> {
   }) : super(notifier: lock);
 
   /// El controlador del bloqueo; quien lo pide se reconstruye cuando cambia.
-  static AppLockController of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<AppLockScope>()!.notifier!;
+  static AppLockController of(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<AppLockScope>()!
+        .notifier!;
+  }
 }

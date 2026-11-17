@@ -18,7 +18,8 @@ abstract interface class ImageSourceService {
   /// Devuelve la imagen elegida, o null si el usuario canceló.
   Future<XFile?> pickFromGallery();
 
-  /// Devuelve las imágenes elegidas (como máximo [limit]); vacía si canceló.
+  /// Solicita como máximo [limit]; el controlador valida otra vez el resultado
+  /// del selector nativo para informar y limpiar cualquier excedente.
   Future<List<XFile>> pickMultipleFromGallery({required int limit});
 
   /// Devuelve la fotografía tomada, o null si el usuario canceló.
@@ -42,12 +43,13 @@ class PickerImageSourceService implements ImageSourceService {
 
   @override
   Future<List<XFile>> pickMultipleFromGallery({required int limit}) async {
-    // El selector múltiple de Android exige un límite de 2 o más.
-    if (limit < 2) {
-      final single = await pickFromGallery();
-      return single == null ? const [] : [single];
-    }
+    if (limit <= 0) return const [];
     try {
+      // image_picker requiere un límite mayor de uno para selección múltiple.
+      if (limit == 1) {
+        final image = await pickFromGallery();
+        return image == null ? const [] : [image];
+      }
       return await _picker.pickMultiImage(limit: limit);
     } on PlatformException {
       throw const AppFailure(FailureKind.imageUnreadable);

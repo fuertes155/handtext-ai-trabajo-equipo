@@ -1,4 +1,14 @@
-> Referencia heredada del proyecto de origen. En la etapa de trabajo en equipo prevalecen [los requisitos actuales](../../docs/REQUISITOS_ACTUALES.md). Esta importación no cambia los acuerdos de autenticación local ni de API local.
+> Enmienda del 2026-11-17: Samuel solicita retirar la implementación de las tareas asignadas a Luis en la rama actual, sin crear otra rama. Durante este reinicio prevalece la [especificación 014](../../specs/014-reinicio-luis/spec.md). El código queda incompleto y no debe desplegarse ni distribuirse; se conservan contratos compartidos, historial y controles de fallo cerrado. La versión comprobada anterior corresponde a `098d4f6`.
+
+> Antecedente: enmienda de entrega autorizada por Samuel el 2026-11-16, que ratifica su solicitud de despliegue del 2026-11-09. [Requisitos de entrega](../../docs/REQUISITOS_ACTUALES.md) y [especificación 013](../../specs/013-entrega-railway/spec.md).
+
+## Acuerdo vigente de entrega
+
+El APK de entrega DEBE conectar por HTTPS a FastAPI en Railway y autenticar las operaciones con una sesión individual del servidor. PostgreSQL conserva usuarios y sesiones en una red privada. RapidOCR procesa imágenes en memoria con modelos ONNX fijados y verificados. Historial y borradores continúan en el teléfono por cuenta.
+
+El modo local conserva las cuentas seguras del dispositivo y ADB para pruebas. El acceso optativo de desarrollo DEBE permanecer deshabilitado por defecto y en distribución. La sesión de cada servidor DEBE almacenarse separadamente de la sesión local.
+
+Motivo de la enmienda: permitir la demostración desde otras redes sin depender del PC. La migración consiste en crear una cuenta del servidor al instalar la versión de entrega, conservando las cuentas locales existentes. Para esta versión, este acuerdo sustituye las instrucciones históricas sobre API exclusivamente local. La precisión manuscrita requiere un corpus autorizado y su evaluación CER.
 
 # Constitución del Proyecto: HandText AI
 
@@ -163,4 +173,4 @@ incompatible, MINOR para ampliar obligaciones y PATCH para aclaraciones sin alte
 La fecha de ratificación original se conserva; la de enmienda se actualiza al cambiar la
 constitución. Los informes temporales de sincronización DEBEN retirarse antes del commit.
 
-**Versión**: 2.0.0 | **Ratificada**: 2026-10-19 | **Última enmienda**: 2026-10-19
+**Versión**: 2.2.0 | **Ratificada**: 2026-10-19 | **Última enmienda**: 2026-11-17

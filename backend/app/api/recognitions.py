@@ -84,11 +84,16 @@ async def create_recognition(request: Request, user: DocumentUser) -> Recognitio
     has_text = bool(result.text.strip())
     request_id = request_id_of(request)
     # Spec 003: las posiciones de las palabras dudosas solo tienen sentido si hay texto.
-    uncertain = (
-        [UncertainWord(start=span.start, end=span.end) for span in result.uncertain_spans]
-        if has_text
-        else []
-    )
+    uncertain: list[UncertainWord] = []
+    last_end = 0
+    if has_text:
+        for span in result.uncertain_spans:
+            # Un proveedor defectuoso no debe romper la respuesta ni marcar otro texto.
+            if last_end <= span.start < span.end <= len(result.text) and any(
+                char.isalnum() for char in result.text[span.start : span.end]
+            ):
+                uncertain.append(UncertainWord(start=span.start, end=span.end))
+                last_end = span.end
     logger.info(
         "recognition user_id=%s format=%s width=%d height=%d has_text=%s chars=%d "
         "uncertain=%d request_id=%s",

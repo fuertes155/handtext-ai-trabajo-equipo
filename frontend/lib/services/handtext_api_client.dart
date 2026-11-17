@@ -9,9 +9,12 @@
 // - Spec 003: la respuesta de reconocimiento trae también las palabras dudosas.
 
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 
 import '../config/app_config.dart';
 import '../models/app_failure.dart';
@@ -39,7 +42,11 @@ class HandTextApiClient implements HandTextApi {
   }) : _baseUrl = baseUrl,
        _tokenProvider = tokenProvider,
        _localDevToken = localDevToken,
-       _client = httpClient ?? http.Client(),
+       _client =
+           httpClient ??
+           IOClient(
+             HttpClient()..connectionTimeout = AppConfig.apiConnectionTimeout,
+           ),
        _recognitionTimeout = recognitionTimeout,
        _exportTimeout = exportTimeout;
 
@@ -56,10 +63,15 @@ class HandTextApiClient implements HandTextApi {
   /// Cabecera de autenticación [SC-202] más las cabeceras propias de la solicitud.
   Map<String, String> _headers(Map<String, String> extra) {
     final token = _tokenProvider?.call();
-    if (token == null && _localDevToken.isNotEmpty) {
-      return {'X-HandText-Local-Dev': _localDevToken, ...extra};
+    if (token != null && token.isNotEmpty) {
+      return {...extra, 'Authorization': 'Bearer $token'};
     }
-    return {if (token != null) 'Authorization': 'Bearer $token', ...extra};
+    if (kDebugMode &&
+        _localDevToken.isNotEmpty &&
+        const ['127.0.0.1', '::1', '10.0.2.2'].contains(_baseUrl.host)) {
+      return {...extra, 'X-HandText-Local-Dev': _localDevToken};
+    }
+    return extra;
   }
 
   @override
@@ -67,13 +79,11 @@ class HandTextApiClient implements HandTextApi {
     Uint8List imageBytes,
     ImageFormat format,
   ) async {
+    final headers = _headers({'Content-Type': format.mimeType});
     final response = await sendRequest(
       () => _client.post(
         _baseUrl.resolve('api/v1/recognitions'),
-        headers: _headers({
-          'Content-Type': format.mimeType,
-          'Accept': 'application/json',
-        }),
+        headers: headers,
         body: imageBytes,
       ),
       timeout: _recognitionTimeout,
@@ -83,6 +93,7 @@ class HandTextApiClient implements HandTextApi {
       throw _failureFromResponse(
         response,
         fallback: FailureKind.recognitionFailed,
+        hadSession: headers.containsKey('Authorization'),
       );
     }
     return _parseRecognition(response);
@@ -90,57 +101,71 @@ class HandTextApiClient implements HandTextApi {
 
   @override
   Future<Uint8List> export(String text, ExportFormat format) async {
+    final headers = _headers({
+      'Content-Type': 'application/json; charset=utf-8',
+    });
     final response = await sendRequest(
       () => _client.post(
         _baseUrl.resolve('api/v1/exports'),
-        headers: _headers({'Content-Type': 'application/json; charset=utf-8'}),
+        headers: headers,
         body: jsonEncode({'text': text, 'format': format.apiValue}),
       ),
       timeout: _exportTimeout,
       timeoutFailure: FailureKind.exportTimeout,
     );
     if (response.statusCode != 200) {
-      throw _failureFromResponse(response, fallback: FailureKind.exportFailed);
+      throw _failureFromResponse(
+        response,
+        fallback: FailureKind.exportFailed,
+        hadSession: headers.containsKey('Authorization'),
+      );
     }
-    final bytes = response.bodyBytes;
-    // SC-001: lo recibido debe ser de verdad un .docx o un .pdf.
-    if (!format.matchesContent(bytes)) {
+    if (!format.matchesContent(response.bodyBytes)) {
       throw const AppFailure(FailureKind.exportFailed);
     }
-    return bytes;
+    return response.bodyBytes;
   }
 
   AppFailure _failureFromResponse(
     http.Response response, {
     required FailureKind fallback,
+    required bool hadSession,
   }) {
-    final failure = failureFromResponse(response, fallback: fallback);
-    if (_tokenProvider == null && failure.kind == FailureKind.sessionExpired) {
-      return const AppFailure(FailureKind.backendAuthenticationRequired);
+    if (response.statusCode == 401) {
+      // Un rechazo sin Bearer no invalida una cuenta local. Se recuerda lo
+      // enviado, aunque la sesión cambie mientras llega la respuesta.
+      return AppFailure(
+        hadSession
+            ? FailureKind.sessionExpired
+            : FailureKind.backendAuthenticationRequired,
+      );
     }
-    return failure;
+    return failureFromResponse(response, fallback: fallback);
   }
 
   /// Interpreta la respuesta 200 del reconocimiento.
   RecognitionResult _parseRecognition(http.Response response) {
-    final Object? body;
     try {
-      body = decodeJson(response);
+      final json = decodeJson(response);
+      if (json case {
+        'status': final String status,
+        'text': final String text,
+        'request_id': String(),
+      } when status == 'text_found' || status == 'no_text') {
+        final hasText = status == 'text_found' && text.trim().isNotEmpty;
+        return RecognitionResult(
+          hasText: hasText,
+          text: hasText ? text : '',
+          uncertainRanges: hasText
+              ? rangesFromApi(text, (json as Map)['uncertain_words'])
+              : const [],
+        );
+      }
     } on FormatException {
       throw const AppFailure(FailureKind.invalidServerResponse);
     }
-    return switch (body) {
-      {'status': 'text_found', 'text': final String text} && final Map map
-          when text.trim().isNotEmpty =>
-        RecognitionResult(
-          hasText: true,
-          text: text,
-          // Spec 003: marcas de palabras dudosas (las inválidas se descartan).
-          uncertainRanges: rangesFromApi(text, map['uncertain_words']),
-        ),
-      {'status': 'text_found' || 'no_text', 'text': String _} =>
-        const RecognitionResult(hasText: false, text: ''),
-      _ => throw const AppFailure(FailureKind.invalidServerResponse),
-    };
+    throw const AppFailure(FailureKind.invalidServerResponse);
   }
+
+  void close() => _client.close();
 }

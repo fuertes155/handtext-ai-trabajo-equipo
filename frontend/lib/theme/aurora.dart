@@ -1,3 +1,5 @@
+// T140 (Samuel): implementación compartida conservada durante el reinicio.
+// T013/T110 (Luis): revisados con app_theme_test.dart; se conserva la paleta compartida.
 // Identidad visual «Aurora»: colores, degradado del fondo y medidas (tareas T110 y T140).
 //
 // Spec 002, módulo 5; research.md de 002, R9. Desde el 2026-10-28 usa la paleta «azul

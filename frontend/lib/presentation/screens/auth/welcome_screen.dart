@@ -45,85 +45,92 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final notice = auth.notice;
-    final failure = auth.failure;
+    final strings = context.strings;
     return AuroraScaffold(
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
-        children: [
-          const Align(
-            alignment: Alignment.centerRight,
-            child: LanguageButton(),
-          ),
-          const Center(child: ScannerLogo(size: 128)),
-          const SizedBox(height: 20),
-          BrandTitle(style: textTheme.headlineLarge),
-          const SizedBox(height: 8),
-          Text(
-            context.strings.welcomeTagline,
-            textAlign: TextAlign.center,
-            style: textTheme.titleMedium?.copyWith(
-              color: Aurora.textSecondary,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          const SizedBox(height: 32),
-          SurfaceCard(
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 480),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _Step(
-                  icon: Icons.photo_camera_outlined,
-                  text: context.strings.welcomeStep1,
+                const Align(
+                  alignment: Alignment.centerRight,
+                  child: LanguageButton(),
                 ),
-                SizedBox(height: 16),
-                _Step(
-                  icon: Icons.auto_awesome,
-                  text: context.strings.welcomeStep2,
+                const Center(child: ScannerLogo()),
+                const SizedBox(height: 24),
+                const BrandTitle(style: TextStyle(fontSize: 32)),
+                const SizedBox(height: 16),
+                Text(
+                  strings.welcomeTagline,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Aurora.textSecondary,
+                    fontSize: 18,
+                  ),
                 ),
-                SizedBox(height: 16),
-                _Step(
-                  icon: Icons.description_outlined,
-                  text: context.strings.welcomeStep3,
+                const SizedBox(height: 24),
+                SurfaceCard(
+                  child: Column(
+                    children: [
+                      _Step(
+                        icon: Icons.add_a_photo_outlined,
+                        text: strings.welcomeStep1,
+                      ),
+                      const SizedBox(height: 16),
+                      _Step(icon: Icons.edit_note, text: strings.welcomeStep2),
+                      const SizedBox(height: 16),
+                      _Step(
+                        icon: Icons.description_outlined,
+                        text: strings.welcomeStep3,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+                if (auth.failure != null) ...[
+                  StatusBanner(
+                    status: OperationStatus.failure(auth.failure!),
+                    onAurora: true,
+                  ),
+                  const SizedBox(height: 16),
+                ],
+                if (auth.notice != null) ...[
+                  StatusBanner(
+                    status: OperationStatus.info(auth.notice!),
+                    onAurora: true,
+                  ),
+                  const SizedBox(height: 16),
+                ],
+                PrimaryButton(
+                  label: strings.createAccount,
+                  onPressed: onCreateAccount,
+                ),
+                const SizedBox(height: 12),
+                OutlinedButton(
+                  onPressed: onSignIn,
+                  child: Text(strings.haveAccount),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  strings.welcomePrivacyNote,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Aurora.textMuted),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => const AboutScreen(),
+                    ),
+                  ),
+                  child: Text(strings.privacyAndAbout),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 32),
-          if (notice != null || failure != null) ...[
-            StatusBanner(
-              status: failure != null
-                  ? OperationStatus.failure(failure)
-                  : notice == StatusEvent.accountDeleted
-                  ? OperationStatus.success(notice!)
-                  : OperationStatus.info(notice!),
-              onAurora: true,
-            ),
-            const SizedBox(height: 16),
-          ],
-          PrimaryButton(
-            label: context.strings.createAccount,
-            icon: Icons.person_add_alt_1_outlined,
-            onPressed: onCreateAccount,
-          ),
-          const SizedBox(height: 12),
-          OutlinedButton(
-            onPressed: onSignIn,
-            child: Text(context.strings.haveAccount),
-          ),
-          const SizedBox(height: 24),
-          Text(
-            context.strings.welcomePrivacyNote,
-            textAlign: TextAlign.center,
-            style: textTheme.bodySmall?.copyWith(color: Aurora.textMuted),
-          ),
-          Center(
-            child: TextButton(
-              onPressed: () => AboutScreen.open(context),
-              child: Text(context.strings.privacyAndAbout),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -139,25 +146,11 @@ class _Step extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            color: Aurora.iconBadge,
-            borderRadius: BorderRadius.circular(Aurora.radiusSmall),
-          ),
-          child: Icon(icon, color: Aurora.blueLight, size: 20),
-        ),
-        const SizedBox(width: 14),
-        Expanded(
-          child: Text(
-            text,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge?.copyWith(color: Aurora.textPrimary),
-          ),
-        ),
+        ExcludeSemantics(child: Icon(icon, color: Aurora.blueLight)),
+        const SizedBox(width: 12),
+        Expanded(child: Text(text)),
       ],
     );
   }

@@ -74,39 +74,40 @@ class _FlowScreenState extends State<FlowScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    final controller = widget.controller;
     return ListenableBuilder(
-      listenable: widget.controller,
+      listenable: controller,
       builder: (context, _) {
-        final controller = widget.controller;
         if (!controller.isReady) {
-          // Mientras se limpian las copias antiguas y se lee el borrador.
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         }
         return PopScope(
-          // Solo se deja salir directamente desde el inicio y sin documento abierto.
-          canPop: controller.step == FlowStep.start && !controller.hasDocument,
+          canPop:
+              controller.step == FlowStep.start &&
+              !controller.hasDocument &&
+              !controller.isBusy,
           onPopInvokedWithResult: (didPop, _) {
-            if (!didPop) unawaited(_handleBack());
+            if (!didPop && !controller.isBusy) unawaited(_handleBack());
           },
           child: AnimatedSwitcher(
             duration: motionDuration(
               context,
-              const Duration(milliseconds: 350),
+              const Duration(milliseconds: 200),
             ),
             child: switch (controller.step) {
               FlowStep.start => StartScreen(
-                key: const ValueKey(FlowStep.start),
+                key: const ValueKey('start'),
                 controller: controller,
                 auth: widget.auth,
               ),
               FlowStep.preview => PreviewScreen(
-                key: const ValueKey(FlowStep.preview),
+                key: const ValueKey('preview'),
                 controller: controller,
               ),
               FlowStep.editor => EditorScreen(
-                key: const ValueKey(FlowStep.editor),
+                key: const ValueKey('editor'),
                 controller: controller,
                 auth: widget.auth,
               ),

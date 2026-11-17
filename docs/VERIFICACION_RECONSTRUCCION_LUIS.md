@@ -1,0 +1,499 @@
+# Reconstrucción de Luis — resultados actuales
+
+Fecha: 2026-11-17. Rama: `entrega/railway-documentacion-20261116`.
+Base inspeccionada y remota: `18f5fde24a8014bece01cdc82d6b29cea56f2756`.
+Repositorio local: `/home/luisdaca/Escritorio/handtext-ai-trabajo-equipo`.
+
+## Inspección y alcance
+
+La copia se descargó en el Escritorio por indicación de Luis. No existían cambios
+locales ni archivos AGENTS.md aplicables. Las 72 issues obtenidas con
+`gh issue list --assignee LUISDACA --state all --limit 150` coinciden exactamente
+con `TAREAS/luis-miguel.md`: 20/21/17/14 por sprint, abiertas y asignadas a LUISDACA.
+PR #221 en borrador. Sin cambios posteriores al reinicio en el remoto inspeccionado.
+
+CLI: `gh auth status` y `gh api user --jq .login` confirman LUISDACA. El conector
+GitHub usa otra cuenta y no se utiliza para publicar. Configuración exclusivamente
+local: Luis Miguel David Campo, `134025037+LUISDACA@users.noreply.github.com`.
+La dirección noreply se compone del ID 134025037 y login confirmados por la API de
+GitHub; no se usa un correo personal inferido ni se modifica la configuración global.
+
+Los índices originales de specs 001/002 conservan casillas históricas aprobadas,
+pero para este reinicio prevalece el seguimiento 014. Todas las issues requieren
+revisión de otro integrante del PR; la aprobación técnica no permite cerrarlas
+antes de esa revisión. No se modifican asignaciones o estados ajenos.
+
+## Lote 1: T002, T006, T010, T104, T108, T114
+
+| Tarea | Implementación o revisión actual | Verificación |
+| --- | --- | --- |
+| T002 · #2 | Versiones fijadas conservadas, instaladas y compatibles con Python 3.12.16. Documentada incompatibilidad del wheel pgserver con 3.14. | Instalación completa y `pip check` sin conflictos. |
+| T006 · #6 | Catálogo completo, handlers de dominio/esquema/HTTP/inesperados, request_id y desafío Bearer en 401. Registros sin mensaje de excepciones ni variables locales. | Catálogo completo, validación sin eco y suites de dominio. |
+| T010 · #10 | OCR falso conserva texto y marcas, registra llamadas y simula fallos; imágenes sintéticas con EXIF, JPEG reproducible y PNG gigante sin asignación masiva. | Pruebas de utilidades, validación y preparación de imágenes. |
+| T104 · #65 | Lee conexión opcional del entorno; secretos excluidos de repr, límites y duraciones compartidos conservados. Token local optativo con mínimo de 32 caracteres. | Configuración explícita, valores ausentes, rechazo de token corto y privacidad. |
+| T108 · #69 | SQL ordenado, transacción con bloqueo de concurrencia, registro idempotente y CLI sin imprimir errores de conexión sensibles. | PostgreSQL temporal real, contrato del almacén, rollback de DDL y registro, reintento e idempotencia. |
+| T114 · #75 | Argon2id con sal, verificación segura de hashes inválidos y hash ficticio; tokens aleatorios de 256 bits y SHA-256 solo para tokens. | Sal distinta, credenciales correctas/incorrectas, tokens distintos, servicio de cuentas y ausencia de contraseñas/tokens planos en PostgreSQL. |
+
+Resultado: **87 passed in 1.40s**, sin skips. Ruff y formateador: correctos en los
+siete archivos Python de este lote. No equivale a aprobación de toda la aplicación.
+Los endpoints de documentos todavía conservan el bloqueo temporal T118.
+
+Comandos desde `backend/`:
+
+```bash
+# Usar Python 3.12; el entorno de esta máquina se llama .venv312.
+.venv312/bin/python -m pip install -r requirements-dev.txt
+.venv312/bin/python -m pip check
+.venv312/bin/ruff check app/config.py app/errors.py app/persistence/migrations.py app/services/accounts/passwords.py app/services/accounts/tokens.py tests/conftest.py tests/test_luis_foundations.py
+.venv312/bin/ruff format --check app/config.py app/errors.py app/persistence/migrations.py app/services/accounts/passwords.py app/services/accounts/tokens.py tests/conftest.py tests/test_luis_foundations.py
+.venv312/bin/pytest -q tests/test_luis_foundations.py tests/test_account_rules.py tests/test_account_service.py tests/test_user_store.py tests/test_image_validation.py tests/test_image_preparation.py
+```
+
+Las pruebas necesitan conexiones locales para TestClient y PostgreSQL; se ejecutaron
+fuera del aislamiento de red. PostgreSQL lo crea y elimina pgserver en un directorio
+temporal exclusivo. No se usa la conexión de producción ni se ejecuta su migración.
+
+Procedencia: se implementaron los cuerpos pendientes contra los contratos y pruebas
+conservados. Se consultó `098d4f6:backend/app/persistence/migrations.py` exclusivamente
+para conservar el contrato existente `schema_migrations.version` y los identificadores
+sin extensión. Esos nombres y el esquema son previos; no se atribuyen a Luis. No se
+restauró masivamente código histórico. T002 revisa dependencias compartidas conservadas.
+
+## Recursos y verificaciones todavía pendientes
+
+Flutter 3.44.9 / Dart 3.12.2 y SDK Android disponibles; Java incluido en Android Studio.
+`flutter pub get` correcto: cinco dependencias de SDK/pruebas se adaptaron al SDK
+instalado en el lockfile. La comprobación offline previa falló por caché incompleta.
+Backend: Python 3.12.16 descargado localmente, paquetes de desarrollo aislados.
+El intento con Python 3.14 no admite pgserver 0.1.4; no se debilitaron las pruebas.
+
+ADB no mostró dispositivos conectados. No se han realizado recorridos manuales,
+configurado PIN/huella, instalado APK ni modificado datos de un teléfono. No se ha
+generado APK actual ni verificado una firma de distribución. Producción intacta.
+
+Tareas con alcance técnico verificado: 42/72; cierre formal: 0/72 por revisión pendiente.
+Las otras 30 tareas requieren implementación/revisión y sus verificaciones actuales.
+
+## Lote 2: T021, T032, T050, T051, T118, T205
+
+- T032: reglas de texto vacío, límite de 200000 caracteres, normalización de saltos,
+  párrafos y rechazo de caracteres no válidos en XML; lista acotada de códigos Unicode.
+- T050: DejaVu Sans 2.37 copiada de `/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf`,
+  conservando `LICENSE-DejaVu.txt`. SHA-256:
+  `b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c`.
+  Es un recurso de terceros, no una fuente creada por Luis.
+- T051: PDF A4 en memoria, fuente incrustada, márgenes de 20 mm, letra de 12 pt,
+  ajuste de líneas/páginas, tabulaciones y rechazo explícito de glifos ausentes.
+- T021: suite nueva de Word que abre ZIP/XML y DOCX, comprueba texto, caracteres,
+  párrafos vacíos, límite exacto, metadatos, controles inválidos, esquema y tamaño.
+- T118: endpoints conectados a DocumentUser compartido; Bearer obligatorio salvo
+  permiso local explícito. Se retiró pending_luis.py y las pruebas temporales ahora
+  verifican 401 y ausencia de llamadas OCR. Permiso local rechazado tras proxy y
+  en configuración Railway; nunca habilita operaciones de cuentas.
+- T205: conversión de marcas a posiciones Unicode, descarte de intervalos inválidos,
+  superpuestos o de puntuación sin cambiar el texto. Modelos compartidos conservados.
+
+Resultado: **218 passed in 2.87s**, sin skips, en la suite completa backend. Incluye
+PostgreSQL temporal, DOCX/PDF, privacidad de registros, autorización y proveedores
+con transportes simulados. No se instala OCR local ni se llama a proveedores reales.
+Ruff completo: correcto; formateador: 57 archivos correctos. Se corrigió el handler
+de StoreUnavailableError para responder 503, descubierto por la suite compartida.
+
+Comandos desde backend:
+
+```bash
+.venv312/bin/ruff check .
+.venv312/bin/ruff format --check .
+.venv312/bin/pytest -q
+.venv312/bin/pytest --noconftest -q ../checks/test_reinicio_luis.py
+```
+
+Los checks finales verifican autenticación y mantienen el control de release
+mientras falta T409. Se conserva el nombre del archivo para que siga siendo
+localizable. La suite anterior de bloqueo temporal se sustituyó, no se debilitó.
+No se consultó ni restauró implementación histórica en este lote; las funciones
+se implementaron contra contratos actuales y pruebas compartidas.
+
+## Lote 3: T012, T013, T022, T035, T110, T201
+
+T012 implementa URL de API configurable, barra final y validación sin credenciales,
+query ni fragmento. Las cuentas del servidor requieren HTTPS explícito. Límites
+y tiempos siguen el contrato conservado. Tres ejecuciones de configuración verifican
+HTTPS válido, URL ausente y HTTP rechazado, con cuentas del servidor; el token local
+permanece vacío en ese modo aunque se suministre una definición sintética.
+
+T035 valida tamaño, firma y dimensiones antes de procesar; traduce fallos a errores
+seguros. La lectura de dimensiones usa ImageDescriptor sin decodificar píxeles y
+libera descriptor/buffer en finally. T022 aporta pruebas nuevas de límites exactos,
+cuatro límites inválidos, validaciones previas, imagen dañada y PNG sintético real.
+
+T013/T110 revisan el aporte conservado T140 de Samuel: sin cambiar colores ni temas,
+se comprueban claro/oscuro, Poppins, superficies, foco y botones de 52 dp. No se
+atribuye ese diseño a Luis ni se acredita todavía un recorrido visual completo.
+
+T201 fija image_cropper 12.2.1 y share_plus 12.0.2; restaura UCropActivity como
+actividad privada, manteniendo copias de seguridad desactivadas. pub get correcto
+y servicios de recorte/compartir pasan el analizador con el SDK instalado. El
+lockfile registra los paquetes y la adaptación de cinco dependencias al SDK.
+Las licencias de los paquetes se conservan en sus distribuciones; Poppins no cambia.
+
+Verificación: **10 pruebas Flutter aprobadas** más **3 escenarios de configuración**
+aprobados; analizador del alcance sin incidencias; formato correcto. Comprobación
+XML de actividad única, privada y backup desactivado, correcta. No es la suite
+Flutter completa ni una comprobación del selector nativo de Android.
+
+Comandos desde frontend:
+
+```bash
+flutter pub get
+flutter test --no-pub test/services/image_rules_test.dart test/services/app_config_test.dart test/theme/app_theme_test.dart
+flutter test --no-pub --dart-define=HOSTED_ACCOUNTS=true --dart-define=API_BASE_URL=https://example.invalid/api --dart-define=LOCAL_DEV_API_TOKEN=synthetic-unused test/services/app_config_test.dart
+flutter test --no-pub --dart-define=HOSTED_ACCOUNTS=true test/services/app_config_test.dart
+flutter test --no-pub --dart-define=HOSTED_ACCOUNTS=true --dart-define=API_BASE_URL=http://example.invalid/ test/services/app_config_test.dart
+flutter analyze --no-pub lib/config/app_config.dart lib/services/image_rules.dart lib/services/image_editor_service.dart lib/services/share_service.dart lib/theme test/services/image_rules_test.dart test/services/app_config_test.dart test/theme/app_theme_test.dart
+dart format --output=none --set-exit-if-changed lib/config/app_config.dart lib/services/image_rules.dart lib/theme test/services/image_rules_test.dart test/services/app_config_test.dart test/theme/app_theme_test.dart
+```
+
+No se consultó implementación histórica en este lote. Los temas son los conservados
+en 18f5fde; se revisan mediante pruebas nuevas. Firma, pantallas y suite general
+continúan pendientes, igual que las verificaciones físicas.
+
+## Lote 4: T038, T119, T124, T125, T206, T303
+
+T038 envía imagen binaria y texto JSON, aplica límites de espera, traduce errores y
+verifica la firma de archivos. Lee el Bearer actual en cada solicitud. El permiso
+local solo sale en debug y hacia loopback/emulador, nunca a un servidor remoto.
+Las marcas se convierten a UTF-16 y el texto válido se conserva. El cliente ofrece
+close para liberar conexiones. Se conserva el traductor de errores compartido.
+
+T124 valida nombre, correo, longitud, confirmación y consentimiento. T125 administra
+lectura, inicio, cierre, eliminación y vencimiento de sesión; evita peticiones
+duplicadas, conserva cache sin red y exige persistir antes de anunciar ingreso.
+Un cambio de propietario al recuperar una sesión se rechaza. Fallos del almacén
+no se registran ni se anuncian como persistencia correcta.
+
+T119 sustituye suites retiradas de formularios/cliente, amplía la suite compartida
+del controlador con duplicados, errores de almacenamiento y aislamiento de dueño.
+T206 prueba conversión Unicode, validación, desplazamiento, borrado, pegado y
+puntuación en las marcas. T303 solicita el límite nativo, usa selección individual
+si queda una página y conserva resultados excedentes para que el controlador
+compartido pueda informar y limpiar sus copias, en vez de ocultarlos. Su falso
+registra llamadas y límites para las pruebas de varias páginas conservadas.
+
+**60 pruebas aprobadas**, incluida la suite compartida de autenticación local
+Argon2id. El único ajuste a LocalAuthApi cuenta puntos Unicode en los límites de
+nombre/contraseña como el backend; la derivación, migración y almacenamiento
+seguros de Samuel no se reescriben. No se consultó implementación histórica.
+El análisis y formato del alcance son correctos. Datos sintéticos y HTTP simulado.
+
+Comandos desde frontend:
+
+```bash
+flutter test --no-pub test/services/account_rules_test.dart test/services/uncertain_ranges_test.dart test/services/auth_api_client_test.dart test/services/handtext_api_client_test.dart test/services/image_source_service_test.dart test/services/local_auth_api_test.dart test/state/auth_controller_test.dart
+flutter analyze --no-pub lib/services/handtext_api_client.dart lib/services/account_rules.dart lib/services/image_source_service.dart lib/services/local_auth_api.dart lib/state/auth_controller.dart test/services/account_rules_test.dart test/services/uncertain_ranges_test.dart test/services/auth_api_client_test.dart test/services/image_source_service_test.dart test/services/handtext_api_client_test.dart test/state/auth_controller_test.dart
+dart format --output=none --set-exit-if-changed lib/services/handtext_api_client.dart lib/services/account_rules.dart lib/services/image_source_service.dart lib/services/local_auth_api.dart lib/state/auth_controller.dart test/services/account_rules_test.dart test/services/uncertain_ranges_test.dart test/services/auth_api_client_test.dart test/services/image_source_service_test.dart test/services/handtext_api_client_test.dart test/state/auth_controller_test.dart test/support/fakes.dart
+```
+
+Las pruebas Flutter también necesitan sockets locales; cuando el aislamiento los
+rechaza se ejecutan fuera de él. No se prueba galería física ni persistencia real
+del Android Keystore hasta contar con dispositivo. La revisión del equipo sigue
+pendiente en todas las issues.
+
+## Lote 5: T139, T401, T704, T1003, T1005, T1006
+
+Persistencia de idioma/bloqueo con lectura compatible de archivos antiguos; MaterialApp
+resuelve español, inglés y el idioma automático con español de respaldo. La elección
+se verifica en el MaterialApp real mientras se comprueba una sesión simulada, sin
+atribuir aprobación a las pantallas del flujo aún pendientes.
+
+El bloqueo exige verificar y persistir antes de anunciar activación. Cancelar o
+fallar mantiene el cierre. La vuelta tras más de 60 segundos bloquea; el caso exacto
+de 60 segundos no. Se conserva el primer instante de salida entre inactive/hidden/
+paused, y se evita lanzar verificaciones duplicadas. La desactivación persistida
+impide volver a bloquear. El gate oculta documentos y foco/semántica, conservando
+el árbol y el texto para el desbloqueo. El PIN y la huella los sigue verificando
+Android mediante el adaptador compartido: en las pruebas se simula su resultado.
+
+T401 aporta pruebas nuevas de JSON, todas las combinaciones de ajustes, archivo
+privado temporal, escritura atómica, valores dañados y fallo de persistencia. T139
+comprueba AA para texto (4.5:1), foco/iconos (3:1), estados y botones, conservando
+la paleta de Samuel. El interruptor de bloqueo real se prueba al 100 % y 200 %.
+
+**44 pruebas aprobadas**; análisis del alcance sin incidencias, formato correcto.
+No se verifican PIN/huella reales, TalkBack físico ni pantallas completas. T404,
+T126 y T142 incluyen solo dependencias necesarias para este lote (Ajustes, header,
+splash, logo y tarjeta de acción); aún no se cuentan terminadas. No se restauró
+código histórico. SurfaceCard compartida conserva su diseño y añade un Material
+transparente: el SDK 3.44 detectó que ListTile no podía pintar sobre su DecoratedBox.
+Se corrigió esa incompatibilidad sin quitar la comprobación ni cambiar la paleta.
+
+Comandos desde frontend:
+
+```bash
+flutter test --no-pub test/state/settings_test.dart test/state/lock_controller_test.dart test/theme/aurora_contrast_test.dart test/presentation/settings_foundations_test.dart
+flutter analyze --no-pub lib/app.dart lib/services/settings_store.dart lib/state/settings_controller.dart lib/state/app_lock_controller.dart lib/presentation/app_lock_scope.dart lib/presentation/screens/settings_screen.dart lib/presentation/screens/lock_screen.dart lib/presentation/screens/splash_screen.dart lib/presentation/widgets/aurora_header.dart lib/presentation/widgets/scanner_logo.dart lib/presentation/widgets/action_tile.dart lib/presentation/widgets/surface_card.dart test/state/settings_test.dart test/state/lock_controller_test.dart test/theme/aurora_contrast_test.dart test/presentation/settings_foundations_test.dart
+dart format --output=none --set-exit-if-changed lib/app.dart lib/services/settings_store.dart lib/state/settings_controller.dart lib/state/app_lock_controller.dart lib/presentation/app_lock_scope.dart lib/presentation/screens/settings_screen.dart lib/presentation/screens/lock_screen.dart lib/presentation/screens/splash_screen.dart lib/presentation/widgets/aurora_header.dart lib/presentation/widgets/scanner_logo.dart lib/presentation/widgets/action_tile.dart lib/presentation/widgets/surface_card.dart test/state/settings_test.dart test/state/lock_controller_test.dart test/theme/aurora_contrast_test.dart test/presentation/settings_foundations_test.dart
+```
+
+Recursos inspeccionados: sin teléfono, sin AVD ni imagen de sistema instalada y sin
+/dev/kvm; no se acredita recorrido en emulador. No existe directorio .handtext con
+clave de firma en esta máquina. Java disponible en Android Studio es versión 25;
+la compatibilidad de herramientas para APK se resolverá al llegar a la compilación.
+GitHub confirma que el commit 6a0cb1b se asocia a la cuenta LUISDACA y su noreply.
+
+## Lote 6: T042, T126, T130, T142, T507, T511
+
+Pantallas de bienvenida, ingreso y registro con validación, consentimiento, datos
+del modo local/servidor, errores seguros y prevención de duplicados. Los campos
+de contraseña van ocultos, sin autocorrección/sugerencias y con guía de longitud.
+Se conserva el almacenamiento y la API compartidos. Los errores no revelan si el
+correo existe. No se acredita aún el flujo completo de documentos.
+
+Los diálogos de autorización/confirmación solo devuelven aceptación al pulsar
+expresamente su botón; cancelar o cerrar rechaza. El envío menciona el número de
+imágenes. StatusBanner presenta texto, icono, estado, acción y región viva. La
+ruta histórica de T042 menciona status_message.dart, pero el contrato actual usa
+status_banner.dart/StatusBanner: se conserva ese nombre, sin crear un alias vacío.
+
+Menú de cuenta con confirmación de texto pendiente al cerrar, y contraseña al
+eliminar. La cancelación conserva sesión/documento. Eliminar correctamente limpia
+sesión, borrador e historial propios. El avatar mide 48 dp y su inicial no entra en
+la semántica ni absorbe el encabezado vecino; el diálogo se desplaza al 200 %.
+Logo, escaneo y componentes usan la paleta conservada y detienen los bucles al
+pedir menos animaciones. T134 se implementa como dependencia de T142 y se mantiene
+pendiente de verificación integrada en la vista previa. No se consultó código histórico.
+
+Integración T125: si ya se borró la cuenta en el servicio y falla la limpieza local,
+se retorna fallo y se cierra la sesión ficticia, sin anunciar eliminación completa.
+Una regresión verifica sesión vacía, aviso no exitoso y fallo seguro; la bienvenida
+muestra el fallo. También se normaliza un detalle de formato del test de bloqueo.
+
+Verificación: **25 pruebas** de widgets/controlador de sesión y **8 escenarios
+compartidos** de bienvenida, privacidad local/servidor, consentimiento, confirmación
+y error de ingreso. Análisis del alcance sin incidencias; formato correcto.
+No se reemplazan ni debilitan las suites compartidas pendientes. Las nuevas pruebas
+usan isSemantics, equivalente actual de containsSemantics, con las mismas condiciones.
+
+Comandos desde frontend:
+
+```bash
+flutter test --no-pub test/presentation/account_widgets_test.dart test/state/auth_controller_test.dart
+flutter test --no-pub test/presentation/auth_screens_test.dart --name 'sin sesión se muestra|datos incorrectos muestran|sin la autorización de datos|contraseñas deben coincidir|registro y privacidad coinciden'
+flutter analyze --no-pub test/presentation/account_widgets_test.dart lib/presentation/widgets/account_menu.dart lib/presentation/widgets/scan_overlay.dart lib/presentation/widgets/confirm_dialog.dart lib/presentation/widgets/consent_dialog.dart lib/presentation/widgets/status_banner.dart lib/presentation/widgets/password_field.dart lib/presentation/screens/auth lib/state/auth_controller.dart test/state/auth_controller_test.dart
+dart format --output=none --set-exit-if-changed lib/presentation/screens/auth lib/presentation/widgets/account_menu.dart lib/presentation/widgets/confirm_dialog.dart lib/presentation/widgets/consent_dialog.dart lib/presentation/widgets/password_field.dart lib/presentation/widgets/scan_overlay.dart lib/presentation/widgets/status_banner.dart lib/state/auth_controller.dart test/state/auth_controller_test.dart test/state/lock_controller_test.dart test/presentation/account_widgets_test.dart
+```
+
+## Lote 7: T043, T210, T213, T216, T512, T902
+
+Inicio, vista previa y editor conectados al controlador compartido; botón atrás y
+persistencia al pasar a segundo plano conservados. Se pide autorización en cada
+envío, se desactivan acciones duplicadas, el editor conserva la última corrección
+y la exportación usa Word/PDF. La preview muestra páginas, controles, recorte,
+original y estados sin tocar la imagen original. Los fallos/cancelaciones conservan
+el texto y la imagen anterior; las copias fallidas se limpian.
+
+ReviewTextController pinta fondo y subrayado ondulado sin cambiar el texto y
+respeta la composición IME. Siguiente selecciona y anuncia la palabra; aceptar
+quita la marca. La exportación nunca contiene las marcas. Compartir usa exactamente
+los bytes, nombre y formato guardados, y no aparece al cancelar el guardado.
+
+Los avisos/revisión del editor se desplazan dentro del 45 % disponible; el texto
+conserva más de 150 dp al 200 % y Exportar sigue visible. El encabezado limita su
+escalado a 150 % y omite el subtítulo por encima de 130 %, según R5 de 006. La hoja
+de formatos se desplaza y el teclado se retira al abrirla. PrimaryButton compartido
+conserva colores y mínimo de 54 dp; puede crecer y envolver texto, sin elipsis que
+cortara etiquetas al 200 %. Cuenta ahora tiene un límite semántico propio: la
+suite compartida detectó que absorbía el saludo; se corrigió el código sin debilitar
+la expectativa. Se amplió la regresión aislada con saludo y encabezado vecinos.
+
+El nombre del archivo usa el título limpio y hasta 60 puntos Unicode, sin partir
+emojis. Caracteres prohibidos, espacios/puntos finales y respaldo con fecha se
+comprueban. Modelo/controlador T905 de Juan se conserva.
+
+**38 pruebas aprobadas**: flujo, extras, nombres, componentes de cuenta y recorrido
+automático de accesibilidad al 100/200 %. Análisis y formato del alcance correctos.
+Se incluyen dependencias T505 (selector de consejos), T803/T806 (conexión/fallo del
+escáner) y T903 (acción de copiar); se mantienen sin contar hasta revisar sus
+criterios y ejecutar sus suites propias. No se acredita OCR, compartir, recorte o
+TalkBack físicos. No se consultó implementación histórica.
+
+Comandos desde frontend:
+
+```bash
+flutter test --no-pub test/presentation/accessibility_test.dart test/presentation/extras_screens_test.dart test/presentation/flow_screen_test.dart test/services/file_name_test.dart test/presentation/account_widgets_test.dart
+flutter analyze --no-pub lib/presentation/screens/editor_screen.dart lib/presentation/screens/flow_screen.dart lib/presentation/screens/start_screen.dart lib/presentation/screens/preview_screen.dart lib/presentation/screens/app_root.dart lib/presentation/widgets/review_text_controller.dart lib/presentation/widgets/export_format_sheet.dart lib/presentation/widgets/primary_button.dart lib/state/document_flow_controller.dart test/presentation/extras_screens_test.dart test/services/file_name_test.dart
+dart format --output=none --set-exit-if-changed lib/presentation/screens/app_root.dart lib/presentation/screens/editor_screen.dart lib/presentation/screens/flow_screen.dart lib/presentation/screens/preview_screen.dart lib/presentation/screens/start_screen.dart lib/presentation/widgets/export_format_sheet.dart lib/presentation/widgets/review_text_controller.dart lib/presentation/widgets/primary_button.dart lib/presentation/widgets/account_menu.dart lib/state/document_flow_controller.dart test/presentation/extras_screens_test.dart test/services/file_name_test.dart test/presentation/account_widgets_test.dart
+```
+
+## Lote 8: T025, T026, T045, T128, T134, T305
+
+58 pruebas aprobadas: controlador, permisos/captura, pantallas de flujo y cuentas,
+y varias páginas. Análisis y formato del alcance correctos.
+
+Las nuevas suites comprueban consentimiento por envío, duplicados, borrador y su
+orden de escritura/borrado, exportación vigente, fallos y cancelaciones. Captura
+comprueba permiso denegado/permanente, repetición, cancelación y copia inválida;
+no se modifica el original. Se conserva y revisa la suite compartida de varias
+páginas: orden, máximo 10, limpieza, reintento sin reenviar páginas y marcas.
+T134 se verifica en la vista previa: visible durante OCR y retirada al terminar;
+las pruebas previas ya cubren menos animaciones. Las suites compartidas no se
+reescriben. La de cuentas detectó dos avisos de sesión vencida: LoginScreen evita
+repetir el mismo fallo, manteniendo el aviso de recuperación y los otros errores.
+No se debilitaron expectativas ni se consultó implementación histórica.
+
+Comandos desde frontend:
+
+```bash
+flutter test --no-pub --reporter expanded test/state/document_flow_controller_test.dart test/state/camera_flow_test.dart test/presentation/flow_screen_test.dart test/presentation/auth_screens_test.dart test/state/pages_flow_test.dart
+flutter analyze --no-pub test/state/document_flow_controller_test.dart test/state/camera_flow_test.dart test/presentation/flow_screen_test.dart lib/presentation/screens/auth/login_screen.dart
+dart format --output=none --set-exit-if-changed test/state/document_flow_controller_test.dart test/state/camera_flow_test.dart test/presentation/flow_screen_test.dart lib/presentation/screens/auth/login_screen.dart
+```
+
+Son pruebas con fakes/datos sintéticos; cámara y TalkBack físicos pendientes.
+Las issues permanecen abiertas por la revisión del equipo exigida en sus criterios.
+
+
+## Lote 9: T404, T406, T503, T505, T604, T610
+
+40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),
+incluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.
+
+Los consejos se muestran una vez por teléfono, persisten al terminar/saltar/atrás,
+se reabren desde inicio y Ajustes y no reaparecen al cambiar de cuenta. Se añadió
+PopScope a TipsScreen para cumplir Atrás de Android; se usa sendAnnouncement con
+la vista actual (API de accesibilidad vigente). Las pruebas usan la app completa,
+menos animaciones y cuatro páginas; no solicitan cámara ni envían imágenes.
+
+Se comprueba versión/build de AppConfig contra pubspec.yaml, «Acerca de», licencias
+y privacidad, cambio de tema y escala del editor 1.4. Solo se actualiza el matcher
+deprecado containsSemantics a su equivalente isSemantics, conservando condiciones.
+Se conserva y revisa la suite compartida del historial: guardado correcto, no
+duplicar, cancelación/fallo no registrar, historial sin espacio no rompe el archivo,
+abrir sin perder borrador indebidamente y separación entre cerrar/eliminar cuenta.
+Borrar todo también prueba cancelar antes de confirmar. Ninguna eliminación de
+prueba toca datos reales: almacenes sintéticos. No se reutilizó código histórico.
+
+Comandos desde frontend:
+
+```bash
+flutter test --no-pub --reporter expanded test/presentation/tips_screen_test.dart test/state/settings_test.dart test/presentation/settings_screens_test.dart test/state/history_flow_test.dart test/presentation/history_screen_test.dart
+flutter analyze --no-pub lib/presentation/screens/tips_screen.dart test/presentation/tips_screen_test.dart test/state/settings_test.dart test/presentation/settings_screens_test.dart
+dart format --output=none --set-exit-if-changed lib/presentation/screens/tips_screen.dart test/presentation/tips_screen_test.dart test/state/settings_test.dart test/presentation/settings_screens_test.dart test/presentation/history_screen_test.dart
+```
+
+Revisión formal y verificaciones Android físicas pendientes.
+
+## Lote 10: T803, T806, T903, T906, T606, T612
+
+52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento
+por cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.
+
+T803/T806 conectan el origen scanner al mismo circuito de copias/validación, límites,
+orden, cancelación, consentimiento y reconocimiento. La suite compartida comprueba
+falta de Play Services, fallo, cancelar y alternativa Tomar fotografía, sin envíos
+ni pérdida del texto. main.dart conserva la inyección de MlKitDocumentScanner.
+
+T906 completa búsqueda y diálogo de renombrado, con cancelar/atrás, límite 1..60
+puntos Unicode, botón desactivado ante inválidos y desplazamiento del diálogo. Usa
+sin modificar los contratos T905 de Juan en HistoryEntry y DocumentHistory.
+Buscar no escribe en disco; renombrar conserva ID/texto y el nombre se mantiene al
+exportar otra vez. Copiar usa exactamente el texto corregido y comunica resultado;
+las cadenas y privacidad en español/inglés se revisan y conservan. Se amplía el
+arnés con fábrica opcional para probar dos controladores/cuentas independientes.
+
+Se actualizan quickstart de 007, README y mapa: historial local por cuenta, sin
+imágenes ni archivos exportados; cerrar sesión conserva historial y elimina borrador;
+eliminar cuenta borra su historial. Portapapeles accesible para otras apps. No se
+consultó implementación histórica ni se efectuó la prueba física pendiente.
+
+Comandos desde frontend:
+
+```bash
+flutter test --no-pub --reporter expanded test/state/scanner_flow_test.dart test/presentation/organize_test.dart test/presentation/history_screen_test.dart test/services/history_store_test.dart test/services/storage_test.dart
+flutter analyze --no-pub lib/presentation/screens/history_screen.dart test/presentation/organize_test.dart test/presentation/history_screen_test.dart test/support/app_tester.dart
+dart format --output=none --set-exit-if-changed lib/presentation/screens/history_screen.dart test/presentation/organize_test.dart test/presentation/history_screen_test.dart test/support/app_tester.dart
+```
+
+Revisión del equipo y selectores/Play Services/TalkBack físicos pendientes.
+
+## Lote 11: T016, T054, T057, T137, T708, T1103
+
+Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.
+Flutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin
+incidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.
+
+T016 revisa el manifiesto fusionado: Internet/cámara/biometría, sin permiso general
+de almacenamiento, allowBackup=false, exclusión de nube/transferencia y uCrop privado.
+Release nunca permite HTTP. T054/T1103 actualizan mapa, README, reinicio y quickstarts,
+con requisitos actuales, procedencia, comandos, resultados y límites históricos.
+T708 conserva y ejecuta todo el recorrido inglés 100/200 %, errores y títulos nativos;
+solo se migra el matcher semántico deprecado al equivalente sin cambiar condiciones.
+
+T137 integra contratos reales. Detectaron que un 401 sin Bearer expulsaba cuentas
+locales: ahora se distingue falta de autorización remota de sesión vencida usando
+las cabeceras enviadas, incluso si el token cambia antes de la respuesta. Se amplía
+la regresión y se mantiene la expectativa específica del contrato compartido.
+La API reproducible tools/serve_contract_test.py usa PostgreSQL efímero y no toma
+credenciales/URL de producción. No hay llamadas OCR externas.
+
+T057 genera APK debug actual 1.0.0 (1), minSdk24/target36, guardado en
+frontend/build/verification/handtext-debug-20261117.apk. SHA-256:
+acf454c15ed67ddba9ef3e1c05dc61c89751a5fabae57ed2764a3946b9b352ea.
+Gradle 8.12 usa JDK17 aislado. Se desactiva Jetifier con dependencias AndroidX y se
+limitan trabajadores tras un fallo real de heap; no se ocultan errores. Compilación
+posterior y repetición final correctas. Flutter avisa de futuras retiradas de soporte
+para Gradle/AGP/Kotlin actuales, sin impedir la compilación ni saltar validaciones.
+
+Dependencia T409: firma propia implementada, diez pruebas de política Gradle reales
+con certificados sintéticos aprobadas. Se sustituye LUIS_PENDIENTE por reglas finales
+contra URL insegura, cuentas locales, token dev, clave ausente/inválida y firma debug.
+Release por arquitectura falla con SIGNING_REQUIRED por falta de clave autorizada;
+T409/T411 no se cuentan concluidas sin firma/instalación reales. T1102 ya tiene su
+paso de reingreso/persistencia implementado y analizado; espera ejecución Android.
+
+Comandos exactos, rutas absolutas, configuración local y recursos pendientes:
+[QUICKSTART_RECONSTRUCCION_LUIS.md](QUICKSTART_RECONSTRUCCION_LUIS.md).
+Revisión del equipo pendiente en las 72 issues. No se despliega ni modifica producción.
+
+## Lote final — verificación Android y cierre del registro (2026-11-17)
+
+T312 y T1102 verificadas técnicamente. Total: **68/72**, distribuidas 20/20,
+21/21, 15/17 y 12/14 por sprint. **Cierre formal: 0/72**; revisión de otro integrante
+pendiente en las 72 issues. Ninguna se cierra indebidamente.
+
+Ejecución Android real en AVD nuevo Android 35 Google APIs x86_64, KVM y 2 GB:
+cuenta/Argon2id en PostgreSQL temporal, Word real, cierre/reingreso/persistencia,
+50 documentos en inglés, búsqueda, renombrado, portapapeles nativo, tres páginas,
+reordenar/quitar y PDF real. Recorrido automatizado de 30,3 s; apertura con 50
+entradas: 239 ms. OCR, selector y guardado se simulan según el contrato de 012;
+no acredita cámara, galería, recorte o compartir nativos ni calidad OCR real.
+La primera ejecución de T1102 ya pasó en 16,8 s/254 ms; el recorrido ampliado posterior
+es la evidencia final. No se presenta como prueba manual.
+
+El arranque de herramientas falló varias veces por ADB desconectado y DDS. Se probó
+ADB directo a 127.0.0.1:5581 y DDS habilitado; esa combinación permitió la ejecución
+ampliada correcta. --no-dds provoca error del comparador de goldens de Flutter 3.44;
+no usarlo en el comando reproducible. El robot retira foco antes de tocar para que
+el teclado Android no cubra el consentimiento. No se debilitó ninguna expectativa.
+
+Se corrigió un defecto real de conservación: el borrador recuperado se marca sin
+exportar, por lo que cerrar sesión pide confirmación. Una prueba del controlador
+y otra de pantalla verifican cancelar y conservar texto/sesión/borrador. Suite final:
+**351 pruebas Flutter sin omisiones**, backend **218**, checks **7**, política Gradle
+**10**, formato/análisis y Ruff correctos. No se suman cifras de lotes solapados.
+
+Pendientes con implementación/avance documentado:
+
+| Tarea | Recurso o verificación pendiente |
+| --- | --- |
+| T409 · #147 | Clave autorizada para validar firma real; política y diez escenarios sintéticos aprobados. |
+| T411 · #149 | APK release por arquitectura, instalación y arranque SC-504; falta clave de entrega. |
+| T908 · #206 | Recorrido físico en teléfono; automatización Android de organización aprobada. |
+| T1008 · #214 | PIN/huella simulada y recorrido físico; suites de controlador/widgets aprobadas. |
+
+No se cambia seguridad/PIN de un teléfono, no se llama OCR de pago ni se despliega.
+La API y PostgreSQL de contratos se apagan al terminar, limpiando solo sus datos
+temporales. AVD de prueba conservado para repetir; artefactos solo locales.
+[Comandos y APK actuales](QUICKSTART_RECONSTRUCCION_LUIS.md).
+
+APK normal final regenerado tras la corrección del borrador: `frontend/build/verification/handtext-debug-20261117.apk`, SHA-256 `7903229bc7315fb3ff1cdcc1ed78177f95eea2130583954301f4c364fe47475f`; firma v2 válida verificada. El hash del lote 11 corresponde al artefacto anterior conservado como `frontend/build/verification/handtext-debug-lote11-9d748cf.apk`.

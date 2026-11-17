@@ -14,8 +14,8 @@ const displayNameMaxChars = 60;
 
 /// Correo con forma válida (algo@dominio.ext, máximo 254 caracteres).
 bool isValidEmail(String email) {
-  final normalized = email.trim().toLowerCase();
-  return normalized.length <= 254 && _emailPattern.hasMatch(normalized);
+  final normalized = email.trim();
+  return normalized.runes.length <= 254 && _emailPattern.hasMatch(normalized);
 }
 
 /// Revisa el formulario de registro; devuelve el primer problema o null si está bien.
@@ -27,12 +27,12 @@ AppFailure? validateRegistrationForm({
   required bool acceptsDataPolicy,
 }) {
   final name = displayName.trim().split(RegExp(r'\s+')).join(' ');
-  if (name.isEmpty || name.length > displayNameMaxChars) {
+  if (name.isEmpty || name.runes.length > displayNameMaxChars) {
     return const AppFailure(FailureKind.invalidDisplayName);
   }
   if (!isValidEmail(email)) return const AppFailure(FailureKind.invalidEmail);
-  if (password.length < passwordMinChars ||
-      password.length > passwordMaxChars ||
+  if (password.runes.length < passwordMinChars ||
+      password.runes.length > passwordMaxChars ||
       password.trim().isEmpty) {
     return const AppFailure(FailureKind.weakPassword);
   }
@@ -40,7 +40,7 @@ AppFailure? validateRegistrationForm({
     return const AppFailure(FailureKind.passwordMismatch);
   }
   if (!acceptsDataPolicy) {
-    return const AppFailure(FailureKind.dataPolicyNotAccepted); // [CU-H1-E5]
+    return const AppFailure(FailureKind.dataPolicyNotAccepted);
   }
   return null;
 }
@@ -53,20 +53,15 @@ AppFailure? validateLoginForm({
   if (email.trim().isEmpty || password.isEmpty) {
     return const AppFailure(FailureKind.missingCredentials);
   }
+  if (!isValidEmail(email)) return const AppFailure(FailureKind.invalidEmail);
   return null;
 }
 
 /// Nivel de seguridad de la contraseña (solo es una guía visual): 0 débil, 1
 /// aceptable, 2 fuerte. La regla obligatoria es la longitud mínima de 8.
 int passwordStrength(String password) {
-  if (password.length < passwordMinChars) return 0;
-  var points = 0;
-  if (password.length >= 12) points++;
-  if (RegExp(r'\d').hasMatch(password)) points++;
-  if (RegExp(r'[A-ZÁÉÍÓÚÑ]').hasMatch(password) &&
-      RegExp(r'[a-záéíóúñ]').hasMatch(password)) {
-    points++;
+  if (password.runes.length < passwordMinChars || password.trim().isEmpty) {
+    return 0;
   }
-  if (RegExp(r'[^A-Za-z0-9ÁÉÍÓÚÑáéíóúñ]').hasMatch(password)) points++;
-  return points >= 3 ? 2 : 1;
+  return password.runes.length >= 12 ? 2 : 1;
 }
