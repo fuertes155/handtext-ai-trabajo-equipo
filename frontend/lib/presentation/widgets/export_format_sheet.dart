@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Selector de formato de exportación (tareas T052 y T133; Historia 3, escenario 1).
 //
 // Dos tarjetas grandes: Word (ícono azul) y PDF (ícono rojo). Devuelve null si la
@@ -17,10 +15,9 @@ Future<ExportFormat?> showExportFormatSheet(BuildContext context) {
   return showModalBottomSheet<ExportFormat>(
     context: context,
     showDragHandle: true,
-    // T512: tamaño y desplazamiento pendientes de LUISDACA.
+    isScrollControlled: true,
     builder: (context) => SafeArea(
-      child: Padding(
-        // T512: desplazamiento pendiente de LUISDACA.
+      child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,

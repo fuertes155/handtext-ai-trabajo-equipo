@@ -79,52 +79,58 @@ class AccountButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final strings = context.strings;
-    return PopupMenuButton<_AccountAction>(
-      tooltip: strings.accountTooltip,
-      enabled: !auth.isBusy && !documents.isBusy,
-      padding: EdgeInsets.zero,
-      onSelected: (action) {
-        switch (action) {
-          case _AccountAction.settings:
-            unawaited(
-              Navigator.of(context).push(
-                MaterialPageRoute<void>(builder: (_) => const SettingsScreen()),
-              ),
-            );
-          case _AccountAction.about:
-            unawaited(
-              Navigator.of(context).push(
-                MaterialPageRoute<void>(builder: (_) => const AboutScreen()),
-              ),
-            );
-          case _AccountAction.signOut:
-            unawaited(_signOut(context));
-          case _AccountAction.deleteAccount:
-            unawaited(_deleteAccount(context));
-        }
-      },
-      itemBuilder: (_) => [
-        PopupMenuItem(
-          value: _AccountAction.settings,
-          child: Text(strings.settingsTitle),
+    // Un nodo propio evita que el saludo o el título vecinos se mezclen con Cuenta.
+    return Semantics(
+      container: true,
+      child: PopupMenuButton<_AccountAction>(
+        tooltip: strings.accountTooltip,
+        enabled: !auth.isBusy && !documents.isBusy,
+        padding: EdgeInsets.zero,
+        onSelected: (action) {
+          switch (action) {
+            case _AccountAction.settings:
+              unawaited(
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (_) => const SettingsScreen(),
+                  ),
+                ),
+              );
+            case _AccountAction.about:
+              unawaited(
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(builder: (_) => const AboutScreen()),
+                ),
+              );
+            case _AccountAction.signOut:
+              unawaited(_signOut(context));
+            case _AccountAction.deleteAccount:
+              unawaited(_deleteAccount(context));
+          }
+        },
+        itemBuilder: (_) => [
+          PopupMenuItem(
+            value: _AccountAction.settings,
+            child: Text(strings.settingsTitle),
+          ),
+          PopupMenuItem(
+            value: _AccountAction.about,
+            child: Text(strings.aboutTitle),
+          ),
+          const PopupMenuDivider(),
+          PopupMenuItem(
+            value: _AccountAction.signOut,
+            child: Text(strings.signOut),
+          ),
+          PopupMenuItem(
+            value: _AccountAction.deleteAccount,
+            child: Text(strings.deleteAccount),
+          ),
+        ],
+        child: Semantics(
+          button: true,
+          child: _Avatar(initial: auth.user?.initial ?? '?'),
         ),
-        PopupMenuItem(
-          value: _AccountAction.about,
-          child: Text(strings.aboutTitle),
-        ),
-        const PopupMenuDivider(),
-        PopupMenuItem(
-          value: _AccountAction.signOut,
-          child: Text(strings.signOut),
-        ),
-        PopupMenuItem(
-          value: _AccountAction.deleteAccount,
-          child: Text(strings.deleteAccount),
-        ),
-      ],
-      child: Semantics(
-        button: true,
-        child: _Avatar(initial: auth.user?.initial ?? '?'),
       ),
     );
   }

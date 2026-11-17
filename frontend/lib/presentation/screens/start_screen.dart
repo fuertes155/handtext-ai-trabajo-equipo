@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Pantalla de inicio (tareas T043 y T132; spec 001, módulo 1; spec 002, módulo 5).
 //
 // Sobre el fondo Aurora:
@@ -44,6 +42,113 @@ class StartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T043 pendiente de LUISDACA");
+    final strings = context.strings;
+    final busy = controller.isBusy;
+    final status = controller.status;
+    return AuroraScaffold(
+      body: ListView(
+        padding: const EdgeInsets.all(20),
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  strings.greeting(auth.user?.firstName ?? ''),
+                  style: const TextStyle(color: Aurora.textSecondary),
+                ),
+              ),
+              AccountButton(auth: auth, documents: controller),
+            ],
+          ),
+          const SizedBox(height: 20),
+          SurfaceCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Center(child: ScannerLogo(size: 88)),
+                const SizedBox(height: 16),
+                Semantics(
+                  container: true,
+                  header: true,
+                  child: Text(
+                    strings.startHeadline,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  strings.startDescription,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Aurora.textSecondary),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+          if (status != null) ...[
+            StatusBanner(
+              status: status,
+              onAurora: true,
+              actionLabel: status.action == StatusAction.takePhoto
+                  ? strings.takePhoto
+                  : null,
+              onAction: status.action == StatusAction.takePhoto && !busy
+                  ? controller.takePhoto
+                  : null,
+            ),
+            const SizedBox(height: 16),
+          ],
+          if (controller.hasDocument) ...[
+            Text(strings.keepCurrentTextNotice),
+            TextButton(
+              onPressed: busy ? null : controller.returnToDocument,
+              child: Text(strings.backToCurrentText),
+            ),
+            const SizedBox(height: 12),
+          ],
+          ActionTile(
+            icon: Icons.document_scanner_outlined,
+            title: strings.scanDocument,
+            subtitle: strings.scanDocumentSubtitle,
+            onTap: busy ? null : controller.scanDocument,
+          ),
+          const SizedBox(height: 12),
+          ActionTile(
+            icon: Icons.photo_camera_outlined,
+            title: strings.takePhoto,
+            subtitle: strings.takePhotoSubtitle,
+            onTap: busy ? null : controller.takePhoto,
+          ),
+          const SizedBox(height: 12),
+          ActionTile(
+            icon: Icons.photo_library_outlined,
+            title: strings.pickFromGallery,
+            subtitle: strings.pickFromGallerySubtitle,
+            onTap: busy ? null : controller.pickFromGallery,
+          ),
+          const SizedBox(height: 12),
+          ActionTile(
+            icon: Icons.folder_outlined,
+            title: strings.historyTitle,
+            subtitle: strings.historyCount(controller.history.entries.length),
+            onTap: busy ? null : () => HistoryScreen.open(context, controller),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            strings.imageRequirements,
+            style: const TextStyle(color: Aurora.textMuted),
+          ),
+          TextButton.icon(
+            onPressed: () => TipsScreen.open(context),
+            icon: const Icon(Icons.lightbulb_outline),
+            label: Text(strings.tipsLink),
+          ),
+        ],
+      ),
+    );
   }
 }

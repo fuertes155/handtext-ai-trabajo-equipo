@@ -134,3 +134,11 @@ widgets/sesión y 8 escenarios compartidos de privacidad y formularios. Análisi
 y formato del alcance correctos. El flujo completo y TalkBack físico siguen
 pendientes. T134 queda implementada como dependencia, pendiente de integrar/verificar
 en la vista previa. Revisión del equipo pendiente. Total técnico: 36/72.
+
+## Reconstrucción actual — lote 7 (2026-11-17)
+
+T043, T210, T213, T216, T512 y T902: flujo de pantallas, revisión, recorte,
+compartir y nombres verificados con 38 pruebas, incluidas guías de accesibilidad
+al 100 % y 200 %. Análisis/formato del alcance correctos. T505/T803/T806/T903
+quedan implementadas como dependencias, pendientes de su revisión y suites propias.
+Sin verificación nativa física. Revisión del equipo pendiente. Total: 42/72.

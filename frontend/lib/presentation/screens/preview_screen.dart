@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Vista previa de la imagen (tareas T043 y T132; spec 001, módulos 1 y 2).
 //
 // - Muestra la imagen antes del reconocimiento y permite aceptarla, reemplazarla o
@@ -86,7 +84,181 @@ class PreviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T043,T213 pendiente de LUISDACA");
+    final strings = context.strings;
+    final image = controller.pendingImage;
+    if (image == null) {
+      return AuroraScaffold(
+        body: Center(child: Text(strings.imagePreviewUnavailable)),
+      );
+    }
+    final busy = controller.isBusy;
+    final status = controller.status;
+    final recognizing = status?.event == StatusEvent.recognizing;
+    return AuroraScaffold(
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+            child: Row(
+              children: [
+                IconButton(
+                  tooltip: strings.cancelSelectionTooltip,
+                  onPressed: busy ? null : controller.cancelPreview,
+                  icon: const Icon(Icons.close),
+                ),
+                Expanded(
+                  child: Semantics(
+                    container: true,
+                    header: true,
+                    child: Text(
+                      strings.previewTitle,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+                if (controller.pages.length > 1) ...[
+                  IconButton(
+                    tooltip: strings.movePageBefore,
+                    onPressed: busy || controller.selectedPageIndex == 0
+                        ? null
+                        : () => controller.moveSelectedPage(-1),
+                    icon: const Icon(Icons.arrow_back),
+                  ),
+                  IconButton(
+                    tooltip: strings.movePageAfter,
+                    onPressed:
+                        busy ||
+                            controller.selectedPageIndex ==
+                                controller.pages.length - 1
+                        ? null
+                        : () => controller.moveSelectedPage(1),
+                    icon: const Icon(Icons.arrow_forward),
+                  ),
+                  IconButton(
+                    tooltip: strings.removePage,
+                    onPressed: busy ? null : controller.removeSelectedPage,
+                    icon: const Icon(Icons.delete_outline),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.only(bottom: 24),
+              children: [
+                PageStrip(
+                  pages: controller.pages,
+                  selectedIndex: controller.selectedPageIndex,
+                  onSelect: busy ? null : controller.selectPage,
+                  onAdd: busy || !controller.canAddPages
+                      ? null
+                      : () => _addPage(context),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (controller.pages.length > 1) ...[
+                        Text(
+                          strings.pageOf(
+                            controller.selectedPageIndex + 1,
+                            controller.pages.length,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                      ],
+                      SurfaceCard(
+                        padding: const EdgeInsets.all(8),
+                        child: SizedBox(
+                          height: 280,
+                          child: Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Image.memory(
+                                image.bytes,
+                                fit: BoxFit.contain,
+                                cacheWidth: 1200,
+                                errorBuilder: (context, _, _) => Center(
+                                  child: Text(strings.imagePreviewUnavailable),
+                                ),
+                              ),
+                              if (recognizing) ...[
+                                const ScanOverlay(),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: _ReadingChip(
+                                    text: strings.readingHandwriting,
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        strings.imageDetails(image),
+                        style: const TextStyle(color: Aurora.textSecondary),
+                      ),
+                      const SizedBox(height: 16),
+                      if (status != null) ...[
+                        StatusBanner(
+                          status: status,
+                          onAurora: true,
+                          actionLabel:
+                              status.action == StatusAction.retryRecognition
+                              ? strings.retry
+                              : null,
+                          onAction:
+                              !busy &&
+                                  status.action == StatusAction.retryRecognition
+                              ? () => _acceptAndRecognize(context)
+                              : null,
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+                      PrimaryButton(
+                        label: controller.pages.length == 1
+                            ? strings.acceptAndRecognize
+                            : strings.recognizePages(controller.pages.length),
+                        onPressed: busy
+                            ? null
+                            : () => _acceptAndRecognize(context),
+                        isLoading: busy,
+                      ),
+                      const SizedBox(height: 12),
+                      OutlinedButton.icon(
+                        onPressed: busy ? null : controller.replaceImage,
+                        icon: const Icon(Icons.image_outlined),
+                        label: Text(strings.replaceImageLabel(image.origin)),
+                      ),
+                      const SizedBox(height: 12),
+                      OutlinedButton.icon(
+                        onPressed: busy ? null : controller.editImage,
+                        icon: const Icon(Icons.crop_rotate),
+                        label: Text(strings.editImage),
+                      ),
+                      if (controller.canRestoreOriginalImage)
+                        TextButton(
+                          onPressed: busy
+                              ? null
+                              : controller.restoreOriginalImage,
+                          child: Text(strings.restoreOriginalImage),
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -98,6 +270,18 @@ class _ReadingChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T043,T213 pendiente de LUISDACA");
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: Aurora.backgroundTop,
+          borderRadius: BorderRadius.circular(Aurora.radiusSmall),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Text(text, style: const TextStyle(color: Aurora.textPrimary)),
+        ),
+      ),
+    );
   }
 }

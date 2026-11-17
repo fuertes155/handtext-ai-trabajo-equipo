@@ -117,9 +117,10 @@
     {
       "task": "T043",
       "issue": 43,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Pantallas en frontend/lib/presentation/screens/ (flow_screen.dart, start_screen.dart, preview_screen.dart, editor_screen.dart) · Dificultad Alta."
+      "description": "Pantallas en frontend/lib/presentation/screens/ (flow_screen.dart, start_screen.dart, preview_screen.dart, editor_screen.dart) · Dificultad Alta.",
+      "verification": "Lote 7: 38 pruebas de pantallas, revisión, recorte, compartir, nombres y accesibilidad 100/200; revisión pendiente"
     },
     {
       "task": "T045",
@@ -302,23 +303,26 @@
     {
       "task": "T210",
       "issue": 117,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "ReviewTextController en frontend/lib/presentation/widgets/review_text_controller.dart y barra de revisión en frontend/lib/presentation/screens/editor_screen.dart, con pruebas de pantalla · Dificultad Alta."
+      "description": "ReviewTextController en frontend/lib/presentation/widgets/review_text_controller.dart y barra de revisión en frontend/lib/presentation/screens/editor_screen.dart, con pruebas de pantalla · Dificultad Alta.",
+      "verification": "Lote 7: 38 pruebas de pantallas, revisión, recorte, compartir, nombres y accesibilidad 100/200; revisión pendiente"
     },
     {
       "task": "T213",
       "issue": 120,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Acciones «Recortar o girar» y «Usar la imagen original» en frontend/lib/presentation/screens/preview_screen.dart, con pruebas de pantalla · Dificultad Media."
+      "description": "Acciones «Recortar o girar» y «Usar la imagen original» en frontend/lib/presentation/screens/preview_screen.dart, con pruebas de pantalla · Dificultad Media.",
+      "verification": "Lote 7: 38 pruebas de pantallas, revisión, recorte, compartir, nombres y accesibilidad 100/200; revisión pendiente"
     },
     {
       "task": "T216",
       "issue": 123,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Botón «Compartir» en el aviso de éxito del editor, con prueba de pantalla · Dificultad Media."
+      "description": "Botón «Compartir» en el aviso de éxito del editor, con prueba de pantalla · Dificultad Media.",
+      "verification": "Lote 7: 38 pruebas de pantallas, revisión, recorte, compartir, nombres y accesibilidad 100/200; revisión pendiente"
     },
     {
       "task": "T303",
@@ -411,9 +415,10 @@
     {
       "task": "T512",
       "issue": 163,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Avisos del editor en un área desplazable y encabezado más corto con letra grande (R5) en frontend/lib/presentation/screens/editor_screen.dart; hoja de exportar desplazable (R6) en frontend/lib/presentation/widgets/export_format_sheet.dart · Dificultad Media."
+      "description": "Avisos del editor en un área desplazable y encabezado más corto con letra grande (R5) en frontend/lib/presentation/screens/editor_screen.dart; hoja de exportar desplazable (R6) en frontend/lib/presentation/widgets/export_format_sheet.dart · Dificultad Media.",
+      "verification": "Lote 7: 38 pruebas de pantallas, revisión, recorte, compartir, nombres y accesibilidad 100/200; revisión pendiente"
     },
     {
       "task": "T604",
@@ -475,9 +480,10 @@
     {
       "task": "T902",
       "issue": 200,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "suggestedFileName con el título y su uso en DocumentFlowController.export (frontend/lib/state/document_flow_controller.dart) · Dificultad Media."
+      "description": "suggestedFileName con el título y su uso en DocumentFlowController.export (frontend/lib/state/document_flow_controller.dart) · Dificultad Media.",
+      "verification": "Lote 7: 38 pruebas de pantallas, revisión, recorte, compartir, nombres y accesibilidad 100/200; revisión pendiente"
     },
     {
       "task": "T903",

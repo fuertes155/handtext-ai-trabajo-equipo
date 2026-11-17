@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Controlador del texto del editor que pinta las palabras dudosas (tarea T210; spec
 // 003, módulo 1; research.md de 003, R4).
 //
@@ -26,6 +24,41 @@ class ReviewTextController extends TextEditingController {
     TextStyle? style,
     required bool withComposing,
   }) {
-    throw UnimplementedError("T210 pendiente de LUISDACA");
+    if (withComposing &&
+        value.composing.isValid &&
+        !value.composing.isCollapsed) {
+      return super.buildTextSpan(
+        context: context,
+        style: style,
+        withComposing: withComposing,
+      );
+    }
+    final ranges = validRanges(text, uncertainRanges());
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    final spans = <InlineSpan>[];
+    var cursor = 0;
+    for (final range in ranges) {
+      if (cursor < range.start) {
+        spans.add(TextSpan(text: text.substring(cursor, range.start)));
+      }
+      spans.add(
+        TextSpan(
+          text: text.substring(range.start, range.end),
+          style: TextStyle(
+            backgroundColor: dark
+                ? Aurora.uncertainFillDark
+                : Aurora.uncertainFillLight,
+            decoration: TextDecoration.underline,
+            decorationStyle: TextDecorationStyle.wavy,
+            decorationColor: dark
+                ? Aurora.uncertainUnderlineDark
+                : Aurora.uncertainUnderlineLight,
+          ),
+        ),
+      );
+      cursor = range.end;
+    }
+    if (cursor < text.length) spans.add(TextSpan(text: text.substring(cursor)));
+    return TextSpan(style: style, children: spans);
   }
 }

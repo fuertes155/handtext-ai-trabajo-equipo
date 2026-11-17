@@ -71,8 +71,8 @@ ADB no mostró dispositivos conectados. No se han realizado recorridos manuales,
 configurado PIN/huella, instalado APK ni modificado datos de un teléfono. No se ha
 generado APK actual ni verificado una firma de distribución. Producción intacta.
 
-Tareas con alcance técnico verificado: 36/72; cierre formal: 0/72 por revisión pendiente.
-Las otras 36 tareas requieren implementación/revisión y sus verificaciones actuales.
+Tareas con alcance técnico verificado: 42/72; cierre formal: 0/72 por revisión pendiente.
+Las otras 30 tareas requieren implementación/revisión y sus verificaciones actuales.
 
 ## Lote 2: T021, T032, T050, T051, T118, T205
 
@@ -281,4 +281,46 @@ flutter test --no-pub test/presentation/account_widgets_test.dart test/state/aut
 flutter test --no-pub test/presentation/auth_screens_test.dart --name 'sin sesión se muestra|datos incorrectos muestran|sin la autorización de datos|contraseñas deben coincidir|registro y privacidad coinciden'
 flutter analyze --no-pub test/presentation/account_widgets_test.dart lib/presentation/widgets/account_menu.dart lib/presentation/widgets/scan_overlay.dart lib/presentation/widgets/confirm_dialog.dart lib/presentation/widgets/consent_dialog.dart lib/presentation/widgets/status_banner.dart lib/presentation/widgets/password_field.dart lib/presentation/screens/auth lib/state/auth_controller.dart test/state/auth_controller_test.dart
 dart format --output=none --set-exit-if-changed lib/presentation/screens/auth lib/presentation/widgets/account_menu.dart lib/presentation/widgets/confirm_dialog.dart lib/presentation/widgets/consent_dialog.dart lib/presentation/widgets/password_field.dart lib/presentation/widgets/scan_overlay.dart lib/presentation/widgets/status_banner.dart lib/state/auth_controller.dart test/state/auth_controller_test.dart test/state/lock_controller_test.dart test/presentation/account_widgets_test.dart
+```
+
+## Lote 7: T043, T210, T213, T216, T512, T902
+
+Inicio, vista previa y editor conectados al controlador compartido; botón atrás y
+persistencia al pasar a segundo plano conservados. Se pide autorización en cada
+envío, se desactivan acciones duplicadas, el editor conserva la última corrección
+y la exportación usa Word/PDF. La preview muestra páginas, controles, recorte,
+original y estados sin tocar la imagen original. Los fallos/cancelaciones conservan
+el texto y la imagen anterior; las copias fallidas se limpian.
+
+ReviewTextController pinta fondo y subrayado ondulado sin cambiar el texto y
+respeta la composición IME. Siguiente selecciona y anuncia la palabra; aceptar
+quita la marca. La exportación nunca contiene las marcas. Compartir usa exactamente
+los bytes, nombre y formato guardados, y no aparece al cancelar el guardado.
+
+Los avisos/revisión del editor se desplazan dentro del 45 % disponible; el texto
+conserva más de 150 dp al 200 % y Exportar sigue visible. El encabezado limita su
+escalado a 150 % y omite el subtítulo por encima de 130 %, según R5 de 006. La hoja
+de formatos se desplaza y el teclado se retira al abrirla. PrimaryButton compartido
+conserva colores y mínimo de 54 dp; puede crecer y envolver texto, sin elipsis que
+cortara etiquetas al 200 %. Cuenta ahora tiene un límite semántico propio: la
+suite compartida detectó que absorbía el saludo; se corrigió el código sin debilitar
+la expectativa. Se amplió la regresión aislada con saludo y encabezado vecinos.
+
+El nombre del archivo usa el título limpio y hasta 60 puntos Unicode, sin partir
+emojis. Caracteres prohibidos, espacios/puntos finales y respaldo con fecha se
+comprueban. Modelo/controlador T905 de Juan se conserva.
+
+**38 pruebas aprobadas**: flujo, extras, nombres, componentes de cuenta y recorrido
+automático de accesibilidad al 100/200 %. Análisis y formato del alcance correctos.
+Se incluyen dependencias T505 (selector de consejos), T803/T806 (conexión/fallo del
+escáner) y T903 (acción de copiar); se mantienen sin contar hasta revisar sus
+criterios y ejecutar sus suites propias. No se acredita OCR, compartir, recorte o
+TalkBack físicos. No se consultó implementación histórica.
+
+Comandos desde frontend:
+
+```bash
+flutter test --no-pub test/presentation/accessibility_test.dart test/presentation/extras_screens_test.dart test/presentation/flow_screen_test.dart test/services/file_name_test.dart test/presentation/account_widgets_test.dart
+flutter analyze --no-pub lib/presentation/screens/editor_screen.dart lib/presentation/screens/flow_screen.dart lib/presentation/screens/start_screen.dart lib/presentation/screens/preview_screen.dart lib/presentation/screens/app_root.dart lib/presentation/widgets/review_text_controller.dart lib/presentation/widgets/export_format_sheet.dart lib/presentation/widgets/primary_button.dart lib/state/document_flow_controller.dart test/presentation/extras_screens_test.dart test/services/file_name_test.dart
+dart format --output=none --set-exit-if-changed lib/presentation/screens/app_root.dart lib/presentation/screens/editor_screen.dart lib/presentation/screens/flow_screen.dart lib/presentation/screens/preview_screen.dart lib/presentation/screens/start_screen.dart lib/presentation/widgets/export_format_sheet.dart lib/presentation/widgets/review_text_controller.dart lib/presentation/widgets/primary_button.dart lib/presentation/widgets/account_menu.dart lib/state/document_flow_controller.dart test/presentation/extras_screens_test.dart test/services/file_name_test.dart test/presentation/account_widgets_test.dart
 ```

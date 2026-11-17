@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Controlador del flujo completo de HandText AI (tareas T041 y T047).
 //
 // Es el «cerebro» de la app: decide qué pantalla se ve (inicio, vista previa o editor),
@@ -77,14 +75,25 @@ String suggestedFileName(
   DateTime moment, {
   String? title,
 }) {
-  throw UnimplementedError('T902 pendiente de LUISDACA');
+  final clean = _cleanFileName(title ?? '');
+  if (clean.isNotEmpty) return '$clean.${format.extension}';
+  String two(int value) => value.toString().padLeft(2, '0');
+  final date =
+      '${moment.year.toString().padLeft(4, '0')}${two(moment.month)}${two(moment.day)}';
+  return 'HandText_${date}_${two(moment.hour)}${two(moment.minute)}.${format.extension}';
 }
 
 /// [OR-H1-E2] [SC-1001] Quita lo que Android no acepta en un nombre de archivo
 /// (`/ \ : * ? " < > |` y caracteres de control), junta los espacios, corta en 60
 /// caracteres y quita los puntos y espacios del final.
 String _cleanFileName(String title) {
-  throw UnimplementedError("T902 pendiente de LUISDACA");
+  final cleaned = title
+      .replaceAll(RegExp(r'\s+'), ' ')
+      .replaceAll(RegExp(r'[\\/:*?"<>|\x00-\x1f\x7f]'), '')
+      .trim();
+  return String.fromCharCodes(
+    cleaned.runes.take(60),
+  ).replaceAll(RegExp(r'[. ]+$'), '').trim();
 }
 
 class DocumentFlowController extends ChangeNotifier {
@@ -265,7 +274,7 @@ class DocumentFlowController extends ChangeNotifier {
   /// [ED-H1-E2] [ED-H1-E3] Spec 009: escanear una o varias hojas. Empieza un documento
   /// nuevo.
   Future<void> scanDocument() {
-    throw UnimplementedError('T803 pendiente de LUISDACA');
+    return _addImages(ImageOrigin.scanner, _AddMode.newDocument);
   }
 
   /// [VP-H1-E2] Agrega páginas al final, desde la galería o la cámara.
@@ -319,7 +328,7 @@ class DocumentFlowController extends ChangeNotifier {
       } else if (origin == ImageOrigin.scanner) {
         // [ED-H1-E3] Spec 009: solo las hojas que caben; cancelar no cambia nada
         // [ED-H1-E5] [SC-903].
-        throw UnimplementedError('T803 pendiente de LUISDACA');
+        picked = await _scanner.scan(pageLimit: room) ?? const [];
       } else if (mode == _AddMode.replaceSelected) {
         final image = await _imageSource.pickFromGallery();
         picked = [?image];
@@ -373,7 +382,7 @@ class DocumentFlowController extends ChangeNotifier {
       _status = OperationStatus.failure(
         failure,
         action: failure.kind == FailureKind.scannerUnavailable
-            ? throw UnimplementedError('T806 pendiente de LUISDACA')
+            ? StatusAction.takePhoto
             : null,
       );
     } on Exception {

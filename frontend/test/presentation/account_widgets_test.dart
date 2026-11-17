@@ -284,9 +284,15 @@ void main() {
           Row(
             children: [
               Expanded(
-                child: Semantics(
-                  header: true,
-                  child: const Text('separate title'),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Semantics(
+                      header: true,
+                      child: const Text('separate title'),
+                    ),
+                    const Text('separate greeting'),
+                  ],
                 ),
               ),
               AccountButton(auth: h.auth, documents: h.controller),

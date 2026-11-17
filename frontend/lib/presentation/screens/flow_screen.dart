@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Pantalla raíz del flujo de documentos (tareas T043 y T132).
 //
 // - Muestra la pantalla que corresponde al paso del controlador: inicio, vista previa
@@ -76,6 +74,47 @@ class _FlowScreenState extends State<FlowScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T043 pendiente de LUISDACA");
+    final controller = widget.controller;
+    return ListenableBuilder(
+      listenable: controller,
+      builder: (context, _) {
+        if (!controller.isReady) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+        return PopScope(
+          canPop:
+              controller.step == FlowStep.start &&
+              !controller.hasDocument &&
+              !controller.isBusy,
+          onPopInvokedWithResult: (didPop, _) {
+            if (!didPop && !controller.isBusy) unawaited(_handleBack());
+          },
+          child: AnimatedSwitcher(
+            duration: motionDuration(
+              context,
+              const Duration(milliseconds: 200),
+            ),
+            child: switch (controller.step) {
+              FlowStep.start => StartScreen(
+                key: const ValueKey('start'),
+                controller: controller,
+                auth: widget.auth,
+              ),
+              FlowStep.preview => PreviewScreen(
+                key: const ValueKey('preview'),
+                controller: controller,
+              ),
+              FlowStep.editor => EditorScreen(
+                key: const ValueKey('editor'),
+                controller: controller,
+                auth: widget.auth,
+              ),
+            },
+          ),
+        );
+      },
+    );
   }
 }

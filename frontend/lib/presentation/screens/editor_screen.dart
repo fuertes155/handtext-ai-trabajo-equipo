@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Editor del texto reconocido (tareas T043 y T132; spec 001, módulos 3 y 4).
 //
 // - [H1-E6] Muestra el texto en un campo editable y la advertencia permanente de que
@@ -39,6 +37,7 @@ import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 
 import '../../models/operation_status.dart';
+import '../../models/app_failure.dart';
 import '../../state/auth_controller.dart';
 import '../../state/document_flow_controller.dart';
 import '../../theme/aurora.dart';
@@ -83,7 +82,30 @@ class _EditorScreenState extends State<EditorScreen> {
   final FocusNode _textFocus = FocusNode();
 
   @override
+  void initState() {
+    super.initState();
+    _textController.addListener(_selectionChanged);
+  }
+
+  void _selectionChanged() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void didUpdateWidget(covariant EditorScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final text = widget.controller.documentText ?? '';
+    if (_textController.text != text) {
+      _textController.value = TextEditingValue(
+        text: text,
+        selection: TextSelection.collapsed(offset: text.length),
+      );
+    }
+  }
+
+  @override
   void dispose() {
+    _textController.removeListener(_selectionChanged);
     _textController.dispose();
     _textFocus.dispose();
     super.dispose();
@@ -91,21 +113,49 @@ class _EditorScreenState extends State<EditorScreen> {
 
   /// La marca que contiene la selección actual, o null si no hay ninguna.
   TextRange? _selectedUncertainWord(TextSelection selection) {
-    throw UnimplementedError("T043,T210,T216,T512,T903 pendiente de LUISDACA");
+    if (!selection.isValid) return null;
+    for (final range in widget.controller.uncertainRanges) {
+      if (selection.start >= range.start && selection.end <= range.end) {
+        return range;
+      }
+    }
+    return null;
   }
 
   /// [EX-H1-E3] Selecciona la siguiente palabra dudosa después del cursor; tras la
   /// última, vuelve a la primera.
   void _selectNextUncertainWord() {
-    throw UnimplementedError("T043,T210,T216,T512,T903 pendiente de LUISDACA");
+    final ranges = widget.controller.uncertainRanges;
+    if (ranges.isEmpty || widget.controller.isBusy) return;
+    final end = _textController.selection.isValid
+        ? _textController.selection.end
+        : 0;
+    final next =
+        ranges.where((range) => range.start >= end).firstOrNull ?? ranges.first;
+    _textController.selection = TextSelection(
+      baseOffset: next.start,
+      extentOffset: next.end,
+    );
+    _textFocus.requestFocus();
+    unawaited(
+      SemanticsService.sendAnnouncement(
+        View.of(context),
+        context.strings.uncertainWordAnnouncement(
+          next.textInside(_textController.text),
+        ),
+        Directionality.of(context),
+      ),
+    );
   }
 
   /// [EX-H1-E5] «Está bien»: quita la marca de la palabra seleccionada.
   void _acceptSelectedWord() {
-    throw UnimplementedError("T043,T210,T216,T512,T903 pendiente de LUISDACA");
+    final range = _selectedUncertainWord(_textController.selection);
+    if (range != null) widget.controller.acceptUncertainWord(range);
   }
 
   Future<void> _export() async {
+    FocusScope.of(context).unfocus();
     final format = await showExportFormatSheet(context);
     if (format == null) return; // cerró la hoja sin elegir
     await widget.controller.export(format);
@@ -135,7 +185,28 @@ class _EditorScreenState extends State<EditorScreen> {
   /// [OR-H2-E1] [SC-1002] Copia el texto tal cual está, sin las marcas de palabras
   /// dudosas (research.md de 010, R2).
   Future<void> _copyAll() async {
-    throw UnimplementedError("T043,T210,T216,T512,T903 pendiente de LUISDACA");
+    final text = widget.controller.documentText ?? '';
+    if (text.isEmpty) return;
+    try {
+      await Clipboard.setData(ClipboardData(text: text));
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.strings.textCopied)));
+      }
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              context.strings.failureText(
+                const AppFailure(FailureKind.unexpected),
+              ),
+            ),
+          ),
+        );
+      }
+    }
   }
 
   void _onMenuSelected(_EditorAction action) {
@@ -151,7 +222,175 @@ class _EditorScreenState extends State<EditorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T043,T210,T216,T512,T903 pendiente de LUISDACA");
+    final controller = widget.controller;
+    final strings = context.strings;
+    final text = controller.documentText ?? '';
+    final busy = controller.isBusy;
+    final status = controller.status;
+    final large = MediaQuery.textScalerOf(context).scale(16) > 16 * 1.3;
+    final selected = _selectedUncertainWord(_textController.selection);
+    final words = text.trim().isEmpty
+        ? 0
+        : text.trim().split(RegExp(r'\s+')).length;
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            ColoredBox(
+              color: Aurora.backgroundBottom,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MediaQuery.withClampedTextScaling(
+                            maxScaleFactor: 1.5,
+                            child: Semantics(
+                              container: true,
+                              header: true,
+                              child: Text(
+                                strings.editorTitle,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ),
+                          if (!large)
+                            Text(
+                              strings.editorSubtitle,
+                              style: const TextStyle(
+                                color: Aurora.textSecondary,
+                                fontSize: 12,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                    AccountButton(auth: widget.auth, documents: controller),
+                    PopupMenuButton<_EditorAction>(
+                      tooltip: strings.moreActionsTooltip,
+                      enabled: !busy,
+                      icon: const Icon(Icons.more_vert, color: Colors.white),
+                      onSelected: _onMenuSelected,
+                      itemBuilder: (_) => [
+                        if (text.isNotEmpty)
+                          PopupMenuItem(
+                            value: _EditorAction.copyAll,
+                            child: Text(strings.copyAllText),
+                          ),
+                        PopupMenuItem(
+                          value: _EditorAction.processAnotherImage,
+                          child: Text(strings.processAnotherImage),
+                        ),
+                        PopupMenuItem(
+                          value: _EditorAction.discard,
+                          child: Text(strings.discardText),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: LayoutBuilder(
+                builder: (context, constraints) => Column(
+                  children: [
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxHeight: constraints.maxHeight * 0.45,
+                      ),
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const _RecognitionWarning(),
+                            if (status != null) ...[
+                              const SizedBox(height: 10),
+                              StatusBanner(
+                                status: status,
+                                actionLabel:
+                                    status.action == StatusAction.shareExport
+                                    ? strings.share
+                                    : null,
+                                onAction:
+                                    !busy &&
+                                        status.action ==
+                                            StatusAction.shareExport
+                                    ? controller.shareLastExport
+                                    : null,
+                              ),
+                            ],
+                            if (controller.uncertainRanges.isNotEmpty) ...[
+                              const SizedBox(height: 10),
+                              _ReviewBar(
+                                count: controller.uncertainRanges.length,
+                                onNext: busy ? null : _selectNextUncertainWord,
+                                onAccept: busy || selected == null
+                                    ? null
+                                    : _acceptSelectedWord,
+                              ),
+                            ],
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              child: Text(
+                                strings.textStats(words, text.runes.length),
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: TextField(
+                          controller: _textController,
+                          focusNode: _textFocus,
+                          readOnly: busy,
+                          maxLines: null,
+                          expands: true,
+                          textAlignVertical: TextAlignVertical.top,
+                          style: editorTextStyle(
+                            context,
+                            SettingsScope.of(context).settings.textSize,
+                          ),
+                          decoration: InputDecoration(
+                            labelText: strings.editorLabel,
+                            hintText: strings.editorHint,
+                            alignLabelWithHint: true,
+                          ),
+                          onChanged: controller.updateText,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              child: PrimaryButton(
+                label: strings.export,
+                onPressed: busy ? null : _export,
+                isLoading: status?.event == StatusEvent.exporting,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -172,7 +411,39 @@ class _ReviewBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T043,T210,T216,T512,T903 pendiente de LUISDACA");
+    final strings = context.strings;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Semantics(
+          liveRegion: true,
+          child: Text(
+            strings.uncertainWordsCount(count),
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+        ),
+        Text(
+          onAccept == null
+              ? strings.uncertainWordsHint
+              : strings.acceptUncertainWordHint,
+        ),
+        Wrap(
+          spacing: 8,
+          children: [
+            TextButton.icon(
+              onPressed: onNext,
+              icon: const Icon(Icons.navigate_next),
+              label: Text(strings.nextUncertainWord),
+            ),
+            TextButton.icon(
+              onPressed: onAccept,
+              icon: const Icon(Icons.check),
+              label: Text(strings.acceptUncertainWord),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }
 
@@ -182,6 +453,18 @@ class _RecognitionWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T043,T210,T216,T512,T903 pendiente de LUISDACA");
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ExcludeSemantics(
+          child: Icon(
+            Icons.fact_check_outlined,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(child: Text(context.strings.recognitionWarning)),
+      ],
+    );
   }
 }

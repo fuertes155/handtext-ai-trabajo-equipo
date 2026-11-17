@@ -8,6 +8,22 @@ import 'package:handtext_ai/state/document_flow_controller.dart';
 final _moment = DateTime(2026, 11, 5, 15, 30);
 
 void main() {
+  test(
+    'Unicode no se corta en una mitad de sustituto y un título de puntos usa el respaldo',
+    () {
+      final name = suggestedFileName(
+        ExportFormat.pdf,
+        _moment,
+        title: '🙂' * 80,
+      );
+      expect(name, '${'🙂' * 60}.pdf');
+      expect(
+        suggestedFileName(ExportFormat.pdf, _moment, title: ' ... '),
+        'HandText_20261105_1530.pdf',
+      );
+    },
+  );
+
   test('[OR-H1-E1] el título del documento es el nombre del archivo', () {
     expect(
       suggestedFileName(
