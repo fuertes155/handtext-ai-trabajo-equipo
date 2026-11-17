@@ -171,3 +171,14 @@ Flutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis s
 incidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.
 
 Revisión del equipo pendiente. Total técnico: 66/72. Evidencia: `docs/VERIFICACION_RECONSTRUCCION_LUIS.md`.
+
+## Estado final de esta ejecución (2026-11-17)
+
+68/72 tareas verificadas técnicamente (20/20, 21/21, 15/17, 12/14 por sprint).
+T312 y T1102 completan el lote final de dos tareas: recorrido Android automatizado
+ampliado aprobado en 30,3 s, recuperación tras reingreso y varias páginas con PDF real.
+351 pruebas Flutter sin omisiones; 218 backend; siete checks; diez políticas Gradle.
+APK debug generado; release falla por falta de clave, sin fallback debug.
+Pendientes: T409/T411 (clave/firma/instalación release), T908 (teléfono físico) y
+T1008 (PIN/huella y teléfono). Revisión formal pendiente en las 72 issues, que siguen
+abiertas. [Detalle por tarea](../docs/ESTADO_TAREAS_LUIS.md).

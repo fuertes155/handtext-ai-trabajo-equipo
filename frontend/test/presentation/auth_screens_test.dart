@@ -28,6 +28,19 @@ Future<void> _openAccountMenuItem(WidgetTester tester, String item) async {
 }
 
 void main() {
+  testWidgets('un borrador recuperado exige confirmar antes de cerrar sesión', (
+    tester,
+  ) async {
+    final h = TestHarness()..drafts.stored = 'Borrador sintético recuperado';
+    await pumpHandTextApp(tester, h);
+    await _openAccountMenuItem(tester, es.signOut);
+    expect(find.text(es.signOutTitle), findsOneWidget);
+    await tapText(tester, es.cancel);
+    expect(h.sessions.stored, isNotNull);
+    expect(h.drafts.stored, 'Borrador sintético recuperado');
+    expect(h.controller.documentText, 'Borrador sintético recuperado');
+  });
+
   for (final (language, locale) in [
     (AppLanguage.spanish, const Locale('es')),
     (AppLanguage.english, const Locale('en')),

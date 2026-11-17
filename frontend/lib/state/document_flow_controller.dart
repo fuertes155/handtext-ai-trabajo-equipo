@@ -246,6 +246,8 @@ class DocumentFlowController extends ChangeNotifier {
     }
     if (draft != null && draft.text.trim().isNotEmpty) {
       _documentText = draft.text;
+      // Es un borrador sin exportar: cerrar sesión requiere confirmar su pérdida.
+      _hasUnexportedChanges = true;
       // [EX-H1-E7] Las marcas que quedaban vuelven con el borrador.
       _uncertainRanges = validRanges(draft.text, draft.uncertainRanges);
       // [HD-H2-E4] Un borrador abierto desde el historial sigue unido a su entrada.

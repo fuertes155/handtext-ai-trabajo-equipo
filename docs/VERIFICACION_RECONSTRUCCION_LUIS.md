@@ -454,3 +454,46 @@ paso de reingreso/persistencia implementado y analizado; espera ejecución Andro
 Comandos exactos, rutas absolutas, configuración local y recursos pendientes:
 [QUICKSTART_RECONSTRUCCION_LUIS.md](QUICKSTART_RECONSTRUCCION_LUIS.md).
 Revisión del equipo pendiente en las 72 issues. No se despliega ni modifica producción.
+
+## Lote final — verificación Android y cierre del registro (2026-11-17)
+
+T312 y T1102 verificadas técnicamente. Total: **68/72**, distribuidas 20/20,
+21/21, 15/17 y 12/14 por sprint. **Cierre formal: 0/72**; revisión de otro integrante
+pendiente en las 72 issues. Ninguna se cierra indebidamente.
+
+Ejecución Android real en AVD nuevo Android 35 Google APIs x86_64, KVM y 2 GB:
+cuenta/Argon2id en PostgreSQL temporal, Word real, cierre/reingreso/persistencia,
+50 documentos en inglés, búsqueda, renombrado, portapapeles nativo, tres páginas,
+reordenar/quitar y PDF real. Recorrido automatizado de 30,3 s; apertura con 50
+entradas: 239 ms. OCR, selector y guardado se simulan según el contrato de 012;
+no acredita cámara, galería, recorte o compartir nativos ni calidad OCR real.
+La primera ejecución de T1102 ya pasó en 16,8 s/254 ms; el recorrido ampliado posterior
+es la evidencia final. No se presenta como prueba manual.
+
+El arranque de herramientas falló varias veces por ADB desconectado y DDS. Se probó
+ADB directo a 127.0.0.1:5581 y DDS habilitado; esa combinación permitió la ejecución
+ampliada correcta. --no-dds provoca error del comparador de goldens de Flutter 3.44;
+no usarlo en el comando reproducible. El robot retira foco antes de tocar para que
+el teclado Android no cubra el consentimiento. No se debilitó ninguna expectativa.
+
+Se corrigió un defecto real de conservación: el borrador recuperado se marca sin
+exportar, por lo que cerrar sesión pide confirmación. Una prueba del controlador
+y otra de pantalla verifican cancelar y conservar texto/sesión/borrador. Suite final:
+**351 pruebas Flutter sin omisiones**, backend **218**, checks **7**, política Gradle
+**10**, formato/análisis y Ruff correctos. No se suman cifras de lotes solapados.
+
+Pendientes con implementación/avance documentado:
+
+| Tarea | Recurso o verificación pendiente |
+| --- | --- |
+| T409 · #147 | Clave autorizada para validar firma real; política y diez escenarios sintéticos aprobados. |
+| T411 · #149 | APK release por arquitectura, instalación y arranque SC-504; falta clave de entrega. |
+| T908 · #206 | Recorrido físico en teléfono; automatización Android de organización aprobada. |
+| T1008 · #214 | PIN/huella simulada y recorrido físico; suites de controlador/widgets aprobadas. |
+
+No se cambia seguridad/PIN de un teléfono, no se llama OCR de pago ni se despliega.
+La API y PostgreSQL de contratos se apagan al terminar, limpiando solo sus datos
+temporales. AVD de prueba conservado para repetir; artefactos solo locales.
+[Comandos y APK actuales](QUICKSTART_RECONSTRUCCION_LUIS.md).
+
+APK normal final regenerado tras la corrección del borrador: `frontend/build/verification/handtext-debug-20261117.apk`, SHA-256 `7903229bc7315fb3ff1cdcc1ed78177f95eea2130583954301f4c364fe47475f`; firma v2 válida verificada. El hash del lote 11 corresponde al artefacto anterior conservado como `frontend/build/verification/handtext-debug-lote11-9d748cf.apk`.

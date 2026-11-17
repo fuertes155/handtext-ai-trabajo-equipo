@@ -160,3 +160,6 @@ archivos; revisión formal pendiente en todos los casos.
 | [T1008](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/214) | Formateador, analizador, todas las pruebas y recorrido en el emulador con PIN y huella simulada; registro de verificación al final de este archivo (parcial: falta el recorrido en un teléfono; ver el registro) | Verificación completa pendiente; consultar informe actual |
 | [T1102](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/216) | Cerrar sesión, volver a entrar y encontrar el documento, en el mismo recorrido | Verificación completa pendiente; consultar informe actual |
 | [T1103](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/217) | quickstart.md (el comando), README.md y MAPA_DEL_CODIGO.md | Lote 11 |
+
+T312/T1102: recorrido Android ampliado final aprobado (30,3 s), incluida recuperación,
+organización y varias páginas. Estado completo: [68 verificadas / cuatro pendientes](docs/ESTADO_TAREAS_LUIS.md).

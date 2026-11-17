@@ -31,3 +31,11 @@ Cada lote registra implementación, pruebas actuales y procedencia del material
 consultado. Una tarea técnicamente verificada sigue abierta si exige revisión del
 equipo o evidencia física pendiente. Los bloqueos de documentos y release se
 sustituyen únicamente junto con la implementación definitiva y sus pruebas.
+
+## Resultado de la reconstrucción ejecutada
+
+Implementaciones repuestas sin restauración masiva del historial. 68/72 con
+verificación técnica; T409/T411/T908/T1008 conservan verificaciones pendientes por
+clave de entrega o dispositivo/PIN. Ninguna issue cierra antes de la revisión del
+PR por otro integrante. Bloqueos temporales sustituidos por autorización y política
+release definitivas probadas. [Registro actual](../../docs/VERIFICACION_RECONSTRUCCION_LUIS.md).

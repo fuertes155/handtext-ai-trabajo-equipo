@@ -141,6 +141,7 @@ void main() {
       addTearDown(h.controller.dispose);
       await h.controller.initialize();
       expect(h.controller.documentText, 'Recuperado');
+      expect(h.controller.hasUnexportedChanges, isTrue);
       expect(h.controller.status?.event, StatusEvent.draftRestored);
       h.controller.updateText('Cambio 1');
       h.controller.updateText('Cambio 2');

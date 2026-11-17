@@ -352,9 +352,10 @@
     {
       "task": "T312",
       "issue": 138,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
-      "description": "Formateadores, analizadores, todas las pruebas, APK y recorrido en el emulador; registro de verificación al final de este archivo · Dificultad Baja."
+      "description": "Formateadores, analizadores, todas las pruebas, APK y recorrido en el emulador; registro de verificación al final de este archivo · Dificultad Baja.",
+      "verification": "Lote final: 351 pruebas Flutter, 218 backend, 7 checks, 10 políticas Gradle y recorrido Android ampliado aprobado en 30.3 s; revisión del equipo pendiente."
     },
     {
       "task": "T401",
@@ -383,16 +384,18 @@
     {
       "task": "T409",
       "issue": 147,
-      "state": "pending",
+      "state": "implemented_verification_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Firma con key.properties y HTTP según el tipo de compilación en frontend/android/app/build.gradle.kts y en el manifiesto · Dificultad Alta."
+      "description": "Firma con key.properties y HTTP según el tipo de compilación en frontend/android/app/build.gradle.kts y en el manifiesto · Dificultad Alta.",
+      "verification": "Política y configuración de firma implementadas; 10 pruebas Gradle con certificados sintéticos aprobadas. Falta clave autorizada del proyecto para comprobar firma real."
     },
     {
       "task": "T411",
       "issue": 149,
-      "state": "pending",
+      "state": "implemented_verification_pending",
       "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
-      "description": "Compilar la versión final por procesador, instalarla y medir el arranque (SC-504) · Dificultad Baja."
+      "description": "Compilar la versión final por procesador, instalarla y medir el arranque (SC-504) · Dificultad Baja.",
+      "verification": "Release por arquitectura intentada: SIGNING_REQUIRED. Falta clave de entrega; no hay APK release, instalación ni medición de arranque SC-504."
     },
     {
       "task": "T503",
@@ -525,9 +528,10 @@
     {
       "task": "T908",
       "issue": 206,
-      "state": "pending",
+      "state": "implemented_verification_pending",
       "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
-      "description": "Formateador, analizador, todas las pruebas y recorrido en el emulador; registro de verificación al final de este archivo (parcial: falta el recorrido en un teléfono; ver el registro) · Dificultad Baja."
+      "description": "Formateador, analizador, todas las pruebas y recorrido en el emulador; registro de verificación al final de este archivo (parcial: falta el recorrido en un teléfono; ver el registro) · Dificultad Baja.",
+      "verification": "Formato/análisis, 351 pruebas Flutter y recorrido Android automatizado de copiar/buscar/renombrar aprobados. Sigue pendiente el recorrido físico en teléfono exigido en la tarea."
     },
     {
       "task": "T1003",
@@ -556,16 +560,18 @@
     {
       "task": "T1008",
       "issue": 214,
-      "state": "pending",
+      "state": "implemented_verification_pending",
       "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
-      "description": "Formateador, analizador, todas las pruebas y recorrido en el emulador con PIN y huella simulada; registro de verificación al final de este archivo (parcial: falta el recorrido en un teléfono; ver el registro) · Dificultad Baja."
+      "description": "Formateador, analizador, todas las pruebas y recorrido en el emulador con PIN y huella simulada; registro de verificación al final de este archivo (parcial: falta el recorrido en un teléfono; ver el registro) · Dificultad Baja.",
+      "verification": "Controlador/widgets de bloqueo verificados en la suite. Falta recorrido con PIN/huella simulada configurados y comprobación física. No se modificó PIN ni seguridad del teléfono."
     },
     {
       "task": "T1102",
       "issue": 216,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Cerrar sesión, volver a entrar y encontrar el documento, en el mismo recorrido · Dificultad Media."
+      "description": "Cerrar sesión, volver a entrar y encontrar el documento, en el mismo recorrido · Dificultad Media.",
+      "verification": "Lote final: 351 pruebas Flutter, 218 backend, 7 checks, 10 políticas Gradle y recorrido Android ampliado aprobado en 30.3 s; revisión del equipo pendiente."
     },
     {
       "task": "T1103",
@@ -659,5 +665,11 @@
     "specs/014-reinicio-luis/plan.md",
     "specs/014-reinicio-luis/spec.md",
     "specs/014-reinicio-luis/tasks.md"
-  ]
+  ],
+  "current_summary": {
+    "technically_verified": 68,
+    "pending_verification": 4,
+    "formally_closed": 0,
+    "reason": "Las 72 issues requieren revisión de otro integrante del PR."
+  }
 }

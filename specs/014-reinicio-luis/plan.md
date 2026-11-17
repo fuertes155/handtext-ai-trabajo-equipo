@@ -16,3 +16,11 @@ documentales y autorización, servicios Flutter, pantallas e integraciones. Se
 registran los cuatro sprints en el índice sin cambiar tareas ajenas. Cada seis
 alcances técnicamente verificados se revisa y publica un commit en la misma rama;
 las issues requieren además los criterios de cierre vigentes, incluida revisión.
+
+## Resultado de la reconstrucción ejecutada
+
+Implementaciones repuestas sin restauración masiva del historial. 68/72 con
+verificación técnica; T409/T411/T908/T1008 conservan verificaciones pendientes por
+clave de entrega o dispositivo/PIN. Ninguna issue cierra antes de la revisión del
+PR por otro integrante. Bloqueos temporales sustituidos por autorización y política
+release definitivas probadas. [Registro actual](../../docs/VERIFICACION_RECONSTRUCCION_LUIS.md).

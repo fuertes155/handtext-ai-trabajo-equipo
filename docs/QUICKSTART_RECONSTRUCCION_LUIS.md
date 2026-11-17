@@ -59,7 +59,7 @@ flutter analyze --no-pub
 HANDTEXT_API_URL=http://127.0.0.1:8765/ flutter test --no-pub --reporter expanded
 ```
 
-350 pruebas aprobadas sin omisiones. Sin HANDTEXT_API_URL, nueve contratos existentes
+351 pruebas aprobadas sin omisiones. Sin HANDTEXT_API_URL, nueve contratos existentes
 se omiten: esa ejecución parcial no sustituye el resultado completo anterior.
 Se corrigió un 401 sin Bearer: informa falta de autenticación remota sin expulsar una
 cuenta local. Con Bearer rechazado pide iniciar sesión; se comprueba incluso si el
@@ -82,7 +82,7 @@ PATH=/tmp/handtext-tools/jdk17/bin:$PATH /home/luisdaca/Android/Sdk/build-tools/
 APK absoluto:
 `/home/luisdaca/Escritorio/handtext-ai-trabajo-equipo/frontend/build/verification/handtext-debug-20261117.apk`
 
-SHA-256: `acf454c15ed67ddba9ef3e1c05dc61c89751a5fabae57ed2764a3946b9b352ea`.
+SHA-256: `7903229bc7315fb3ff1cdcc1ed78177f95eea2130583954301f4c364fe47475f`.
 Paquete com.handtextai.team.debug, versión 1.0.0 (1), minSdk 24, targetSdk 36.
 Firma debug válida v2 comprobada; **no es un APK de distribución**. El manifiesto
 fusionado mantiene allowBackup=false, reglas de exclusión de transferencia y uCrop
@@ -115,16 +115,34 @@ La revisión de otro integrante sigue pendiente en las 72 issues.
 
 ## Integración Android
 
-Se prepara AVD nuevo HandText_Luis_20261117, Android 35 Google APIs x86_64,
+Se creó AVD nuevo HandText_Luis_20261117, Android 35 Google APIs x86_64,
 puerto 5580, KVM, 2 GB y modo sin ventana. No contiene datos personales.
-El estado y resultado de su ejecución se incorporarán al informe actual.
-Comando previsto con la API temporal anterior, sin tokens de desarrollo dentro del APK:
+Recorrido ampliado aprobado: 30,3 s; apertura de documento con 50 entradas: 239 ms.
+El AVD se conserva apagado. Para repetirlo, arranque primero la API temporal y,
+en otra terminal, el emulador (espere a que sys.boot_completed sea 1):
 
 ```bash
-XDG_CONFIG_HOME=/tmp/handtext-flutter-config flutter test integration_test/flujo_completo_test.dart -d emulator-5580 --dart-define=E2E_LOCAL_ACCOUNTS=false --dart-define=API_BASE_URL=http://10.0.2.2:8765/
+/home/luisdaca/Android/Sdk/emulator/emulator -avd HandText_Luis_20261117 -port 5580 -no-window -no-audio -no-snapshot -gpu swiftshader -memory 2048
+```
+
+Comando ejecutado con DDS habilitado y ADB directo, sin tokens de desarrollo dentro del APK:
+
+```bash
+/home/luisdaca/Android/Sdk/platform-tools/adb connect 127.0.0.1:5581
+XDG_CONFIG_HOME=/tmp/handtext-flutter-config flutter test integration_test/flujo_completo_test.dart -d 127.0.0.1:5581 --reporter expanded --dart-define=E2E_LOCAL_ACCOUNTS=false --dart-define=API_BASE_URL=http://10.0.2.2:8765/
 ```
 
 Esa composición de prueba debug usa cuentas reales en la API temporal y Bearer;
 no modifica la exigencia HTTPS de la distribución. OCR/selector/guardado son simulados
 por el contrato de la prueba; Word, PostgreSQL, almacenamiento seguro e historial son
-reales. No afirmar aprobado hasta registrar la ejecución.
+reales. También recorre búsqueda/renombrado, portapapeles Android y tres páginas reordenadas
+con eliminación de una y PDF real. El robot oculta teclado retirando el foco antes
+de tocar botones. Se usa DDS habilitado; --no-dds falla con el comparador de goldens
+de Flutter 3.44. Hubo intentos previos fallidos de ADB/DDS, registrados en el informe.
+
+
+El último lote corrige el borrador recuperado: cerrar sesión pide confirmación;
+cancelar conserva texto y sesión. [Estado de las 72 tareas](ESTADO_TAREAS_LUIS.md).
+El APK instrumentado del recorrido se conserva separado en
+`/home/luisdaca/Escritorio/handtext-ai-trabajo-equipo/frontend/build/verification/handtext-e2e-debug-20261117.apk`.
+Contiene un robot de pruebas, no es la aplicación normal ni una entrega.
