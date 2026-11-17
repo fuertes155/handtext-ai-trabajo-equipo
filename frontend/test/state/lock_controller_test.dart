@@ -27,11 +27,11 @@ void main() {
       authenticator: verifier,
       now: () => clock,
     )..start();
-      verifier.available = false;
-      expect(await lock.enable('synthetic reason'), isFalse);
-      expect(verifier.calls, 0);
-      verifier.available = true;
-      expect(await lock.enable('synthetic reason'), isFalse);
+    verifier.available = false;
+    expect(await lock.enable('synthetic reason'), isFalse);
+    expect(verifier.calls, 0);
+    verifier.available = true;
+    expect(await lock.enable('synthetic reason'), isFalse);
     expect(store.stored.appLock, isFalse);
     verifier.result = true;
     expect(await lock.enable('synthetic reason'), isTrue);

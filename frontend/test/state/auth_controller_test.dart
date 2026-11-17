@@ -29,6 +29,28 @@ class FailingSessionStore extends InMemorySessionStore {
 }
 
 void main() {
+  test(
+    'si la cuenta ya se borró, un fallo local no conserva sesión ni anuncia éxito',
+    () async {
+      final sessions = InMemorySessionStore()
+        ..stored = const StoredSession(token: 'synthetic', user: testUser);
+      final auth = AuthController(api: FakeAuthApi(), sessions: sessions);
+      await auth.initialize();
+      final ok = await auth.deleteAccount(
+        'synthetic-password',
+        beforeSignOut: () async =>
+            throw StateError('synthetic cleanup failure'),
+      );
+      expect(ok, isFalse);
+      expect(auth.status, AuthStatus.signedOut);
+      expect(auth.token, isNull);
+      expect(sessions.stored, isNull);
+      expect(auth.notice, isNot(StatusEvent.accountDeleted));
+      expect(auth.failure?.kind, FailureKind.unexpected);
+      auth.dispose();
+    },
+  );
+
   test('un ingreso repetido no inicia dos peticiones y libera busy', () async {
     final api = WaitingAuthApi();
     final auth = AuthController(api: api, sessions: InMemorySessionStore());

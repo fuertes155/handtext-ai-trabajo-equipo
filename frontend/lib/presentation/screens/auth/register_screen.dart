@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Pantalla de registro (tarea T126; spec 002, CU-H1-E2 a CU-H1-E5).
 //
 // Nombre, correo, contraseña (con barra de seguridad), confirmación y la autorización
@@ -41,7 +39,7 @@ class RegisterScreen extends StatefulWidget {
 
   @override
   State<RegisterScreen> createState() {
-    throw UnimplementedError("T126 pendiente de LUISDACA");
+    return _RegisterScreenState();
   }
 }
 
@@ -63,11 +61,164 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<void> _submit() async {
-    throw UnimplementedError("T126 pendiente de LUISDACA");
+    if (widget.auth.isBusy) return;
+    final failure = validateRegistrationForm(
+      displayName: _name.text,
+      email: _email.text,
+      password: _password.text,
+      confirmation: _confirmation.text,
+      acceptsDataPolicy: _acceptsDataPolicy,
+    );
+    setState(() => _formFailure = failure);
+    if (failure != null) return;
+    FocusScope.of(context).unfocus();
+    await widget.auth.register(
+      displayName: _name.text,
+      email: _email.text,
+      password: _password.text,
+      acceptsDataPolicy: _acceptsDataPolicy,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T126 pendiente de LUISDACA");
+    return AuroraScaffold(
+      body: ListenableBuilder(
+        listenable: widget.auth,
+        builder: (context, _) {
+          final strings = context.strings;
+          final failure = _formFailure ?? widget.auth.failure;
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 480),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          tooltip: strings.back,
+                          onPressed: widget.auth.isBusy ? null : widget.onBack,
+                          icon: const Icon(Icons.arrow_back),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Semantics(
+                            header: true,
+                            child: Text(
+                              strings.registerTitle,
+                              style: Theme.of(context).textTheme.headlineMedium,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      strings.registerSubtitle,
+                      style: const TextStyle(color: Aurora.textSecondary),
+                    ),
+                    const SizedBox(height: 24),
+                    if (failure != null) ...[
+                      StatusBanner(
+                        status: OperationStatus.failure(failure),
+                        onAurora: true,
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                    SurfaceCard(
+                      child: AutofillGroup(
+                        child: AbsorbPointer(
+                          absorbing: widget.auth.isBusy,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              TextField(
+                                controller: _name,
+                                textCapitalization: TextCapitalization.words,
+                                autofillHints: const [AutofillHints.name],
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: strings.nameLabel,
+                                  prefixIcon: const Icon(Icons.person_outline),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              TextField(
+                                controller: _email,
+                                keyboardType: TextInputType.emailAddress,
+                                autofillHints: const [AutofillHints.email],
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: strings.emailLabel,
+                                  prefixIcon: const Icon(Icons.email_outlined),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              PasswordField(
+                                controller: _password,
+                                label: strings.passwordLabel,
+                                showStrength: true,
+                                autofillHints: const [
+                                  AutofillHints.newPassword,
+                                ],
+                                textInputAction: TextInputAction.next,
+                              ),
+                              const SizedBox(height: 20),
+                              PasswordField(
+                                controller: _confirmation,
+                                label: strings.confirmPasswordLabel,
+                                autofillHints: const [
+                                  AutofillHints.newPassword,
+                                ],
+                                textInputAction: TextInputAction.done,
+                                onSubmitted: (_) => _submit(),
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                strings.passwordHint,
+                                style: const TextStyle(color: Aurora.textMuted),
+                              ),
+                              const SizedBox(height: 12),
+                              CheckboxListTile(
+                                contentPadding: EdgeInsets.zero,
+                                controlAffinity:
+                                    ListTileControlAffinity.leading,
+                                value: _acceptsDataPolicy,
+                                onChanged: (value) => setState(
+                                  () => _acceptsDataPolicy = value ?? false,
+                                ),
+                                title: Text(strings.dataPolicyConsent),
+                              ),
+                              const SizedBox(height: 20),
+                              PrimaryButton(
+                                label: strings.createAccount,
+                                onPressed: widget.auth.isBusy ? null : _submit,
+                                isLoading: widget.auth.isBusy,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      strings.haveAccountQuestion,
+                      textAlign: TextAlign.center,
+                    ),
+                    TextButton(
+                      onPressed: widget.auth.isBusy ? null : widget.onSignIn,
+                      child: Text(strings.signIn),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 }

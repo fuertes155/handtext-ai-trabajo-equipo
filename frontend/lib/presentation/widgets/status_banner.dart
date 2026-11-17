@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Aviso de estado de una operación (tareas T042 y T133; spec 001, módulo 5).
 //
 // Muestra con color, ícono y texto si una operación está en curso, terminó bien, falló o
@@ -41,7 +39,68 @@ class StatusBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T042 pendiente de LUISDACA");
+    final scheme = Theme.of(context).colorScheme;
+    final color = switch (status.kind) {
+      StatusKind.success => onAurora ? Aurora.success : const Color(0xFF166534),
+      StatusKind.failure => onAurora ? Aurora.danger : scheme.error,
+      _ => onAurora ? Aurora.blueLight : scheme.primary,
+    };
+    final icon = switch (status.kind) {
+      StatusKind.success => Icons.check_circle_outline,
+      StatusKind.failure => Icons.error_outline,
+      _ => Icons.info_outline,
+    };
+    return Semantics(
+      container: true,
+      liveRegion: true,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: 0.10),
+          border: Border.all(color: color),
+          borderRadius: BorderRadius.circular(Aurora.radiusSmall),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ExcludeSemantics(
+                    child: _PopIn(
+                      enabled: status.kind == StatusKind.success,
+                      child: status.kind == StatusKind.inProgress
+                          ? SizedBox.square(
+                              dimension: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: color,
+                              ),
+                            )
+                          : Icon(icon, color: color),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      context.strings.statusText(status),
+                      style: TextStyle(
+                        color: onAurora ? Aurora.textPrimary : scheme.onSurface,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              if (actionLabel != null && onAction != null) ...[
+                const SizedBox(height: 8),
+                TextButton(onPressed: onAction, child: Text(actionLabel!)),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -54,6 +113,14 @@ class _PopIn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T042 pendiente de LUISDACA");
+    if (!enabled || !decorativeMotionEnabled(context)) return child;
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0.8, end: 1),
+      duration: motionDuration(context, const Duration(milliseconds: 220)),
+      curve: Curves.easeOutBack,
+      builder: (context, scale, child) =>
+          Transform.scale(scale: scale, child: child),
+      child: child,
+    );
   }
 }

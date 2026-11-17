@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Diálogo genérico de confirmación (tarea T042; spec, módulo 3).
 //
 // «Solicitar confirmación antes de una acción que descarte o sustituya correcciones;
@@ -18,5 +16,28 @@ Future<bool> showConfirmDialog(
   required String confirmLabel,
   bool destructive = false,
 }) async {
-  throw UnimplementedError("T042 pendiente de LUISDACA");
+  return await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          scrollable: true,
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text(context.strings.cancel),
+            ),
+            FilledButton(
+              style: destructive
+                  ? FilledButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.error,
+                    )
+                  : null,
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text(confirmLabel),
+            ),
+          ],
+        ),
+      ) ??
+      false;
 }

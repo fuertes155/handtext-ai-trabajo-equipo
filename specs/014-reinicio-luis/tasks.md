@@ -124,3 +124,11 @@ Flutter de persistencia, idioma, contraste y bloqueo (controlador y widgets).
 Análisis/formato del alcance correctos. Sin certificación de biometría física.
 Se incluyen dependencias parciales T404/T126/T142, todavía sin contarlas terminadas.
 Revisión del equipo pendiente. Total técnico: 30/72.
+
+## Reconstrucción actual — lote 6 (2026-11-17)
+
+T042, T126, T130, T142, T507 y T511: componentes verificados con 25 pruebas de
+widgets/sesión y 8 escenarios compartidos de privacidad y formularios. Análisis
+y formato del alcance correctos. El flujo completo y TalkBack físico siguen
+pendientes. T134 queda implementada como dependencia, pendiente de integrar/verificar
+en la vista previa. Revisión del equipo pendiente. Total técnico: 36/72.

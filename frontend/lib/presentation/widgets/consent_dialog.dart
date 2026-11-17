@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Diálogo de autorización de envío (tarea T042; spec 001, módulo 6; research.md, R13).
 //
 // [H1-E3] Antes de enviar la imagen, se informa al usuario que irá al servidor de
@@ -18,5 +16,25 @@ Future<bool> showConsentDialog(
   BuildContext context, {
   int imageCount = 1,
 }) async {
-  throw UnimplementedError("T042,T142 pendiente de LUISDACA");
+  final strings = context.strings;
+  return await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          scrollable: true,
+          icon: const Icon(Icons.privacy_tip_outlined, color: Aurora.blueLight),
+          title: Text(strings.consentTitleFor(imageCount)),
+          content: Text(strings.consentMessageFor(imageCount)),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text(strings.consentDecline),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text(strings.consentAccept),
+            ),
+          ],
+        ),
+      ) ??
+      false;
 }

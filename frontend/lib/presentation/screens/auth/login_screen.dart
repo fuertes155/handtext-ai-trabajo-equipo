@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Pantalla de ingreso (tarea T126; spec 002, CU-H1-E6 a CU-H1-E8).
 //
 // Correo y contraseña en una tarjeta. Antes de enviar se revisa que ambos
@@ -40,7 +38,7 @@ class LoginScreen extends StatefulWidget {
 
   @override
   State<LoginScreen> createState() {
-    throw UnimplementedError("T126 pendiente de LUISDACA");
+    return _LoginScreenState();
   }
 }
 
@@ -57,11 +55,128 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _submit() async {
-    throw UnimplementedError("T126 pendiente de LUISDACA");
+    if (widget.auth.isBusy) return;
+    final failure = validateLoginForm(
+      email: _email.text,
+      password: _password.text,
+    );
+    setState(() => _formFailure = failure);
+    if (failure != null) return;
+    FocusScope.of(context).unfocus();
+    await widget.auth.signIn(email: _email.text, password: _password.text);
   }
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T126 pendiente de LUISDACA");
+    return AuroraScaffold(
+      body: ListenableBuilder(
+        listenable: widget.auth,
+        builder: (context, _) {
+          final strings = context.strings;
+          final failure = _formFailure ?? widget.auth.failure;
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 480),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          tooltip: strings.back,
+                          onPressed: widget.auth.isBusy ? null : widget.onBack,
+                          icon: const Icon(Icons.arrow_back),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Semantics(
+                            header: true,
+                            child: Text(
+                              strings.loginTitle,
+                              style: Theme.of(context).textTheme.headlineMedium,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      strings.loginSubtitle,
+                      style: const TextStyle(color: Aurora.textSecondary),
+                    ),
+                    const SizedBox(height: 24),
+                    if (widget.auth.notice == StatusEvent.sessionExpired) ...[
+                      StatusBanner(
+                        status: const OperationStatus.info(
+                          StatusEvent.sessionExpired,
+                        ),
+                        onAurora: true,
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                    if (failure != null) ...[
+                      StatusBanner(
+                        status: OperationStatus.failure(failure),
+                        onAurora: true,
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                    SurfaceCard(
+                      child: AutofillGroup(
+                        child: AbsorbPointer(
+                          absorbing: widget.auth.isBusy,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              TextField(
+                                controller: _email,
+                                keyboardType: TextInputType.emailAddress,
+                                autofillHints: const [AutofillHints.email],
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: strings.emailLabel,
+                                  prefixIcon: const Icon(Icons.email_outlined),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              PasswordField(
+                                controller: _password,
+                                label: strings.passwordLabel,
+                                autofillHints: const [AutofillHints.password],
+                                textInputAction: TextInputAction.done,
+                                onSubmitted: (_) => _submit(),
+                              ),
+                              const SizedBox(height: 24),
+                              PrimaryButton(
+                                label: strings.signIn,
+                                onPressed: widget.auth.isBusy ? null : _submit,
+                                isLoading: widget.auth.isBusy,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      strings.noAccountQuestion,
+                      textAlign: TextAlign.center,
+                    ),
+                    TextButton(
+                      onPressed: widget.auth.isBusy
+                          ? null
+                          : widget.onCreateAccount,
+                      child: Text(strings.createAccountLink),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 }

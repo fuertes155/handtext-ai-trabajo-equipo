@@ -71,8 +71,8 @@ ADB no mostró dispositivos conectados. No se han realizado recorridos manuales,
 configurado PIN/huella, instalado APK ni modificado datos de un teléfono. No se ha
 generado APK actual ni verificado una firma de distribución. Producción intacta.
 
-Tareas con alcance técnico verificado: 30/72; cierre formal: 0/72 por revisión pendiente.
-Las otras 42 tareas requieren implementación/revisión y sus verificaciones actuales.
+Tareas con alcance técnico verificado: 36/72; cierre formal: 0/72 por revisión pendiente.
+Las otras 36 tareas requieren implementación/revisión y sus verificaciones actuales.
 
 ## Lote 2: T021, T032, T050, T051, T118, T205
 
@@ -240,3 +240,45 @@ Recursos inspeccionados: sin teléfono, sin AVD ni imagen de sistema instalada y
 clave de firma en esta máquina. Java disponible en Android Studio es versión 25;
 la compatibilidad de herramientas para APK se resolverá al llegar a la compilación.
 GitHub confirma que el commit 6a0cb1b se asocia a la cuenta LUISDACA y su noreply.
+
+## Lote 6: T042, T126, T130, T142, T507, T511
+
+Pantallas de bienvenida, ingreso y registro con validación, consentimiento, datos
+del modo local/servidor, errores seguros y prevención de duplicados. Los campos
+de contraseña van ocultos, sin autocorrección/sugerencias y con guía de longitud.
+Se conserva el almacenamiento y la API compartidos. Los errores no revelan si el
+correo existe. No se acredita aún el flujo completo de documentos.
+
+Los diálogos de autorización/confirmación solo devuelven aceptación al pulsar
+expresamente su botón; cancelar o cerrar rechaza. El envío menciona el número de
+imágenes. StatusBanner presenta texto, icono, estado, acción y región viva. La
+ruta histórica de T042 menciona status_message.dart, pero el contrato actual usa
+status_banner.dart/StatusBanner: se conserva ese nombre, sin crear un alias vacío.
+
+Menú de cuenta con confirmación de texto pendiente al cerrar, y contraseña al
+eliminar. La cancelación conserva sesión/documento. Eliminar correctamente limpia
+sesión, borrador e historial propios. El avatar mide 48 dp y su inicial no entra en
+la semántica ni absorbe el encabezado vecino; el diálogo se desplaza al 200 %.
+Logo, escaneo y componentes usan la paleta conservada y detienen los bucles al
+pedir menos animaciones. T134 se implementa como dependencia de T142 y se mantiene
+pendiente de verificación integrada en la vista previa. No se consultó código histórico.
+
+Integración T125: si ya se borró la cuenta en el servicio y falla la limpieza local,
+se retorna fallo y se cierra la sesión ficticia, sin anunciar eliminación completa.
+Una regresión verifica sesión vacía, aviso no exitoso y fallo seguro; la bienvenida
+muestra el fallo. También se normaliza un detalle de formato del test de bloqueo.
+
+Verificación: **25 pruebas** de widgets/controlador de sesión y **8 escenarios
+compartidos** de bienvenida, privacidad local/servidor, consentimiento, confirmación
+y error de ingreso. Análisis del alcance sin incidencias; formato correcto.
+No se reemplazan ni debilitan las suites compartidas pendientes. Las nuevas pruebas
+usan isSemantics, equivalente actual de containsSemantics, con las mismas condiciones.
+
+Comandos desde frontend:
+
+```bash
+flutter test --no-pub test/presentation/account_widgets_test.dart test/state/auth_controller_test.dart
+flutter test --no-pub test/presentation/auth_screens_test.dart --name 'sin sesión se muestra|datos incorrectos muestran|sin la autorización de datos|contraseñas deben coincidir|registro y privacidad coinciden'
+flutter analyze --no-pub test/presentation/account_widgets_test.dart lib/presentation/widgets/account_menu.dart lib/presentation/widgets/scan_overlay.dart lib/presentation/widgets/confirm_dialog.dart lib/presentation/widgets/consent_dialog.dart lib/presentation/widgets/status_banner.dart lib/presentation/widgets/password_field.dart lib/presentation/screens/auth lib/state/auth_controller.dart test/state/auth_controller_test.dart
+dart format --output=none --set-exit-if-changed lib/presentation/screens/auth lib/presentation/widgets/account_menu.dart lib/presentation/widgets/confirm_dialog.dart lib/presentation/widgets/consent_dialog.dart lib/presentation/widgets/password_field.dart lib/presentation/widgets/scan_overlay.dart lib/presentation/widgets/status_banner.dart lib/state/auth_controller.dart test/state/auth_controller_test.dart test/state/lock_controller_test.dart test/presentation/account_widgets_test.dart
+```

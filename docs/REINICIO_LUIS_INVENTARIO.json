@@ -109,9 +109,10 @@
     {
       "task": "T042",
       "issue": 42,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Widgets de estado, autorización y confirmación en frontend/lib/presentation/widgets/ (status_message.dart, consent_dialog.dart, confirm_dialog.dart) · Dificultad Media."
+      "description": "Widgets de estado, autorización y confirmación en frontend/lib/presentation/widgets/ (status_message.dart, consent_dialog.dart, confirm_dialog.dart) · Dificultad Media.",
+      "verification": "Lote 6: 25 pruebas de componentes/sesión y 8 escenarios compartidos; análisis y formato del alcance; revisión pendiente"
     },
     {
       "task": "T043",
@@ -224,9 +225,10 @@
     {
       "task": "T126",
       "issue": 87,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Pantallas de presentación, bienvenida, ingreso y registro en frontend/lib/presentation/screens/auth/ · Dificultad Alta."
+      "description": "Pantallas de presentación, bienvenida, ingreso y registro en frontend/lib/presentation/screens/auth/ · Dificultad Alta.",
+      "verification": "Lote 6: 25 pruebas de componentes/sesión y 8 escenarios compartidos; análisis y formato del alcance; revisión pendiente"
     },
     {
       "task": "T128",
@@ -238,9 +240,10 @@
     {
       "task": "T130",
       "issue": 91,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Menú de cuenta y diálogo de eliminación en frontend/lib/presentation/widgets/account_menu.dart · Dificultad Media."
+      "description": "Menú de cuenta y diálogo de eliminación en frontend/lib/presentation/widgets/account_menu.dart · Dificultad Media.",
+      "verification": "Lote 6: 25 pruebas de componentes/sesión y 8 escenarios compartidos; análisis y formato del alcance; revisión pendiente"
     },
     {
       "task": "T134",
@@ -267,9 +270,10 @@
     {
       "task": "T142",
       "issue": 103,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Logo-escáner, animación de escaneo, avisos, menú de cuenta, diálogo de autorización y campo de contraseña con la nueva paleta en frontend/lib/presentation/widgets/ · Dificultad Media."
+      "description": "Logo-escáner, animación de escaneo, avisos, menú de cuenta, diálogo de autorización y campo de contraseña con la nueva paleta en frontend/lib/presentation/widgets/ · Dificultad Media.",
+      "verification": "Lote 6: 25 pruebas de componentes/sesión y 8 escenarios compartidos; análisis y formato del alcance; revisión pendiente"
     },
     {
       "task": "T201",
@@ -391,16 +395,18 @@
     {
       "task": "T507",
       "issue": 158,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Avatar sin la inicial en la lectura (R9) en frontend/lib/presentation/widgets/account_menu.dart · Dificultad Baja."
+      "description": "Avatar sin la inicial en la lectura (R9) en frontend/lib/presentation/widgets/account_menu.dart · Dificultad Baja.",
+      "verification": "Lote 6: 25 pruebas de componentes/sesión y 8 escenarios compartidos; análisis y formato del alcance; revisión pendiente"
     },
     {
       "task": "T511",
       "issue": 162,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Avatar de 48 dp (R9) y diálogo de eliminar cuenta desplazable (R6) en frontend/lib/presentation/widgets/account_menu.dart · Dificultad Baja."
+      "description": "Avatar de 48 dp (R9) y diálogo de eliminar cuenta desplazable (R6) en frontend/lib/presentation/widgets/account_menu.dart · Dificultad Baja.",
+      "verification": "Lote 6: 25 pruebas de componentes/sesión y 8 escenarios compartidos; análisis y formato del alcance; revisión pendiente"
     },
     {
       "task": "T512",

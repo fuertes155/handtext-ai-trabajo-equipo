@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Navegación entre bienvenida, ingreso y registro (tarea T126; spec 002, Historia 1).
 //
 // Las tres pantallas cambian con un desvanecimiento suave. El botón «atrás» de Android
@@ -27,7 +25,7 @@ class AuthFlow extends StatefulWidget {
 
   @override
   State<AuthFlow> createState() {
-    throw UnimplementedError("T126 pendiente de LUISDACA");
+    return _AuthFlowState();
   }
 }
 
@@ -37,11 +35,41 @@ class _AuthFlowState extends State<AuthFlow> {
       : _AuthPage.welcome;
 
   void _go(_AuthPage page) {
-    throw UnimplementedError("T126 pendiente de LUISDACA");
+    if (widget.auth.isBusy) return;
+    widget.auth.clearFailure();
+    setState(() => _page = page);
   }
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T126 pendiente de LUISDACA");
+    return PopScope(
+      canPop: _page == _AuthPage.welcome,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) _go(_AuthPage.welcome);
+      },
+      child: AnimatedSwitcher(
+        duration: motionDuration(context, const Duration(milliseconds: 220)),
+        child: switch (_page) {
+          _AuthPage.welcome => WelcomeScreen(
+            key: const ValueKey('welcome'),
+            auth: widget.auth,
+            onCreateAccount: () => _go(_AuthPage.register),
+            onSignIn: () => _go(_AuthPage.login),
+          ),
+          _AuthPage.login => LoginScreen(
+            key: const ValueKey('login'),
+            auth: widget.auth,
+            onBack: () => _go(_AuthPage.welcome),
+            onCreateAccount: () => _go(_AuthPage.register),
+          ),
+          _AuthPage.register => RegisterScreen(
+            key: const ValueKey('register'),
+            auth: widget.auth,
+            onBack: () => _go(_AuthPage.welcome),
+            onSignIn: () => _go(_AuthPage.login),
+          ),
+        },
+      ),
+    );
   }
 }

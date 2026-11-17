@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Campo de contraseña con botón «mostrar/ocultar» (tarea T126; spec 002, módulo 1).
 // Con [showStrength] muestra debajo una barra de seguridad (solo es una guía; la regla
 // obligatoria es la longitud mínima de 8 caracteres).
@@ -43,7 +41,7 @@ class PasswordField extends StatefulWidget {
 
   @override
   State<PasswordField> createState() {
-    throw UnimplementedError("T126,T142 pendiente de LUISDACA");
+    return _PasswordFieldState();
   }
 }
 
@@ -52,7 +50,42 @@ class _PasswordFieldState extends State<PasswordField> {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T126,T142 pendiente de LUISDACA");
+    final strings = context.strings;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        TextField(
+          controller: widget.controller,
+          obscureText: _obscured,
+          enableSuggestions: false,
+          autocorrect: false,
+          autofillHints: widget.autofillHints,
+          textInputAction: widget.textInputAction,
+          onSubmitted: widget.onSubmitted,
+          decoration: InputDecoration(
+            labelText: widget.label,
+            prefixIcon: const Icon(Icons.lock_outline),
+            suffixIcon: IconButton(
+              tooltip: _obscured ? strings.showPassword : strings.hidePassword,
+              onPressed: () => setState(() => _obscured = !_obscured),
+              icon: Icon(
+                _obscured
+                    ? Icons.visibility_outlined
+                    : Icons.visibility_off_outlined,
+              ),
+            ),
+          ),
+        ),
+        if (widget.showStrength) ...[
+          const SizedBox(height: 8),
+          ValueListenableBuilder<TextEditingValue>(
+            valueListenable: widget.controller,
+            builder: (context, value, _) =>
+                _StrengthMeter(level: passwordStrength(value.text)),
+          ),
+        ],
+      ],
+    );
   }
 }
 
@@ -64,6 +97,35 @@ class _StrengthMeter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T126,T142 pendiente de LUISDACA");
+    final label = context.strings.passwordStrength(level);
+    final color = [
+      Aurora.danger,
+      Aurora.warning,
+      Aurora.success,
+    ][level.clamp(0, 2)];
+    return Semantics(
+      label: label,
+      child: ExcludeSemantics(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                for (var i = 0; i < 3; i++)
+                  Expanded(
+                    child: Container(
+                      height: 4,
+                      margin: const EdgeInsets.symmetric(horizontal: 2),
+                      color: i <= level ? color : Aurora.surfaceBorder,
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Text(label, style: const TextStyle(color: Aurora.textMuted)),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Animación de escaneo sobre la imagen mientras la IA lee (tareas T134 y T142; CU-H3-E2).
 //
 // Oscurece levemente la imagen y la recorre con una línea celeste y su estela suave.
@@ -16,7 +14,7 @@ class ScanOverlay extends StatefulWidget {
 
   @override
   State<ScanOverlay> createState() {
-    throw UnimplementedError("T134,T142 pendiente de LUISDACA");
+    return _ScanOverlayState();
   }
 }
 
@@ -29,7 +27,8 @@ class _ScanOverlayState extends State<ScanOverlay>
 
   @override
   void didChangeDependencies() {
-    throw UnimplementedError("T134,T142 pendiente de LUISDACA");
+    super.didChangeDependencies();
+    syncLoopingAnimation(context, _controller, reverse: true);
   }
 
   @override
@@ -40,7 +39,17 @@ class _ScanOverlayState extends State<ScanOverlay>
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T134,T142 pendiente de LUISDACA");
+    return IgnorePointer(
+      child: ExcludeSemantics(
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, _) => CustomPaint(
+            painter: _ScanPainter(progress: _controller.value),
+            size: Size.infinite,
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -51,11 +60,42 @@ class _ScanPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    throw UnimplementedError("T134,T142 pendiente de LUISDACA");
+    canvas.drawRect(
+      Offset.zero & size,
+      Paint()..color = Colors.black.withValues(alpha: 0.15),
+    );
+    final y = size.height * progress;
+    final trail = Rect.fromLTRB(
+      0,
+      (y - 40).clamp(0, size.height),
+      size.width,
+      y,
+    );
+    if (trail.height > 0) {
+      canvas.drawRect(
+        trail,
+        Paint()
+          ..shader = LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Aurora.sky.withValues(alpha: 0),
+              Aurora.sky.withValues(alpha: 0.22),
+            ],
+          ).createShader(trail),
+      );
+    }
+    canvas.drawLine(
+      Offset(0, y),
+      Offset(size.width, y),
+      Paint()
+        ..color = Aurora.sky
+        ..strokeWidth = 3,
+    );
   }
 
   @override
   bool shouldRepaint(_ScanPainter oldDelegate) {
-    throw UnimplementedError("T134,T142 pendiente de LUISDACA");
+    return progress != oldDelegate.progress;
   }
 }

@@ -201,9 +201,11 @@ class AuthController extends ChangeNotifier {
     if (_isBusy || _isDisposed || _session == null) return false;
     _isBusy = true;
     _failure = null;
+    var deletedRemotely = false;
     _notify();
     try {
       await _api.deleteAccount(_session!.token, password);
+      deletedRemotely = true;
       await beforeSignOut?.call();
       await _sessions.clear();
       _session = null;
@@ -217,6 +219,13 @@ class AuthController extends ChangeNotifier {
       _failure = const AppFailure(FailureKind.unexpected);
       return false;
     } finally {
+      if (deletedRemotely && _status != AuthStatus.signedOut) {
+        // La cuenta ya no existe: un fallo de limpieza local se informa, pero no
+        // se mantiene una sesión ficticia ni se anuncia la eliminación completa.
+        _session = null;
+        _status = AuthStatus.signedOut;
+        await _clearQuietly();
+      }
       _isBusy = false;
       _notify();
     }
