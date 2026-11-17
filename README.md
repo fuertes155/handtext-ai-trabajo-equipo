@@ -1,6 +1,18 @@
 # HandText AI · Trabajo en equipo
 
-El repositorio organiza una nueva fase de HandText AI en 218 tareas, cuatro sprints y un prompt por integrante. La rama `samuel/implementacion` incorpora la app Android y la API local con las dependencias compartidas citadas en su historial.
+HandText AI es una aplicación Flutter Android que escanea hojas, reconoce texto, permite corregirlo y exporta Word/PDF. La entrega conecta el APK por HTTPS con FastAPI y PostgreSQL en Railway. RapidOCR procesa las imágenes con modelos ONNX en el servidor.
+
+## Entrega final
+
+- [Instalación, despliegue y compilación](docs/ENTREGA_FINAL.md).
+- [Verificaciones y límites conocidos](docs/VERIFICACION_ENTREGA.md).
+- [Especificación del despliegue](specs/013-entrega-railway/spec.md).
+- [Presentación para la exposición](docs/presentacion/HandText-AI-entrega-final.pptx).
+- [Salud de la API](https://handtext-api-production.up.railway.app/health).
+
+La compilación de entrega usa `HOSTED_ACCOUNTS=true` y requiere crear una cuenta del servidor. Las cuentas de la prueba local permanecen en el teléfono. Historial y borradores se conservan por cuenta en el dispositivo. El APK entregado requiere Android ARM64 e Internet para cuentas, reconocimiento y exportación.
+
+El proyecto organiza 218 tareas en cuatro sprints. Los informes históricos conservan los resultados y la procedencia de cada integración.
 
 Consulta la [guía local](specs/001-handtext-mvp/quickstart.md), el [mapa del código](MAPA_DEL_CODIGO.md) y el [recorrido de ajustes y accesibilidad](docs/PRUEBA_DE_INTERFAZ.md).
 
@@ -69,6 +81,6 @@ dos tareas cerradas administrativamente sin acreditar su validación.
 Se incorporaron los archivos y pruebas restantes conservando las mejoras actuales.
 El [informe completo](docs/INTEGRACION_COMPLETA_DOCUMENTO_WORD.md) explica las fusiones,
 la procedencia, el inventario y las verificaciones. Las guías originales y el despliegue
-Render se conservan como referencia; para ejecutar, usa las guías locales vigentes.
+Render se conservan como referencia; para la entrega usa la guía final y para desarrollo las guías locales.
 
 - [Conciliación de issues y pendientes tras la integración completa](docs/CONCILIACION_ISSUES_INTEGRACION.md).

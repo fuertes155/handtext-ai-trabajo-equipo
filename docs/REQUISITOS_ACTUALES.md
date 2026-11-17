@@ -1,39 +1,32 @@
 # Requisitos actuales
 
+Actualizados el 2026-11-16. La solicitud de despliegue del 2026-11-09 autoriza la entrega descrita en la [especificación 013](../specs/013-entrega-railway/spec.md).
+
 ## Producto
 
-App Flutter para Android que captura o selecciona manuscritos, permite reconocimiento, revisión del texto y exportación DOCX/PDF mediante FastAPI. Evolución por cuatro sprints con varias páginas, historial, idioma, ajustes, accesibilidad, escáner, organización y bloqueo biométrico.
+Flutter Android permite escanear o elegir imágenes, reconocer hasta diez páginas, revisar texto y exportar Word/PDF. Incluye historial por cuenta, idiomas, accesibilidad y bloqueo del dispositivo.
 
-## Restricciones que prevalecen sobre las especificaciones antiguas
+## Entrega vigente
 
-- Registro e inicio de sesión de la app exclusivamente locales, sin solicitudes al backend para autenticarse.
-- Cuentas y sesiones guardadas de forma segura en el dispositivo. Derivación de contraseñas con salt y Argon2id o equivalente adecuado mediante dependencia mantenida. No usar SHA-256 directo.
-- Separar cuentas y almacenamiento de depuración y distribución cuando corresponda.
-- API únicamente en el computador para la prueba, preparada para el puerto 8001. Inspeccionar puertos y procesos antes de iniciarla. No detener servicios desconocidos ni ocupar 8000 por suposición.
-- `API_BASE_URL` configurable. El acceso de desarrollo exige `LOCAL_DEV_API_TOKEN` en la app y `HANDTEXT_LOCAL_DEV_TOKEN` en la API, configurados por canales locales seguros.
-- Acceso de desarrollo desactivado por defecto y no habilitado en compilaciones para distribuir. Ese token solo puede autorizar reconocimiento/exportación. Nunca las rutas de cuentas.
-- El OCR en el computador requiere los modelos de RapidOCR instalados localmente. Si se selecciona un proveedor externo, sus credenciales se suministran al backend. No pedir secretos en el chat ni afirmar que OCR funciona sin validación.
-- No desplegar la API. No subir claves, tokens, `.env`, archivos de credenciales o datos personales. Usar muestras sintéticas o autorizadas.
-- No borrar datos ni desinstalar apps sin permiso. Si falta espacio, informar primero. Usar el emulador mientras no haya dispositivo disponible.
-- Ejecutar pruebas pertinentes de Flutter/backend, análisis y formato. Compilar APK x86_64 cuando exista una implementación que pueda compilarse.
+- Compilar con `HOSTED_ACCOUNTS=true` y una `API_BASE_URL` HTTPS explícita. Usar cuentas del servidor y PostgreSQL privado.
+- Conservar la sesión segura por servidor y autenticar OCR/exportación mediante Bearer. Derivar contraseñas con Argon2id.
+- Ejecutar RapidOCR con modelos ONNX fijados en Railway. Validar integridad y permisos de los modelos durante la construcción.
+- Mantener borradores e historial por cuenta en el teléfono. Crear una cuenta del servidor al migrar desde la prueba local, conservando las cuentas locales anteriores.
+- La calidad OCR depende de la imagen y la escritura. Medir CER con diez hojas autorizadas antes de acreditar la meta de precisión.
 
-## Dependencias y coordinación
+## Desarrollo local
 
-La estructura inicial no existe aún. Empezar por tareas de preparación de backend, dependencias, Flutter y exclusiones Git. Después, integrar configuración y contratos compartidos antes de construir consumidores. Cada integrante revisa las issues relacionadas y coordina contratos y archivos compartidos con los demás. Una tarea que necesita un módulo ausente está bloqueada hasta integrarlo o acordar explícitamente una dependencia.
+- Mantener registro e ingreso sin red con LocalAuthApi y almacenamiento seguro del dispositivo.
+- Inspeccionar procesos y puertos antes de arrancar la API en el PC. Conservar el flujo ADB y el lanzador de prueba.
+- El token local de desarrollo exige configuración explícita, solo permite documentos desde bucle local y queda desactivado por defecto y en distribución.
+- Configurar credenciales de proveedores externos exclusivamente en el backend por canales seguros.
 
-Las pruebas de servidor de cuentas pueden mantenerse donde la especificación lo requiera, pero la app local no debe consumir esas rutas. Si una tarea antigua contradice estas restricciones, actualizar su alcance mediante un acuerdo en su issue antes de implementarla.
+## Datos y validación
 
-## Referencias por funcionalidad
+- Conservar claves, tokens, keystores y datos personales fuera de Git. Usar hojas sintéticas o autorizadas.
+- No borrar datos ni desinstalar aplicaciones sin permiso.
+- Ejecutar pruebas, analizadores, compilación y comprobación de firma. Registrar fecha y alcance de cada resultado.
+- Los recorridos de Samsung, TalkBack, biometría y guardado nativo requieren evidencia física.
+- Mantener autoría real y revisión de aportes. Las issues y los informes distinguen resultados históricos de la entrega.
 
-- [001 · 001-handtext-mvp](https://github.com/Juan-Miguel-Her-Del/documento_word/tree/356ff82297820bccfac9f5049ea020c9f40f0001/specs/001-handtext-mvp/spec.md)
-- [002 · 002-cuentas-de-usuario](https://github.com/Juan-Miguel-Her-Del/documento_word/tree/356ff82297820bccfac9f5049ea020c9f40f0001/specs/002-cuentas-de-usuario/spec.md)
-- [003 · 003-revision-recorte-compartir](https://github.com/Juan-Miguel-Her-Del/documento_word/tree/356ff82297820bccfac9f5049ea020c9f40f0001/specs/003-revision-recorte-compartir/spec.md)
-- [004 · 004-varias-paginas](https://github.com/Juan-Miguel-Her-Del/documento_word/tree/356ff82297820bccfac9f5049ea020c9f40f0001/specs/004-varias-paginas/spec.md)
-- [005 · 005-ajustes-y-version-final](https://github.com/Juan-Miguel-Her-Del/documento_word/tree/356ff82297820bccfac9f5049ea020c9f40f0001/specs/005-ajustes-y-version-final/spec.md)
-- [006 · 006-primer-uso-y-accesibilidad](https://github.com/Juan-Miguel-Her-Del/documento_word/tree/356ff82297820bccfac9f5049ea020c9f40f0001/specs/006-primer-uso-y-accesibilidad/spec.md)
-- [007 · 007-historial-de-documentos](https://github.com/Juan-Miguel-Her-Del/documento_word/tree/356ff82297820bccfac9f5049ea020c9f40f0001/specs/007-historial-de-documentos/spec.md)
-- [008 · 008-idioma-ingles](https://github.com/Juan-Miguel-Her-Del/documento_word/tree/356ff82297820bccfac9f5049ea020c9f40f0001/specs/008-idioma-ingles/spec.md)
-- [009 · 009-escaner-de-documentos](https://github.com/Juan-Miguel-Her-Del/documento_word/tree/356ff82297820bccfac9f5049ea020c9f40f0001/specs/009-escaner-de-documentos/spec.md)
-- [010 · 010-organizar-documentos](https://github.com/Juan-Miguel-Her-Del/documento_word/tree/356ff82297820bccfac9f5049ea020c9f40f0001/specs/010-organizar-documentos/spec.md)
-- [011 · 011-bloqueo-con-huella](https://github.com/Juan-Miguel-Her-Del/documento_word/tree/356ff82297820bccfac9f5049ea020c9f40f0001/specs/011-bloqueo-con-huella/spec.md)
-- [012 · 012-pruebas-de-punta-a-punta](https://github.com/Juan-Miguel-Her-Del/documento_word/tree/356ff82297820bccfac9f5049ea020c9f40f0001/specs/012-pruebas-de-punta-a-punta/spec.md)
+Consultar [ENTREGA_FINAL.md](ENTREGA_FINAL.md) y [VERIFICACION_ENTREGA.md](VERIFICACION_ENTREGA.md). Las especificaciones históricas se conservan y se amplían mediante 013.

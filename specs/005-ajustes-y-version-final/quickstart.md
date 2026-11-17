@@ -1,3 +1,5 @@
+> Entrega 2026-11-16. La [especificación 013](../013-entrega-railway/spec.md) amplía este alcance para Railway, HTTPS y cuentas del servidor. Consultar la [guía final](../../docs/ENTREGA_FINAL.md). El modo local conserva su configuración de desarrollo.
+
 # Ajustes, licencias y compilación
 
 Arranca la app y la API siguiendo la [guía local del MVP](../001-handtext-mvp/quickstart.md).
