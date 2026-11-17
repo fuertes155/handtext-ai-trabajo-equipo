@@ -1,5 +1,3 @@
-# Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-# Los comentarios anteriores describen requisitos; no son verificación del código actual.
 """Generador de archivos PDF (tarea T051; Historia 3).
 
 - Página A4, márgenes de 20 mm, letra DejaVu Sans de 12 pt y alineación izquierda.
@@ -18,6 +16,12 @@ from __future__ import annotations
 from functools import lru_cache
 from pathlib import Path
 
+from fontTools.ttLib import TTFont
+from fpdf import FPDF
+from fpdf.enums import XPos, YPos
+
+from app.services.documents.text_rules import split_into_paragraphs, unsupported_characters_error
+
 # backend/app/assets/fonts/DejaVuSans.ttf (licencia en LICENSE-DejaVu.txt, misma carpeta).
 FONT_PATH = Path(__file__).resolve().parents[2] / "assets" / "fonts" / "DejaVuSans.ttf"
 FONT_FAMILY = "DejaVuSans"
@@ -29,12 +33,35 @@ TAB_AS_SPACES = "    "
 
 @lru_cache(maxsize=1)
 def _font_codepoints() -> frozenset[int]:
-    raise NotImplementedError("T051: implementación pendiente de LUISDACA")
+    with TTFont(FONT_PATH) as font:
+        return frozenset(font.getBestCmap())
 
 
 def find_unrenderable_characters(text: str) -> list[str]:
-    raise NotImplementedError("T051: implementación pendiente de LUISDACA")
+    available = _font_codepoints()
+    return list(
+        dict.fromkeys(char for char in text if char not in "\r\n\t" and ord(char) not in available)
+    )
 
 
 def build_pdf(text: str) -> bytes:
-    raise NotImplementedError("T051: implementación pendiente de LUISDACA")
+    invalid = find_unrenderable_characters(text)
+    if invalid:
+        raise unsupported_characters_error(invalid, "PDF")
+    pdf = FPDF(format="A4")
+    pdf.set_margins(MARGIN_MM, MARGIN_MM, MARGIN_MM)
+    pdf.set_auto_page_break(auto=True, margin=MARGIN_MM)
+    pdf.add_font(FONT_FAMILY, fname=str(FONT_PATH))
+    pdf.set_font(FONT_FAMILY, size=FONT_SIZE_PT)
+    pdf.set_author("HandText AI")
+    pdf.set_title("Documento digitalizado")
+    pdf.add_page()
+    for paragraph in split_into_paragraphs(text):
+        pdf.multi_cell(
+            w=0,
+            h=LINE_HEIGHT_MM,
+            text=paragraph.replace("\t", TAB_AS_SPACES),
+            new_x=XPos.LMARGIN,
+            new_y=YPos.NEXT,
+        )
+    return bytes(pdf.output())

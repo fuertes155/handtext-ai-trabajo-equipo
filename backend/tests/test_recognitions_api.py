@@ -15,6 +15,25 @@ from tests.conftest import FakeOcrProvider, make_client, make_image_bytes, make_
 URL = "/api/v1/recognitions"
 
 
+def test_uncertain_words_reject_invalid_ranges_without_changing_unicode_text():
+    text = "🙂 duda ¡ fin"
+    provider = FakeOcrProvider(
+        text=text,
+        uncertain=(
+            UncertainSpan(-1, 2),
+            UncertainSpan(2, 6),
+            UncertainSpan(3, 5),
+            UncertainSpan(7, 8),
+            UncertainSpan(9, 12),
+            UncertainSpan(12, 99),
+        ),
+    )
+    response = _post(provider, make_image_bytes(800, 600))
+    assert response.status_code == 200
+    assert response.json()["text"] == text
+    assert response.json()["uncertain_words"] == [{"start": 2, "end": 6}, {"start": 9, "end": 12}]
+
+
 def _post(provider: FakeOcrProvider | None, data: bytes, content_type: str = "image/png"):
     return make_client(provider).post(URL, content=data, headers={"Content-Type": content_type})
 

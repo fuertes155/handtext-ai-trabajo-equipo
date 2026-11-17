@@ -1,5 +1,3 @@
-# Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-# Los comentarios anteriores describen requisitos; no son verificación del código actual.
 """Ruta de reconocimiento: POST /api/v1/recognitions (tarea T031).
 
 Spec, módulo 2; Historia 1, escenarios 1 y 6 a 8. Pasos:
@@ -22,11 +20,11 @@ import logging
 from fastapi import APIRouter, Request
 from starlette.concurrency import run_in_threadpool
 
+from app.api.auth import DocumentUser
 from app.api.request_body import read_body_limited
 from app.config import MAX_IMAGE_BYTES
 from app.errors import AppError, ErrorCode, request_id_of
-from app.pending_luis import PendingDocumentUser, pending_implementation
-from app.schemas import RecognitionResponse, RecognitionStatus
+from app.schemas import RecognitionResponse, RecognitionStatus, UncertainWord
 from app.services.image_preparation import prepare_for_ocr
 from app.services.image_validation import validate_image
 from app.services.ocr import (
@@ -57,7 +55,7 @@ _IMAGE_BODY = {
     summary="Reconocer el texto manuscrito de una imagen",
     openapi_extra=_IMAGE_BODY,
 )
-async def create_recognition(request: Request, user: PendingDocumentUser) -> RecognitionResponse:
+async def create_recognition(request: Request, user: DocumentUser) -> RecognitionResponse:
     """Valida la imagen, la reconoce con el proveedor y devuelve el texto sin modificarlo.
 
     Requiere sesión normal o el secreto local de desarrollo configurado explícitamente.
@@ -86,7 +84,16 @@ async def create_recognition(request: Request, user: PendingDocumentUser) -> Rec
     has_text = bool(result.text.strip())
     request_id = request_id_of(request)
     # Spec 003: las posiciones de las palabras dudosas solo tienen sentido si hay texto.
-    uncertain = pending_implementation("T205")
+    uncertain: list[UncertainWord] = []
+    last_end = 0
+    if has_text:
+        for span in result.uncertain_spans:
+            # Un proveedor defectuoso no debe romper la respuesta ni marcar otro texto.
+            if last_end <= span.start < span.end <= len(result.text) and any(
+                char.isalnum() for char in result.text[span.start : span.end]
+            ):
+                uncertain.append(UncertainWord(start=span.start, end=span.end))
+                last_end = span.end
     logger.info(
         "recognition user_id=%s format=%s width=%d height=%d has_text=%s chars=%d "
         "uncertain=%d request_id=%s",

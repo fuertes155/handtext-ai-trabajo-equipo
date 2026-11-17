@@ -1,40 +1,31 @@
-"""Verificación aislada: no carga la aplicación ni modifica la base de datos."""
+"""T118: autorización final; release sigue bloqueada hasta completar T409."""
 
 import sys
 from pathlib import Path
 
 import pytest
-from fastapi import FastAPI
-from fastapi.testclient import TestClient
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "backend"))
 
-# Se añade la carpeta backend antes de importar los routers reales, sin app.main.
-from app.api.exports import router as exports_router
-from app.api.recognitions import router as recognitions_router
-from app.pending_luis import pending_implementation
+from tests.conftest import FakeOcrProvider, make_client
 
 
 @pytest.mark.parametrize("route", ["/recognitions", "/exports"])
 @pytest.mark.parametrize(
     "authorization", [None, "Bearer incorrecto", "Bearer " + "x" * 48]
 )
-def test_real_document_routes_stay_closed(route, authorization):
-    app = FastAPI()
-    app.include_router(recognitions_router)
-    app.include_router(exports_router)
+def test_real_document_routes_require_a_valid_session(route, authorization):
+    provider = FakeOcrProvider()
+    client = make_client(provider, authenticated=False)
     headers = {} if authorization is None else {"Authorization": authorization}
-    response = TestClient(app).post(
-        route, headers=headers, content=b"ejemplo sintetico"
+    response = client.post(
+        "/api/v1" + route, headers=headers, content=b"ejemplo sintetico"
     )
-    assert response.status_code == 503
-    assert "T118" in response.json()["detail"]
-
-
-def test_placeholder_is_an_explicit_failure():
-    with pytest.raises(NotImplementedError, match="T205"):
-        pending_implementation("T205")
+    assert response.status_code == 401
+    assert response.json()["error"]["code"] == "UNAUTHENTICATED"
+    assert response.headers["WWW-Authenticate"] == "Bearer"
+    assert provider.received == []
 
 
 def test_release_marker_and_dependencies():

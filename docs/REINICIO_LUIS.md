@@ -135,3 +135,8 @@ La implementación actual y sus resultados se registran en
 Ese registro complementa el inventario y distingue verificación técnica de cierre
 por revisión del equipo. Las comprobaciones del retiro anteriores siguen siendo
 históricas; no certifican las implementaciones nuevas.
+
+Actualización del lote 2: T118/T205 ya tienen implementación definitiva;
+`backend/app/pending_luis.py` fue sustituido por DocumentUser y pruebas de
+autorización. Los detalles anteriores describen el retiro histórico. El marcador
+`frontend/LUIS_PENDIENTE` continúa vigente hasta completar Flutter y T409.

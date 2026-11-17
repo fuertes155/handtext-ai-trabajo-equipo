@@ -97,3 +97,10 @@ T002, T006, T010, T104, T108 y T114: implementación o revisión técnica verifi
 87 pruebas aprobadas con PostgreSQL temporal real; Ruff y formato aprobados.
 Las casillas siguen pendientes porque las issues exigen revisión de otro integrante.
 Ver [registro de reconstrucción](../docs/VERIFICACION_RECONSTRUCCION_LUIS.md).
+
+## Reconstrucción actual — lote 2 (2026-11-17)
+
+T021, T032, T050, T051, T118 y T205: alcance técnico verificado. Suite completa
+del backend: 218 pruebas aprobadas, sin skips; Ruff y formato completos correctos.
+Autorización definitiva instalada y comprobada; release sigue bloqueada.
+Las issues siguen abiertas por revisión del equipo. Total técnico: 12/72.

@@ -74,6 +74,10 @@ def require_document_user(request: Request) -> UserRecord:
         expected
         and request.client
         and request.client.host in ("127.0.0.1", "::1")
+        # Un proxy puede conectar desde loopback por un cliente remoto. El permiso
+        # de desarrollo solo admite acceso directo, nunca solicitudes reenviadas.
+        and not request.headers.get("forwarded")
+        and not request.headers.get("x-forwarded-for")
         and hmac.compare_digest(supplied.encode("utf-8"), expected.encode("utf-8"))
     ):
         return UserRecord(

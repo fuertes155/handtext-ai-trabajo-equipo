@@ -71,5 +71,45 @@ ADB no mostró dispositivos conectados. No se han realizado recorridos manuales,
 configurado PIN/huella, instalado APK ni modificado datos de un teléfono. No se ha
 generado APK actual ni verificado una firma de distribución. Producción intacta.
 
-Tareas con alcance técnico verificado: 6/72; cierre formal: 0/72 por revisión pendiente.
-Las otras 66 tareas requieren implementación/revisión y sus verificaciones actuales.
+Tareas con alcance técnico verificado: 12/72; cierre formal: 0/72 por revisión pendiente.
+Las otras 60 tareas requieren implementación/revisión y sus verificaciones actuales.
+
+## Lote 2: T021, T032, T050, T051, T118, T205
+
+- T032: reglas de texto vacío, límite de 200000 caracteres, normalización de saltos,
+  párrafos y rechazo de caracteres no válidos en XML; lista acotada de códigos Unicode.
+- T050: DejaVu Sans 2.37 copiada de `/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf`,
+  conservando `LICENSE-DejaVu.txt`. SHA-256:
+  `b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c`.
+  Es un recurso de terceros, no una fuente creada por Luis.
+- T051: PDF A4 en memoria, fuente incrustada, márgenes de 20 mm, letra de 12 pt,
+  ajuste de líneas/páginas, tabulaciones y rechazo explícito de glifos ausentes.
+- T021: suite nueva de Word que abre ZIP/XML y DOCX, comprueba texto, caracteres,
+  párrafos vacíos, límite exacto, metadatos, controles inválidos, esquema y tamaño.
+- T118: endpoints conectados a DocumentUser compartido; Bearer obligatorio salvo
+  permiso local explícito. Se retiró pending_luis.py y las pruebas temporales ahora
+  verifican 401 y ausencia de llamadas OCR. Permiso local rechazado tras proxy y
+  en configuración Railway; nunca habilita operaciones de cuentas.
+- T205: conversión de marcas a posiciones Unicode, descarte de intervalos inválidos,
+  superpuestos o de puntuación sin cambiar el texto. Modelos compartidos conservados.
+
+Resultado: **218 passed in 2.87s**, sin skips, en la suite completa backend. Incluye
+PostgreSQL temporal, DOCX/PDF, privacidad de registros, autorización y proveedores
+con transportes simulados. No se instala OCR local ni se llama a proveedores reales.
+Ruff completo: correcto; formateador: 57 archivos correctos. Se corrigió el handler
+de StoreUnavailableError para responder 503, descubierto por la suite compartida.
+
+Comandos desde backend:
+
+```bash
+.venv312/bin/ruff check .
+.venv312/bin/ruff format --check .
+.venv312/bin/pytest -q
+.venv312/bin/pytest --noconftest -q ../checks/test_reinicio_luis.py
+```
+
+Los checks finales verifican autenticación y mantienen el control de release
+mientras falta T409. Se conserva el nombre del archivo para que siga siendo
+localizable. La suite anterior de bloqueo temporal se sustituyó, no se debilitó.
+No se consultó ni restauró implementación histórica en este lote; las funciones
+se implementaron contra contratos actuales y pruebas compartidas.

@@ -93,6 +93,8 @@ class Settings:
         models = os.environ.get(LOCAL_OCR_MODELS_ENV, "").strip() if ocr_provider == "local" else ""
         database_url = os.environ.get(DATABASE_URL_ENV, "").strip()
         local_dev_token = os.environ.get(LOCAL_DEV_TOKEN_ENV, "").strip()
+        if local_dev_token and os.environ.get("RAILWAY_PROJECT_ID"):
+            raise ValueError("El acceso local de desarrollo no se permite en Railway.")
         if local_dev_token and len(local_dev_token) < 32:
             raise ValueError(f"{LOCAL_DEV_TOKEN_ENV} debe tener al menos 32 caracteres.")
         return cls(

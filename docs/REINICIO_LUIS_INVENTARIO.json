@@ -53,9 +53,10 @@
     {
       "task": "T021",
       "issue": 21,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Exportación Word (contenido, párrafos, caracteres, texto vacío) en backend/tests/test_exports_docx.py · Dificultad Media."
+      "description": "Exportación Word (contenido, párrafos, caracteres, texto vacío) en backend/tests/test_exports_docx.py · Dificultad Media.",
+      "verification": "Lote 2: suite backend 218 passed; Ruff y formato completos; revisión del equipo pendiente"
     },
     {
       "task": "T022",
@@ -81,9 +82,10 @@
     {
       "task": "T032",
       "issue": 32,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Reglas del texto exportable (vacío, tamaño y caracteres XML) en backend/app/services/documents/text_rules.py · Dificultad Media."
+      "description": "Reglas del texto exportable (vacío, tamaño y caracteres XML) en backend/app/services/documents/text_rules.py · Dificultad Media.",
+      "verification": "Lote 2: suite backend 218 passed; Ruff y formato completos; revisión del equipo pendiente"
     },
     {
       "task": "T035",
@@ -123,16 +125,18 @@
     {
       "task": "T050",
       "issue": 50,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Fuente DejaVu Sans y su licencia en backend/app/assets/fonts/ · Dificultad Baja."
+      "description": "Fuente DejaVu Sans y su licencia en backend/app/assets/fonts/ · Dificultad Baja.",
+      "verification": "Lote 2: suite backend 218 passed; Ruff y formato completos; revisión del equipo pendiente"
     },
     {
       "task": "T051",
       "issue": 51,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Generador de PDF en backend/app/services/documents/pdf_builder.py · Dificultad Media."
+      "description": "Generador de PDF en backend/app/services/documents/pdf_builder.py · Dificultad Media.",
+      "verification": "Lote 2: suite backend 218 passed; Ruff y formato completos; revisión del equipo pendiente"
     },
     {
       "task": "T054",
@@ -182,9 +186,10 @@
     {
       "task": "T118",
       "issue": 79,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Protección de reconocimiento y exportación en backend/app/api/recognitions.py y backend/app/api/exports.py · Dificultad Media."
+      "description": "Protección de reconocimiento y exportación en backend/app/api/recognitions.py y backend/app/api/exports.py · Dificultad Media.",
+      "verification": "Lote 2: suite backend 218 passed; Ruff y formato completos; revisión del equipo pendiente"
     },
     {
       "task": "T119",
@@ -266,9 +271,10 @@
     {
       "task": "T205",
       "issue": 112,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
-      "description": "Campo uncertain_words en backend/app/schemas.py y backend/app/api/recognitions.py, con su prueba en backend/tests/test_recognitions_api.py · Dificultad Media."
+      "description": "Campo uncertain_words en backend/app/schemas.py y backend/app/api/recognitions.py, con su prueba en backend/tests/test_recognitions_api.py · Dificultad Media.",
+      "verification": "Lote 2: suite backend 218 passed; Ruff y formato completos; revisión del equipo pendiente"
     },
     {
       "task": "T206",

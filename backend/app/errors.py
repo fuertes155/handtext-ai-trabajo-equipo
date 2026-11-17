@@ -24,6 +24,8 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException
 
+from app.persistence.user_store import StoreUnavailableError
+
 logger = logging.getLogger("handtext")
 
 
@@ -152,6 +154,10 @@ def log_unexpected_error(exc: BaseException, request_id: str) -> None:
 
 
 def install_error_handlers(app: FastAPI) -> None:
+    @app.exception_handler(StoreUnavailableError)
+    async def unavailable_store(request: Request, exc: StoreUnavailableError) -> JSONResponse:
+        return error_response(AppError(ErrorCode.ACCOUNTS_UNAVAILABLE), request_id_of(request))
+
     @app.exception_handler(AppError)
     async def domain_error(request: Request, exc: AppError) -> JSONResponse:
         return error_response(exc, request_id_of(request))
