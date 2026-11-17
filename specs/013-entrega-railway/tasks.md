@@ -5,7 +5,7 @@
 - [x] Incorporar cuentas del servidor y HTTPS.
 - [x] Documentar alcance, configuración y aceptación.
 - [x] Registrar verificaciones posteriores a la integración y actualizar presentación.
-- [ ] Abrir PR revisable hacia `main`.
+- [x] Abrir PR revisable hacia `main`: [#221](https://github.com/fuertes155/handtext-ai-trabajo-equipo/pull/221).
 - [ ] Confirmar el recorrido del APK final en Samsung desde una red externa.
 - [ ] Completar corpus autorizado de diez hojas y evaluación CER.
 - [ ] Obtener revisión de otro integrante y registrar sus aportes reales.

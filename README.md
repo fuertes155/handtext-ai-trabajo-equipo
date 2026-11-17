@@ -8,6 +8,7 @@ HandText AI es una aplicación Flutter Android que escanea hojas, reconoce texto
 - [Verificaciones y límites conocidos](docs/VERIFICACION_ENTREGA.md).
 - [Especificación del despliegue](specs/013-entrega-railway/spec.md).
 - [Presentación para la exposición](docs/presentacion/HandText-AI-entrega-final.pptx).
+- [Descargar APK firmado y materiales de preentrega](https://github.com/fuertes155/handtext-ai-trabajo-equipo/releases/tag/entrega-20261116).
 - [Salud de la API](https://handtext-api-production.up.railway.app/health).
 
 La compilación de entrega usa `HOSTED_ACCOUNTS=true` y requiere crear una cuenta del servidor. Las cuentas de la prueba local permanecen en el teléfono. Historial y borradores se conservan por cuenta en el dispositivo. El APK entregado requiere Android ARM64 e Internet para cuentas, reconocimiento y exportación.

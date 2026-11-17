@@ -2,6 +2,8 @@
 
 Resultados ejecutados después de integrar `origin/main` (`66b4d22`) en la rama `entrega/railway-documentacion-20261116`. El commit de integración es `aecb5d1`; los commits siguientes consolidan documentación y presentación. Los informes anteriores conservan su fecha y no sustituyen esta verificación.
 
+Cambios publicados en el [PR #221](https://github.com/fuertes155/handtext-ai-trabajo-equipo/pull/221), abierto hacia `main` para revisión del equipo. El [paquete de preentrega](https://github.com/fuertes155/handtext-ai-trabajo-equipo/releases/tag/entrega-20261116) contiene APK firmado, presentación y suma de comprobación.
+
 ## Pruebas automatizadas
 
 | Comprobación | Resultado |
@@ -56,6 +58,8 @@ RapidOCR del servidor ejecutó el reconocimiento sin llamar a Google Vision ni O
 3. Medir CER con diez hojas manuscritas autorizadas y sus transcripciones; conservar consentimiento y muestras fuera del repositorio si contienen información personal.
 4. Obtener revisión real del PR por otro integrante, registrar sus aportes y resolver observaciones. Las asignaciones de issues no demuestran autoría; no se fabrican commits ni revisiones.
 5. Confirmar acceso de la profesora al repositorio privado y que cada integrante cargue los materiales en Campus UCC.
+
+Las issues #138, #149, #186, #198, #206 y #214 permanecen abiertas porque incluyen recorridos o mediciones físicas pendientes. La parte de compilación y firma ARM64 de #149 está acreditada arriba; no acredita otras arquitecturas, instalación ni arranque.
 
 ## Relación con los criterios de evaluación
 
