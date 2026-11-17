@@ -116,7 +116,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 16),
                     ],
-                    if (failure != null) ...[
+                    // La caducidad ya se explica en el aviso de recuperación.
+                    if (failure != null &&
+                        !(failure.kind == FailureKind.sessionExpired &&
+                            widget.auth.notice ==
+                                StatusEvent.sessionExpired)) ...[
                       StatusBanner(
                         status: OperationStatus.failure(failure),
                         onAurora: true,

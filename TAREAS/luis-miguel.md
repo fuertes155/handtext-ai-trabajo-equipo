@@ -142,3 +142,10 @@ compartir y nombres verificados con 38 pruebas, incluidas guías de accesibilida
 al 100 % y 200 %. Análisis/formato del alcance correctos. T505/T803/T806/T903
 quedan implementadas como dependencias, pendientes de su revisión y suites propias.
 Sin verificación nativa física. Revisión del equipo pendiente. Total: 42/72.
+
+## Reconstrucción actual — lote 8 (2026-11-17)
+
+T025, T026, T045, T128, T134, T305: alcance técnico verificado. 58 pruebas aprobadas: controlador, permisos/captura, pantallas de flujo y cuentas,
+y varias páginas. Análisis y formato del alcance correctos.
+
+Revisión del equipo pendiente. Total técnico: 48/72. Evidencia: `docs/VERIFICACION_RECONSTRUCCION_LUIS.md`.

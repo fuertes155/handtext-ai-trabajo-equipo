@@ -324,3 +324,31 @@ flutter test --no-pub test/presentation/accessibility_test.dart test/presentatio
 flutter analyze --no-pub lib/presentation/screens/editor_screen.dart lib/presentation/screens/flow_screen.dart lib/presentation/screens/start_screen.dart lib/presentation/screens/preview_screen.dart lib/presentation/screens/app_root.dart lib/presentation/widgets/review_text_controller.dart lib/presentation/widgets/export_format_sheet.dart lib/presentation/widgets/primary_button.dart lib/state/document_flow_controller.dart test/presentation/extras_screens_test.dart test/services/file_name_test.dart
 dart format --output=none --set-exit-if-changed lib/presentation/screens/app_root.dart lib/presentation/screens/editor_screen.dart lib/presentation/screens/flow_screen.dart lib/presentation/screens/preview_screen.dart lib/presentation/screens/start_screen.dart lib/presentation/widgets/export_format_sheet.dart lib/presentation/widgets/review_text_controller.dart lib/presentation/widgets/primary_button.dart lib/presentation/widgets/account_menu.dart lib/state/document_flow_controller.dart test/presentation/extras_screens_test.dart test/services/file_name_test.dart test/presentation/account_widgets_test.dart
 ```
+
+## Lote 8: T025, T026, T045, T128, T134, T305
+
+58 pruebas aprobadas: controlador, permisos/captura, pantallas de flujo y cuentas,
+y varias páginas. Análisis y formato del alcance correctos.
+
+Las nuevas suites comprueban consentimiento por envío, duplicados, borrador y su
+orden de escritura/borrado, exportación vigente, fallos y cancelaciones. Captura
+comprueba permiso denegado/permanente, repetición, cancelación y copia inválida;
+no se modifica el original. Se conserva y revisa la suite compartida de varias
+páginas: orden, máximo 10, limpieza, reintento sin reenviar páginas y marcas.
+T134 se verifica en la vista previa: visible durante OCR y retirada al terminar;
+las pruebas previas ya cubren menos animaciones. Las suites compartidas no se
+reescriben. La de cuentas detectó dos avisos de sesión vencida: LoginScreen evita
+repetir el mismo fallo, manteniendo el aviso de recuperación y los otros errores.
+No se debilitaron expectativas ni se consultó implementación histórica.
+
+Comandos desde frontend:
+
+```bash
+flutter test --no-pub --reporter expanded test/state/document_flow_controller_test.dart test/state/camera_flow_test.dart test/presentation/flow_screen_test.dart test/presentation/auth_screens_test.dart test/state/pages_flow_test.dart
+flutter analyze --no-pub test/state/document_flow_controller_test.dart test/state/camera_flow_test.dart test/presentation/flow_screen_test.dart lib/presentation/screens/auth/login_screen.dart
+dart format --output=none --set-exit-if-changed test/state/document_flow_controller_test.dart test/state/camera_flow_test.dart test/presentation/flow_screen_test.dart lib/presentation/screens/auth/login_screen.dart
+```
+
+Son pruebas con fakes/datos sintéticos; cámara y TalkBack físicos pendientes.
+Las issues permanecen abiertas por la revisión del equipo exigida en sus criterios.
+
