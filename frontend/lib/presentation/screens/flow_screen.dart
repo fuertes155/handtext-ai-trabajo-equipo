@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Pantalla raíz del flujo de documentos (tareas T043 y T132).
 //
 // - Muestra la pantalla que corresponde al paso del controlador: inicio, vista previa
@@ -74,46 +76,6 @@ class _FlowScreenState extends State<FlowScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: widget.controller,
-      builder: (context, _) {
-        final controller = widget.controller;
-        if (!controller.isReady) {
-          // Mientras se limpian las copias antiguas y se lee el borrador.
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
-        return PopScope(
-          // Solo se deja salir directamente desde el inicio y sin documento abierto.
-          canPop: controller.step == FlowStep.start && !controller.hasDocument,
-          onPopInvokedWithResult: (didPop, _) {
-            if (!didPop) unawaited(_handleBack());
-          },
-          child: AnimatedSwitcher(
-            duration: motionDuration(
-              context,
-              const Duration(milliseconds: 350),
-            ),
-            child: switch (controller.step) {
-              FlowStep.start => StartScreen(
-                key: const ValueKey(FlowStep.start),
-                controller: controller,
-                auth: widget.auth,
-              ),
-              FlowStep.preview => PreviewScreen(
-                key: const ValueKey(FlowStep.preview),
-                controller: controller,
-              ),
-              FlowStep.editor => EditorScreen(
-                key: const ValueKey(FlowStep.editor),
-                controller: controller,
-                auth: widget.auth,
-              ),
-            },
-          ),
-        );
-      },
-    );
+    throw UnimplementedError("T043 pendiente de LUISDACA");
   }
 }

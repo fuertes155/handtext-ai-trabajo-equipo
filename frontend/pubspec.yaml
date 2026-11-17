@@ -39,10 +39,10 @@ dependencies:
   cryptography: 2.9.0
   # Recortar y girar la imagen con el editor nativo uCrop (spec 003; research.md de
   # 003, R6). Versión fija: la 13.x exige Flutter 3.47.
-  image_cropper: 12.2.1
+  # T201 pendiente de LUISDACA: volver a seleccionar y fijar image_cropper.
   # Compartir el documento guardado con el selector de Android (spec 003; research.md
   # de 003, R7). Versión fija: la 13.x exige Flutter 3.38.
-  share_plus: 12.0.2
+  # T201 pendiente de LUISDACA: volver a seleccionar y fijar share_plus.
   # Escáner de documentos de Google ML Kit: bordes, enderezado y filtros (spec 009;
   # research.md de 009, R1). Versión fija: la 0.7.0 exige un Flutter más nuevo.
   google_mlkit_document_scanner: 0.5.0

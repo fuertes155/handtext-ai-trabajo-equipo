@@ -1,3 +1,5 @@
+# Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+# Los comentarios anteriores describen requisitos; no son verificación del código actual.
 """Ruta de exportación: POST /api/v1/exports (tarea T034).
 
 Spec, módulo 4; Historia 1 (escenarios 9, 10 y 12) e Historia 3 (escenarios 1 a 3).
@@ -16,10 +18,10 @@ from fastapi.responses import Response
 from pydantic import ValidationError
 from starlette.concurrency import run_in_threadpool
 
-from app.api.auth import DocumentUser
 from app.api.request_body import read_body_limited
 from app.config import MAX_EXPORT_BODY_BYTES
 from app.errors import AppError, ErrorCode, request_id_of
+from app.pending_luis import PendingDocumentUser
 from app.schemas import ExportRequest
 from app.services.documents.export_service import (
     DOCX_MEDIA_TYPE,
@@ -51,7 +53,7 @@ _EXPORT_BODY = {
         }
     },
 )
-async def create_export(request: Request, user: DocumentUser) -> Response:
+async def create_export(request: Request, user: PendingDocumentUser) -> Response:
     """Genera el archivo con el texto recibido (la última versión confirmada en la app).
 
     Requiere sesión normal o el secreto local de desarrollo configurado explícitamente.

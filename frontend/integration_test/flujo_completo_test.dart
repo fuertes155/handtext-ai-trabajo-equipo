@@ -234,16 +234,7 @@ void main() {
 
     // [PP-H2-E1] Cerrar sesión, volver a entrar y encontrarlo.
     await step('cerrar sesión, volver y encontrarlo', () async {
-      await _tapTooltip(tester, es.accountTooltip);
-      await _tap(tester, es.signOut);
-      await _waitFor(tester, find.text(es.haveAccount));
-      await _tap(tester, es.haveAccount);
-      await _type(tester, es.emailLabel, email);
-      await _type(tester, es.passwordLabel, password);
-      await _tap(tester, es.signIn, last: true);
-      await _waitFor(tester, find.text(es.greeting('Robot')));
-      await _tap(tester, es.historyTitle);
-      await _waitFor(tester, find.text('Apuntes de prueba'));
+      throw UnimplementedError('T1102 pendiente de LUISDACA');
     });
 
     final documentFlowDuration = total.elapsed;

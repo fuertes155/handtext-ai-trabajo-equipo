@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Pantalla de bloqueo (tarea T1005; spec 011, Historia 2; research.md de 011, R4).
 //
 // AppLockGate envuelve toda la app (encima del Navigator, así también tapa Ajustes, Mis
@@ -31,19 +33,7 @@ class AppLockGate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: lock,
-      builder: (context, _) {
-        final locked = lock.isLocked;
-        return Stack(
-          children: [
-            // [BL-H2-E1] Bloqueada, no se ve ni se lee ningún documento.
-            Offstage(offstage: locked, child: child),
-            if (locked) LockScreen(lock: lock),
-          ],
-        );
-      },
-    );
+    throw UnimplementedError("T1005 pendiente de LUISDACA");
   }
 }
 
@@ -55,63 +45,23 @@ class LockScreen extends StatefulWidget {
   final AppLockController lock;
 
   @override
-  State<LockScreen> createState() => _LockScreenState();
+  State<LockScreen> createState() {
+    throw UnimplementedError("T1005 pendiente de LUISDACA");
+  }
 }
 
 class _LockScreenState extends State<LockScreen> {
   @override
   void initState() {
-    super.initState();
-    // Pide la huella apenas aparece, como las apps de banco.
-    WidgetsBinding.instance.addPostFrameCallback((_) => _unlock());
+    throw UnimplementedError("T1005 pendiente de LUISDACA");
   }
 
   Future<void> _unlock() async {
-    if (!mounted) return;
-    await widget.lock.unlock(context.strings.unlockReason);
+    throw UnimplementedError("T1005 pendiente de LUISDACA");
   }
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return AuroraScaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const ScannerLogo(size: 96),
-              const SizedBox(height: 20),
-              BrandTitle(style: textTheme.headlineMedium),
-              const SizedBox(height: 24),
-              Semantics(
-                container: true,
-                header: true,
-                child: Text(
-                  context.strings.lockedTitle,
-                  textAlign: TextAlign.center,
-                  style: textTheme.titleLarge?.copyWith(color: Colors.white),
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                context.strings.lockedMessage,
-                textAlign: TextAlign.center,
-                style: textTheme.bodyMedium?.copyWith(
-                  color: Aurora.textSecondary,
-                ),
-              ),
-              const SizedBox(height: 32),
-              PrimaryButton(
-                label: context.strings.unlock,
-                icon: Icons.fingerprint,
-                onPressed: _unlock,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+    throw UnimplementedError("T1005 pendiente de LUISDACA");
   }
 }

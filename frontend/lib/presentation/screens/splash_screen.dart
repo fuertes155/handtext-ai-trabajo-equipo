@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Pantalla de presentación (tarea T126): se ve un instante al abrir la app, mientras se
 // comprueba si hay una sesión guardada [CU-H1-E9].
 
@@ -13,17 +15,6 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AuroraScaffold(
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const ScannerLogo(size: 120),
-            const SizedBox(height: 20),
-            BrandTitle(style: Theme.of(context).textTheme.headlineMedium),
-          ],
-        ),
-      ),
-    );
+    throw UnimplementedError("T126 pendiente de LUISDACA");
   }
 }

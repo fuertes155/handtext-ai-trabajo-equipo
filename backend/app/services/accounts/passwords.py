@@ -1,3 +1,5 @@
+# Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+# Los comentarios anteriores describen requisitos; no son verificación del código actual.
 """Cifrado y verificación de contraseñas con Argon2id (tarea T114; research.md de 002, R1).
 
 - La base guarda solo el hash (que ya incluye la sal y los parámetros), nunca la
@@ -9,7 +11,6 @@
 from __future__ import annotations
 
 from argon2 import PasswordHasher
-from argon2.exceptions import InvalidHashError, VerificationError, VerifyMismatchError
 
 
 class PasswordService:
@@ -17,19 +18,13 @@ class PasswordService:
 
     def __init__(self, hasher: PasswordHasher | None = None) -> None:
         # Parámetros predeterminados de argon2-cffi (Argon2id, perfil de RFC 9106).
-        self._hasher = hasher or PasswordHasher()
-        self._dummy_hash = self._hasher.hash("contraseña-ficticia-para-igualar-tiempos")
+        raise NotImplementedError("T114: implementación pendiente de LUISDACA")
 
     def hash(self, password: str) -> str:
-        return self._hasher.hash(password)
+        raise NotImplementedError("T114: implementación pendiente de LUISDACA")
 
     def verify(self, password_hash: str, password: str) -> bool:
-        """True solo si la contraseña corresponde al hash."""
-        try:
-            return self._hasher.verify(password_hash, password)
-        except (VerifyMismatchError, VerificationError, InvalidHashError):
-            return False
+        raise NotImplementedError("T114: implementación pendiente de LUISDACA")
 
     def verify_dummy(self, password: str) -> None:
-        """Gasta el mismo tiempo que una verificación real (correo inexistente)."""
-        self.verify(self._dummy_hash, password)
+        raise NotImplementedError("T114: implementación pendiente de LUISDACA")

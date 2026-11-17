@@ -1,3 +1,5 @@
+# Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+# Los comentarios anteriores describen requisitos; no son verificación del código actual.
 """Configuración del backend de HandText AI (tarea T005).
 
 Aquí están, en un solo lugar, los valores que el spec acordó el 2026-10-26
@@ -20,6 +22,8 @@ import os
 from dataclasses import dataclass, field
 from datetime import timedelta
 from pathlib import Path
+
+from app.pending_luis import pending_implementation
 
 # --- Límites de imagen acordados en el spec (módulo 1) -------------------------------
 MAX_IMAGE_BYTES = 10 * 1024 * 1024  # 10 MB
@@ -91,7 +95,7 @@ class Settings:
         }.get(ocr_provider)
         key = (os.environ.get(key_name, "").strip() or None) if key_name else None
         models = os.environ.get(LOCAL_OCR_MODELS_ENV, "").strip() if ocr_provider == "local" else ""
-        database_url = os.environ.get(DATABASE_URL_ENV, "").strip()
+        database_url = pending_implementation("T104")
         local_dev_token = os.environ.get(LOCAL_DEV_TOKEN_ENV, "").strip()
         if local_dev_token and len(local_dev_token) < 32:
             raise ValueError(f"{LOCAL_DEV_TOKEN_ENV} debe tener al menos 32 caracteres.")

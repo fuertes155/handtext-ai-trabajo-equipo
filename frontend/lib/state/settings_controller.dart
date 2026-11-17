@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Controlador de los ajustes (tarea T402; spec 005, Historia 1).
 //
 // Guarda los ajustes elegidos y avisa a las pantallas para que cambien al instante
@@ -39,12 +41,14 @@ class SettingsController extends ChangeNotifier {
 
   /// Spec 011: guarda si el bloqueo con huella está activo. Lo llama
   /// AppLockController después de verificar a la persona.
-  Future<void> setAppLock(bool enabled) =>
-      _update(_settings.copyWith(appLock: enabled));
+  Future<void> setAppLock(bool enabled) {
+    throw UnimplementedError("T704,T1003 pendiente de LUISDACA");
+  }
 
   /// [IE-H1-E2] [IE-H1-E4] [SC-804] Idioma de la interfaz; se aplica al instante.
-  Future<void> setLanguage(AppLanguage language) =>
-      _update(_settings.copyWith(language: language));
+  Future<void> setLanguage(AppLanguage language) {
+    throw UnimplementedError("T704,T1003 pendiente de LUISDACA");
+  }
 
   /// [PA-H1-E3] [PA-H1-E4] Los consejos ya se vieron o se saltaron: no vuelven a
   /// aparecer solos [SC-601].

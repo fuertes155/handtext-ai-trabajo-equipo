@@ -41,11 +41,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <!-- Editor de recorte y giro (image_cropper / uCrop), spec 003. -->
-        <activity
-            android:name="com.yalantis.ucrop.UCropActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <!-- T201: integrar UCropActivity cuando Luis implemente las dependencias. -->
         <!-- Lo usa Flutter para registrar los plugins. No borrar. -->
         <meta-data
             android:name="flutterEmbedding"

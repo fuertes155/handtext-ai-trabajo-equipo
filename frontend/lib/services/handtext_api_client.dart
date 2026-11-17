@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Cliente de la API de documentos (tareas T038 y T121; contracts/api.md).
 //
 // - recognize: envía la imagen como cuerpo binario a POST /api/v1/recognitions.
@@ -61,11 +63,7 @@ class HandTextApiClient implements HandTextApi {
 
   /// Cabecera de autenticación [SC-202] más las cabeceras propias de la solicitud.
   Map<String, String> _headers(Map<String, String> extra) {
-    final token = _tokenProvider?.call();
-    if (token == null && _localDevToken.isNotEmpty) {
-      return {'X-HandText-Local-Dev': _localDevToken, ...extra};
-    }
-    return {if (token != null) 'Authorization': 'Bearer $token', ...extra};
+    throw UnimplementedError("T038 pendiente de LUISDACA");
   }
 
   @override
@@ -73,80 +71,23 @@ class HandTextApiClient implements HandTextApi {
     Uint8List imageBytes,
     ImageFormat format,
   ) async {
-    final response = await sendRequest(
-      () => _client.post(
-        _baseUrl.resolve('api/v1/recognitions'),
-        headers: _headers({
-          'Content-Type': format.mimeType,
-          'Accept': 'application/json',
-        }),
-        body: imageBytes,
-      ),
-      timeout: _recognitionTimeout,
-      timeoutFailure: FailureKind.recognitionTimeout,
-    );
-    if (response.statusCode != 200) {
-      throw _failureFromResponse(
-        response,
-        fallback: FailureKind.recognitionFailed,
-      );
-    }
-    return _parseRecognition(response);
+    throw UnimplementedError("T038 pendiente de LUISDACA");
   }
 
   @override
   Future<Uint8List> export(String text, ExportFormat format) async {
-    final response = await sendRequest(
-      () => _client.post(
-        _baseUrl.resolve('api/v1/exports'),
-        headers: _headers({'Content-Type': 'application/json; charset=utf-8'}),
-        body: jsonEncode({'text': text, 'format': format.apiValue}),
-      ),
-      timeout: _exportTimeout,
-      timeoutFailure: FailureKind.exportTimeout,
-    );
-    if (response.statusCode != 200) {
-      throw _failureFromResponse(response, fallback: FailureKind.exportFailed);
-    }
-    final bytes = response.bodyBytes;
-    // SC-001: lo recibido debe ser de verdad un .docx o un .pdf.
-    if (!format.matchesContent(bytes)) {
-      throw const AppFailure(FailureKind.exportFailed);
-    }
-    return bytes;
+    throw UnimplementedError("T038 pendiente de LUISDACA");
   }
 
   AppFailure _failureFromResponse(
     http.Response response, {
     required FailureKind fallback,
   }) {
-    final failure = failureFromResponse(response, fallback: fallback);
-    if (_tokenProvider == null && failure.kind == FailureKind.sessionExpired) {
-      return const AppFailure(FailureKind.backendAuthenticationRequired);
-    }
-    return failure;
+    throw UnimplementedError("T038 pendiente de LUISDACA");
   }
 
   /// Interpreta la respuesta 200 del reconocimiento.
   RecognitionResult _parseRecognition(http.Response response) {
-    final Object? body;
-    try {
-      body = decodeJson(response);
-    } on FormatException {
-      throw const AppFailure(FailureKind.invalidServerResponse);
-    }
-    return switch (body) {
-      {'status': 'text_found', 'text': final String text} && final Map map
-          when text.trim().isNotEmpty =>
-        RecognitionResult(
-          hasText: true,
-          text: text,
-          // Spec 003: marcas de palabras dudosas (las inválidas se descartan).
-          uncertainRanges: rangesFromApi(text, map['uncertain_words']),
-        ),
-      {'status': 'text_found' || 'no_text', 'text': String _} =>
-        const RecognitionResult(hasText: false, text: ''),
-      _ => throw const AppFailure(FailureKind.invalidServerResponse),
-    };
+    throw UnimplementedError("T038 pendiente de LUISDACA");
   }
 }

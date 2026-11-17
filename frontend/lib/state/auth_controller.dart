@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Controlador de la sesión (tarea T125; spec 002, Historias 1 y 2).
 //
 // Decide si se muestra la bienvenida (sin sesión) o la app (con sesión), y concentra
@@ -33,61 +35,38 @@ class AuthController extends ChangeNotifier {
   StatusEvent? _notice;
   bool _isDisposed = false;
 
-  AuthStatus get status => _status;
+  AuthStatus get status {
+    throw UnimplementedError("T125 pendiente de LUISDACA");
+  }
 
   /// Cuenta con sesión (null sin sesión).
-  UserAccount? get user => _session?.user;
+  UserAccount? get user {
+    throw UnimplementedError("T125 pendiente de LUISDACA");
+  }
 
   /// Token para la cabecera Authorization (lo lee HandTextApiClient).
-  String? get token => _session?.token;
+  String? get token {
+    throw UnimplementedError("T125 pendiente de LUISDACA");
+  }
 
   /// [SC-008] Hay una operación de cuenta en curso.
-  bool get isBusy => _isBusy;
+  bool get isBusy {
+    throw UnimplementedError("T125 pendiente de LUISDACA");
+  }
 
   /// Último fallo del registro, el ingreso o la eliminación (para mostrarlo).
-  AppFailure? get failure => _failure;
+  AppFailure? get failure {
+    throw UnimplementedError("T125 pendiente de LUISDACA");
+  }
 
   /// Aviso para la bienvenida: sesión vencida, sesión cerrada o cuenta eliminada.
-  StatusEvent? get notice => _notice;
+  StatusEvent? get notice {
+    throw UnimplementedError("T125 pendiente de LUISDACA");
+  }
 
   /// Al abrir la app, comprueba la sesión guardada con el servicio de autenticación.
   Future<void> initialize() async {
-    StoredSession? stored;
-    try {
-      stored = await _sessions.read();
-    } on Exception {
-      stored = null;
-    }
-    if (stored == null) {
-      _status = AuthStatus.signedOut;
-      _notify();
-      return;
-    }
-
-    _session = stored;
-    try {
-      final user = await _api.me(stored.token);
-      _session = StoredSession(token: stored.token, user: user);
-      await _saveQuietly(_session!);
-      _status = AuthStatus.signedIn;
-    } on AppFailure catch (failure) {
-      if (failure.kind == FailureKind.sessionExpired) {
-        // [CU-H2-E5] El servidor ya no reconoce la sesión: se pide ingresar de nuevo.
-        await _clearQuietly();
-        _session = null;
-        _status = AuthStatus.signedOut;
-        _notice = StatusEvent.sessionExpired;
-      } else if (failure.kind == FailureKind.noConnection) {
-        // Caso límite de la spec 002: sin conexión se entra con los datos guardados.
-        _status = AuthStatus.signedIn;
-      } else {
-        await _clearQuietly();
-        _session = null;
-        _status = AuthStatus.signedOut;
-        _failure = failure;
-      }
-    }
-    _notify();
+    throw UnimplementedError("T125 pendiente de LUISDACA");
   }
 
   /// [CU-H1-E2] Crea la cuenta e inicia la sesión. Devuelve true si lo logró.
@@ -96,69 +75,23 @@ class AuthController extends ChangeNotifier {
     required String email,
     required String password,
     required bool acceptsDataPolicy,
-  }) => _startSession(
-    () => _api.register(
-      displayName: displayName,
-      email: email,
-      password: password,
-      acceptsDataPolicy: acceptsDataPolicy,
-    ),
-  );
+  }) {
+    throw UnimplementedError("T125 pendiente de LUISDACA");
+  }
 
   /// [CU-H1-E6] Inicia sesión con correo y contraseña.
-  Future<bool> signIn({required String email, required String password}) =>
-      _startSession(() => _api.login(email: email, password: password));
+  Future<bool> signIn({required String email, required String password}) {
+    throw UnimplementedError("T125 pendiente de LUISDACA");
+  }
 
   Future<bool> _startSession(Future<AuthResult> Function() request) async {
-    if (_isBusy) return false;
-    _isBusy = true;
-    _failure = null;
-    _notify();
-    try {
-      final result = await request();
-      final session = StoredSession(token: result.token, user: result.user);
-      // [CU-H1-E9] La sesión debe persistirse antes de entrar.
-      await _sessions.save(session);
-      _session = session;
-      _status = AuthStatus.signedIn;
-      _notice = null;
-      return true;
-    } on AppFailure catch (failure) {
-      _failure = failure; // [CU-H1-E3] [CU-H1-E7] [CU-H1-E8]
-      return false;
-    } on Exception {
-      _failure = const AppFailure(FailureKind.unexpected);
-      return false;
-    } finally {
-      _isBusy = false;
-      _notify();
-    }
+    throw UnimplementedError("T125 pendiente de LUISDACA");
   }
 
   /// [CU-H2-E1] Cierra la sesión. [beforeSignOut] borra antes los datos locales de la
   /// cuenta (el borrador), si la pantalla lo pidió con confirmación [CU-H2-E2].
   Future<void> signOut({Future<void> Function()? beforeSignOut}) async {
-    if (_isBusy) return;
-    final token = this.token;
-    _isBusy = true;
-    _notify();
-    try {
-      await beforeSignOut?.call();
-      if (token != null) {
-        try {
-          await _api.logout(token); // el token deja de servir en el servidor
-        } on Exception {
-          // Sin conexión: la sesión local se borra igual y vencerá en el servidor.
-        }
-      }
-    } finally {
-      await _clearQuietly();
-      _session = null;
-      _status = AuthStatus.signedOut;
-      _notice = StatusEvent.signedOut;
-      _isBusy = false;
-      _notify();
-    }
+    throw UnimplementedError("T125 pendiente de LUISDACA");
   }
 
   /// [CU-H2-E3] Elimina la cuenta confirmando con la contraseña. Devuelve true si lo
@@ -167,64 +100,30 @@ class AuthController extends ChangeNotifier {
     String password, {
     Future<void> Function()? beforeSignOut,
   }) async {
-    final token = this.token;
-    if (token == null || _isBusy) return false;
-    _isBusy = true;
-    _failure = null;
-    _notify();
-    try {
-      await _api.deleteAccount(token, password);
-      await beforeSignOut?.call(); // borra el borrador de esta persona
-      await _clearQuietly();
-      _session = null;
-      _status = AuthStatus.signedOut;
-      _notice = StatusEvent.accountDeleted;
-      return true;
-    } on AppFailure catch (failure) {
-      _failure = failure;
-      return false;
-    } finally {
-      _isBusy = false;
-      _notify();
-    }
+    throw UnimplementedError("T125 pendiente de LUISDACA");
   }
 
   /// [CU-H2-E5] La API rechazó la sesión (401): se vuelve a la bienvenida. El borrador
   /// de esta persona se conserva y se recupera cuando vuelva a ingresar.
   void handleSessionExpired() {
-    if (_status != AuthStatus.signedIn) return;
-    _session = null;
-    _status = AuthStatus.signedOut;
-    _notice = StatusEvent.sessionExpired;
-    _notify();
-    unawaited(_clearQuietly());
+    throw UnimplementedError("T125 pendiente de LUISDACA");
   }
 
   /// Borra el fallo mostrado (por ejemplo, al cambiar de pantalla).
   void clearFailure() {
-    if (_failure == null) return;
-    _failure = null;
-    _notify();
+    throw UnimplementedError("T125 pendiente de LUISDACA");
   }
 
   Future<void> _saveQuietly(StoredSession session) async {
-    try {
-      await _sessions.save(session);
-    } on Exception catch (error) {
-      debugPrint('No se pudo guardar la sesión: ${error.runtimeType}');
-    }
+    throw UnimplementedError("T125 pendiente de LUISDACA");
   }
 
   Future<void> _clearQuietly() async {
-    try {
-      await _sessions.clear();
-    } on Exception catch (error) {
-      debugPrint('No se pudo borrar la sesión: ${error.runtimeType}');
-    }
+    throw UnimplementedError("T125 pendiente de LUISDACA");
   }
 
   void _notify() {
-    if (!_isDisposed) notifyListeners();
+    throw UnimplementedError("T125 pendiente de LUISDACA");
   }
 
   @override

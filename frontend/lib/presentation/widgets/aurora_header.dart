@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Encabezado de las pantallas secundarias Aurora (tarea T404; spec 005): botón «Volver»
 // y título. Lo usan Ajustes, Acerca de, Privacidad y Mis documentos.
 // Spec 006: el título es un encabezado para TalkBack [PA-H2-E5].
@@ -20,32 +22,6 @@ class AuroraHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 4, 16, 8),
-      child: Row(
-        children: [
-          IconButton(
-            tooltip: context.strings.back,
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.of(context).maybePop(),
-          ),
-          const SizedBox(width: 4),
-          Expanded(
-            child: Semantics(
-              // Nodo propio: no se mezcla con los botones vecinos.
-              container: true,
-              header: true,
-              child: Text(
-                title,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleLarge?.copyWith(color: Colors.white),
-              ),
-            ),
-          ),
-          ...actions,
-        ],
-      ),
-    );
+    throw UnimplementedError("T404 pendiente de LUISDACA");
   }
 }

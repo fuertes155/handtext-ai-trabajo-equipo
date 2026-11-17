@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Diálogo de autorización de envío (tarea T042; spec 001, módulo 6; research.md, R13).
 //
 // [H1-E3] Antes de enviar la imagen, se informa al usuario que irá al servidor de
@@ -16,48 +18,5 @@ Future<bool> showConsentDialog(
   BuildContext context, {
   int imageCount = 1,
 }) async {
-  final authorized = await showDialog<bool>(
-    context: context,
-    // Tocar fuera del diálogo no debe contar como respuesta.
-    barrierDismissible: false,
-    builder: (context) => AlertDialog(
-      // Insignia con el escudo de privacidad. Center evita que el diálogo la estire
-      // a todo el ancho.
-      icon: Center(
-        child: Container(
-          width: 56,
-          height: 56,
-          decoration: BoxDecoration(
-            color: Aurora.blue.withValues(alpha: 0.12),
-            borderRadius: BorderRadius.circular(Aurora.radius),
-          ),
-          child: Icon(
-            Icons.privacy_tip_outlined,
-            color: Theme.of(context).brightness == Brightness.dark
-                ? Aurora.blueLight
-                : Aurora.blue,
-            size: 28,
-          ),
-        ),
-      ),
-      title: Text(context.strings.consentTitleFor(imageCount)),
-      content: Text(context.strings.consentMessageFor(imageCount)),
-      // Si los botones no caben en una fila, se apilan centrados y con la acción
-      // principal arriba.
-      actionsOverflowAlignment: OverflowBarAlignment.center,
-      actionsOverflowDirection: VerticalDirection.up,
-      actionsOverflowButtonSpacing: 8,
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(false),
-          child: Text(context.strings.consentDecline),
-        ),
-        FilledButton(
-          onPressed: () => Navigator.of(context).pop(true),
-          child: Text(context.strings.consentAccept),
-        ),
-      ],
-    ),
-  );
-  return authorized ?? false; // cerrar con «atrás» = no autoriza
+  throw UnimplementedError("T042,T142 pendiente de LUISDACA");
 }

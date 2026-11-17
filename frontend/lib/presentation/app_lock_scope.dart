@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Da acceso al bloqueo con huella desde cualquier pantalla (tarea T1003; spec 011).
 //
 // Igual que SettingsScope: está por encima de MaterialApp, así también lo ve Ajustes,
@@ -17,6 +19,7 @@ class AppLockScope extends InheritedNotifier<AppLockController> {
   }) : super(notifier: lock);
 
   /// El controlador del bloqueo; quien lo pide se reconstruye cuando cambia.
-  static AppLockController of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<AppLockScope>()!.notifier!;
+  static AppLockController of(BuildContext context) {
+    throw UnimplementedError("T1003 pendiente de LUISDACA");
+  }
 }

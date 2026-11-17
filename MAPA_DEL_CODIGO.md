@@ -1,5 +1,7 @@
 # Mapa del código
 
+> **Reinicio 2026-11-17:** este mapa describe la integración histórica anterior. Las tareas de Luis están pendientes; consultar [el inventario actual](docs/REINICIO_LUIS.md). No acredita que el código actual esté completo.
+
 | Componente | Responsabilidad |
 | --- | --- |
 | `frontend/lib/main.dart` | Conecta cuentas locales, ajustes, sesión y servicios de documentos. |

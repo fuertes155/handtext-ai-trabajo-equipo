@@ -1,5 +1,7 @@
 # Pruebas del APK final en Android
 
+> **Referencia histórica:** resultados del APK probado antes del reinicio de las tareas de Luis. Esta revisión requiere nuevas pruebas tras implementar los pendientes. Ver [REINICIO_LUIS.md](REINICIO_LUIS.md).
+
 ## Versión y evidencia
 
 Artefacto: `HandText-AI-entrega-20261116-arm64.apk`, versión `1.0.0+1`, paquete `com.handtextai.team`. SHA-256: `62DFCC853BBC62BEE6971E08121E242A2F0256552CBF89D48B4A8E3E299655C1`. Usa cuentas del servidor y la API HTTPS de Railway. Véase [instalación](ENTREGA_FINAL.md).

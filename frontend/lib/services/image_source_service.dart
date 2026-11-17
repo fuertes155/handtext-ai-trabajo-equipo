@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Obtención de la imagen desde la galería o la cámara (tareas T040 y T047).
 //
 // - Galería (Historia 1): selector de fotos del sistema; en Android no necesita permisos.
@@ -42,16 +44,7 @@ class PickerImageSourceService implements ImageSourceService {
 
   @override
   Future<List<XFile>> pickMultipleFromGallery({required int limit}) async {
-    // El selector múltiple de Android exige un límite de 2 o más.
-    if (limit < 2) {
-      final single = await pickFromGallery();
-      return single == null ? const [] : [single];
-    }
-    try {
-      return await _picker.pickMultiImage(limit: limit);
-    } on PlatformException {
-      throw const AppFailure(FailureKind.imageUnreadable);
-    }
+    throw UnimplementedError("T303 pendiente de LUISDACA");
   }
 
   @override

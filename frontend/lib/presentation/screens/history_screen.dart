@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Pantalla «Mis documentos» (tareas T607, T609 y T611; spec 007; research.md de 007,
 // R9).
 //
@@ -102,11 +104,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   /// [OR-H3-E3] Pide el nombre nuevo; cancelar no cambia nada.
   Future<void> _rename(HistoryEntry entry) async {
-    final name = await showDialog<String>(
-      context: context,
-      builder: (_) => _RenameDialog(initial: entry.title),
-    );
-    if (name != null) await _controller.history.rename(entry.id, name);
+    throw UnimplementedError("T906 pendiente de LUISDACA");
   }
 
   /// [HD-H3-E2] Vacía el historial, con confirmación.
@@ -151,18 +149,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ],
               ),
               // [OR-H3-E1] Búsqueda, solo si hay documentos.
-              if (entries.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-                  child: TextField(
-                    onChanged: (value) => setState(() => _query = value),
-                    textInputAction: TextInputAction.search,
-                    decoration: InputDecoration(
-                      hintText: context.strings.historySearchHint,
-                      prefixIcon: const Icon(Icons.search),
-                    ),
-                  ),
-                ),
+              // T906: buscador pendiente de LUISDACA.
               Expanded(
                 child: entries.isEmpty
                     ? const _EmptyHistory()
@@ -302,35 +289,7 @@ class _RenameDialogState extends State<_RenameDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      scrollable: true, // letra grande (spec 006)
-      title: Text(context.strings.historyRenameTitle),
-      content: TextField(
-        controller: _name,
-        autofocus: true,
-        maxLength: 60,
-        textInputAction: TextInputAction.done,
-        decoration: InputDecoration(
-          labelText: context.strings.historyRenameLabel,
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(context.strings.cancel),
-        ),
-        ValueListenableBuilder<TextEditingValue>(
-          valueListenable: _name,
-          builder: (context, value, _) => FilledButton(
-            // Un nombre de solo espacios no se acepta (caso límite).
-            onPressed: value.text.trim().isEmpty
-                ? null
-                : () => Navigator.of(context).pop(value.text.trim()),
-            child: Text(context.strings.historyRenameConfirm),
-          ),
-        ),
-      ],
-    );
+    throw UnimplementedError("T906 pendiente de LUISDACA");
   }
 }
 

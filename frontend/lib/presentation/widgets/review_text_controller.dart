@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Controlador del texto del editor que pinta las palabras dudosas (tarea T210; spec
 // 003, módulo 1; research.md de 003, R4).
 //
@@ -24,56 +26,6 @@ class ReviewTextController extends TextEditingController {
     TextStyle? style,
     required bool withComposing,
   }) {
-    final ranges = validRanges(text, uncertainRanges());
-    if (ranges.isEmpty) {
-      return super.buildTextSpan(
-        context: context,
-        style: style,
-        withComposing: withComposing,
-      );
-    }
-
-    final dark = Theme.of(context).brightness == Brightness.dark;
-    final marked = TextStyle(
-      backgroundColor: dark
-          ? Aurora.uncertainFillDark
-          : Aurora.uncertainFillLight,
-      decoration: TextDecoration.underline,
-      decorationStyle: TextDecorationStyle.wavy,
-      decorationColor: dark
-          ? Aurora.uncertainUnderlineDark
-          : Aurora.uncertainUnderlineLight,
-    );
-    // El teclado subraya la palabra que está componiendo; se respeta ese subrayado.
-    final composing = withComposing && value.isComposingRangeValid
-        ? value.composing
-        : null;
-
-    // Se corta el texto en cada borde de una marca o de la composición, y cada
-    // trozo recibe su estilo.
-    final cuts = <int>{
-      0,
-      text.length,
-      for (final range in ranges) ...[range.start, range.end],
-      if (composing != null) ...[composing.start, composing.end],
-    }.toList()..sort();
-    final children = <TextSpan>[];
-    for (var i = 0; i < cuts.length - 1; i++) {
-      final start = cuts[i];
-      final end = cuts[i + 1];
-      final isMarked = ranges.any((r) => r.start <= start && end <= r.end);
-      final isComposing =
-          composing != null && composing.start <= start && end <= composing.end;
-      TextStyle? pieceStyle = isMarked ? marked : null;
-      if (isComposing) {
-        pieceStyle = (pieceStyle ?? const TextStyle()).merge(
-          const TextStyle(decoration: TextDecoration.underline),
-        );
-      }
-      children.add(
-        TextSpan(text: text.substring(start, end), style: pieceStyle),
-      );
-    }
-    return TextSpan(style: style, children: children);
+    throw UnimplementedError("T210 pendiente de LUISDACA");
   }
 }

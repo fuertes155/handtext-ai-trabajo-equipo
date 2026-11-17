@@ -1,5 +1,7 @@
 # Verificación de entrega · 2026-11-16
 
+> **Referencia histórica:** las pruebas de esta entrega corresponden a la versión anterior al reinicio del 2026-11-17. No se transfieren al código incompleto actual. Ver [REINICIO_LUIS.md](REINICIO_LUIS.md).
+
 Resultados ejecutados después de integrar `origin/main` (`66b4d22`) en la rama `entrega/railway-documentacion-20261116`. El commit de integración es `aecb5d1`; los commits siguientes consolidan documentación y presentación. Los informes anteriores conservan su fecha y no sustituyen esta verificación.
 
 Cambios publicados en el [PR #221](https://github.com/fuertes155/handtext-ai-trabajo-equipo/pull/221), abierto hacia `main` para revisión del equipo. El [paquete de preentrega](https://github.com/fuertes155/handtext-ai-trabajo-equipo/releases/tag/entrega-20261116) contiene APK firmado, presentación y suma de comprobación.

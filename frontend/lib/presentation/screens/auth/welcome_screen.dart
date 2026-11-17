@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Pantalla de bienvenida (tareas T126 y T143; spec 002, CU-H1-E1).
 //
 // Logo animado, título de marca, los tres pasos de la app en una tarjeta y los botones
@@ -45,87 +47,7 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final notice = auth.notice;
-    final failure = auth.failure;
-    return AuroraScaffold(
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
-        children: [
-          const Align(
-            alignment: Alignment.centerRight,
-            child: LanguageButton(),
-          ),
-          const Center(child: ScannerLogo(size: 128)),
-          const SizedBox(height: 20),
-          BrandTitle(style: textTheme.headlineLarge),
-          const SizedBox(height: 8),
-          Text(
-            context.strings.welcomeTagline,
-            textAlign: TextAlign.center,
-            style: textTheme.titleMedium?.copyWith(
-              color: Aurora.textSecondary,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          const SizedBox(height: 32),
-          SurfaceCard(
-            child: Column(
-              children: [
-                _Step(
-                  icon: Icons.photo_camera_outlined,
-                  text: context.strings.welcomeStep1,
-                ),
-                SizedBox(height: 16),
-                _Step(
-                  icon: Icons.auto_awesome,
-                  text: context.strings.welcomeStep2,
-                ),
-                SizedBox(height: 16),
-                _Step(
-                  icon: Icons.description_outlined,
-                  text: context.strings.welcomeStep3,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 32),
-          if (notice != null || failure != null) ...[
-            StatusBanner(
-              status: failure != null
-                  ? OperationStatus.failure(failure)
-                  : notice == StatusEvent.accountDeleted
-                  ? OperationStatus.success(notice!)
-                  : OperationStatus.info(notice!),
-              onAurora: true,
-            ),
-            const SizedBox(height: 16),
-          ],
-          PrimaryButton(
-            label: context.strings.createAccount,
-            icon: Icons.person_add_alt_1_outlined,
-            onPressed: onCreateAccount,
-          ),
-          const SizedBox(height: 12),
-          OutlinedButton(
-            onPressed: onSignIn,
-            child: Text(context.strings.haveAccount),
-          ),
-          const SizedBox(height: 24),
-          Text(
-            context.strings.welcomePrivacyNote,
-            textAlign: TextAlign.center,
-            style: textTheme.bodySmall?.copyWith(color: Aurora.textMuted),
-          ),
-          Center(
-            child: TextButton(
-              onPressed: () => AboutScreen.open(context),
-              child: Text(context.strings.privacyAndAbout),
-            ),
-          ),
-        ],
-      ),
-    );
+    throw UnimplementedError("T126 pendiente de LUISDACA");
   }
 }
 
@@ -138,27 +60,6 @@ class _Step extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            color: Aurora.iconBadge,
-            borderRadius: BorderRadius.circular(Aurora.radiusSmall),
-          ),
-          child: Icon(icon, color: Aurora.blueLight, size: 20),
-        ),
-        const SizedBox(width: 14),
-        Expanded(
-          child: Text(
-            text,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge?.copyWith(color: Aurora.textPrimary),
-          ),
-        ),
-      ],
-    );
+    throw UnimplementedError("T126 pendiente de LUISDACA");
   }
 }

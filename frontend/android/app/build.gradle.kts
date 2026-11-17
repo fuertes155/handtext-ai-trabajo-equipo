@@ -1,15 +1,8 @@
-// Compilación Android de HandText AI.
-//
-// Spec 005 (tarea T409; research.md de 005, R7 y R8):
-// - Firma: si existe android/key.properties (NO se sube al repositorio), la versión
-//   release se firma con la clave del proyecto. Si no existe, se usa la de depuración
-//   y Gradle lo advierte: ese APK no se entrega.
-// - HTTP sin cifrar: permitido en debug (API del computador) y prohibido en release,
-//   salvo que se pida al compilar: flutter build apk --release -P permitirHttpLocal=true
+// Reinicio autorizado 2026-11-17. T409 pendiente de LUISDACA.
+// Firma retirada; release bloqueada mientras exista frontend/LUIS_PENDIENTE.
+// Se conservan los identificadores Android y las comprobaciones de URL compartidas.
 
-import java.io.FileInputStream
 import java.util.Base64
-import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -19,12 +12,18 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-// Clave de firma de la versión final (fuera del repositorio).
-val keystoreProperties = Properties()
-val keystorePropertiesFile = rootProject.file("key.properties")
-val hasReleaseKey = keystorePropertiesFile.exists()
-if (hasReleaseKey) {
-    FileInputStream(keystorePropertiesFile).use { keystoreProperties.load(it) }
+// T409: Luis debe implementar y revisar la firma. No se modifican sus claves locales.
+// El reinicio de tareas no es una versión que pueda entregarse.
+val checkLuisReleaseReady = tasks.register("checkLuisReleaseReady") {
+    val pending = rootProject.file("../LUIS_PENDIENTE")
+    doLast {
+        if (pending.exists()) {
+            throw GradleException(
+                "HandText: release bloqueada. Implementar y verificar las tareas de " +
+                    "LUISDACA antes de retirar frontend/LUIS_PENDIENTE.",
+            )
+        }
+    }
 }
 
 // Versión de demostración con la API local por HTTP (petición explícita, R8).
@@ -73,7 +72,7 @@ val checkReleaseApiUrl = tasks.register("checkReleaseApiUrl") {
 }
 // Antes de compilar el código Dart, para avisar en segundos y no al final.
 tasks.matching { it.name in setOf("preReleaseBuild", "compileFlutterBuildRelease") }
-    .configureEach { dependsOn(checkReleaseApiUrl) }
+    .configureEach { dependsOn(checkLuisReleaseReady, checkReleaseApiUrl) }
 
 android {
     namespace = "com.handtextai.handtext_ai"
@@ -105,17 +104,6 @@ android {
         manifestPlaceholders["usesCleartextTraffic"] = "false"
     }
 
-    signingConfigs {
-        if (hasReleaseKey) {
-            create("release") {
-                keyAlias = keystoreProperties["keyAlias"] as String
-                keyPassword = keystoreProperties["keyPassword"] as String
-                storeFile = file(keystoreProperties["storeFile"] as String)
-                storePassword = keystoreProperties["storePassword"] as String
-            }
-        }
-    }
-
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
@@ -123,18 +111,9 @@ android {
             manifestPlaceholders["usesCleartextTraffic"] = "true"
         }
         release {
-            // [AV-H3-E1] Firma con la clave del proyecto; sin ella, la de depuración.
-            signingConfig = if (hasReleaseKey) {
-                signingConfigs.getByName("release")
-            } else {
-                logger.warn(
-                    "HandText AI: falta android/key.properties; la versión release se " +
-                        "firma con la clave de depuración y NO debe entregarse.",
-                )
-                signingConfigs.getByName("debug")
-            }
-            // [AV-H3-E2] [AV-H3-E3] Solo HTTPS, salvo la demostración pedida al compilar.
-            manifestPlaceholders["usesCleartextTraffic"] = allowLocalHttp.toString()
+            // T409 pendiente: sin firma de depuración como sustituto de una entrega.
+            // Se conserva la restricción segura de HTTPS incluso durante el reinicio.
+            manifestPlaceholders["usesCleartextTraffic"] = "false"
         }
     }
 }

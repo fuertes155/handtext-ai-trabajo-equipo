@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Cuándo la app está bloqueada (tarea T1005; spec 011; research.md de 011, R3).
 //
 // - Con el bloqueo activo, la app empieza bloqueada si abre con una sesión guardada
@@ -43,16 +45,13 @@ class AppLockController extends ChangeNotifier with WidgetsBindingObserver {
 
   /// [SC-1101] true: se ve la pantalla de bloqueo en lugar de la app. Solo con el
   /// bloqueo activo y una sesión iniciada.
-  bool get isLocked =>
-      _locked &&
-      _settings.settings.appLock &&
-      _auth.status == AuthStatus.signedIn;
+  bool get isLocked {
+    throw UnimplementedError("T1005 pendiente de LUISDACA");
+  }
 
   /// Empieza a observar la app (al abrirla).
   void start() {
-    WidgetsBinding.instance.addObserver(this);
-    _auth.addListener(_onAuthChanged);
-    _settings.addListener(notifyListeners);
+    throw UnimplementedError("T1005 pendiente de LUISDACA");
   }
 
   @override
@@ -66,61 +65,28 @@ class AppLockController extends ChangeNotifier with WidgetsBindingObserver {
   /// [BL-H2-E5] Sin sesión no hay nada que bloquear; quien ingresa con su contraseña
   /// ya se verificó.
   void _onAuthChanged() {
-    if (_auth.status == AuthStatus.signedOut) _locked = false;
-    notifyListeners();
+    throw UnimplementedError("T1005 pendiente de LUISDACA");
   }
 
   /// [BL-H2-E4] Al volver después de más de [timeout] en segundo plano, se bloquea.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    switch (state) {
-      case AppLifecycleState.paused || AppLifecycleState.hidden:
-        _backgroundedAt ??= _now();
-      case AppLifecycleState.resumed:
-        final since = _backgroundedAt;
-        _backgroundedAt = null;
-        if (since != null &&
-            _now().difference(since) > timeout &&
-            _auth.status == AuthStatus.signedIn) {
-          _locked = true;
-          notifyListeners();
-        }
-      case AppLifecycleState.inactive || AppLifecycleState.detached:
-        break;
-    }
+    throw UnimplementedError("T1005 pendiente de LUISDACA");
   }
 
   /// [BL-H2-E2] [BL-H2-E3] Pide la verificación; solo una a la vez.
   Future<void> unlock(String reason) async {
-    if (_verifying || !isLocked) return;
-    _verifying = true;
-    try {
-      if (await authenticator.authenticate(reason)) {
-        _locked = false; // [SC-1103] la app sigue donde estaba
-      }
-    } finally {
-      _verifying = false;
-      notifyListeners();
-    }
+    throw UnimplementedError("T1005 pendiente de LUISDACA");
   }
 
   /// [BL-H1-E2] [BL-H1-E3] [SC-1104] Activa el bloqueo solo si la verificación es
   /// correcta. Devuelve si quedó activo.
   Future<bool> enable(String reason) async {
-    if (_verifying) return false;
-    _verifying = true;
-    try {
-      final verified = await authenticator.authenticate(reason);
-      if (verified) await _settings.setAppLock(true);
-      return verified;
-    } finally {
-      _verifying = false;
-    }
+    throw UnimplementedError("T1005 pendiente de LUISDACA");
   }
 
   /// [BL-H3-E1] Desactiva el bloqueo: la app deja de pedir la verificación.
   Future<void> disable() async {
-    _locked = false;
-    await _settings.setAppLock(false);
+    throw UnimplementedError("T1005 pendiente de LUISDACA");
   }
 }

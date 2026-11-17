@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Controlador del flujo completo de HandText AI (tareas T041 y T047).
 //
 // Es el «cerebro» de la app: decide qué pantalla se ve (inicio, vista previa o editor),
@@ -75,29 +77,14 @@ String suggestedFileName(
   DateTime moment, {
   String? title,
 }) {
-  final name = _cleanFileName(title ?? '');
-  if (name.isNotEmpty) return '$name.${format.extension}';
-  String twoDigits(int value) => value.toString().padLeft(2, '0');
-  final date =
-      '${moment.year}${twoDigits(moment.month)}${twoDigits(moment.day)}';
-  final time = '${twoDigits(moment.hour)}${twoDigits(moment.minute)}';
-  return 'HandText_${date}_$time.${format.extension}';
+  throw UnimplementedError('T902 pendiente de LUISDACA');
 }
 
 /// [OR-H1-E2] [SC-1001] Quita lo que Android no acepta en un nombre de archivo
 /// (`/ \ : * ? " < > |` y caracteres de control), junta los espacios, corta en 60
 /// caracteres y quita los puntos y espacios del final.
 String _cleanFileName(String title) {
-  var name = title
-      .replaceAll(RegExp(r'[\\/:*?"<>|]'), '')
-      .replaceAll(RegExp(r'[\x00-\x1F\x7F]'), ' ')
-      .replaceAll(RegExp(r'\s+'), ' ')
-      .trim();
-  final characters = name.runes.toList();
-  if (characters.length > 60) {
-    name = String.fromCharCodes(characters.take(60));
-  }
-  return name.replaceAll(RegExp(r'[.\s]+$'), '');
+  throw UnimplementedError("T902 pendiente de LUISDACA");
 }
 
 class DocumentFlowController extends ChangeNotifier {
@@ -277,8 +264,9 @@ class DocumentFlowController extends ChangeNotifier {
 
   /// [ED-H1-E2] [ED-H1-E3] Spec 009: escanear una o varias hojas. Empieza un documento
   /// nuevo.
-  Future<void> scanDocument() =>
-      _addImages(ImageOrigin.scanner, _AddMode.newDocument);
+  Future<void> scanDocument() {
+    throw UnimplementedError('T803 pendiente de LUISDACA');
+  }
 
   /// [VP-H1-E2] Agrega páginas al final, desde la galería o la cámara.
   Future<void> addPages(ImageOrigin origin) =>
@@ -331,7 +319,7 @@ class DocumentFlowController extends ChangeNotifier {
       } else if (origin == ImageOrigin.scanner) {
         // [ED-H1-E3] Spec 009: solo las hojas que caben; cancelar no cambia nada
         // [ED-H1-E5] [SC-903].
-        picked = await _scanner.scan(pageLimit: room) ?? const [];
+        throw UnimplementedError('T803 pendiente de LUISDACA');
       } else if (mode == _AddMode.replaceSelected) {
         final image = await _imageSource.pickFromGallery();
         picked = [?image];
@@ -385,7 +373,7 @@ class DocumentFlowController extends ChangeNotifier {
       _status = OperationStatus.failure(
         failure,
         action: failure.kind == FailureKind.scannerUnavailable
-            ? StatusAction.takePhoto
+            ? throw UnimplementedError('T806 pendiente de LUISDACA')
             : null,
       );
     } on Exception {

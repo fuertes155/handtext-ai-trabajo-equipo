@@ -1,0 +1,597 @@
+{
+  "date": "2026-11-17",
+  "repository": "fuertes155/handtext-ai-trabajo-equipo",
+  "branch": "entrega/railway-documentacion-20261116",
+  "reference": "098d4f65abf359515b2663562953624bf6f9e8c8",
+  "warning": "Código incompleto; no entregar ni desplegar. Asignación no acredita autoría del código previo.",
+  "tasks": [
+    {
+      "task": "T002",
+      "issue": 2,
+      "state": "pending",
+      "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
+      "description": "Fijar las dependencias exactas en backend/requirements.txt y backend/requirements-dev.txt · Dificultad Baja."
+    },
+    {
+      "task": "T006",
+      "issue": 6,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Catálogo de errores con código, mensaje y request_id, y sus manejadores, en backend/app/errors.py · Dificultad Media."
+    },
+    {
+      "task": "T010",
+      "issue": 10,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Utilidades de prueba (imágenes sintéticas y OCR falso) en backend/tests/conftest.py · Dificultad Media."
+    },
+    {
+      "task": "T012",
+      "issue": 12,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Configuración de la app (URL del backend, tiempos y límites) en frontend/lib/config/app_config.dart · Dificultad Baja."
+    },
+    {
+      "task": "T013",
+      "issue": 13,
+      "state": "pending",
+      "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
+      "description": "Tema centralizado en frontend/lib/theme/app_theme.dart · Dificultad Media."
+    },
+    {
+      "task": "T016",
+      "issue": 16,
+      "state": "pending",
+      "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
+      "description": "Manifiestos Android (Internet, sin copias de seguridad y HTTP solo en debug) en frontend/android/app/src/main/AndroidManifest.xml, frontend/android/app/src/main/res/xml/data_extraction_rules.xml y frontend/android/app/src/debug/AndroidManifest.xml · Dificultad Media."
+    },
+    {
+      "task": "T021",
+      "issue": 21,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Exportación Word (contenido, párrafos, caracteres, texto vacío) en backend/tests/test_exports_docx.py · Dificultad Media."
+    },
+    {
+      "task": "T022",
+      "issue": 22,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Reglas de imagen de la app en frontend/test/services/image_rules_test.dart · Dificultad Media."
+    },
+    {
+      "task": "T025",
+      "issue": 25,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Controlador del flujo (autorización, duplicados, fallos y borrador) en frontend/test/state/document_flow_controller_test.dart · Dificultad Alta."
+    },
+    {
+      "task": "T026",
+      "issue": 26,
+      "state": "pending",
+      "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
+      "description": "Pantallas y diálogos del flujo en frontend/test/presentation/flow_screen_test.dart · Dificultad Media."
+    },
+    {
+      "task": "T032",
+      "issue": 32,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Reglas del texto exportable (vacío, tamaño y caracteres XML) en backend/app/services/documents/text_rules.py · Dificultad Media."
+    },
+    {
+      "task": "T035",
+      "issue": 35,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Reglas y lectura de dimensiones de imagen en frontend/lib/services/image_rules.dart · Dificultad Media."
+    },
+    {
+      "task": "T038",
+      "issue": 38,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Cliente de la API en frontend/lib/services/handtext_api_client.dart · Dificultad Media."
+    },
+    {
+      "task": "T042",
+      "issue": 42,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Widgets de estado, autorización y confirmación en frontend/lib/presentation/widgets/ (status_message.dart, consent_dialog.dart, confirm_dialog.dart) · Dificultad Media."
+    },
+    {
+      "task": "T043",
+      "issue": 43,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Pantallas en frontend/lib/presentation/screens/ (flow_screen.dart, start_screen.dart, preview_screen.dart, editor_screen.dart) · Dificultad Alta."
+    },
+    {
+      "task": "T045",
+      "issue": 45,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Pruebas de captura y permisos en frontend/test/state/camera_flow_test.dart · Dificultad Media."
+    },
+    {
+      "task": "T050",
+      "issue": 50,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Fuente DejaVu Sans y su licencia en backend/app/assets/fonts/ · Dificultad Baja."
+    },
+    {
+      "task": "T051",
+      "issue": 51,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Generador de PDF en backend/app/services/documents/pdf_builder.py · Dificultad Media."
+    },
+    {
+      "task": "T054",
+      "issue": 54,
+      "state": "pending",
+      "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
+      "description": "Mapa de requisitos → código → pruebas en MAPA_DEL_CODIGO.md · Dificultad Baja."
+    },
+    {
+      "task": "T057",
+      "issue": 57,
+      "state": "pending",
+      "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
+      "description": "Compilar el APK de depuración con flutter build apk --debug en frontend/ · Dificultad Baja."
+    },
+    {
+      "task": "T104",
+      "issue": 65,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Configuración de la base, la duración de la sesión, el bloqueo y los límites en backend/app/config.py · Dificultad Baja."
+    },
+    {
+      "task": "T108",
+      "issue": 69,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Ejecutor de migraciones en backend/app/persistence/migrations.py · Dificultad Media."
+    },
+    {
+      "task": "T110",
+      "issue": 71,
+      "state": "pending",
+      "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
+      "description": "Colores, degradados y temas Aurora en frontend/lib/theme/aurora.dart y frontend/lib/theme/app_theme.dart · Dificultad Media."
+    },
+    {
+      "task": "T114",
+      "issue": 75,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Contraseñas Argon2id y tokens en backend/app/services/accounts/passwords.py y backend/app/services/accounts/tokens.py · Dificultad Alta."
+    },
+    {
+      "task": "T118",
+      "issue": 79,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Protección de reconocimiento y exportación en backend/app/api/recognitions.py y backend/app/api/exports.py · Dificultad Media."
+    },
+    {
+      "task": "T119",
+      "issue": 80,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Pruebas de la app en frontend/test/services/auth_api_client_test.dart, frontend/test/services/account_rules_test.dart y frontend/test/state/auth_controller_test.dart · Dificultad Media."
+    },
+    {
+      "task": "T124",
+      "issue": 85,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Reglas de formulario en frontend/lib/services/account_rules.dart · Dificultad Media."
+    },
+    {
+      "task": "T125",
+      "issue": 86,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Controlador de sesión en frontend/lib/state/auth_controller.dart · Dificultad Alta."
+    },
+    {
+      "task": "T126",
+      "issue": 87,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Pantallas de presentación, bienvenida, ingreso y registro en frontend/lib/presentation/screens/auth/ · Dificultad Alta."
+    },
+    {
+      "task": "T128",
+      "issue": 89,
+      "state": "pending",
+      "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
+      "description": "Pruebas de pantallas de cuentas en frontend/test/presentation/auth_screens_test.dart · Dificultad Media."
+    },
+    {
+      "task": "T130",
+      "issue": 91,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Menú de cuenta y diálogo de eliminación en frontend/lib/presentation/widgets/account_menu.dart · Dificultad Media."
+    },
+    {
+      "task": "T134",
+      "issue": 95,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Animación de escaneo sobre la imagen en frontend/lib/presentation/widgets/scan_overlay.dart · Dificultad Media."
+    },
+    {
+      "task": "T137",
+      "issue": 98,
+      "state": "pending",
+      "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
+      "description": "Formateadores, analizadores y todas las pruebas; registro de verificación al final de este archivo · Dificultad Baja."
+    },
+    {
+      "task": "T139",
+      "issue": 100,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Prueba de contraste de la paleta [SC-208] en frontend/test/theme/aurora_contrast_test.dart · Dificultad Media."
+    },
+    {
+      "task": "T142",
+      "issue": 103,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Logo-escáner, animación de escaneo, avisos, menú de cuenta, diálogo de autorización y campo de contraseña con la nueva paleta en frontend/lib/presentation/widgets/ · Dificultad Media."
+    },
+    {
+      "task": "T201",
+      "issue": 108,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Dependencias image_cropper 12.2.1 y share_plus 12.0.2 en frontend/pubspec.yaml; UCropActivity en frontend/android/app/src/main/AndroidManifest.xml · Dificultad Baja."
+    },
+    {
+      "task": "T205",
+      "issue": 112,
+      "state": "pending",
+      "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
+      "description": "Campo uncertain_words en backend/app/schemas.py y backend/app/api/recognitions.py, con su prueba en backend/tests/test_recognitions_api.py · Dificultad Media."
+    },
+    {
+      "task": "T206",
+      "issue": 113,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Pruebas de conversión, validación y ajuste de marcas en frontend/test/services/uncertain_ranges_test.dart · Dificultad Media."
+    },
+    {
+      "task": "T210",
+      "issue": 117,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "ReviewTextController en frontend/lib/presentation/widgets/review_text_controller.dart y barra de revisión en frontend/lib/presentation/screens/editor_screen.dart, con pruebas de pantalla · Dificultad Alta."
+    },
+    {
+      "task": "T213",
+      "issue": 120,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Acciones «Recortar o girar» y «Usar la imagen original» en frontend/lib/presentation/screens/preview_screen.dart, con pruebas de pantalla · Dificultad Media."
+    },
+    {
+      "task": "T216",
+      "issue": 123,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Botón «Compartir» en el aviso de éxito del editor, con prueba de pantalla · Dificultad Media."
+    },
+    {
+      "task": "T303",
+      "issue": 129,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "pickMultipleFromGallery en frontend/lib/services/image_source_service.dart y en el servicio falso de las pruebas · Dificultad Media."
+    },
+    {
+      "task": "T305",
+      "issue": 131,
+      "state": "pending",
+      "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
+      "description": "Pruebas del controlador con varias páginas en frontend/test/state/pages_flow_test.dart · Dificultad Media."
+    },
+    {
+      "task": "T312",
+      "issue": 138,
+      "state": "pending",
+      "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
+      "description": "Formateadores, analizadores, todas las pruebas, APK y recorrido en el emulador; registro de verificación al final de este archivo · Dificultad Baja."
+    },
+    {
+      "task": "T401",
+      "issue": 139,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Pruebas del almacén y del controlador de ajustes en frontend/test/state/settings_test.dart · Dificultad Media."
+    },
+    {
+      "task": "T404",
+      "issue": 142,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Pantalla de Ajustes en frontend/lib/presentation/screens/settings_screen.dart y tamaño de letra en el editor · Dificultad Media."
+    },
+    {
+      "task": "T406",
+      "issue": 144,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Prueba de la versión contra pubspec.yaml y pruebas de pantalla de «Acerca de» · Dificultad Media."
+    },
+    {
+      "task": "T409",
+      "issue": 147,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Firma con key.properties y HTTP según el tipo de compilación en frontend/android/app/build.gradle.kts y en el manifiesto · Dificultad Alta."
+    },
+    {
+      "task": "T411",
+      "issue": 149,
+      "state": "pending",
+      "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
+      "description": "Compilar la versión final por procesador, instalarla y medir el arranque (SC-504) · Dificultad Baja."
+    },
+    {
+      "task": "T503",
+      "issue": 154,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Pruebas de pantalla de los consejos (primera vez, Siguiente, Empezar, Saltar, atrás, cambio de cuenta, abrir desde el inicio y Ajustes) en frontend/test/presentation/tips_screen_test.dart · Dificultad Media."
+    },
+    {
+      "task": "T505",
+      "issue": 156,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Consejos la primera vez en frontend/lib/presentation/screens/app_root.dart; enlaces en start_screen.dart y settings_screen.dart; arnés de pruebas con tipsSeen · Dificultad Media."
+    },
+    {
+      "task": "T507",
+      "issue": 158,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Avatar sin la inicial en la lectura (R9) en frontend/lib/presentation/widgets/account_menu.dart · Dificultad Baja."
+    },
+    {
+      "task": "T511",
+      "issue": 162,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Avatar de 48 dp (R9) y diálogo de eliminar cuenta desplazable (R6) en frontend/lib/presentation/widgets/account_menu.dart · Dificultad Baja."
+    },
+    {
+      "task": "T512",
+      "issue": 163,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Avisos del editor en un área desplazable y encabezado más corto con letra grande (R5) en frontend/lib/presentation/screens/editor_screen.dart; hoja de exportar desplazable (R6) en frontend/lib/presentation/widgets/export_format_sheet.dart · Dificultad Media."
+    },
+    {
+      "task": "T604",
+      "issue": 169,
+      "state": "pending",
+      "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
+      "description": "Pruebas del controlador: registrar al guardar, actualizar sin duplicar, no registrar cancelados ni fallidos, fallo del historial sin afectar el guardado, en frontend/test/state/history_flow_test.dart · Dificultad Media."
+    },
+    {
+      "task": "T606",
+      "issue": 171,
+      "state": "pending",
+      "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
+      "description": "Pruebas de pantalla (lista, vacío, orden, otra cuenta) en frontend/test/presentation/history_screen_test.dart · Dificultad Media."
+    },
+    {
+      "task": "T610",
+      "issue": 175,
+      "state": "pending",
+      "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
+      "description": "Pruebas de eliminar, borrar todo, cancelar y eliminar la cuenta · Dificultad Media."
+    },
+    {
+      "task": "T612",
+      "issue": 177,
+      "state": "pending",
+      "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
+      "description": "Privacidad («Historial»), quickstart.md, README.md y MAPA_DEL_CODIGO.md; guías de accesibilidad de 006 (nombres y 48 dp, al 100 % y al 200 %) en history_screen_test.dart · Dificultad Baja."
+    },
+    {
+      "task": "T704",
+      "issue": 182,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "AppLanguage en AppSettings, almacén y controlador; locale y resolución en frontend/lib/app.dart · Dificultad Media."
+    },
+    {
+      "task": "T708",
+      "issue": 186,
+      "state": "pending",
+      "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
+      "description": "Recorrido de todas las pantallas en inglés al 100 % y al 200 % sin textos en español (SC-802, SC-805), fallos y títulos de servicios · Dificultad Media."
+    },
+    {
+      "task": "T803",
+      "issue": 192,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "ImageOrigin.scanner, scanDocument y el origen en _addImages en frontend/lib/state/document_flow_controller.dart; conexión en frontend/lib/main.dart · Dificultad Media."
+    },
+    {
+      "task": "T806",
+      "issue": 195,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "scannerUnavailable y scannerFailed, StatusAction.takePhoto y el aviso con acción en el inicio · Dificultad Media."
+    },
+    {
+      "task": "T902",
+      "issue": 200,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "suggestedFileName con el título y su uso en DocumentFlowController.export (frontend/lib/state/document_flow_controller.dart) · Dificultad Media."
+    },
+    {
+      "task": "T903",
+      "issue": 201,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "«Copiar todo el texto» en el menú del editor (frontend/lib/presentation/screens/editor_screen.dart), textos en español e inglés y privacidad; pruebas de pantalla en frontend/test/presentation/organize_test.dart · Dificultad Baja."
+    },
+    {
+      "task": "T906",
+      "issue": 204,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Búsqueda y «Renombrar» en frontend/lib/presentation/screens/history_screen.dart · Dificultad Media."
+    },
+    {
+      "task": "T908",
+      "issue": 206,
+      "state": "pending",
+      "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
+      "description": "Formateador, analizador, todas las pruebas y recorrido en el emulador; registro de verificación al final de este archivo (parcial: falta el recorrido en un teléfono; ver el registro) · Dificultad Baja."
+    },
+    {
+      "task": "T1003",
+      "issue": 209,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "appLock en AppSettings, almacén y controlador; interruptor en frontend/lib/presentation/screens/settings_screen.dart · Dificultad Media."
+    },
+    {
+      "task": "T1005",
+      "issue": 211,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "AppLockController (R3) en frontend/lib/state/app_lock_controller.dart, pantalla frontend/lib/presentation/screens/lock_screen.dart y AppLockGate en frontend/lib/app.dart (R4); textos en español e inglés · Dificultad Alta."
+    },
+    {
+      "task": "T1006",
+      "issue": 212,
+      "state": "pending",
+      "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
+      "description": "Prueba: al desactivarlo, la app deja de bloquearse · Dificultad Baja."
+    },
+    {
+      "task": "T1008",
+      "issue": 214,
+      "state": "pending",
+      "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
+      "description": "Formateador, analizador, todas las pruebas y recorrido en el emulador con PIN y huella simulada; registro de verificación al final de este archivo (parcial: falta el recorrido en un teléfono; ver el registro) · Dificultad Baja."
+    },
+    {
+      "task": "T1102",
+      "issue": 216,
+      "state": "pending",
+      "disposition": "implementacion_o_suite_retirada",
+      "description": "Cerrar sesión, volver a entrar y encontrar el documento, en el mismo recorrido · Dificultad Media."
+    },
+    {
+      "task": "T1103",
+      "issue": 217,
+      "state": "pending",
+      "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
+      "description": "quickstart.md (el comando), README.md y MAPA_DEL_CODIGO.md · Dificultad Baja."
+    }
+  ],
+  "files_changed": [
+    ".specify/memory/constitution.md",
+    "MAPA_DEL_CODIGO.md",
+    "README.md",
+    "TAREAS/luis-miguel.md",
+    "backend/app/api/exports.py",
+    "backend/app/api/recognitions.py",
+    "backend/app/assets/fonts/DejaVuSans.ttf",
+    "backend/app/config.py",
+    "backend/app/errors.py",
+    "backend/app/pending_luis.py",
+    "backend/app/persistence/migrations.py",
+    "backend/app/services/accounts/passwords.py",
+    "backend/app/services/accounts/tokens.py",
+    "backend/app/services/documents/pdf_builder.py",
+    "backend/app/services/documents/text_rules.py",
+    "backend/tests/conftest.py",
+    "backend/tests/test_exports_docx.py",
+    "checks/test_reinicio_luis.py",
+    "docs/PRUEBAS_DISPOSITIVO_ENTREGA.md",
+    "docs/REINICIO_LUIS.md",
+    "docs/REINICIO_LUIS_INVENTARIO.json",
+    "docs/REQUISITOS_ACTUALES.md",
+    "docs/VERIFICACION_ENTREGA.md",
+    "frontend/LUIS_PENDIENTE",
+    "frontend/android/app/build.gradle.kts",
+    "frontend/android/app/src/main/AndroidManifest.xml",
+    "frontend/integration_test/flujo_completo_test.dart",
+    "frontend/lib/app.dart",
+    "frontend/lib/config/app_config.dart",
+    "frontend/lib/presentation/app_lock_scope.dart",
+    "frontend/lib/presentation/screens/app_root.dart",
+    "frontend/lib/presentation/screens/auth/auth_flow.dart",
+    "frontend/lib/presentation/screens/auth/login_screen.dart",
+    "frontend/lib/presentation/screens/auth/register_screen.dart",
+    "frontend/lib/presentation/screens/auth/welcome_screen.dart",
+    "frontend/lib/presentation/screens/editor_screen.dart",
+    "frontend/lib/presentation/screens/flow_screen.dart",
+    "frontend/lib/presentation/screens/history_screen.dart",
+    "frontend/lib/presentation/screens/lock_screen.dart",
+    "frontend/lib/presentation/screens/preview_screen.dart",
+    "frontend/lib/presentation/screens/settings_screen.dart",
+    "frontend/lib/presentation/screens/splash_screen.dart",
+    "frontend/lib/presentation/screens/start_screen.dart",
+    "frontend/lib/presentation/widgets/account_menu.dart",
+    "frontend/lib/presentation/widgets/action_tile.dart",
+    "frontend/lib/presentation/widgets/aurora_header.dart",
+    "frontend/lib/presentation/widgets/confirm_dialog.dart",
+    "frontend/lib/presentation/widgets/consent_dialog.dart",
+    "frontend/lib/presentation/widgets/export_format_sheet.dart",
+    "frontend/lib/presentation/widgets/password_field.dart",
+    "frontend/lib/presentation/widgets/review_text_controller.dart",
+    "frontend/lib/presentation/widgets/scan_overlay.dart",
+    "frontend/lib/presentation/widgets/scanner_logo.dart",
+    "frontend/lib/presentation/widgets/status_banner.dart",
+    "frontend/lib/services/account_rules.dart",
+    "frontend/lib/services/handtext_api_client.dart",
+    "frontend/lib/services/image_rules.dart",
+    "frontend/lib/services/image_source_service.dart",
+    "frontend/lib/services/settings_store.dart",
+    "frontend/lib/state/app_lock_controller.dart",
+    "frontend/lib/state/auth_controller.dart",
+    "frontend/lib/state/document_flow_controller.dart",
+    "frontend/lib/state/settings_controller.dart",
+    "frontend/lib/theme/app_theme.dart",
+    "frontend/lib/theme/aurora.dart",
+    "frontend/pubspec.lock",
+    "frontend/pubspec.yaml",
+    "frontend/test/presentation/extras_screens_test.dart",
+    "frontend/test/presentation/organize_test.dart",
+    "frontend/test/presentation/tips_screen_test.dart",
+    "frontend/test/services/account_rules_test.dart",
+    "frontend/test/services/auth_api_client_test.dart",
+    "frontend/test/services/image_rules_test.dart",
+    "frontend/test/services/uncertain_ranges_test.dart",
+    "frontend/test/state/camera_flow_test.dart",
+    "frontend/test/state/document_flow_controller_test.dart",
+    "frontend/test/state/settings_test.dart",
+    "frontend/test/support/fakes.dart",
+    "frontend/test/theme/aurora_contrast_test.dart",
+    "specs/014-reinicio-luis/plan.md",
+    "specs/014-reinicio-luis/spec.md",
+    "specs/014-reinicio-luis/tasks.md"
+  ]
+}

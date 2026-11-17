@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Tarjeta de acción grande del inicio (tareas T132 y T142): ícono en una insignia azul,
 // título, subtítulo y flecha. Se usa para las opciones del inicio y para los consejos
 // en Ajustes.
@@ -33,56 +35,6 @@ class ActionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return Opacity(
-      opacity: onTap == null ? 0.5 : 1,
-      child: SurfaceCard(
-        padding: EdgeInsets.zero,
-        child: Material(
-          type: MaterialType.transparency,
-          child: InkWell(
-            onTap: onTap,
-            child: Padding(
-              padding: const EdgeInsets.all(18),
-              child: Row(
-                children: [
-                  Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: Aurora.iconBadge,
-                      borderRadius: BorderRadius.circular(Aurora.radiusSmall),
-                    ),
-                    child: Icon(icon, color: Aurora.blueLight),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          style: textTheme.titleMedium?.copyWith(
-                            color: Aurora.textPrimary,
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          subtitle,
-                          style: textTheme.bodySmall?.copyWith(
-                            color: Aurora.textSecondary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Icon(Icons.chevron_right, color: Aurora.textMuted),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+    throw UnimplementedError("T142 pendiente de LUISDACA");
   }
 }

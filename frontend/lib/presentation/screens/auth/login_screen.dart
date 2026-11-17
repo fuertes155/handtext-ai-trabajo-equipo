@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Pantalla de ingreso (tarea T126; spec 002, CU-H1-E6 a CU-H1-E8).
 //
 // Correo y contraseña en una tarjeta. Antes de enviar se revisa que ambos
@@ -37,7 +39,9 @@ class LoginScreen extends StatefulWidget {
   final VoidCallback onCreateAccount;
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginScreen> createState() {
+    throw UnimplementedError("T126 pendiente de LUISDACA");
+  }
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -53,129 +57,11 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _submit() async {
-    FocusScope.of(context).unfocus();
-    final failure = validateLoginForm(
-      email: _email.text,
-      password: _password.text,
-    );
-    setState(() => _formFailure = failure);
-    if (failure != null) return;
-    await widget.auth.signIn(email: _email.text, password: _password.text);
+    throw UnimplementedError("T126 pendiente de LUISDACA");
   }
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return ListenableBuilder(
-      listenable: widget.auth,
-      builder: (context, _) {
-        final failure = _formFailure ?? widget.auth.failure;
-        final notice = widget.auth.notice;
-        return AuroraScaffold(
-          body: ListView(
-            padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  tooltip: context.strings.back,
-                  icon: const Icon(Icons.arrow_back, color: Colors.white),
-                  onPressed: widget.onBack,
-                ),
-              ),
-              const SizedBox(height: 12),
-              // [PA-H2-E5] Título como encabezado para TalkBack.
-              Semantics(
-                // Nodo propio: no se mezcla con los botones vecinos.
-                container: true,
-                header: true,
-                child: Text(
-                  context.strings.loginTitle,
-                  style: textTheme.headlineMedium?.copyWith(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                context.strings.loginSubtitle,
-                style: textTheme.bodyLarge?.copyWith(
-                  color: Aurora.textSecondary,
-                ),
-              ),
-              const SizedBox(height: 24),
-              if (notice == StatusEvent.sessionExpired) ...[
-                const StatusBanner(
-                  status: OperationStatus.info(StatusEvent.sessionExpired),
-                  onAurora: true,
-                ),
-                const SizedBox(height: 16),
-              ],
-              SurfaceCard(
-                child: AutofillGroup(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      TextField(
-                        controller: _email,
-                        keyboardType: TextInputType.emailAddress,
-                        autocorrect: false,
-                        autofillHints: const [AutofillHints.email],
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          labelText: context.strings.emailLabel,
-                          prefixIcon: Icon(Icons.alternate_email),
-                        ),
-                      ),
-                      const SizedBox(height: 14),
-                      PasswordField(
-                        controller: _password,
-                        label: context.strings.passwordLabel,
-                        autofillHints: const [AutofillHints.password],
-                        textInputAction: TextInputAction.done,
-                        onSubmitted: (_) => _submit(),
-                      ),
-                      if (failure != null) ...[
-                        const SizedBox(height: 16),
-                        StatusBanner(
-                          status: OperationStatus.failure(failure),
-                          onAurora: true,
-                        ),
-                      ],
-                      const SizedBox(height: 20),
-                      PrimaryButton(
-                        label: context.strings.signIn,
-                        icon: Icons.login,
-                        isLoading: widget.auth.isBusy,
-                        onPressed: _submit,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              // Wrap pasa el enlace a otra línea si no cabe (pantallas angostas o letra
-              // grande de accesibilidad).
-              Wrap(
-                alignment: WrapAlignment.center,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  Text(
-                    context.strings.noAccountQuestion,
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: Aurora.textSecondary,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: widget.onCreateAccount,
-                    child: Text(context.strings.createAccountLink),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
-    );
+    throw UnimplementedError("T126 pendiente de LUISDACA");
   }
 }

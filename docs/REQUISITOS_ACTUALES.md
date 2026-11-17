@@ -1,5 +1,7 @@
 # Requisitos actuales
 
+> **Estado 2026-11-17:** la rama actual está incompleta por el [reinicio autorizado de las tareas de Luis](REINICIO_LUIS.md). Los requisitos de producto y la entrega del 16 de noviembre que siguen son referencia histórica, no validación de esta revisión.
+
 Actualizados el 2026-11-16. La solicitud de despliegue del 2026-11-09 autoriza la entrega descrita en la [especificación 013](../specs/013-entrega-railway/spec.md).
 
 ## Producto

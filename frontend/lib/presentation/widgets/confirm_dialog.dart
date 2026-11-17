@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Diálogo genérico de confirmación (tarea T042; spec, módulo 3).
 //
 // «Solicitar confirmación antes de una acción que descarte o sustituya correcciones;
@@ -16,37 +18,5 @@ Future<bool> showConfirmDialog(
   required String confirmLabel,
   bool destructive = false,
 }) async {
-  final confirmed = await showDialog<bool>(
-    context: context,
-    builder: (context) {
-      final colors = Theme.of(context).colorScheme;
-      return AlertDialog(
-        title: Text(title),
-        content: Text(message),
-        // Si los botones no caben en una fila, se apilan centrados y con la
-        // acción principal arriba.
-        actionsOverflowAlignment: OverflowBarAlignment.center,
-        actionsOverflowDirection: VerticalDirection.up,
-        actionsOverflowButtonSpacing: 8,
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(context.strings.cancel),
-          ),
-          FilledButton(
-            // Las acciones que borran algo se pintan con el color de error.
-            style: destructive
-                ? FilledButton.styleFrom(
-                    backgroundColor: colors.error,
-                    foregroundColor: colors.onError,
-                  )
-                : null,
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text(confirmLabel),
-          ),
-        ],
-      );
-    },
-  );
-  return confirmed ?? false;
+  throw UnimplementedError("T042 pendiente de LUISDACA");
 }

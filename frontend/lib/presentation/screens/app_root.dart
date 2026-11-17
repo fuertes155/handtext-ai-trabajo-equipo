@@ -1,3 +1,5 @@
+// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
+// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Raíz de la app según la sesión (tarea T127; spec 002; data-model.md de 002).
 //
 // - Comprobando la sesión → pantalla de presentación.
@@ -111,27 +113,6 @@ class _SignedInScopeState extends State<SignedInScope> {
 
   @override
   Widget build(BuildContext context) {
-    final settings = SettingsScope.of(context);
-    // [PA-H1-E1] Consejos la primera vez; [PA-H1-E4] después, ya no [SC-601].
-    final Widget child = settings.settings.tipsSeen
-        ? FlowScreen(
-            key: const ValueKey('flow'),
-            controller: _documents,
-            auth: widget.auth,
-          )
-        : PopScope(
-            key: const ValueKey('tips'),
-            // [PA-H1-E3] El botón atrás de Android también los salta (sin cerrar
-            // la app).
-            canPop: false,
-            onPopInvokedWithResult: (didPop, _) {
-              if (!didPop) unawaited(settings.markTipsSeen());
-            },
-            child: TipsScreen(onDone: settings.markTipsSeen),
-          );
-    return AnimatedSwitcher(
-      duration: motionDuration(context, const Duration(milliseconds: 350)),
-      child: child,
-    );
+    throw UnimplementedError("T505 pendiente de LUISDACA");
   }
 }
