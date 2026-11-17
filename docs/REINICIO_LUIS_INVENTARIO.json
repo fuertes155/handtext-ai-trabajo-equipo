@@ -32,16 +32,18 @@
     {
       "task": "T012",
       "issue": 12,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Configuración de la app (URL del backend, tiempos y límites) en frontend/lib/config/app_config.dart · Dificultad Baja."
+      "description": "Configuración de la app (URL del backend, tiempos y límites) en frontend/lib/config/app_config.dart · Dificultad Baja.",
+      "verification": "Lote 3: 10 pruebas Flutter y 3 escenarios de configuración; análisis/formato del alcance correctos; revisión pendiente"
     },
     {
       "task": "T013",
       "issue": 13,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
-      "description": "Tema centralizado en frontend/lib/theme/app_theme.dart · Dificultad Media."
+      "description": "Tema centralizado en frontend/lib/theme/app_theme.dart · Dificultad Media.",
+      "verification": "Lote 3: 10 pruebas Flutter y 3 escenarios de configuración; análisis/formato del alcance correctos; revisión pendiente"
     },
     {
       "task": "T016",
@@ -61,9 +63,10 @@
     {
       "task": "T022",
       "issue": 22,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Reglas de imagen de la app en frontend/test/services/image_rules_test.dart · Dificultad Media."
+      "description": "Reglas de imagen de la app en frontend/test/services/image_rules_test.dart · Dificultad Media.",
+      "verification": "Lote 3: 10 pruebas Flutter y 3 escenarios de configuración; análisis/formato del alcance correctos; revisión pendiente"
     },
     {
       "task": "T025",
@@ -90,9 +93,10 @@
     {
       "task": "T035",
       "issue": 35,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Reglas y lectura de dimensiones de imagen en frontend/lib/services/image_rules.dart · Dificultad Media."
+      "description": "Reglas y lectura de dimensiones de imagen en frontend/lib/services/image_rules.dart · Dificultad Media.",
+      "verification": "Lote 3: 10 pruebas Flutter y 3 escenarios de configuración; análisis/formato del alcance correctos; revisión pendiente"
     },
     {
       "task": "T038",
@@ -171,9 +175,10 @@
     {
       "task": "T110",
       "issue": 71,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
-      "description": "Colores, degradados y temas Aurora en frontend/lib/theme/aurora.dart y frontend/lib/theme/app_theme.dart · Dificultad Media."
+      "description": "Colores, degradados y temas Aurora en frontend/lib/theme/aurora.dart y frontend/lib/theme/app_theme.dart · Dificultad Media.",
+      "verification": "Lote 3: 10 pruebas Flutter y 3 escenarios de configuración; análisis/formato del alcance correctos; revisión pendiente"
     },
     {
       "task": "T114",
@@ -264,9 +269,10 @@
     {
       "task": "T201",
       "issue": 108,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Dependencias image_cropper 12.2.1 y share_plus 12.0.2 en frontend/pubspec.yaml; UCropActivity en frontend/android/app/src/main/AndroidManifest.xml · Dificultad Baja."
+      "description": "Dependencias image_cropper 12.2.1 y share_plus 12.0.2 en frontend/pubspec.yaml; UCropActivity en frontend/android/app/src/main/AndroidManifest.xml · Dificultad Baja.",
+      "verification": "Lote 3: 10 pruebas Flutter y 3 escenarios de configuración; análisis/formato del alcance correctos; revisión pendiente"
     },
     {
       "task": "T205",

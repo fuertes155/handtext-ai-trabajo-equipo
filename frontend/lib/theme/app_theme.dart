@@ -1,5 +1,5 @@
 // T140 (Samuel): implementación compartida conservada durante el reinicio.
-// T013/T110 (Luis): revisión e integración pendientes, sin retirar aportes compartidos.
+// T013/T110 (Luis): revisados con app_theme_test.dart; se conserva la paleta compartida.
 // Temas centralizados de la app (tareas T013, T110 y T140; constitución §2).
 //
 // - light() y dark(): pantallas normales (editor, diálogos y hojas), según el modo del

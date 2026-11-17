@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Reglas de imagen del spec, módulo 1 (tarea T035; research.md, R4).
 //
 // JPEG o PNG identificado por su contenido, hasta 10 MB y de 600 a 10 000 píxeles por
@@ -43,7 +41,21 @@ class ImageCheck {
 /// Identifica el formato por la firma de los primeros bytes. Devuelve null si no es
 /// JPEG ni PNG, aunque el archivo se llame «foto.jpg».
 ImageFormat? detectImageFormat(Uint8List bytes) {
-  throw UnimplementedError("T035 pendiente de LUISDACA");
+  const png = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
+  if (bytes.length >= png.length &&
+      List.generate(
+        png.length,
+        (i) => bytes[i] == png[i],
+      ).every((same) => same)) {
+    return ImageFormat.png;
+  }
+  if (bytes.length >= 3 &&
+      bytes[0] == 0xff &&
+      bytes[1] == 0xd8 &&
+      bytes[2] == 0xff) {
+    return ImageFormat.jpeg;
+  }
+  return null;
 }
 
 /// Aplica las reglas del spec. Lanza [AppFailure] con el motivo del rechazo.
@@ -53,15 +65,43 @@ Future<ImageCheck> validateSelectedImage(
   Uint8List bytes, {
   required ImageDimensionsReader readDimensions,
 }) async {
-  throw UnimplementedError("T035 pendiente de LUISDACA");
+  if (bytes.isEmpty) throw const AppFailure(FailureKind.imageUnreadable);
+  if (bytes.length > AppConfig.maxImageBytes) {
+    throw const AppFailure(FailureKind.imageTooLarge);
+  }
+  final format = detectImageFormat(bytes);
+  if (format == null) throw const AppFailure(FailureKind.unsupportedImageType);
+  final ImageDimensions dimensions;
+  try {
+    dimensions = await readDimensions(bytes);
+  } catch (_) {
+    throw const AppFailure(FailureKind.imageUnreadable);
+  }
+  if (!_isAllowedSide(dimensions.width) || !_isAllowedSide(dimensions.height)) {
+    throw const AppFailure(FailureKind.imageDimensionsOutOfRange);
+  }
+  return ImageCheck(
+    format: format,
+    width: dimensions.width,
+    height: dimensions.height,
+  );
 }
 
 bool _isAllowedSide(int pixels) {
-  throw UnimplementedError("T035 pendiente de LUISDACA");
+  return pixels >= AppConfig.minImageSidePx &&
+      pixels <= AppConfig.maxImageSidePx;
 }
 
 /// Lee ancho y alto con el motor de Flutter. Solo interpreta el encabezado, sin
 /// decodificar los píxeles: es rápido y casi no usa memoria.
 Future<ImageDimensions> readImageDimensionsWithEngine(Uint8List bytes) async {
-  throw UnimplementedError("T035 pendiente de LUISDACA");
+  final buffer = await ui.ImmutableBuffer.fromUint8List(bytes);
+  ui.ImageDescriptor? descriptor;
+  try {
+    descriptor = await ui.ImageDescriptor.encoded(buffer);
+    return ImageDimensions(descriptor.width, descriptor.height);
+  } finally {
+    descriptor?.dispose();
+    buffer.dispose();
+  }
 }

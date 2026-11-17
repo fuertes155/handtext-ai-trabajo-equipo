@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Configuración de la app (tarea T012).
 //
 // Reúne en un solo lugar:
@@ -28,9 +26,11 @@ abstract final class AppConfig {
   ///
   /// Se cambia al ejecutar:
   /// `flutter run --dart-define=API_BASE_URL=http://127.0.0.1:8001/`
-  // Contratos y restricciones de seguridad conservados; configuración por implementar.
-  static final Uri apiBaseUrl = throw UnimplementedError(
-    'T012 pendiente de LUISDACA',
+  static final Uri apiBaseUrl = _parseApiBaseUrl(
+    const String.fromEnvironment(
+      'API_BASE_URL',
+      defaultValue: usesLocalAccounts ? 'http://10.0.2.2:8001/' : '',
+    ),
   );
 
   /// Secreto de uso exclusivo para desarrollo local; vacío por defecto.
@@ -69,6 +69,16 @@ abstract final class AppConfig {
 
   static Uri _parseApiBaseUrl(String url) {
     final uri = Uri.parse(url);
+    if (!uri.hasAuthority ||
+        !const ['http', 'https'].contains(uri.scheme) ||
+        uri.host.isEmpty ||
+        uri.userInfo.isNotEmpty ||
+        uri.hasQuery ||
+        uri.hasFragment) {
+      throw StateError(
+        'API_BASE_URL debe ser una URL HTTP(S) sin credenciales.',
+      );
+    }
     if (!usesLocalAccounts &&
         (uri.scheme != 'https' ||
             uri.host.isEmpty ||

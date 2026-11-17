@@ -104,3 +104,10 @@ T021, T032, T050, T051, T118 y T205: alcance técnico verificado. Suite completa
 del backend: 218 pruebas aprobadas, sin skips; Ruff y formato completos correctos.
 Autorización definitiva instalada y comprobada; release sigue bloqueada.
 Las issues siguen abiertas por revisión del equipo. Total técnico: 12/72.
+
+## Reconstrucción actual — lote 3 (2026-11-17)
+
+T012, T013, T022, T035, T110 y T201: alcance técnico verificado; 10 pruebas
+Flutter y tres escenarios de configuración aprobados; análisis y formato del
+alcance correctos. Temas/paleta de Samuel conservados y revisados. No certifica
+todavía pantallas completas ni APK. Revisión del equipo pendiente. Total: 18/72.

@@ -71,8 +71,8 @@ ADB no mostró dispositivos conectados. No se han realizado recorridos manuales,
 configurado PIN/huella, instalado APK ni modificado datos de un teléfono. No se ha
 generado APK actual ni verificado una firma de distribución. Producción intacta.
 
-Tareas con alcance técnico verificado: 12/72; cierre formal: 0/72 por revisión pendiente.
-Las otras 60 tareas requieren implementación/revisión y sus verificaciones actuales.
+Tareas con alcance técnico verificado: 18/72; cierre formal: 0/72 por revisión pendiente.
+Las otras 54 tareas requieren implementación/revisión y sus verificaciones actuales.
 
 ## Lote 2: T021, T032, T050, T051, T118, T205
 
@@ -113,3 +113,47 @@ mientras falta T409. Se conserva el nombre del archivo para que siga siendo
 localizable. La suite anterior de bloqueo temporal se sustituyó, no se debilitó.
 No se consultó ni restauró implementación histórica en este lote; las funciones
 se implementaron contra contratos actuales y pruebas compartidas.
+
+## Lote 3: T012, T013, T022, T035, T110, T201
+
+T012 implementa URL de API configurable, barra final y validación sin credenciales,
+query ni fragmento. Las cuentas del servidor requieren HTTPS explícito. Límites
+y tiempos siguen el contrato conservado. Tres ejecuciones de configuración verifican
+HTTPS válido, URL ausente y HTTP rechazado, con cuentas del servidor; el token local
+permanece vacío en ese modo aunque se suministre una definición sintética.
+
+T035 valida tamaño, firma y dimensiones antes de procesar; traduce fallos a errores
+seguros. La lectura de dimensiones usa ImageDescriptor sin decodificar píxeles y
+libera descriptor/buffer en finally. T022 aporta pruebas nuevas de límites exactos,
+cuatro límites inválidos, validaciones previas, imagen dañada y PNG sintético real.
+
+T013/T110 revisan el aporte conservado T140 de Samuel: sin cambiar colores ni temas,
+se comprueban claro/oscuro, Poppins, superficies, foco y botones de 52 dp. No se
+atribuye ese diseño a Luis ni se acredita todavía un recorrido visual completo.
+
+T201 fija image_cropper 12.2.1 y share_plus 12.0.2; restaura UCropActivity como
+actividad privada, manteniendo copias de seguridad desactivadas. pub get correcto
+y servicios de recorte/compartir pasan el analizador con el SDK instalado. El
+lockfile registra los paquetes y la adaptación de cinco dependencias al SDK.
+Las licencias de los paquetes se conservan en sus distribuciones; Poppins no cambia.
+
+Verificación: **10 pruebas Flutter aprobadas** más **3 escenarios de configuración**
+aprobados; analizador del alcance sin incidencias; formato correcto. Comprobación
+XML de actividad única, privada y backup desactivado, correcta. No es la suite
+Flutter completa ni una comprobación del selector nativo de Android.
+
+Comandos desde frontend:
+
+```bash
+flutter pub get
+flutter test --no-pub test/services/image_rules_test.dart test/services/app_config_test.dart test/theme/app_theme_test.dart
+flutter test --no-pub --dart-define=HOSTED_ACCOUNTS=true --dart-define=API_BASE_URL=https://example.invalid/api --dart-define=LOCAL_DEV_API_TOKEN=synthetic-unused test/services/app_config_test.dart
+flutter test --no-pub --dart-define=HOSTED_ACCOUNTS=true test/services/app_config_test.dart
+flutter test --no-pub --dart-define=HOSTED_ACCOUNTS=true --dart-define=API_BASE_URL=http://example.invalid/ test/services/app_config_test.dart
+flutter analyze --no-pub lib/config/app_config.dart lib/services/image_rules.dart lib/services/image_editor_service.dart lib/services/share_service.dart lib/theme test/services/image_rules_test.dart test/services/app_config_test.dart test/theme/app_theme_test.dart
+dart format --output=none --set-exit-if-changed lib/config/app_config.dart lib/services/image_rules.dart lib/theme test/services/image_rules_test.dart test/services/app_config_test.dart test/theme/app_theme_test.dart
+```
+
+No se consultó implementación histórica en este lote. Los temas son los conservados
+en 18f5fde; se revisan mediante pruebas nuevas. Firma, pantallas y suite general
+continúan pendientes, igual que las verificaciones físicas.
