@@ -1,16 +1,14 @@
-// Pruebas de ajustes, versión y licencias (tareas T401 y T406; spec 005).
-// Spec 006 (tarea T501): el aviso de que los consejos ya se vieron.
+// Pruebas conservadas de consejos (T501), idioma (T703) y licencias.
+// T401 y la comprobación de versión T406 se entregan a Luis Miguel.
 
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:handtext_ai/config/app_config.dart';
 import 'package:handtext_ai/models/app_settings.dart';
 import 'package:handtext_ai/presentation/font_licenses.dart';
 import 'package:handtext_ai/services/settings_store.dart';
 import 'package:handtext_ai/state/settings_controller.dart';
-import 'package:path/path.dart' as p;
 
 import '../support/fakes.dart';
 
@@ -25,45 +23,6 @@ void main() {
     tearDown(() async {
       if (await folder.exists()) await folder.delete(recursive: true);
     });
-
-    test('[AV-H1-E5] [SC-501] guarda y recupera los ajustes', () async {
-      final store = FileSettingsStore(directory: () async => folder);
-      const chosen = AppSettings(
-        theme: ThemePreference.dark,
-        textSize: EditorTextSize.extraLarge,
-      );
-
-      await store.save(chosen);
-      final loaded = await FileSettingsStore(
-        directory: () async => folder,
-      ).load();
-
-      expect(loaded.theme, ThemePreference.dark);
-      expect(loaded.textSize, EditorTextSize.extraLarge);
-      expect(
-        File(p.join(folder.path, 'settings.json.tmp')).existsSync(),
-        isFalse,
-      );
-    });
-
-    test('[AV-H1-E6] sin archivo, se usan los valores por omisión', () async {
-      final loaded = await FileSettingsStore(
-        directory: () async => folder,
-      ).load();
-
-      expect(loaded.theme, ThemePreference.system);
-      expect(loaded.textSize, EditorTextSize.normal);
-    });
-
-    test(
-      '[AV-H1-E6] un archivo dañado o con valores desconocidos no rompe nada',
-      () {
-        expect(decodeSettings('no es json').theme, ThemePreference.system);
-        final odd = decodeSettings('{"theme": "violeta", "textSize": "large"}');
-        expect(odd.theme, ThemePreference.system);
-        expect(odd.textSize, EditorTextSize.large);
-      },
-    );
 
     test(
       '[PA-H1-E4] [SC-601] recuerda que los consejos ya se vieron',
@@ -117,21 +76,6 @@ void main() {
   });
 
   group('SettingsController', () {
-    test('[AV-H1-E2] [AV-H1-E4] cada cambio se aplica y se guarda', () async {
-      final store = InMemorySettingsStore();
-      final controller = SettingsController(store: store);
-      var notified = 0;
-      controller.addListener(() => notified++);
-
-      await controller.setTheme(ThemePreference.light);
-      await controller.setTextSize(EditorTextSize.large);
-
-      expect(controller.settings.theme, ThemePreference.light);
-      expect(store.stored.textSize, EditorTextSize.large);
-      expect(store.saves, 2);
-      expect(notified, 2);
-    });
-
     test(
       '[PA-H1-E4] marcar los consejos como vistos conserva lo demás',
       () async {
@@ -158,18 +102,6 @@ void main() {
         expect(controller.settings.tipsSeen, isTrue);
       },
     );
-  });
-
-  test('[SC-502] la versión de «Acerca de» es la de pubspec.yaml', () {
-    // Las pruebas se ejecutan desde la carpeta frontend.
-    final pubspec = File('pubspec.yaml').readAsStringSync();
-    final version = RegExp(
-      r'^version:\s*(\S+)\+(\d+)',
-      multiLine: true,
-    ).firstMatch(pubspec)!;
-
-    expect(AppConfig.appVersion, version.group(1));
-    expect(AppConfig.appBuild, int.parse(version.group(2)!));
   });
 
   test('[SC-503] las licencias incluyen la de Poppins', () async {

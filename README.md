@@ -1,5 +1,7 @@
 # HandText AI · Trabajo en equipo
 
+> Estado al 17 de noviembre de 2026. Once tareas se devuelven a Luis Miguel para su revisión e integración. El [informe de entrega](docs/ENTREGA_LUIS_MIGUEL.md) describe el estado actual y los pendientes. Los resultados anteriores corresponden al código previo a esa devolución.
+
 El repositorio organiza una nueva fase de HandText AI en 218 tareas, cuatro sprints y un prompt por integrante. La rama `samuel/implementacion` incorpora la app Android y la API local con las dependencias compartidas citadas en su historial.
 
 Consulta la [guía local](specs/001-handtext-mvp/quickstart.md), el [mapa del código](MAPA_DEL_CODIGO.md) y el [recorrido de ajustes y accesibilidad](docs/PRUEBA_DE_INTERFAZ.md).

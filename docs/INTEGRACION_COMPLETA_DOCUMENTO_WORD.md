@@ -1,5 +1,7 @@
 # Integración completa desde documento_word
 
+> Estado al 17 de noviembre de 2026. Once tareas se devuelven a Luis Miguel para su revisión e integración. El [informe de entrega](ENTREGA_LUIS_MIGUEL.md) describe el estado actual y los pendientes. Los resultados anteriores corresponden al código previo a esa devolución.
+
 ## Procedencia
 
 Se completa la integración solicitada por Juan Miguel desde

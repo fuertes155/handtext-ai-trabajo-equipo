@@ -1680,5 +1680,39 @@
       "destino": "specs/012-pruebas-de-punta-a-punta/tasks.md",
       "tratamiento": "integrado_o_adaptado"
     }
-  ]
+  ],
+  "seguimiento_devolucion_luis": {
+    "fecha": "2026-11-17",
+    "informe": "ENTREGA_LUIS_MIGUEL.md",
+    "commit_previo": "66b4d22ebeac725442f4c72c7be941717f14e489",
+    "issues_reabiertas": [
+      16,
+      22,
+      45,
+      80,
+      100,
+      113,
+      131,
+      139,
+      144,
+      147,
+      154
+    ],
+    "archivos_retirados_o_restaurados": [
+      "frontend/test/state/camera_flow_test.dart",
+      "frontend/test/state/pages_flow_test.dart",
+      "frontend/test/services/image_rules_test.dart",
+      "frontend/test/services/account_rules_test.dart",
+      "frontend/test/services/auth_api_client_test.dart",
+      "frontend/test/theme/aurora_contrast_test.dart",
+      "frontend/test/services/uncertain_ranges_test.dart",
+      "frontend/test/presentation/tips_screen_test.dart",
+      "frontend/android/app/src/main/res/xml/data_extraction_rules.xml",
+      "frontend/android/app/build.gradle.kts",
+      "frontend/android/app/src/main/AndroidManifest.xml",
+      "frontend/android/app/src/debug/AndroidManifest.xml",
+      "frontend/test/state/settings_test.dart"
+    ],
+    "estado": "El listado archivos es el inventario histórico de la integración; consultar el informe de entrega para el estado actual."
+  }
 }
