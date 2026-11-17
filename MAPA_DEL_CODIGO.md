@@ -41,3 +41,21 @@ Véase el [inventario completo](docs/INTEGRACION_COMPLETA_MANIFIESTO.json) y el
 [informe de integración](docs/INTEGRACION_COMPLETA_DOCUMENTO_WORD.md). Incluye las siete
 suites Flutter restantes, el contrato HTTP con PostgreSQL real, las pruebas completas de
 preparación de imágenes, privacidad Android y configuración local de firma y URL release.
+
+## Historial actual revisado en la reconstrucción (2026-11-17)
+
+- `frontend/lib/models/history_entry.dart`: modelo/búsqueda T905 de Juan, conservado.
+- `frontend/lib/state/document_history.dart`: registro/renombrado T905 conservado;
+  máximo 50 y persistencia sin duplicados. La interfaz T906 usa estos contratos.
+- `frontend/lib/presentation/screens/history_screen.dart`: búsqueda, renombrar,
+  abrir y confirmaciones para eliminar. `history_screen_test.dart` prueba cambio de
+  cuenta, cancelaciones y guías de accesibilidad 100/200 %.
+- `frontend/lib/services/history_store.dart`: archivo por ID, sin imágenes ni archivos
+  exportados; probado con almacenamiento temporal aislado.
+- `frontend/lib/presentation/screens/editor_screen.dart`: Copiar todo y exportar el
+  texto vigente. `organize_test.dart` verifica portapapeles, búsqueda y renombrado.
+
+La privacidad de Historial y portapapeles en `strings_es.dart`/`strings_en.dart`
+se conserva y revisa; refleja los modos local y servidor según la compilación.
+[Resultados actuales](docs/VERIFICACION_RECONSTRUCCION_LUIS.md); revisión formal y
+pruebas nativas físicas pendientes.

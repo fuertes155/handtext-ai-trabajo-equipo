@@ -382,3 +382,36 @@ dart format --output=none --set-exit-if-changed lib/presentation/screens/tips_sc
 ```
 
 Revisión formal y verificaciones Android físicas pendientes.
+
+## Lote 10: T803, T806, T903, T906, T606, T612
+
+52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento
+por cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.
+
+T803/T806 conectan el origen scanner al mismo circuito de copias/validación, límites,
+orden, cancelación, consentimiento y reconocimiento. La suite compartida comprueba
+falta de Play Services, fallo, cancelar y alternativa Tomar fotografía, sin envíos
+ni pérdida del texto. main.dart conserva la inyección de MlKitDocumentScanner.
+
+T906 completa búsqueda y diálogo de renombrado, con cancelar/atrás, límite 1..60
+puntos Unicode, botón desactivado ante inválidos y desplazamiento del diálogo. Usa
+sin modificar los contratos T905 de Juan en HistoryEntry y DocumentHistory.
+Buscar no escribe en disco; renombrar conserva ID/texto y el nombre se mantiene al
+exportar otra vez. Copiar usa exactamente el texto corregido y comunica resultado;
+las cadenas y privacidad en español/inglés se revisan y conservan. Se amplía el
+arnés con fábrica opcional para probar dos controladores/cuentas independientes.
+
+Se actualizan quickstart de 007, README y mapa: historial local por cuenta, sin
+imágenes ni archivos exportados; cerrar sesión conserva historial y elimina borrador;
+eliminar cuenta borra su historial. Portapapeles accesible para otras apps. No se
+consultó implementación histórica ni se efectuó la prueba física pendiente.
+
+Comandos desde frontend:
+
+```bash
+flutter test --no-pub --reporter expanded test/state/scanner_flow_test.dart test/presentation/organize_test.dart test/presentation/history_screen_test.dart test/services/history_store_test.dart test/services/storage_test.dart
+flutter analyze --no-pub lib/presentation/screens/history_screen.dart test/presentation/organize_test.dart test/presentation/history_screen_test.dart test/support/app_tester.dart
+dart format --output=none --set-exit-if-changed lib/presentation/screens/history_screen.dart test/presentation/organize_test.dart test/presentation/history_screen_test.dart test/support/app_tester.dart
+```
+
+Revisión del equipo y selectores/Play Services/TalkBack físicos pendientes.

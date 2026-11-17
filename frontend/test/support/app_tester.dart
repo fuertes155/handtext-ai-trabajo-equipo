@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:handtext_ai/app.dart';
+import 'package:handtext_ai/presentation/screens/app_root.dart';
 import 'package:handtext_ai/config/app_config.dart';
 
 import 'fakes.dart';
@@ -20,6 +21,7 @@ Future<void> pumpHandTextApp(
   WidgetTester tester,
   TestHarness h, {
   bool usesLocalAccounts = AppConfig.usesLocalAccounts,
+  DocumentControllerFactory? createDocumentController,
 }) async {
   tester.platformDispatcher.accessibilityFeaturesTestValue =
       const FakeAccessibilityFeatures(disableAnimations: true);
@@ -36,7 +38,7 @@ Future<void> pumpHandTextApp(
       auth: h.auth,
       settings: h.settings,
       lock: h.lock,
-      createDocumentController: h.buildController,
+      createDocumentController: createDocumentController ?? h.buildController,
       usesLocalAccounts: usesLocalAccounts,
     ),
   );

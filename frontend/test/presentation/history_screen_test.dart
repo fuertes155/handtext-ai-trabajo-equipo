@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:handtext_ai/models/export_format.dart';
 import 'package:handtext_ai/models/history_entry.dart';
+import 'package:handtext_ai/models/user_account.dart';
 
 import '../support/strings_es.dart';
 import '../support/app_tester.dart';
@@ -32,6 +33,42 @@ Future<void> _openHistory(WidgetTester tester) =>
     tapText(tester, es.historyTitle);
 
 void main() {
+  testWidgets('otra cuenta recibe su propio controlador y lista vacía', (
+    tester,
+  ) async {
+    final first = _withHistory();
+    final second = TestHarness();
+    await pumpHandTextApp(
+      tester,
+      first,
+      createDocumentController: (user, expired) => user.id == testUser.id
+          ? first.buildController(user, expired)
+          : second.buildController(user, expired),
+    );
+    await _openHistory(tester);
+    expect(find.text(_newer.title), findsOneWidget);
+    await tester.tap(find.byTooltip(es.back));
+    await tester.pumpAndSettle();
+    await first.auth.signOut(
+      beforeSignOut: () => first.controller.clearLocalData(),
+    );
+    await tester.pumpAndSettle();
+    first.authApi.user = const UserAccount(
+      id: 'otra-cuenta',
+      displayName: 'Otra',
+      email: 'otra@example.test',
+    );
+    await first.auth.signIn(
+      email: 'otra@example.test',
+      password: 'synthetic-password',
+    );
+    await tester.pumpAndSettle();
+    await _openHistory(tester);
+    expect(find.text(es.historyEmptyTitle), findsOneWidget);
+    expect(find.text(_newer.title), findsNothing);
+    expect(first.historyStore.stored, hasLength(2));
+  });
+
   testWidgets('[HD-H1-E4] sin documentos, un mensaje lo explica', (
     tester,
   ) async {

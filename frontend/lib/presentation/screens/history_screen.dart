@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Pantalla «Mis documentos» (tareas T607, T609 y T611; spec 007; research.md de 007,
 // R9).
 //
@@ -20,6 +18,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/history_entry.dart';
+import '../../models/app_failure.dart';
 import '../../state/document_flow_controller.dart';
 import '../../theme/aurora.dart';
 import '../strings.dart';
@@ -104,7 +103,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   /// [OR-H3-E3] Pide el nombre nuevo; cancelar no cambia nada.
   Future<void> _rename(HistoryEntry entry) async {
-    throw UnimplementedError("T906 pendiente de LUISDACA");
+    final title = await showDialog<String>(
+      context: context,
+      builder: (_) => _RenameDialog(initial: entry.title),
+    );
+    if (!mounted || title == null || _controller.isBusy) return;
+    await _controller.history.rename(entry.id, title);
   }
 
   /// [HD-H3-E2] Vacía el historial, con confirmación.
@@ -149,7 +153,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ],
               ),
               // [OR-H3-E1] Búsqueda, solo si hay documentos.
-              // T906: buscador pendiente de LUISDACA.
+              if (entries.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                  child: TextField(
+                    onChanged: (value) => setState(() => _query = value),
+                    textInputAction: TextInputAction.search,
+                    decoration: InputDecoration(
+                      labelText: context.strings.historySearchHint,
+                      prefixIcon: const Icon(Icons.search),
+                    ),
+                  ),
+                ),
               Expanded(
                 child: entries.isEmpty
                     ? const _EmptyHistory()
@@ -289,7 +304,42 @@ class _RenameDialogState extends State<_RenameDialog> {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T906 pendiente de LUISDACA");
+    final name = _name.text.trim();
+    final valid = name.isNotEmpty && name.runes.length <= 60;
+    void submit() {
+      if (valid) Navigator.of(context).pop(name);
+    }
+
+    return AlertDialog(
+      scrollable: true,
+      title: Text(context.strings.historyRenameTitle),
+      content: TextField(
+        controller: _name,
+        autofocus: true,
+        textInputAction: TextInputAction.done,
+        onSubmitted: (_) => submit(),
+        onChanged: (_) => setState(() {}),
+        decoration: InputDecoration(
+          labelText: context.strings.historyRenameLabel,
+          errorText: valid
+              ? null
+              : context.strings.failureText(
+                  const AppFailure(FailureKind.invalidDisplayName),
+                ),
+          counterText: '${name.runes.length}/60',
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(context.strings.cancel),
+        ),
+        FilledButton(
+          onPressed: valid ? submit : null,
+          child: Text(context.strings.historyRenameConfirm),
+        ),
+      ],
+    );
   }
 }
 

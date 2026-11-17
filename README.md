@@ -88,3 +88,12 @@ la procedencia, el inventario y las verificaciones. Las guías originales y el d
 Render se conservan como referencia; para la entrega usa la guía final y para desarrollo las guías locales.
 
 - [Conciliación de issues y pendientes tras la integración completa](docs/CONCILIACION_ISSUES_INTEGRACION.md).
+
+## Historial y organización — reconstrucción 2026-11-17
+
+«Mis documentos» conserva hasta 50 textos por cuenta en este teléfono. Buscar filtra
+por título/contenido sin tildes ni mayúsculas; Renombrar conserva el texto y se respeta
+al exportar de nuevo. Eliminar/Borrar todo piden confirmación y no borran archivos
+exportados. Cerrar sesión conserva el historial; eliminar la cuenta lo borra.
+Copiar todo usa el texto actual: otras apps pueden leerlo desde el portapapeles.
+[Pruebas y recorrido pendiente](specs/007-historial-de-documentos/quickstart.md).

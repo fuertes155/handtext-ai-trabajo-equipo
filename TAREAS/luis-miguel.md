@@ -156,3 +156,10 @@ T404, T406, T503, T505, T604, T610: alcance técnico verificado. 40 pruebas apro
 incluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.
 
 Revisión del equipo pendiente. Total técnico: 54/72. Evidencia: `docs/VERIFICACION_RECONSTRUCCION_LUIS.md`.
+
+## Reconstrucción actual — lote 10 (2026-11-17)
+
+T803, T806, T903, T906, T606, T612: alcance técnico verificado. 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento
+por cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.
+
+Revisión del equipo pendiente. Total técnico: 60/72. Evidencia: `docs/VERIFICACION_RECONSTRUCCION_LUIS.md`.

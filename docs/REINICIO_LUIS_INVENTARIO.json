@@ -441,9 +441,10 @@
     {
       "task": "T606",
       "issue": 171,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
-      "description": "Pruebas de pantalla (lista, vacío, orden, otra cuenta) en frontend/test/presentation/history_screen_test.dart · Dificultad Media."
+      "description": "Pruebas de pantalla (lista, vacío, orden, otra cuenta) en frontend/test/presentation/history_screen_test.dart · Dificultad Media.",
+      "verification": "Lote 10: 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento\npor cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T610",
@@ -456,9 +457,10 @@
     {
       "task": "T612",
       "issue": 177,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
-      "description": "Privacidad («Historial»), quickstart.md, README.md y MAPA_DEL_CODIGO.md; guías de accesibilidad de 006 (nombres y 48 dp, al 100 % y al 200 %) en history_screen_test.dart · Dificultad Baja."
+      "description": "Privacidad («Historial»), quickstart.md, README.md y MAPA_DEL_CODIGO.md; guías de accesibilidad de 006 (nombres y 48 dp, al 100 % y al 200 %) en history_screen_test.dart · Dificultad Baja.",
+      "verification": "Lote 10: 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento\npor cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T704",
@@ -478,16 +480,18 @@
     {
       "task": "T803",
       "issue": 192,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "ImageOrigin.scanner, scanDocument y el origen en _addImages en frontend/lib/state/document_flow_controller.dart; conexión en frontend/lib/main.dart · Dificultad Media."
+      "description": "ImageOrigin.scanner, scanDocument y el origen en _addImages en frontend/lib/state/document_flow_controller.dart; conexión en frontend/lib/main.dart · Dificultad Media.",
+      "verification": "Lote 10: 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento\npor cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T806",
       "issue": 195,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "scannerUnavailable y scannerFailed, StatusAction.takePhoto y el aviso con acción en el inicio · Dificultad Media."
+      "description": "scannerUnavailable y scannerFailed, StatusAction.takePhoto y el aviso con acción en el inicio · Dificultad Media.",
+      "verification": "Lote 10: 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento\npor cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T902",
@@ -500,16 +504,18 @@
     {
       "task": "T903",
       "issue": 201,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "«Copiar todo el texto» en el menú del editor (frontend/lib/presentation/screens/editor_screen.dart), textos en español e inglés y privacidad; pruebas de pantalla en frontend/test/presentation/organize_test.dart · Dificultad Baja."
+      "description": "«Copiar todo el texto» en el menú del editor (frontend/lib/presentation/screens/editor_screen.dart), textos en español e inglés y privacidad; pruebas de pantalla en frontend/test/presentation/organize_test.dart · Dificultad Baja.",
+      "verification": "Lote 10: 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento\npor cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T906",
       "issue": 204,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Búsqueda y «Renombrar» en frontend/lib/presentation/screens/history_screen.dart · Dificultad Media."
+      "description": "Búsqueda y «Renombrar» en frontend/lib/presentation/screens/history_screen.dart · Dificultad Media.",
+      "verification": "Lote 10: 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento\npor cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T908",
