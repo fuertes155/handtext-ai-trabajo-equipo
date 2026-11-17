@@ -8,3 +8,11 @@
 6. Publicar los cambios en la misma rama y dejar el PR como borrador. Enviar invitación de escritura a `LUISDACA`, sin suplantar su identidad ni modificar producción.
 
 El inventario y los pasos de Luis se documentan en `docs/REINICIO_LUIS.md`. La aplicación instalada, la API vigente y las evidencias de la entrega anterior son antecedentes y no se alteran en esta fase.
+
+## Ejecución de la reconstrucción
+
+Primero configuración, errores, utilidades, migraciones y seguridad; después reglas
+documentales y autorización, servicios Flutter, pantallas e integraciones. Se
+registran los cuatro sprints en el índice sin cambiar tareas ajenas. Cada seis
+alcances técnicamente verificados se revisa y publica un commit en la misma rama;
+las issues requieren además los criterios de cierre vigentes, incluida revisión.

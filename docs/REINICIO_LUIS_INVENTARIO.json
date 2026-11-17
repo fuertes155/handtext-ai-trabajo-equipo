@@ -8,23 +8,26 @@
     {
       "task": "T002",
       "issue": 2,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
-      "description": "Fijar las dependencias exactas en backend/requirements.txt y backend/requirements-dev.txt · Dificultad Baja."
+      "description": "Fijar las dependencias exactas en backend/requirements.txt y backend/requirements-dev.txt · Dificultad Baja.",
+      "verification": "Lote 1: 87 passed; Ruff y formato correctos; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T006",
       "issue": 6,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Catálogo de errores con código, mensaje y request_id, y sus manejadores, en backend/app/errors.py · Dificultad Media."
+      "description": "Catálogo de errores con código, mensaje y request_id, y sus manejadores, en backend/app/errors.py · Dificultad Media.",
+      "verification": "Lote 1: 87 passed; Ruff y formato correctos; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T010",
       "issue": 10,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Utilidades de prueba (imágenes sintéticas y OCR falso) en backend/tests/conftest.py · Dificultad Media."
+      "description": "Utilidades de prueba (imágenes sintéticas y OCR falso) en backend/tests/conftest.py · Dificultad Media.",
+      "verification": "Lote 1: 87 passed; Ruff y formato correctos; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T012",
@@ -148,16 +151,18 @@
     {
       "task": "T104",
       "issue": 65,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Configuración de la base, la duración de la sesión, el bloqueo y los límites en backend/app/config.py · Dificultad Baja."
+      "description": "Configuración de la base, la duración de la sesión, el bloqueo y los límites en backend/app/config.py · Dificultad Baja.",
+      "verification": "Lote 1: 87 passed; Ruff y formato correctos; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T108",
       "issue": 69,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Ejecutor de migraciones en backend/app/persistence/migrations.py · Dificultad Media."
+      "description": "Ejecutor de migraciones en backend/app/persistence/migrations.py · Dificultad Media.",
+      "verification": "Lote 1: 87 passed; Ruff y formato correctos; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T110",
@@ -169,9 +174,10 @@
     {
       "task": "T114",
       "issue": 75,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Contraseñas Argon2id y tokens en backend/app/services/accounts/passwords.py y backend/app/services/accounts/tokens.py · Dificultad Alta."
+      "description": "Contraseñas Argon2id y tokens en backend/app/services/accounts/passwords.py y backend/app/services/accounts/tokens.py · Dificultad Alta.",
+      "verification": "Lote 1: 87 passed; Ruff y formato correctos; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T118",

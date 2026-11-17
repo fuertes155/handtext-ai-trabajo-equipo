@@ -13,8 +13,12 @@ Cuentas (spec 002):
 
 from __future__ import annotations
 
+import random
+import struct
+import zlib
 from collections.abc import Callable, Iterator
 from datetime import datetime
+from io import BytesIO
 
 import pytest
 from argon2 import PasswordHasher
@@ -49,12 +53,16 @@ class FakeOcrProvider:
         error: Exception | None = None,
         uncertain: tuple[UncertainSpan, ...] = (),
     ) -> None:
-        raise NotImplementedError(
-            "T010: implementación pendiente de LUISDACA"
-        )  # imágenes que «recibió», para comprobarlas
+        self.text = text
+        self.error = error
+        self.uncertain = uncertain
+        self.received: list[bytes] = []
 
     async def recognize(self, image_jpeg: bytes) -> OcrResult:
-        raise NotImplementedError("T010: implementación pendiente de LUISDACA")
+        self.received.append(image_jpeg)
+        if self.error is not None:
+            raise self.error
+        return OcrResult(text=self.text, uncertain_spans=self.uncertain)
 
 
 def make_client(
@@ -115,12 +123,29 @@ def make_image_bytes(
     color: str | tuple[int, ...] = "white",
     exif: Image.Exif | None = None,
 ) -> bytes:
-    raise NotImplementedError("T010: implementación pendiente de LUISDACA")
+    with Image.new(mode, (width, height), color) as image, BytesIO() as output:
+        options = {"exif": exif} if exif is not None else {}
+        image.save(output, format=image_format, **options)
+        return output.getvalue()
 
 
 def make_noisy_jpeg(width: int = 800, height: int = 800) -> bytes:
-    raise NotImplementedError("T010: implementación pendiente de LUISDACA")
+    # Semilla fija: muestra reproducible, suficientemente grande para truncar su JPEG.
+    pixels = random.Random(10).randbytes(width * height * 3)
+    with Image.frombytes("RGB", (width, height), pixels) as image, BytesIO() as output:
+        image.save(output, format="JPEG", quality=90)
+        return output.getvalue()
 
 
 def make_png_header_only(width: int, height: int) -> bytes:
-    raise NotImplementedError("T010: implementación pendiente de LUISDACA")
+    # IHDR válido sin asignar una imagen enorme: prueba de defensa contra bombas.
+    payload = b"IHDR" + struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+    return (
+        b"\x89PNG\r\n\x1a\n"
+        + struct.pack(">I", 13)
+        + payload
+        + struct.pack(">I", zlib.crc32(payload))
+        + struct.pack(">I", 0)
+        + b"IDAT"
+        + struct.pack(">I", zlib.crc32(b"IDAT"))
+    )

@@ -127,3 +127,11 @@ Durante la comprobación, GitHub ya confirmó a `LUISDACA` como colaborador con 
 `write`. Por ello no se genera una invitación duplicada ni se solicita acceso a su
 cuenta. Se asignan sus 72 issues a esa cuenta real. El PR #221 permanece en borrador
 y sin fusión automática hasta que el equipo revise la implementación reconstruida.
+
+## Reconstrucción en curso por LUISDACA
+
+La implementación actual y sus resultados se registran en
+[VERIFICACION_RECONSTRUCCION_LUIS.md](VERIFICACION_RECONSTRUCCION_LUIS.md).
+Ese registro complementa el inventario y distingue verificación técnica de cierre
+por revisión del equipo. Las comprobaciones del retiro anteriores siguen siendo
+históricas; no certifican las implementaciones nuevas.

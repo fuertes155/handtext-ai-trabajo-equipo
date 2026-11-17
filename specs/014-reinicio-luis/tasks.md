@@ -88,3 +88,10 @@ código en el historial: cada tarea exige implementación/revisión y pruebas ac
 - [ ] [T1008](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/214) · Formateador, analizador, todas las pruebas y recorrido en el emulador con PIN y huella simulada; registro de verificación al final de este archivo (parcial: falta el recorrido en un teléfono; ver el registro) · Dificultad Baja.
 - [ ] [T1102](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/216) · Cerrar sesión, volver a entrar y encontrar el documento, en el mismo recorrido · Dificultad Media.
 - [ ] [T1103](https://github.com/fuertes155/handtext-ai-trabajo-equipo/issues/217) · quickstart.md (el comando), README.md y MAPA_DEL_CODIGO.md · Dificultad Baja.
+
+## Reconstrucción actual — lote 1 (2026-11-17)
+
+T002, T006, T010, T104, T108 y T114: implementación o revisión técnica verificada,
+87 pruebas aprobadas con PostgreSQL temporal real; Ruff y formato aprobados.
+Las casillas siguen pendientes porque las issues exigen revisión de otro integrante.
+Ver [registro de reconstrucción](../../docs/VERIFICACION_RECONSTRUCCION_LUIS.md).

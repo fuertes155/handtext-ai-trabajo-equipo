@@ -90,3 +90,10 @@ Cuenta: `LUISDACA`. Total: 72. Reinicio solicitado el 2026-11-17: todas pendient
 ## Conciliación histórica anterior al reinicio
 
 Antes del reinicio, las casillas reflejaban el estado conciliado con GitHub al 10 de noviembre de 2026. Las casillas actuales se reinician a pendiente por petición del propietario. Los cierres técnicos por integración y los recorridos pendientes se detallan en [el informe de conciliación](../docs/CONCILIACION_ISSUES_INTEGRACION.md). No acreditan autoría individual ni revisión formal de PR.
+
+## Reconstrucción actual — lote 1 (2026-11-17)
+
+T002, T006, T010, T104, T108 y T114: implementación o revisión técnica verificada,
+87 pruebas aprobadas con PostgreSQL temporal real; Ruff y formato aprobados.
+Las casillas siguen pendientes porque las issues exigen revisión de otro integrante.
+Ver [registro de reconstrucción](../docs/VERIFICACION_RECONSTRUCCION_LUIS.md).

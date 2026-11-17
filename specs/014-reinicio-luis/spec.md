@@ -19,3 +19,15 @@ Solicitud de Samuel del 2026-11-17: retirar sus implementaciones correspondiente
 ## Aceptación de la preparación
 
 Debe existir un inventario de regiones retiradas y de contratos conservados; los archivos deben seguir siendo sintácticamente válidos. Un intento de usar autorización pendiente debe fallar cerrado y la versión release debe bloquearse. Las pruebas funcionales completas no se anuncian aprobadas hasta que Luis termine. La invitación se envía a `LUISDACA` con escritura; la aceptación y los aportes quedan a su cargo.
+
+## Reconstrucción autorizada por Luis (2026-11-17)
+
+Luis Miguel David Campo solicita implementar y verificar sus 72 tareas con su cuenta
+`LUISDACA`, conservando esta rama y el historial. La prohibición anterior de crear
+commits con su identidad pertenecía a la preparación por otro integrante; desde esta
+fase los commits nuevos usan su identidad real, sin cambiar autores previos.
+
+Cada lote registra implementación, pruebas actuales y procedencia del material
+consultado. Una tarea técnicamente verificada sigue abierta si exige revisión del
+equipo o evidencia física pendiente. Los bloqueos de documentos y release se
+sustituyen únicamente junto con la implementación definitiva y sus pruebas.
