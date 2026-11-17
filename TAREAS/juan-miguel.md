@@ -95,3 +95,20 @@ la implementación de Samuel. La relación de las 73 tareas, la procedencia, las
 y los pendientes se registra en [el informe](../docs/INTEGRACION_JUAN_MIGUEL.md).
 Las casillas iniciales no se marcan por reutilizar código: las issues conservan su
 estado hasta la revisión del equipo y la validación específica de cada tarea.
+
+
+## Registro final de verificaciones
+
+- Backend: Ruff correcto; formato de 50 archivos correcto; 160 pruebas aprobadas,
+  incluido PostgreSQL temporal (36,36 s).
+- Flutter: formato de 113 archivos sin cambios; 285 pruebas aprobadas (18 s).
+- Analizador Flutter: seis avisos informativos preexistentes de deprecación, sin
+  errores ni advertencias; la salida fue 1 por esos avisos.
+- Android: APK USB instalado; API accesible desde el celular; exportación Word real
+  comprobada y OCR real verificado con una imagen sintética.
+- Juan Miguel confirma que los recorridos manuales consultados funcionaron.
+- T061 y T410 se cierran administrativamente, sin acreditar la medición de diez
+  hojas ni la firma de distribución.
+
+Véase [el detalle del cierre](../docs/CIERRE_VERIFICACIONES_JUAN_MIGUEL.md), que distingue
+los resultados observados de la confirmación del responsable y los cierres administrativos.

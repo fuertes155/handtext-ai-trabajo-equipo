@@ -1,0 +1,2 @@
+# Los scripts de Spec Kit deben poder ejecutarse también en Bash.
+*.sh text eol=lf

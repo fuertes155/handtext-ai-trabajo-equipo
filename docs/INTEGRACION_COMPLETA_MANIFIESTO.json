@@ -1,0 +1,1684 @@
+{
+  "repositorio_origen": "Juan-Miguel-Her-Del/documento_word",
+  "commit_origen": "a0b7dd315ebad9cbf4decf0fddcc7968d49d655b",
+  "base_destino": "c30a04b48f0d6569c6b931e44d822d95bf6db410",
+  "archivos": [
+    {
+      "origen": ".agents/skills/speckit-analyze/SKILL.md",
+      "destino": ".agents/skills/speckit-analyze/SKILL.md",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".agents/skills/speckit-checklist/SKILL.md",
+      "destino": ".agents/skills/speckit-checklist/SKILL.md",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".agents/skills/speckit-clarify/SKILL.md",
+      "destino": ".agents/skills/speckit-clarify/SKILL.md",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".agents/skills/speckit-constitution/SKILL.md",
+      "destino": ".agents/skills/speckit-constitution/SKILL.md",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".agents/skills/speckit-converge/SKILL.md",
+      "destino": ".agents/skills/speckit-converge/SKILL.md",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".agents/skills/speckit-implement/SKILL.md",
+      "destino": ".agents/skills/speckit-implement/SKILL.md",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".agents/skills/speckit-plan/SKILL.md",
+      "destino": ".agents/skills/speckit-plan/SKILL.md",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".agents/skills/speckit-specify/SKILL.md",
+      "destino": ".agents/skills/speckit-specify/SKILL.md",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".agents/skills/speckit-tasks/SKILL.md",
+      "destino": ".agents/skills/speckit-tasks/SKILL.md",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".agents/skills/speckit-taskstoissues/SKILL.md",
+      "destino": ".agents/skills/speckit-taskstoissues/SKILL.md",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".gitignore",
+      "destino": ".gitignore",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": ".specify/.gitignore",
+      "destino": ".specify/.gitignore",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/feature.json",
+      "destino": ".specify/feature.json",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/init-options.json",
+      "destino": ".specify/init-options.json",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/integration.json",
+      "destino": ".specify/integration.json",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/integrations/codex.manifest.json",
+      "destino": ".specify/integrations/codex.manifest.json",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/integrations/speckit.manifest.json",
+      "destino": ".specify/integrations/speckit.manifest.json",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/memory/.constitution-template.json",
+      "destino": ".specify/memory/.constitution-template.json",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/memory/constitution.md",
+      "destino": ".specify/memory/constitution.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": ".specify/scripts/bash/check-prerequisites.sh",
+      "destino": ".specify/scripts/bash/check-prerequisites.sh",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/scripts/bash/common.sh",
+      "destino": ".specify/scripts/bash/common.sh",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/scripts/bash/create-new-feature.sh",
+      "destino": ".specify/scripts/bash/create-new-feature.sh",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/scripts/bash/resolve-template.sh",
+      "destino": ".specify/scripts/bash/resolve-template.sh",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/scripts/bash/setup-plan.sh",
+      "destino": ".specify/scripts/bash/setup-plan.sh",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/scripts/bash/setup-tasks.sh",
+      "destino": ".specify/scripts/bash/setup-tasks.sh",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/templates/checklist-template.md",
+      "destino": ".specify/templates/checklist-template.md",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/templates/constitution-template.md",
+      "destino": ".specify/templates/constitution-template.md",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/templates/plan-template.md",
+      "destino": ".specify/templates/plan-template.md",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/templates/spec-template.md",
+      "destino": ".specify/templates/spec-template.md",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/templates/tasks-template.md",
+      "destino": ".specify/templates/tasks-template.md",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/workflows/speckit/workflow.yml",
+      "destino": ".specify/workflows/speckit/workflow.yml",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": ".specify/workflows/workflow-registry.json",
+      "destino": ".specify/workflows/workflow-registry.json",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "MAPA_DEL_CODIGO.md",
+      "destino": "docs/referencia/MAPA_DEL_CODIGO_documento_word.md",
+      "tratamiento": "conservado_como_referencia"
+    },
+    {
+      "origen": "README.md",
+      "destino": "docs/referencia/README_documento_word.md",
+      "tratamiento": "conservado_como_referencia"
+    },
+    {
+      "origen": "backend/app/__init__.py",
+      "destino": "backend/app/__init__.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/api/__init__.py",
+      "destino": "backend/app/api/__init__.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/api/auth.py",
+      "destino": "backend/app/api/auth.py",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "backend/app/api/exports.py",
+      "destino": "backend/app/api/exports.py",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "backend/app/api/recognitions.py",
+      "destino": "backend/app/api/recognitions.py",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "backend/app/api/request_body.py",
+      "destino": "backend/app/api/request_body.py",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "backend/app/assets/fonts/DejaVuSans.ttf",
+      "destino": "backend/app/assets/fonts/DejaVuSans.ttf",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/assets/fonts/LICENSE-DejaVu.txt",
+      "destino": "backend/app/assets/fonts/LICENSE-DejaVu.txt",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "backend/app/config.py",
+      "destino": "backend/app/config.py",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "backend/app/errors.py",
+      "destino": "backend/app/errors.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/main.py",
+      "destino": "backend/app/main.py",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "backend/app/persistence/__init__.py",
+      "destino": "backend/app/persistence/__init__.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/persistence/migrations.py",
+      "destino": "backend/app/persistence/migrations.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/persistence/postgres_store.py",
+      "destino": "backend/app/persistence/postgres_store.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/persistence/user_store.py",
+      "destino": "backend/app/persistence/user_store.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/schemas.py",
+      "destino": "backend/app/schemas.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/services/__init__.py",
+      "destino": "backend/app/services/__init__.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/services/accounts/__init__.py",
+      "destino": "backend/app/services/accounts/__init__.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/services/accounts/account_service.py",
+      "destino": "backend/app/services/accounts/account_service.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/services/accounts/passwords.py",
+      "destino": "backend/app/services/accounts/passwords.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/services/accounts/rules.py",
+      "destino": "backend/app/services/accounts/rules.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/services/accounts/tokens.py",
+      "destino": "backend/app/services/accounts/tokens.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/services/documents/__init__.py",
+      "destino": "backend/app/services/documents/__init__.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/services/documents/docx_builder.py",
+      "destino": "backend/app/services/documents/docx_builder.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/services/documents/export_service.py",
+      "destino": "backend/app/services/documents/export_service.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/services/documents/pdf_builder.py",
+      "destino": "backend/app/services/documents/pdf_builder.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/services/documents/text_rules.py",
+      "destino": "backend/app/services/documents/text_rules.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/services/image_preparation.py",
+      "destino": "backend/app/services/image_preparation.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/services/image_validation.py",
+      "destino": "backend/app/services/image_validation.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/services/ocr/__init__.py",
+      "destino": "backend/app/services/ocr/__init__.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/services/ocr/base.py",
+      "destino": "backend/app/services/ocr/base.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/services/ocr/google_vision.py",
+      "destino": "backend/app/services/ocr/google_vision.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/app/services/ocr/uncertain_words.py",
+      "destino": "backend/app/services/ocr/uncertain_words.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/pyproject.toml",
+      "destino": "backend/pyproject.toml",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/requirements-dev.txt",
+      "destino": "backend/requirements-dev.txt",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/requirements.txt",
+      "destino": "backend/requirements.txt",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/tests/__init__.py",
+      "destino": "backend/tests/__init__.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/tests/conftest.py",
+      "destino": "backend/tests/conftest.py",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "backend/tests/memory_store.py",
+      "destino": "backend/tests/memory_store.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/tests/test_account_service.py",
+      "destino": "backend/tests/test_account_service.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/tests/test_auth_api.py",
+      "destino": "backend/tests/test_auth_api.py",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "backend/tests/test_errors_and_privacy.py",
+      "destino": "backend/tests/test_errors_and_privacy.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/tests/test_exports_docx.py",
+      "destino": "backend/tests/test_exports_docx.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/tests/test_exports_pdf.py",
+      "destino": "backend/tests/test_exports_pdf.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/tests/test_google_vision_provider.py",
+      "destino": "backend/tests/test_google_vision_provider.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/tests/test_image_preparation.py",
+      "destino": "backend/tests/test_image_preparation.py",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "backend/tests/test_image_validation.py",
+      "destino": "backend/tests/test_image_validation.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/tests/test_ocr_quality.py",
+      "destino": "backend/tests/test_ocr_quality.py",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "backend/tests/test_recognitions_api.py",
+      "destino": "backend/tests/test_recognitions_api.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/tests/test_uncertain_words.py",
+      "destino": "backend/tests/test_uncertain_words.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/tests/test_user_store.py",
+      "destino": "backend/tests/test_user_store.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/tools/__init__.py",
+      "destino": "backend/tools/__init__.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "backend/tools/measure_ocr_quality.py",
+      "destino": "backend/tools/measure_ocr_quality.py",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "db/migrations/0001_users_and_sessions.sql",
+      "destino": "db/migrations/0001_users_and_sessions.sql",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "db/setup_local_database.sql",
+      "destino": "db/setup_local_database.sql",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/.gitignore",
+      "destino": "frontend/.gitignore",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/.metadata",
+      "destino": "frontend/.metadata",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/README.md",
+      "destino": "frontend/README.md",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/analysis_options.yaml",
+      "destino": "frontend/analysis_options.yaml",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/.gitignore",
+      "destino": "frontend/android/.gitignore",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/android/app/build.gradle.kts",
+      "destino": "frontend/android/app/build.gradle.kts",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/android/app/src/debug/AndroidManifest.xml",
+      "destino": "frontend/android/app/src/debug/AndroidManifest.xml",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/android/app/src/main/AndroidManifest.xml",
+      "destino": "frontend/android/app/src/main/AndroidManifest.xml",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/android/app/src/main/kotlin/com/handtextai/handtext_ai/MainActivity.kt",
+      "destino": "frontend/android/app/src/main/kotlin/com/handtextai/handtext_ai/MainActivity.kt",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/drawable-v21/launch_background.xml",
+      "destino": "frontend/android/app/src/main/res/drawable-v21/launch_background.xml",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/drawable/launch_background.xml",
+      "destino": "frontend/android/app/src/main/res/drawable/launch_background.xml",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "destino": "frontend/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+      "destino": "frontend/android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png",
+      "destino": "frontend/android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/mipmap-hdpi/ic_launcher_monochrome.png",
+      "destino": "frontend/android/app/src/main/res/mipmap-hdpi/ic_launcher_monochrome.png",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+      "destino": "frontend/android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png",
+      "destino": "frontend/android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/mipmap-mdpi/ic_launcher_monochrome.png",
+      "destino": "frontend/android/app/src/main/res/mipmap-mdpi/ic_launcher_monochrome.png",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+      "destino": "frontend/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png",
+      "destino": "frontend/android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/mipmap-xhdpi/ic_launcher_monochrome.png",
+      "destino": "frontend/android/app/src/main/res/mipmap-xhdpi/ic_launcher_monochrome.png",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+      "destino": "frontend/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png",
+      "destino": "frontend/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_monochrome.png",
+      "destino": "frontend/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_monochrome.png",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "destino": "frontend/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png",
+      "destino": "frontend/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_monochrome.png",
+      "destino": "frontend/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_monochrome.png",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/values-night-v31/styles.xml",
+      "destino": "frontend/android/app/src/main/res/values-night-v31/styles.xml",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/values-night/styles.xml",
+      "destino": "frontend/android/app/src/main/res/values-night/styles.xml",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/values-v31/styles.xml",
+      "destino": "frontend/android/app/src/main/res/values-v31/styles.xml",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/values/colors.xml",
+      "destino": "frontend/android/app/src/main/res/values/colors.xml",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/values/styles.xml",
+      "destino": "frontend/android/app/src/main/res/values/styles.xml",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/main/res/xml/data_extraction_rules.xml",
+      "destino": "frontend/android/app/src/main/res/xml/data_extraction_rules.xml",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/app/src/profile/AndroidManifest.xml",
+      "destino": "frontend/android/app/src/profile/AndroidManifest.xml",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/android/build.gradle.kts",
+      "destino": "frontend/android/build.gradle.kts",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/gradle.properties",
+      "destino": "frontend/android/gradle.properties",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/android/gradle/wrapper/gradle-wrapper.properties",
+      "destino": "frontend/android/gradle/wrapper/gradle-wrapper.properties",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/android/settings.gradle.kts",
+      "destino": "frontend/android/settings.gradle.kts",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/assets/fonts/OFL-Poppins.txt",
+      "destino": "frontend/assets/fonts/OFL-Poppins.txt",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/assets/fonts/Poppins-Bold.ttf",
+      "destino": "frontend/assets/fonts/Poppins-Bold.ttf",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/assets/fonts/Poppins-Medium.ttf",
+      "destino": "frontend/assets/fonts/Poppins-Medium.ttf",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/assets/fonts/Poppins-Regular.ttf",
+      "destino": "frontend/assets/fonts/Poppins-Regular.ttf",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/assets/fonts/Poppins-SemiBold.ttf",
+      "destino": "frontend/assets/fonts/Poppins-SemiBold.ttf",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/integration_test/flujo_completo_test.dart",
+      "destino": "frontend/integration_test/flujo_completo_test.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/app.dart",
+      "destino": "frontend/lib/app.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/config/app_config.dart",
+      "destino": "frontend/lib/config/app_config.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/main.dart",
+      "destino": "frontend/lib/main.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/models/app_failure.dart",
+      "destino": "frontend/lib/models/app_failure.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/models/app_settings.dart",
+      "destino": "frontend/lib/models/app_settings.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/models/document_draft.dart",
+      "destino": "frontend/lib/models/document_draft.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/models/document_page.dart",
+      "destino": "frontend/lib/models/document_page.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/models/export_format.dart",
+      "destino": "frontend/lib/models/export_format.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/models/exported_document.dart",
+      "destino": "frontend/lib/models/exported_document.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/models/history_entry.dart",
+      "destino": "frontend/lib/models/history_entry.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/models/image_format.dart",
+      "destino": "frontend/lib/models/image_format.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/models/operation_status.dart",
+      "destino": "frontend/lib/models/operation_status.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/models/picked_image.dart",
+      "destino": "frontend/lib/models/picked_image.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/models/recognition_result.dart",
+      "destino": "frontend/lib/models/recognition_result.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/models/user_account.dart",
+      "destino": "frontend/lib/models/user_account.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/app_lock_scope.dart",
+      "destino": "frontend/lib/presentation/app_lock_scope.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/font_licenses.dart",
+      "destino": "frontend/lib/presentation/font_licenses.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/screens/about_screen.dart",
+      "destino": "frontend/lib/presentation/screens/about_screen.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/screens/app_root.dart",
+      "destino": "frontend/lib/presentation/screens/app_root.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/screens/auth/auth_flow.dart",
+      "destino": "frontend/lib/presentation/screens/auth/auth_flow.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/screens/auth/login_screen.dart",
+      "destino": "frontend/lib/presentation/screens/auth/login_screen.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/presentation/screens/auth/register_screen.dart",
+      "destino": "frontend/lib/presentation/screens/auth/register_screen.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/presentation/screens/auth/welcome_screen.dart",
+      "destino": "frontend/lib/presentation/screens/auth/welcome_screen.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/presentation/screens/editor_screen.dart",
+      "destino": "frontend/lib/presentation/screens/editor_screen.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/presentation/screens/flow_screen.dart",
+      "destino": "frontend/lib/presentation/screens/flow_screen.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/presentation/screens/history_screen.dart",
+      "destino": "frontend/lib/presentation/screens/history_screen.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/presentation/screens/lock_screen.dart",
+      "destino": "frontend/lib/presentation/screens/lock_screen.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/presentation/screens/preview_screen.dart",
+      "destino": "frontend/lib/presentation/screens/preview_screen.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/screens/privacy_screen.dart",
+      "destino": "frontend/lib/presentation/screens/privacy_screen.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/screens/settings_screen.dart",
+      "destino": "frontend/lib/presentation/screens/settings_screen.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/screens/splash_screen.dart",
+      "destino": "frontend/lib/presentation/screens/splash_screen.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/screens/start_screen.dart",
+      "destino": "frontend/lib/presentation/screens/start_screen.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/presentation/screens/tips_screen.dart",
+      "destino": "frontend/lib/presentation/screens/tips_screen.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/settings_scope.dart",
+      "destino": "frontend/lib/presentation/settings_scope.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/strings.dart",
+      "destino": "frontend/lib/presentation/strings.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/presentation/strings_en.dart",
+      "destino": "frontend/lib/presentation/strings_en.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/presentation/strings_es.dart",
+      "destino": "frontend/lib/presentation/strings_es.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/account_menu.dart",
+      "destino": "frontend/lib/presentation/widgets/account_menu.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/action_tile.dart",
+      "destino": "frontend/lib/presentation/widgets/action_tile.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/aurora_background.dart",
+      "destino": "frontend/lib/presentation/widgets/aurora_background.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/aurora_header.dart",
+      "destino": "frontend/lib/presentation/widgets/aurora_header.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/aurora_scaffold.dart",
+      "destino": "frontend/lib/presentation/widgets/aurora_scaffold.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/brand_title.dart",
+      "destino": "frontend/lib/presentation/widgets/brand_title.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/confirm_dialog.dart",
+      "destino": "frontend/lib/presentation/widgets/confirm_dialog.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/consent_dialog.dart",
+      "destino": "frontend/lib/presentation/widgets/consent_dialog.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/export_format_sheet.dart",
+      "destino": "frontend/lib/presentation/widgets/export_format_sheet.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/language_sheet.dart",
+      "destino": "frontend/lib/presentation/widgets/language_sheet.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/motion.dart",
+      "destino": "frontend/lib/presentation/widgets/motion.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/page_strip.dart",
+      "destino": "frontend/lib/presentation/widgets/page_strip.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/password_field.dart",
+      "destino": "frontend/lib/presentation/widgets/password_field.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/primary_button.dart",
+      "destino": "frontend/lib/presentation/widgets/primary_button.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/review_text_controller.dart",
+      "destino": "frontend/lib/presentation/widgets/review_text_controller.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/scan_overlay.dart",
+      "destino": "frontend/lib/presentation/widgets/scan_overlay.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/scanner_logo.dart",
+      "destino": "frontend/lib/presentation/widgets/scanner_logo.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/status_banner.dart",
+      "destino": "frontend/lib/presentation/widgets/status_banner.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/presentation/widgets/surface_card.dart",
+      "destino": "frontend/lib/presentation/widgets/surface_card.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/services/account_rules.dart",
+      "destino": "frontend/lib/services/account_rules.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/services/api_errors.dart",
+      "destino": "frontend/lib/services/api_errors.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/services/auth_api_client.dart",
+      "destino": "frontend/lib/services/auth_api_client.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/services/camera_permission_service.dart",
+      "destino": "frontend/lib/services/camera_permission_service.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/services/device_authenticator.dart",
+      "destino": "frontend/lib/services/device_authenticator.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/services/document_scanner_service.dart",
+      "destino": "frontend/lib/services/document_scanner_service.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/services/draft_storage.dart",
+      "destino": "frontend/lib/services/draft_storage.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/services/file_save_service.dart",
+      "destino": "frontend/lib/services/file_save_service.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/services/handtext_api_client.dart",
+      "destino": "frontend/lib/services/handtext_api_client.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/services/history_store.dart",
+      "destino": "frontend/lib/services/history_store.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/services/image_editor_service.dart",
+      "destino": "frontend/lib/services/image_editor_service.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/services/image_rules.dart",
+      "destino": "frontend/lib/services/image_rules.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/services/image_source_service.dart",
+      "destino": "frontend/lib/services/image_source_service.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/services/page_join.dart",
+      "destino": "frontend/lib/services/page_join.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/services/session_store.dart",
+      "destino": "frontend/lib/services/session_store.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/services/settings_store.dart",
+      "destino": "frontend/lib/services/settings_store.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/services/share_service.dart",
+      "destino": "frontend/lib/services/share_service.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/services/uncertain_ranges.dart",
+      "destino": "frontend/lib/services/uncertain_ranges.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/services/working_copy_service.dart",
+      "destino": "frontend/lib/services/working_copy_service.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/state/app_lock_controller.dart",
+      "destino": "frontend/lib/state/app_lock_controller.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/state/auth_controller.dart",
+      "destino": "frontend/lib/state/auth_controller.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/state/document_flow_controller.dart",
+      "destino": "frontend/lib/state/document_flow_controller.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/lib/state/document_history.dart",
+      "destino": "frontend/lib/state/document_history.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/state/settings_controller.dart",
+      "destino": "frontend/lib/state/settings_controller.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/theme/app_theme.dart",
+      "destino": "frontend/lib/theme/app_theme.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/lib/theme/aurora.dart",
+      "destino": "frontend/lib/theme/aurora.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/pubspec.lock",
+      "destino": "frontend/pubspec.lock",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/pubspec.yaml",
+      "destino": "frontend/pubspec.yaml",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/test/integration/api_contract_test.dart",
+      "destino": "frontend/test/integration/api_contract_test.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/test/presentation/accessibility_test.dart",
+      "destino": "frontend/test/presentation/accessibility_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/presentation/app_lock_test.dart",
+      "destino": "frontend/test/presentation/app_lock_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/presentation/auth_screens_test.dart",
+      "destino": "frontend/test/presentation/auth_screens_test.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/test/presentation/extras_screens_test.dart",
+      "destino": "frontend/test/presentation/extras_screens_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/presentation/flow_screen_test.dart",
+      "destino": "frontend/test/presentation/flow_screen_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/presentation/history_screen_test.dart",
+      "destino": "frontend/test/presentation/history_screen_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/presentation/language_test.dart",
+      "destino": "frontend/test/presentation/language_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/presentation/organize_test.dart",
+      "destino": "frontend/test/presentation/organize_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/presentation/pages_screen_test.dart",
+      "destino": "frontend/test/presentation/pages_screen_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/presentation/settings_screens_test.dart",
+      "destino": "frontend/test/presentation/settings_screens_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/presentation/tips_screen_test.dart",
+      "destino": "frontend/test/presentation/tips_screen_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/services/account_rules_test.dart",
+      "destino": "frontend/test/services/account_rules_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/services/auth_api_client_test.dart",
+      "destino": "frontend/test/services/auth_api_client_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/services/file_name_test.dart",
+      "destino": "frontend/test/services/file_name_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/services/handtext_api_client_test.dart",
+      "destino": "frontend/test/services/handtext_api_client_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/services/history_store_test.dart",
+      "destino": "frontend/test/services/history_store_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/services/image_rules_test.dart",
+      "destino": "frontend/test/services/image_rules_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/services/page_join_test.dart",
+      "destino": "frontend/test/services/page_join_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/services/storage_test.dart",
+      "destino": "frontend/test/services/storage_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/services/uncertain_ranges_test.dart",
+      "destino": "frontend/test/services/uncertain_ranges_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/state/auth_controller_test.dart",
+      "destino": "frontend/test/state/auth_controller_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/state/camera_flow_test.dart",
+      "destino": "frontend/test/state/camera_flow_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/state/document_flow_controller_test.dart",
+      "destino": "frontend/test/state/document_flow_controller_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/state/extras_flow_test.dart",
+      "destino": "frontend/test/state/extras_flow_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/state/history_flow_test.dart",
+      "destino": "frontend/test/state/history_flow_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/state/pages_flow_test.dart",
+      "destino": "frontend/test/state/pages_flow_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/state/scanner_flow_test.dart",
+      "destino": "frontend/test/state/scanner_flow_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/state/settings_test.dart",
+      "destino": "frontend/test/state/settings_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/support/app_tester.dart",
+      "destino": "frontend/test/support/app_tester.dart",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "frontend/test/support/fakes.dart",
+      "destino": "frontend/test/support/fakes.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/support/strings_es.dart",
+      "destino": "frontend/test/support/strings_es.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/support/synthetic_png.dart",
+      "destino": "frontend/test/support/synthetic_png.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/test/theme/aurora_contrast_test.dart",
+      "destino": "frontend/test/theme/aurora_contrast_test.dart",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "frontend/tool/generate_launcher_icon.py",
+      "destino": "frontend/tool/generate_launcher_icon.py",
+      "tratamiento": "igual_al_origen"
+    },
+    {
+      "origen": "render.yaml",
+      "destino": "docs/referencia/render.original.yaml",
+      "tratamiento": "conservado_como_referencia"
+    },
+    {
+      "origen": "specs/001-handtext-mvp/checklists/requirements.md",
+      "destino": "specs/001-handtext-mvp/checklists/requirements.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/001-handtext-mvp/contracts/api.md",
+      "destino": "specs/001-handtext-mvp/contracts/api.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/001-handtext-mvp/data-model.md",
+      "destino": "specs/001-handtext-mvp/data-model.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/001-handtext-mvp/plan.md",
+      "destino": "specs/001-handtext-mvp/plan.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/001-handtext-mvp/quickstart.md",
+      "destino": "specs/001-handtext-mvp/quickstart.md",
+      "tratamiento": "integrado_o_adaptado",
+      "referencia_historica": "specs/001-handtext-mvp/quickstart.origen.md"
+    },
+    {
+      "origen": "specs/001-handtext-mvp/research.md",
+      "destino": "specs/001-handtext-mvp/research.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/001-handtext-mvp/spec.md",
+      "destino": "specs/001-handtext-mvp/spec.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/001-handtext-mvp/tasks.md",
+      "destino": "specs/001-handtext-mvp/tasks.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/002-cuentas-de-usuario/checklists/requirements.md",
+      "destino": "specs/002-cuentas-de-usuario/checklists/requirements.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/002-cuentas-de-usuario/contracts/auth-api.md",
+      "destino": "specs/002-cuentas-de-usuario/contracts/auth-api.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/002-cuentas-de-usuario/data-model.md",
+      "destino": "specs/002-cuentas-de-usuario/data-model.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/002-cuentas-de-usuario/plan.md",
+      "destino": "specs/002-cuentas-de-usuario/plan.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/002-cuentas-de-usuario/quickstart.md",
+      "destino": "specs/002-cuentas-de-usuario/quickstart.md",
+      "tratamiento": "integrado_o_adaptado",
+      "referencia_historica": "specs/002-cuentas-de-usuario/quickstart.origen.md"
+    },
+    {
+      "origen": "specs/002-cuentas-de-usuario/research.md",
+      "destino": "specs/002-cuentas-de-usuario/research.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/002-cuentas-de-usuario/spec.md",
+      "destino": "specs/002-cuentas-de-usuario/spec.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/002-cuentas-de-usuario/tasks.md",
+      "destino": "specs/002-cuentas-de-usuario/tasks.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/003-revision-recorte-compartir/checklists/requirements.md",
+      "destino": "specs/003-revision-recorte-compartir/checklists/requirements.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/003-revision-recorte-compartir/contracts/recognition-api.md",
+      "destino": "specs/003-revision-recorte-compartir/contracts/recognition-api.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/003-revision-recorte-compartir/data-model.md",
+      "destino": "specs/003-revision-recorte-compartir/data-model.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/003-revision-recorte-compartir/plan.md",
+      "destino": "specs/003-revision-recorte-compartir/plan.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/003-revision-recorte-compartir/quickstart.md",
+      "destino": "specs/003-revision-recorte-compartir/quickstart.md",
+      "tratamiento": "integrado_o_adaptado",
+      "referencia_historica": "specs/003-revision-recorte-compartir/quickstart.origen.md"
+    },
+    {
+      "origen": "specs/003-revision-recorte-compartir/research.md",
+      "destino": "specs/003-revision-recorte-compartir/research.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/003-revision-recorte-compartir/spec.md",
+      "destino": "specs/003-revision-recorte-compartir/spec.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/003-revision-recorte-compartir/tasks.md",
+      "destino": "specs/003-revision-recorte-compartir/tasks.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/004-varias-paginas/checklists/requirements.md",
+      "destino": "specs/004-varias-paginas/checklists/requirements.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/004-varias-paginas/data-model.md",
+      "destino": "specs/004-varias-paginas/data-model.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/004-varias-paginas/plan.md",
+      "destino": "specs/004-varias-paginas/plan.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/004-varias-paginas/quickstart.md",
+      "destino": "specs/004-varias-paginas/quickstart.md",
+      "tratamiento": "integrado_o_adaptado",
+      "referencia_historica": "specs/004-varias-paginas/quickstart.origen.md"
+    },
+    {
+      "origen": "specs/004-varias-paginas/research.md",
+      "destino": "specs/004-varias-paginas/research.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/004-varias-paginas/spec.md",
+      "destino": "specs/004-varias-paginas/spec.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/004-varias-paginas/tasks.md",
+      "destino": "specs/004-varias-paginas/tasks.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/005-ajustes-y-version-final/checklists/requirements.md",
+      "destino": "specs/005-ajustes-y-version-final/checklists/requirements.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/005-ajustes-y-version-final/plan.md",
+      "destino": "specs/005-ajustes-y-version-final/plan.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/005-ajustes-y-version-final/quickstart.md",
+      "destino": "specs/005-ajustes-y-version-final/quickstart.md",
+      "tratamiento": "integrado_o_adaptado",
+      "referencia_historica": "specs/005-ajustes-y-version-final/quickstart.origen.md"
+    },
+    {
+      "origen": "specs/005-ajustes-y-version-final/research.md",
+      "destino": "specs/005-ajustes-y-version-final/research.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/005-ajustes-y-version-final/spec.md",
+      "destino": "specs/005-ajustes-y-version-final/spec.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/005-ajustes-y-version-final/tasks.md",
+      "destino": "specs/005-ajustes-y-version-final/tasks.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/006-primer-uso-y-accesibilidad/checklists/requirements.md",
+      "destino": "specs/006-primer-uso-y-accesibilidad/checklists/requirements.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/006-primer-uso-y-accesibilidad/plan.md",
+      "destino": "specs/006-primer-uso-y-accesibilidad/plan.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/006-primer-uso-y-accesibilidad/quickstart.md",
+      "destino": "specs/006-primer-uso-y-accesibilidad/quickstart.md",
+      "tratamiento": "integrado_o_adaptado",
+      "referencia_historica": "specs/006-primer-uso-y-accesibilidad/quickstart.origen.md"
+    },
+    {
+      "origen": "specs/006-primer-uso-y-accesibilidad/research.md",
+      "destino": "specs/006-primer-uso-y-accesibilidad/research.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/006-primer-uso-y-accesibilidad/spec.md",
+      "destino": "specs/006-primer-uso-y-accesibilidad/spec.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/006-primer-uso-y-accesibilidad/tasks.md",
+      "destino": "specs/006-primer-uso-y-accesibilidad/tasks.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/007-historial-de-documentos/checklists/requirements.md",
+      "destino": "specs/007-historial-de-documentos/checklists/requirements.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/007-historial-de-documentos/data-model.md",
+      "destino": "specs/007-historial-de-documentos/data-model.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/007-historial-de-documentos/plan.md",
+      "destino": "specs/007-historial-de-documentos/plan.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/007-historial-de-documentos/quickstart.md",
+      "destino": "specs/007-historial-de-documentos/quickstart.md",
+      "tratamiento": "integrado_o_adaptado",
+      "referencia_historica": "specs/007-historial-de-documentos/quickstart.origen.md"
+    },
+    {
+      "origen": "specs/007-historial-de-documentos/research.md",
+      "destino": "specs/007-historial-de-documentos/research.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/007-historial-de-documentos/spec.md",
+      "destino": "specs/007-historial-de-documentos/spec.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/007-historial-de-documentos/tasks.md",
+      "destino": "specs/007-historial-de-documentos/tasks.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/008-idioma-ingles/checklists/requirements.md",
+      "destino": "specs/008-idioma-ingles/checklists/requirements.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/008-idioma-ingles/plan.md",
+      "destino": "specs/008-idioma-ingles/plan.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/008-idioma-ingles/quickstart.md",
+      "destino": "specs/008-idioma-ingles/quickstart.md",
+      "tratamiento": "integrado_o_adaptado",
+      "referencia_historica": "specs/008-idioma-ingles/quickstart.origen.md"
+    },
+    {
+      "origen": "specs/008-idioma-ingles/research.md",
+      "destino": "specs/008-idioma-ingles/research.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/008-idioma-ingles/spec.md",
+      "destino": "specs/008-idioma-ingles/spec.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/008-idioma-ingles/tasks.md",
+      "destino": "specs/008-idioma-ingles/tasks.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/009-escaner-de-documentos/checklists/requirements.md",
+      "destino": "specs/009-escaner-de-documentos/checklists/requirements.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/009-escaner-de-documentos/plan.md",
+      "destino": "specs/009-escaner-de-documentos/plan.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/009-escaner-de-documentos/quickstart.md",
+      "destino": "specs/009-escaner-de-documentos/quickstart.md",
+      "tratamiento": "integrado_o_adaptado",
+      "referencia_historica": "specs/009-escaner-de-documentos/quickstart.origen.md"
+    },
+    {
+      "origen": "specs/009-escaner-de-documentos/research.md",
+      "destino": "specs/009-escaner-de-documentos/research.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/009-escaner-de-documentos/spec.md",
+      "destino": "specs/009-escaner-de-documentos/spec.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/009-escaner-de-documentos/tasks.md",
+      "destino": "specs/009-escaner-de-documentos/tasks.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/010-organizar-documentos/checklists/requirements.md",
+      "destino": "specs/010-organizar-documentos/checklists/requirements.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/010-organizar-documentos/plan.md",
+      "destino": "specs/010-organizar-documentos/plan.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/010-organizar-documentos/quickstart.md",
+      "destino": "specs/010-organizar-documentos/quickstart.md",
+      "tratamiento": "integrado_o_adaptado",
+      "referencia_historica": "specs/010-organizar-documentos/quickstart.origen.md"
+    },
+    {
+      "origen": "specs/010-organizar-documentos/research.md",
+      "destino": "specs/010-organizar-documentos/research.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/010-organizar-documentos/spec.md",
+      "destino": "specs/010-organizar-documentos/spec.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/010-organizar-documentos/tasks.md",
+      "destino": "specs/010-organizar-documentos/tasks.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/011-bloqueo-con-huella/checklists/requirements.md",
+      "destino": "specs/011-bloqueo-con-huella/checklists/requirements.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/011-bloqueo-con-huella/plan.md",
+      "destino": "specs/011-bloqueo-con-huella/plan.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/011-bloqueo-con-huella/quickstart.md",
+      "destino": "specs/011-bloqueo-con-huella/quickstart.md",
+      "tratamiento": "integrado_o_adaptado",
+      "referencia_historica": "specs/011-bloqueo-con-huella/quickstart.origen.md"
+    },
+    {
+      "origen": "specs/011-bloqueo-con-huella/research.md",
+      "destino": "specs/011-bloqueo-con-huella/research.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/011-bloqueo-con-huella/spec.md",
+      "destino": "specs/011-bloqueo-con-huella/spec.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/011-bloqueo-con-huella/tasks.md",
+      "destino": "specs/011-bloqueo-con-huella/tasks.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/012-pruebas-de-punta-a-punta/checklists/requirements.md",
+      "destino": "specs/012-pruebas-de-punta-a-punta/checklists/requirements.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/012-pruebas-de-punta-a-punta/plan.md",
+      "destino": "specs/012-pruebas-de-punta-a-punta/plan.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/012-pruebas-de-punta-a-punta/quickstart.md",
+      "destino": "specs/012-pruebas-de-punta-a-punta/quickstart.md",
+      "tratamiento": "integrado_o_adaptado",
+      "referencia_historica": "specs/012-pruebas-de-punta-a-punta/quickstart.origen.md"
+    },
+    {
+      "origen": "specs/012-pruebas-de-punta-a-punta/research.md",
+      "destino": "specs/012-pruebas-de-punta-a-punta/research.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/012-pruebas-de-punta-a-punta/spec.md",
+      "destino": "specs/012-pruebas-de-punta-a-punta/spec.md",
+      "tratamiento": "integrado_o_adaptado"
+    },
+    {
+      "origen": "specs/012-pruebas-de-punta-a-punta/tasks.md",
+      "destino": "specs/012-pruebas-de-punta-a-punta/tasks.md",
+      "tratamiento": "integrado_o_adaptado"
+    }
+  ]
+}
