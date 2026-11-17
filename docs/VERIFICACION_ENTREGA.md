@@ -45,6 +45,18 @@ La resolución DNS del PC falló al consultar directamente el dominio. Para esta
 
 RapidOCR del servidor ejecutó el reconocimiento sin llamar a Google Vision ni OpenAI. La imagen tipográfica sintética comprueba el funcionamiento del OCR, no su precisión manuscrita. Los 3,5 s corresponden a esa solicitud; no son una garantía de latencia para cualquier fotografía.
 
+## Ronda posterior: APK firmado en Samsung
+
+El 2026-11-16 se autorizó el Samsung SM-A055M por USB, con Android 15 y 36 524 280 KiB libres antes de instalar. El APK firmado de la guía final se instaló con `Success` y abrió correctamente. La variante debug anterior se conserva.
+
+Se comprobaron desde la UI del APK: registro del servidor, validación de nombre y consentimiento, ingreso incorrecto y correcto, cierre de sesión, recuperación de sesión y de borrador, OCR de una y dos imágenes sintéticas, edición, guardado nativo Word/PDF, búsqueda, renombrado, copia y reapertura del historial. Se conservaron la sesión y las preferencias de idioma, tema y letra al reiniciar.
+
+Errores comprobados: cancelar el consentimiento, cancelar el escáner, exportar texto vacío, cancelar el guardado y exportar sin Internet. El texto se conservó. Se restauró la conexión y la exportación volvió a responder. Word y PDF recuperados del teléfono incluyen la última corrección. No hay visor Word instalado; la validación del contenido DOCX se realizó en el PC. Samsung Notes mostró correctamente el PDF; su captura está incluida. La captura ADB del visor Drive apareció en blanco, pese a que el árbol accesible leía el texto. Se registra esa limitación del visor/captura por separado; PDFium y Poppler del PC también dibujan el archivo correctamente.
+
+El OCR de una imagen tardó 9,92 s hasta observar el editor por ADB; ese dato incluye consultas a la UI. No equivale a latencia del servidor ni a precisión manuscrita. Se comprobó el editor en inglés al 200 %; no se declara completo el recorrido de todas las pantallas. TalkBack se desactivó a petición del usuario y el bloqueo se dejó pendiente por su indicación.
+
+El [registro detallado](PRUEBAS_DISPOSITIVO_ENTREGA.md) y las [capturas y exportaciones sintéticas](evidencias/android-20261116/README.md) distinguen lo aprobado, parcial y pendiente. No se usaron documentos privados en el OCR ni se publican credenciales o listados personales.
+
 ## Artefactos
 
 - [Guía de instalación y compilación](ENTREGA_FINAL.md): nombre, ubicación y SHA-256 del APK firmado del 2026-11-16.
@@ -53,23 +65,25 @@ RapidOCR del servidor ejecutó el reconocimiento sin llamar a Google Vision ni O
 
 ## Pendientes que requieren evidencia externa
 
-1. Instalar y recorrer este APK firmado en el Samsung desde Internet. ADB no detectó dispositivos en esta sesión; no se instaló, desinstaló ni borró información del teléfono. Las confirmaciones anteriores del escáner en depuración son antecedentes, no validación de este binario.
-2. Registrar guardado nativo, reapertura, biometría, TalkBack y tiempos de inicio en el dispositivo. La cobertura automatizada no sustituye estas comprobaciones.
+El [protocolo Android y registro de acceso](PRUEBAS_DISPOSITIVO_ENTREGA.md) prepara los casos satisfactorios, errores y límites de esta ronda. Sus casos no se consideran ejecutados por estar documentados.
+
+1. Completar el recorrido controlado de escaneo de papel: ML Kit abrió y devolvió JPEG, pero las capturas aportadas enfocaban el chat y se excluyeron del envío y las evidencias. Los casos OCR publicados usan imágenes sintéticas de galería. El cambio a otra red tampoco se probó en esta ronda.
+2. Completar el recorrido completo en inglés. El selector del sistema conserva etiquetas en español con HandText en inglés; el alcance de los controles nativos requiere revisión. TalkBack y bloqueo quedan pendientes por indicación del usuario. Las aperturas de Activity de Samsung son medidas complementarias; no sustituyen SC-504 y SC-705 del emulador de referencia.
 3. Medir CER con diez hojas manuscritas autorizadas y sus transcripciones; conservar consentimiento y muestras fuera del repositorio si contienen información personal.
 4. Obtener revisión real del PR por otro integrante, registrar sus aportes y resolver observaciones. Las asignaciones de issues no demuestran autoría; no se fabrican commits ni revisiones.
 5. Confirmar acceso de la profesora al repositorio privado y que cada integrante cargue los materiales en Campus UCC.
 
-Las issues #138, #149, #186, #198, #206 y #214 permanecen abiertas porque incluyen recorridos o mediciones físicas pendientes. La parte de compilación y firma ARM64 de #149 está acreditada arriba; no acredita otras arquitecturas, instalación ni arranque.
+Las issues #138, #149, #186, #198, #206 y #214 siguen abiertas hasta conciliar la revisión del PR con sus criterios. Esta ronda aporta evidencia nueva de varias páginas y organización para #138 y #206. En #149 ya constan compilación, firma e instalación ARM64; siguen sin acreditarse otras arquitecturas ni los objetivos del emulador de referencia. No se atribuye el trabajo de esta ronda al responsable previsto de una issue: lo realizó Samuel con asistencia, conservando la procedencia de la implementación anterior.
 
 ## Relación con los criterios de evaluación
 
 | Área | Evidencia disponible / acción pendiente |
 | --- | --- |
 | Desarrollo guiado por especificaciones | Constitución, `specs/001` a `specs/013`, planes y tareas; la spec 013 documenta el cambio autorizado a despliegue |
-| Aplicación funcional | APK ARM64 firmado y recorrido HTTP real; falta demostración del APK final en el teléfono |
+| Aplicación funcional | APK firmado instalado en Samsung: cuentas, OCR de galería y archivos guardados; escaneo de papel y limitaciones detalladas arriba |
 | Calidad del código | Analizadores, formateador y pruebas automatizadas; configuración HTTPS y desarrollo desactivado en release |
 | Trabajo colaborativo en Git | Historial y procedencia preservados, rama y PR; revisión y aportes deben corresponder a personas reales |
-| Pruebas y validación | Resultados arriba; medición manuscrita y recorridos físicos pendientes |
+| Pruebas y validación | Resultados automatizados y registro Android; medición manuscrita, accesibilidad, bloqueo y recorridos indicados pendientes |
 | Documentación y demostración | README, guía final, este registro y presentación con notas; carga en Campus a cargo de cada integrante |
 
 No se cierran tareas manuales solo por compilar ni se declara cumplimiento total de la rúbrica con estas pruebas.

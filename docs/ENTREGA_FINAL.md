@@ -13,6 +13,8 @@
 
 Consultar [resultados y límites](VERIFICACION_ENTREGA.md). `/health` comprueba la API. La aplicación se demuestra mediante el APK Android.
 
+El APK ya se instaló y verificó en Samsung SM-A055M con Android 15. El [registro Android](PRUEBAS_DISPOSITIVO_ENTREGA.md) incluye OCR de galería, Word/PDF guardados, lectura del PDF en Samsung Notes, sesión, historial y errores controlados. La carpeta de evidencias contiene capturas originales y documentos sintéticos. TalkBack y bloqueo quedaron pendientes por indicación del usuario; no se acredita todavía el escaneo controlado de papel ni precisión manuscrita.
+
 ## Instalación y demo
 
 1. Copiar el APK al teléfono y abrirlo para instalarlo. Si aparece conflicto de firma o falta de espacio, detenerse y registrar el mensaje antes de modificar datos.
