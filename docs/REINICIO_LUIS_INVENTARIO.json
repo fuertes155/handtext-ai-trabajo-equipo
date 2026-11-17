@@ -101,9 +101,10 @@
     {
       "task": "T038",
       "issue": 38,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Cliente de la API en frontend/lib/services/handtext_api_client.dart · Dificultad Media."
+      "description": "Cliente de la API en frontend/lib/services/handtext_api_client.dart · Dificultad Media.",
+      "verification": "Lote 4: 60 pruebas Flutter de servicios/sesión y Argon2id local; análisis y formato del alcance correctos; revisión pendiente"
     },
     {
       "task": "T042",
@@ -199,23 +200,26 @@
     {
       "task": "T119",
       "issue": 80,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Pruebas de la app en frontend/test/services/auth_api_client_test.dart, frontend/test/services/account_rules_test.dart y frontend/test/state/auth_controller_test.dart · Dificultad Media."
+      "description": "Pruebas de la app en frontend/test/services/auth_api_client_test.dart, frontend/test/services/account_rules_test.dart y frontend/test/state/auth_controller_test.dart · Dificultad Media.",
+      "verification": "Lote 4: 60 pruebas Flutter de servicios/sesión y Argon2id local; análisis y formato del alcance correctos; revisión pendiente"
     },
     {
       "task": "T124",
       "issue": 85,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Reglas de formulario en frontend/lib/services/account_rules.dart · Dificultad Media."
+      "description": "Reglas de formulario en frontend/lib/services/account_rules.dart · Dificultad Media.",
+      "verification": "Lote 4: 60 pruebas Flutter de servicios/sesión y Argon2id local; análisis y formato del alcance correctos; revisión pendiente"
     },
     {
       "task": "T125",
       "issue": 86,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Controlador de sesión en frontend/lib/state/auth_controller.dart · Dificultad Alta."
+      "description": "Controlador de sesión en frontend/lib/state/auth_controller.dart · Dificultad Alta.",
+      "verification": "Lote 4: 60 pruebas Flutter de servicios/sesión y Argon2id local; análisis y formato del alcance correctos; revisión pendiente"
     },
     {
       "task": "T126",
@@ -285,9 +289,10 @@
     {
       "task": "T206",
       "issue": 113,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Pruebas de conversión, validación y ajuste de marcas en frontend/test/services/uncertain_ranges_test.dart · Dificultad Media."
+      "description": "Pruebas de conversión, validación y ajuste de marcas en frontend/test/services/uncertain_ranges_test.dart · Dificultad Media.",
+      "verification": "Lote 4: 60 pruebas Flutter de servicios/sesión y Argon2id local; análisis y formato del alcance correctos; revisión pendiente"
     },
     {
       "task": "T210",
@@ -313,9 +318,10 @@
     {
       "task": "T303",
       "issue": 129,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "pickMultipleFromGallery en frontend/lib/services/image_source_service.dart y en el servicio falso de las pruebas · Dificultad Media."
+      "description": "pickMultipleFromGallery en frontend/lib/services/image_source_service.dart y en el servicio falso de las pruebas · Dificultad Media.",
+      "verification": "Lote 4: 60 pruebas Flutter de servicios/sesión y Argon2id local; análisis y formato del alcance correctos; revisión pendiente"
     },
     {
       "task": "T305",

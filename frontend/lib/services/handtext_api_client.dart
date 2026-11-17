@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Cliente de la API de documentos (tareas T038 y T121; contracts/api.md).
 //
 // - recognize: envía la imagen como cuerpo binario a POST /api/v1/recognitions.
@@ -16,6 +14,7 @@ import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 
 import '../config/app_config.dart';
 import '../models/app_failure.dart';
@@ -63,7 +62,16 @@ class HandTextApiClient implements HandTextApi {
 
   /// Cabecera de autenticación [SC-202] más las cabeceras propias de la solicitud.
   Map<String, String> _headers(Map<String, String> extra) {
-    throw UnimplementedError("T038 pendiente de LUISDACA");
+    final token = _tokenProvider?.call();
+    if (token != null && token.isNotEmpty) {
+      return {...extra, 'Authorization': 'Bearer $token'};
+    }
+    if (kDebugMode &&
+        _localDevToken.isNotEmpty &&
+        const ['127.0.0.1', '::1', '10.0.2.2'].contains(_baseUrl.host)) {
+      return {...extra, 'X-HandText-Local-Dev': _localDevToken};
+    }
+    return extra;
   }
 
   @override
@@ -71,23 +79,77 @@ class HandTextApiClient implements HandTextApi {
     Uint8List imageBytes,
     ImageFormat format,
   ) async {
-    throw UnimplementedError("T038 pendiente de LUISDACA");
+    final response = await sendRequest(
+      () => _client.post(
+        _baseUrl.resolve('api/v1/recognitions'),
+        headers: _headers({'Content-Type': format.mimeType}),
+        body: imageBytes,
+      ),
+      timeout: _recognitionTimeout,
+      timeoutFailure: FailureKind.recognitionTimeout,
+    );
+    if (response.statusCode != 200) {
+      throw _failureFromResponse(
+        response,
+        fallback: FailureKind.recognitionFailed,
+      );
+    }
+    return _parseRecognition(response);
   }
 
   @override
   Future<Uint8List> export(String text, ExportFormat format) async {
-    throw UnimplementedError("T038 pendiente de LUISDACA");
+    final response = await sendRequest(
+      () => _client.post(
+        _baseUrl.resolve('api/v1/exports'),
+        headers: _headers({'Content-Type': 'application/json; charset=utf-8'}),
+        body: jsonEncode({'text': text, 'format': format.apiValue}),
+      ),
+      timeout: _exportTimeout,
+      timeoutFailure: FailureKind.exportTimeout,
+    );
+    if (response.statusCode != 200) {
+      throw _failureFromResponse(response, fallback: FailureKind.exportFailed);
+    }
+    if (!format.matchesContent(response.bodyBytes)) {
+      throw const AppFailure(FailureKind.exportFailed);
+    }
+    return response.bodyBytes;
   }
 
   AppFailure _failureFromResponse(
     http.Response response, {
     required FailureKind fallback,
   }) {
-    throw UnimplementedError("T038 pendiente de LUISDACA");
+    if (response.statusCode == 401) {
+      return const AppFailure(FailureKind.sessionExpired);
+    }
+    return failureFromResponse(response, fallback: fallback);
   }
 
   /// Interpreta la respuesta 200 del reconocimiento.
   RecognitionResult _parseRecognition(http.Response response) {
-    throw UnimplementedError("T038 pendiente de LUISDACA");
+    try {
+      final json = decodeJson(response);
+      if (json case {
+        'status': final String status,
+        'text': final String text,
+        'request_id': String(),
+      } when status == 'text_found' || status == 'no_text') {
+        final hasText = status == 'text_found' && text.trim().isNotEmpty;
+        return RecognitionResult(
+          hasText: hasText,
+          text: hasText ? text : '',
+          uncertainRanges: hasText
+              ? rangesFromApi(text, (json as Map)['uncertain_words'])
+              : const [],
+        );
+      }
+    } on FormatException {
+      throw const AppFailure(FailureKind.invalidServerResponse);
+    }
+    throw const AppFailure(FailureKind.invalidServerResponse);
   }
+
+  void close() => _client.close();
 }

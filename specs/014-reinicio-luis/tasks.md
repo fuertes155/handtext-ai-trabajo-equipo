@@ -109,3 +109,10 @@ T012, T013, T022, T035, T110 y T201: alcance técnico verificado; 10 pruebas
 Flutter y tres escenarios de configuración aprobados; análisis y formato del
 alcance correctos. Temas/paleta de Samuel conservados y revisados. No certifica
 todavía pantallas completas ni APK. Revisión del equipo pendiente. Total: 18/72.
+
+## Reconstrucción actual — lote 4 (2026-11-17)
+
+T038, T119, T124, T125, T206 y T303: alcance técnico verificado con 60 pruebas
+Flutter de servicios, sesión, galería y autenticación local. Se conserva Argon2id
+de Samuel; solo se unifica el cómputo Unicode de límites con el backend. Análisis
+y formato del alcance correctos. Revisión del equipo pendiente. Total: 24/72.

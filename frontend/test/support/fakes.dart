@@ -78,7 +78,10 @@ class FakeImageSource implements ImageSourceService {
 
   @override
   Future<List<XFile>> pickMultipleFromGallery({required int limit}) async {
-    throw UnimplementedError("T303 pendiente de LUISDACA");
+    galleryCalls++;
+    lastLimit = limit;
+    return galleryResults ??
+        (galleryResult == null ? <XFile>[] : [galleryResult!]);
   }
 
   @override

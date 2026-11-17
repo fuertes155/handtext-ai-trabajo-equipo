@@ -118,14 +118,14 @@ class LocalAuthApi implements AuthApi {
   }) async {
     final name = displayName.trim().split(RegExp(r'\s+')).join(' ');
     final normalizedEmail = email.trim().toLowerCase();
-    if (name.isEmpty || name.length > displayNameMaxChars) {
+    if (name.isEmpty || name.runes.length > displayNameMaxChars) {
       throw const AppFailure(FailureKind.invalidDisplayName);
     }
     if (!isValidEmail(normalizedEmail)) {
       throw const AppFailure(FailureKind.invalidEmail);
     }
-    if (password.length < passwordMinChars ||
-        password.length > passwordMaxChars ||
+    if (password.runes.length < passwordMinChars ||
+        password.runes.length > passwordMaxChars ||
         password.trim().isEmpty) {
       throw const AppFailure(FailureKind.weakPassword);
     }

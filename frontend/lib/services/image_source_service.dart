@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Obtención de la imagen desde la galería o la cámara (tareas T040 y T047).
 //
 // - Galería (Historia 1): selector de fotos del sistema; en Android no necesita permisos.
@@ -20,7 +18,8 @@ abstract interface class ImageSourceService {
   /// Devuelve la imagen elegida, o null si el usuario canceló.
   Future<XFile?> pickFromGallery();
 
-  /// Devuelve las imágenes elegidas (como máximo [limit]); vacía si canceló.
+  /// Solicita como máximo [limit]; el controlador valida otra vez el resultado
+  /// del selector nativo para informar y limpiar cualquier excedente.
   Future<List<XFile>> pickMultipleFromGallery({required int limit});
 
   /// Devuelve la fotografía tomada, o null si el usuario canceló.
@@ -44,7 +43,17 @@ class PickerImageSourceService implements ImageSourceService {
 
   @override
   Future<List<XFile>> pickMultipleFromGallery({required int limit}) async {
-    throw UnimplementedError("T303 pendiente de LUISDACA");
+    if (limit <= 0) return const [];
+    try {
+      // image_picker requiere un límite mayor de uno para selección múltiple.
+      if (limit == 1) {
+        final image = await pickFromGallery();
+        return image == null ? const [] : [image];
+      }
+      return await _picker.pickMultiImage(limit: limit);
+    } on PlatformException {
+      throw const AppFailure(FailureKind.imageUnreadable);
+    }
   }
 
   @override

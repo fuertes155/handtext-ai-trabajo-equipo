@@ -1,14 +1,91 @@
 // Pruebas del controlador de sesión (tareas T119 y T129; spec 002).
 
+import 'dart:async';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:handtext_ai/models/app_failure.dart';
 import 'package:handtext_ai/models/operation_status.dart';
 import 'package:handtext_ai/services/session_store.dart';
+import 'package:handtext_ai/services/auth_api_client.dart';
+import 'package:handtext_ai/models/user_account.dart';
 import 'package:handtext_ai/state/auth_controller.dart';
 
 import '../support/fakes.dart';
 
+class WaitingAuthApi extends FakeAuthApi {
+  final pending = Completer<AuthResult>();
+  int requests = 0;
+  @override
+  Future<AuthResult> login({required String email, required String password}) {
+    requests++;
+    return pending.future;
+  }
+}
+
+class FailingSessionStore extends InMemorySessionStore {
+  @override
+  Future<void> save(StoredSession session) async =>
+      throw StateError('synthetic-storage-error');
+}
+
 void main() {
+  test('un ingreso repetido no inicia dos peticiones y libera busy', () async {
+    final api = WaitingAuthApi();
+    final auth = AuthController(api: api, sessions: InMemorySessionStore());
+    await auth.initialize();
+    final first = auth.signIn(
+      email: 'test@example.invalid',
+      password: 'synthetic',
+    );
+    expect(auth.isBusy, isTrue);
+    expect(
+      await auth.signIn(email: 'test@example.invalid', password: 'synthetic'),
+      isFalse,
+    );
+    expect(api.requests, 1);
+    api.pending.complete(
+      const AuthResult(token: 'synthetic-token', user: testUser),
+    );
+    expect(await first, isTrue);
+    expect(auth.isBusy, isFalse);
+    auth.dispose();
+  });
+
+  test('no anuncia sesión persistida si falla el almacén seguro', () async {
+    final auth = AuthController(
+      api: FakeAuthApi(),
+      sessions: FailingSessionStore(),
+    );
+    await auth.initialize();
+    expect(
+      await auth.signIn(email: 'test@example.invalid', password: 'synthetic'),
+      isFalse,
+    );
+    expect(auth.status, AuthStatus.signedOut);
+    expect(auth.token, isNull);
+    expect(auth.failure?.kind, FailureKind.unexpected);
+    expect(auth.isBusy, isFalse);
+    auth.dispose();
+  });
+
+  test('rechaza un cambio de propietario en la recuperación', () async {
+    final api = FakeAuthApi()
+      ..user = const UserAccount(
+        id: 'other',
+        displayName: 'Other',
+        email: 'other@example.invalid',
+      );
+    final sessions = InMemorySessionStore()
+      ..stored = const StoredSession(token: 'synthetic', user: testUser);
+    final auth = AuthController(api: api, sessions: sessions);
+    await auth.initialize();
+    expect(auth.status, AuthStatus.signedOut);
+    expect(auth.token, isNull);
+    expect(sessions.stored, isNull);
+    expect(auth.notice, StatusEvent.sessionExpired);
+    auth.dispose();
+  });
+
   late FakeAuthApi api;
   late InMemorySessionStore sessions;
   late AuthController auth;

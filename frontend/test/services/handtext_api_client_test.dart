@@ -50,6 +50,43 @@ Future<FailureKind> _failureOf(Future<Object?> operation) async {
 }
 
 void main() {
+  test(
+    'usa el Bearer actual y restringe el permiso local al desarrollo local',
+    () async {
+      String? token = 'synthetic-first';
+      final sent = <http.Request>[];
+      final client = HandTextApiClient(
+        baseUrl: Uri.parse('http://127.0.0.1:8001/'),
+        tokenProvider: () => token,
+        localDevToken: 'synthetic-local',
+        httpClient: MockClient((request) async {
+          sent.add(request);
+          return _json({'status': 'no_text', 'text': '', 'request_id': 'r'});
+        }),
+      );
+      await client.recognize(fakePngBytes(), ImageFormat.png);
+      expect(sent.last.headers['authorization'], 'Bearer synthetic-first');
+      expect(sent.last.headers.containsKey('x-handtext-local-dev'), isFalse);
+      token = null;
+      await client.recognize(fakePngBytes(), ImageFormat.png);
+      expect(sent.last.headers['x-handtext-local-dev'], 'synthetic-local');
+      client.close();
+      final remote = HandTextApiClient(
+        baseUrl: Uri.parse('https://example.invalid/'),
+        localDevToken: 'synthetic-local',
+        httpClient: MockClient((request) async {
+          expect(request.headers.containsKey('x-handtext-local-dev'), isFalse);
+          return http.Response('', 401);
+        }),
+      );
+      expect(
+        await _failureOf(remote.recognize(fakePngBytes(), ImageFormat.png)),
+        FailureKind.sessionExpired,
+      );
+      remote.close();
+    },
+  );
+
   group('reconocimiento', () {
     test('envía la imagen como cuerpo binario con su tipo', () async {
       late http.Request sent;

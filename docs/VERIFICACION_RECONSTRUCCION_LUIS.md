@@ -71,8 +71,8 @@ ADB no mostró dispositivos conectados. No se han realizado recorridos manuales,
 configurado PIN/huella, instalado APK ni modificado datos de un teléfono. No se ha
 generado APK actual ni verificado una firma de distribución. Producción intacta.
 
-Tareas con alcance técnico verificado: 18/72; cierre formal: 0/72 por revisión pendiente.
-Las otras 54 tareas requieren implementación/revisión y sus verificaciones actuales.
+Tareas con alcance técnico verificado: 24/72; cierre formal: 0/72 por revisión pendiente.
+Las otras 48 tareas requieren implementación/revisión y sus verificaciones actuales.
 
 ## Lote 2: T021, T032, T050, T051, T118, T205
 
@@ -157,3 +157,44 @@ dart format --output=none --set-exit-if-changed lib/config/app_config.dart lib/s
 No se consultó implementación histórica en este lote. Los temas son los conservados
 en 18f5fde; se revisan mediante pruebas nuevas. Firma, pantallas y suite general
 continúan pendientes, igual que las verificaciones físicas.
+
+## Lote 4: T038, T119, T124, T125, T206, T303
+
+T038 envía imagen binaria y texto JSON, aplica límites de espera, traduce errores y
+verifica la firma de archivos. Lee el Bearer actual en cada solicitud. El permiso
+local solo sale en debug y hacia loopback/emulador, nunca a un servidor remoto.
+Las marcas se convierten a UTF-16 y el texto válido se conserva. El cliente ofrece
+close para liberar conexiones. Se conserva el traductor de errores compartido.
+
+T124 valida nombre, correo, longitud, confirmación y consentimiento. T125 administra
+lectura, inicio, cierre, eliminación y vencimiento de sesión; evita peticiones
+duplicadas, conserva cache sin red y exige persistir antes de anunciar ingreso.
+Un cambio de propietario al recuperar una sesión se rechaza. Fallos del almacén
+no se registran ni se anuncian como persistencia correcta.
+
+T119 sustituye suites retiradas de formularios/cliente, amplía la suite compartida
+del controlador con duplicados, errores de almacenamiento y aislamiento de dueño.
+T206 prueba conversión Unicode, validación, desplazamiento, borrado, pegado y
+puntuación en las marcas. T303 solicita el límite nativo, usa selección individual
+si queda una página y conserva resultados excedentes para que el controlador
+compartido pueda informar y limpiar sus copias, en vez de ocultarlos. Su falso
+registra llamadas y límites para las pruebas de varias páginas conservadas.
+
+**60 pruebas aprobadas**, incluida la suite compartida de autenticación local
+Argon2id. El único ajuste a LocalAuthApi cuenta puntos Unicode en los límites de
+nombre/contraseña como el backend; la derivación, migración y almacenamiento
+seguros de Samuel no se reescriben. No se consultó implementación histórica.
+El análisis y formato del alcance son correctos. Datos sintéticos y HTTP simulado.
+
+Comandos desde frontend:
+
+```bash
+flutter test --no-pub test/services/account_rules_test.dart test/services/uncertain_ranges_test.dart test/services/auth_api_client_test.dart test/services/handtext_api_client_test.dart test/services/image_source_service_test.dart test/services/local_auth_api_test.dart test/state/auth_controller_test.dart
+flutter analyze --no-pub lib/services/handtext_api_client.dart lib/services/account_rules.dart lib/services/image_source_service.dart lib/services/local_auth_api.dart lib/state/auth_controller.dart test/services/account_rules_test.dart test/services/uncertain_ranges_test.dart test/services/auth_api_client_test.dart test/services/image_source_service_test.dart test/services/handtext_api_client_test.dart test/state/auth_controller_test.dart
+dart format --output=none --set-exit-if-changed lib/services/handtext_api_client.dart lib/services/account_rules.dart lib/services/image_source_service.dart lib/services/local_auth_api.dart lib/state/auth_controller.dart test/services/account_rules_test.dart test/services/uncertain_ranges_test.dart test/services/auth_api_client_test.dart test/services/image_source_service_test.dart test/services/handtext_api_client_test.dart test/state/auth_controller_test.dart test/support/fakes.dart
+```
+
+Las pruebas Flutter también necesitan sockets locales; cuando el aislamiento los
+rechaza se ejecutan fuera de él. No se prueba galería física ni persistencia real
+del Android Keystore hasta contar con dispositivo. La revisión del equipo sigue
+pendiente en todas las issues.

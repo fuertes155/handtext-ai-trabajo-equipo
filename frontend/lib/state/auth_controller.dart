@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Controlador de la sesión (tarea T125; spec 002, Historias 1 y 2).
 //
 // Decide si se muestra la bienvenida (sin sesión) o la app (con sesión), y concentra
@@ -36,37 +34,77 @@ class AuthController extends ChangeNotifier {
   bool _isDisposed = false;
 
   AuthStatus get status {
-    throw UnimplementedError("T125 pendiente de LUISDACA");
+    return _status;
   }
 
   /// Cuenta con sesión (null sin sesión).
   UserAccount? get user {
-    throw UnimplementedError("T125 pendiente de LUISDACA");
+    return _session?.user;
   }
 
   /// Token para la cabecera Authorization (lo lee HandTextApiClient).
   String? get token {
-    throw UnimplementedError("T125 pendiente de LUISDACA");
+    return _session?.token;
   }
 
   /// [SC-008] Hay una operación de cuenta en curso.
   bool get isBusy {
-    throw UnimplementedError("T125 pendiente de LUISDACA");
+    return _isBusy;
   }
 
   /// Último fallo del registro, el ingreso o la eliminación (para mostrarlo).
   AppFailure? get failure {
-    throw UnimplementedError("T125 pendiente de LUISDACA");
+    return _failure;
   }
 
   /// Aviso para la bienvenida: sesión vencida, sesión cerrada o cuenta eliminada.
   StatusEvent? get notice {
-    throw UnimplementedError("T125 pendiente de LUISDACA");
+    return _notice;
   }
 
   /// Al abrir la app, comprueba la sesión guardada con el servicio de autenticación.
   Future<void> initialize() async {
-    throw UnimplementedError("T125 pendiente de LUISDACA");
+    if (_isBusy || _isDisposed) return;
+    _isBusy = true;
+    _failure = null;
+    try {
+      final saved = await _sessions.read();
+      if (saved == null) {
+        _status = AuthStatus.signedOut;
+        return;
+      }
+      try {
+        final account = await _api.me(saved.token);
+        // Un token nunca debe cambiar de propietario al recuperar una sesión.
+        if (account.id != saved.user.id) {
+          throw const AppFailure(FailureKind.sessionExpired);
+        }
+        _session = StoredSession(token: saved.token, user: account);
+        await _saveQuietly(_session!);
+        _status = AuthStatus.signedIn;
+      } on AppFailure catch (error) {
+        if (error.kind == FailureKind.noConnection ||
+            error.kind == FailureKind.accountsUnavailable) {
+          _session = saved;
+          _status = AuthStatus.signedIn;
+        } else {
+          _session = null;
+          _status = AuthStatus.signedOut;
+          if (error.kind == FailureKind.sessionExpired) {
+            _notice = StatusEvent.sessionExpired;
+          }
+          _failure = error;
+          await _clearQuietly();
+        }
+      }
+    } catch (_) {
+      _session = null;
+      _status = AuthStatus.signedOut;
+      _failure = const AppFailure(FailureKind.unexpected);
+    } finally {
+      _isBusy = false;
+      _notify();
+    }
   }
 
   /// [CU-H1-E2] Crea la cuenta e inicia la sesión. Devuelve true si lo logró.
@@ -76,22 +114,82 @@ class AuthController extends ChangeNotifier {
     required String password,
     required bool acceptsDataPolicy,
   }) {
-    throw UnimplementedError("T125 pendiente de LUISDACA");
+    return _startSession(
+      () => _api.register(
+        displayName: displayName.trim().split(RegExp(r'\s+')).join(' '),
+        email: email.trim().toLowerCase(),
+        password: password,
+        acceptsDataPolicy: acceptsDataPolicy,
+      ),
+    );
   }
 
   /// [CU-H1-E6] Inicia sesión con correo y contraseña.
   Future<bool> signIn({required String email, required String password}) {
-    throw UnimplementedError("T125 pendiente de LUISDACA");
+    return _startSession(
+      () => _api.login(email: email.trim().toLowerCase(), password: password),
+    );
   }
 
   Future<bool> _startSession(Future<AuthResult> Function() request) async {
-    throw UnimplementedError("T125 pendiente de LUISDACA");
+    if (_isBusy || _isDisposed) return false;
+    _isBusy = true;
+    _failure = null;
+    _notice = null;
+    _notify();
+    try {
+      final grant = await request();
+      if (grant.token.isEmpty || grant.user.id.isEmpty) {
+        throw const AppFailure(FailureKind.invalidServerResponse);
+      }
+      final session = StoredSession(token: grant.token, user: grant.user);
+      await _saveQuietly(session);
+      _session = session;
+      _status = AuthStatus.signedIn;
+      return true;
+    } on AppFailure catch (error) {
+      _failure = error;
+      return false;
+    } catch (_) {
+      _failure = const AppFailure(FailureKind.unexpected);
+      return false;
+    } finally {
+      _isBusy = false;
+      _notify();
+    }
   }
 
   /// [CU-H2-E1] Cierra la sesión. [beforeSignOut] borra antes los datos locales de la
   /// cuenta (el borrador), si la pantalla lo pidió con confirmación [CU-H2-E2].
   Future<void> signOut({Future<void> Function()? beforeSignOut}) async {
-    throw UnimplementedError("T125 pendiente de LUISDACA");
+    if (_isBusy || _isDisposed || _session == null) return;
+    _isBusy = true;
+    _failure = null;
+    _notify();
+    try {
+      await beforeSignOut?.call();
+      try {
+        await _api.logout(_session!.token);
+      } on AppFailure catch (error) {
+        // Sin red se puede cerrar la sesión del teléfono. La sesión del servidor
+        // mantiene su vencimiento habitual; nunca se inventa una revocación remota.
+        if (error.kind != FailureKind.noConnection &&
+            error.kind != FailureKind.sessionExpired) {
+          rethrow;
+        }
+      }
+      await _sessions.clear();
+      _session = null;
+      _status = AuthStatus.signedOut;
+      _notice = StatusEvent.signedOut;
+    } on AppFailure catch (error) {
+      _failure = error;
+    } catch (_) {
+      _failure = const AppFailure(FailureKind.unexpected);
+    } finally {
+      _isBusy = false;
+      _notify();
+    }
   }
 
   /// [CU-H2-E3] Elimina la cuenta confirmando con la contraseña. Devuelve true si lo
@@ -100,30 +198,66 @@ class AuthController extends ChangeNotifier {
     String password, {
     Future<void> Function()? beforeSignOut,
   }) async {
-    throw UnimplementedError("T125 pendiente de LUISDACA");
+    if (_isBusy || _isDisposed || _session == null) return false;
+    _isBusy = true;
+    _failure = null;
+    _notify();
+    try {
+      await _api.deleteAccount(_session!.token, password);
+      await beforeSignOut?.call();
+      await _sessions.clear();
+      _session = null;
+      _status = AuthStatus.signedOut;
+      _notice = StatusEvent.accountDeleted;
+      return true;
+    } on AppFailure catch (error) {
+      _failure = error;
+      return false;
+    } catch (_) {
+      _failure = const AppFailure(FailureKind.unexpected);
+      return false;
+    } finally {
+      _isBusy = false;
+      _notify();
+    }
   }
 
   /// [CU-H2-E5] La API rechazó la sesión (401): se vuelve a la bienvenida. El borrador
   /// de esta persona se conserva y se recupera cuando vuelva a ingresar.
   void handleSessionExpired() {
-    throw UnimplementedError("T125 pendiente de LUISDACA");
+    _session = null;
+    _status = AuthStatus.signedOut;
+    _notice = StatusEvent.sessionExpired;
+    unawaited(_clearQuietly());
+    _notify();
   }
 
   /// Borra el fallo mostrado (por ejemplo, al cambiar de pantalla).
   void clearFailure() {
-    throw UnimplementedError("T125 pendiente de LUISDACA");
+    _failure = null;
+    _notify();
   }
 
   Future<void> _saveQuietly(StoredSession session) async {
-    throw UnimplementedError("T125 pendiente de LUISDACA");
+    // No registrar errores del almacenamiento seguro: pueden incluir datos privados.
+    try {
+      await _sessions.save(session);
+    } catch (_) {
+      throw const AppFailure(FailureKind.unexpected);
+    }
   }
 
   Future<void> _clearQuietly() async {
-    throw UnimplementedError("T125 pendiente de LUISDACA");
+    try {
+      await _sessions.clear();
+    } catch (_) {
+      _failure = const AppFailure(FailureKind.unexpected);
+      _notify();
+    }
   }
 
   void _notify() {
-    throw UnimplementedError("T125 pendiente de LUISDACA");
+    if (!_isDisposed) notifyListeners();
   }
 
   @override
