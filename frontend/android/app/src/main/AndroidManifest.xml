@@ -9,7 +9,7 @@
   - label: nombre visible de la app.
   - UCropActivity: editor nativo de recorte y giro (spec 003; research.md de 003, R6).
   - usesCleartextTraffic: lo decide Gradle según el tipo de compilación (spec 005,
-    research.md R8): debug lo permite; release, solo si se pide al compilar.
+    research.md R8): debug lo permite; release exige HTTPS sin excepciones.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />

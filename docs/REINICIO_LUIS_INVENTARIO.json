@@ -48,9 +48,10 @@
     {
       "task": "T016",
       "issue": 16,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
-      "description": "Manifiestos Android (Internet, sin copias de seguridad y HTTP solo en debug) en frontend/android/app/src/main/AndroidManifest.xml, frontend/android/app/src/main/res/xml/data_extraction_rules.xml y frontend/android/app/src/debug/AndroidManifest.xml · Dificultad Media."
+      "description": "Manifiestos Android (Internet, sin copias de seguridad y HTTP solo en debug) en frontend/android/app/src/main/AndroidManifest.xml, frontend/android/app/src/main/res/xml/data_extraction_rules.xml y frontend/android/app/src/debug/AndroidManifest.xml · Dificultad Media.",
+      "verification": "Lote 11: Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.\nFlutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin\nincidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T021",
@@ -151,16 +152,18 @@
     {
       "task": "T054",
       "issue": 54,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
-      "description": "Mapa de requisitos → código → pruebas en MAPA_DEL_CODIGO.md · Dificultad Baja."
+      "description": "Mapa de requisitos → código → pruebas en MAPA_DEL_CODIGO.md · Dificultad Baja.",
+      "verification": "Lote 11: Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.\nFlutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin\nincidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T057",
       "issue": 57,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
-      "description": "Compilar el APK de depuración con flutter build apk --debug en frontend/ · Dificultad Baja."
+      "description": "Compilar el APK de depuración con flutter build apk --debug en frontend/ · Dificultad Baja.",
+      "verification": "Lote 11: Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.\nFlutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin\nincidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T104",
@@ -261,9 +264,10 @@
     {
       "task": "T137",
       "issue": 98,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
-      "description": "Formateadores, analizadores y todas las pruebas; registro de verificación al final de este archivo · Dificultad Baja."
+      "description": "Formateadores, analizadores y todas las pruebas; registro de verificación al final de este archivo · Dificultad Baja.",
+      "verification": "Lote 11: Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.\nFlutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin\nincidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T139",
@@ -473,9 +477,10 @@
     {
       "task": "T708",
       "issue": 186,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
-      "description": "Recorrido de todas las pantallas en inglés al 100 % y al 200 % sin textos en español (SC-802, SC-805), fallos y títulos de servicios · Dificultad Media."
+      "description": "Recorrido de todas las pantallas en inglés al 100 % y al 200 % sin textos en español (SC-802, SC-805), fallos y títulos de servicios · Dificultad Media.",
+      "verification": "Lote 11: Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.\nFlutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin\nincidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     },
     {
       "task": "T803",
@@ -565,9 +570,10 @@
     {
       "task": "T1103",
       "issue": 217,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
-      "description": "quickstart.md (el comando), README.md y MAPA_DEL_CODIGO.md · Dificultad Baja."
+      "description": "quickstart.md (el comando), README.md y MAPA_DEL_CODIGO.md · Dificultad Baja.",
+      "verification": "Lote 11: Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.\nFlutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin\nincidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
     }
   ],
   "files_changed": [

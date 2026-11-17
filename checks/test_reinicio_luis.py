@@ -1,4 +1,4 @@
-"""T118: autorización final; release sigue bloqueada hasta completar T409."""
+"""Autorización final y conexión de la política de distribución (T118/T409)."""
 
 import sys
 from pathlib import Path
@@ -28,12 +28,12 @@ def test_real_document_routes_require_a_valid_session(route, authorization):
     assert provider.received == []
 
 
-def test_release_marker_and_dependencies():
-    assert (ROOT / "frontend/LUIS_PENDIENTE").is_file()
+def test_release_policy_replaces_temporary_marker():
+    assert not (ROOT / "frontend/LUIS_PENDIENTE").exists()
     script = (ROOT / "frontend/android/app/build.gradle.kts").read_text(
         encoding="utf-8"
     )
-    assert "dependsOn(checkLuisReleaseReady, checkReleaseApiUrl)" in script
+    assert "dependsOn(checkReleaseConfiguration)" in script
     assert "throw GradleException" in script
     assert 'manifestPlaceholders["usesCleartextTraffic"] = "false"' in script
     assert 'signingConfigs.getByName("debug")' not in script

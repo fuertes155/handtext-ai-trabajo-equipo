@@ -1,3 +1,7 @@
+> **Antecedente del 16 de noviembre.** Para esta reconstrucción use
+> [los comandos actuales](QUICKSTART_RECONSTRUCCION_LUIS.md). Esta guía no acredita
+> firma, APK ni pruebas de la revisión actual. No desplegar durante este trabajo.
+
 # Entrega final de HandText AI
 
 ## Archivos y acceso
@@ -46,7 +50,7 @@ flutter build apk --release --target-platform android-arm64 --dart-define=HOSTED
 Pop-Location
 ```
 
-Para reproducir la firma, configurar `frontend/android/key.properties` localmente con la clave autorizada de distribución. Ese archivo y el keystore están excluidos de Git. También puede firmarse con `apksigner sign`, suministrando la contraseña por entorno o entrada protegida. Comprobar con `apksigner verify --verbose`. El fallback debug de Gradle se conserva para desarrollo; la entrega requiere verificar la firma de distribución.
+Para reproducir la firma, configurar `frontend/android/key.properties` localmente con la clave autorizada de distribución. Ese archivo y el keystore están excluidos de Git. También puede firmarse con `apksigner sign`, suministrando la contraseña por entorno o entrada protegida. Comprobar con `apksigner verify --verbose`. La reconstrucción del 17 de noviembre elimina cualquier fallback debug: release exige una clave propia válida, HTTPS y HOSTED_ACCOUNTS=true. La firma real continúa pendiente de la clave autorizada.
 
 ## Despliegue Railway
 

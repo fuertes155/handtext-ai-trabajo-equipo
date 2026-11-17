@@ -79,10 +79,11 @@ class HandTextApiClient implements HandTextApi {
     Uint8List imageBytes,
     ImageFormat format,
   ) async {
+    final headers = _headers({'Content-Type': format.mimeType});
     final response = await sendRequest(
       () => _client.post(
         _baseUrl.resolve('api/v1/recognitions'),
-        headers: _headers({'Content-Type': format.mimeType}),
+        headers: headers,
         body: imageBytes,
       ),
       timeout: _recognitionTimeout,
@@ -92,6 +93,7 @@ class HandTextApiClient implements HandTextApi {
       throw _failureFromResponse(
         response,
         fallback: FailureKind.recognitionFailed,
+        hadSession: headers.containsKey('Authorization'),
       );
     }
     return _parseRecognition(response);
@@ -99,17 +101,24 @@ class HandTextApiClient implements HandTextApi {
 
   @override
   Future<Uint8List> export(String text, ExportFormat format) async {
+    final headers = _headers({
+      'Content-Type': 'application/json; charset=utf-8',
+    });
     final response = await sendRequest(
       () => _client.post(
         _baseUrl.resolve('api/v1/exports'),
-        headers: _headers({'Content-Type': 'application/json; charset=utf-8'}),
+        headers: headers,
         body: jsonEncode({'text': text, 'format': format.apiValue}),
       ),
       timeout: _exportTimeout,
       timeoutFailure: FailureKind.exportTimeout,
     );
     if (response.statusCode != 200) {
-      throw _failureFromResponse(response, fallback: FailureKind.exportFailed);
+      throw _failureFromResponse(
+        response,
+        fallback: FailureKind.exportFailed,
+        hadSession: headers.containsKey('Authorization'),
+      );
     }
     if (!format.matchesContent(response.bodyBytes)) {
       throw const AppFailure(FailureKind.exportFailed);
@@ -120,9 +129,16 @@ class HandTextApiClient implements HandTextApi {
   AppFailure _failureFromResponse(
     http.Response response, {
     required FailureKind fallback,
+    required bool hadSession,
   }) {
     if (response.statusCode == 401) {
-      return const AppFailure(FailureKind.sessionExpired);
+      // Un rechazo sin Bearer no invalida una cuenta local. Se recuerda lo
+      // enviado, aunque la sesión cambie mientras llega la respuesta.
+      return AppFailure(
+        hadSession
+            ? FailureKind.sessionExpired
+            : FailureKind.backendAuthenticationRequired,
+      );
     }
     return failureFromResponse(response, fallback: fallback);
   }

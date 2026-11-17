@@ -50,6 +50,28 @@ Future<FailureKind> _failureOf(Future<Object?> operation) async {
 }
 
 void main() {
+  for (final withToken in [true, false]) {
+    test('401 distingue sesión remota de cuenta local ($withToken)', () async {
+      String? token = withToken ? 'synthetic-session' : null;
+      final client = HandTextApiClient(
+        baseUrl: Uri.parse('https://example.invalid/'),
+        tokenProvider: () => token,
+        httpClient: MockClient((request) async {
+          expect(request.headers.containsKey('authorization'), withToken);
+          token = null;
+          return http.Response('', 401);
+        }),
+      );
+      expect(
+        await _failureOf(client.export('Texto', ExportFormat.docx)),
+        withToken
+            ? FailureKind.sessionExpired
+            : FailureKind.backendAuthenticationRequired,
+      );
+      client.close();
+    });
+  }
+
   test(
     'usa el Bearer actual y restringe el permiso local al desarrollo local',
     () async {
@@ -81,7 +103,7 @@ void main() {
       );
       expect(
         await _failureOf(remote.recognize(fakePngBytes(), ImageFormat.png)),
-        FailureKind.sessionExpired,
+        FailureKind.backendAuthenticationRequired,
       );
       remote.close();
     },

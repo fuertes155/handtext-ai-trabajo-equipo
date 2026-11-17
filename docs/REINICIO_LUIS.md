@@ -4,7 +4,15 @@ Solicitud del propietario: 2026-11-17. Cuenta prevista: `LUISDACA`.
 Repositorio: `fuertes155/handtext-ai-trabajo-equipo`.
 Rama existente: `entrega/railway-documentacion-20261116`. No se crea otra rama.
 
-**Esta revisión está incompleta y no debe entregarse ni desplegarse.** Se retiran
+**Estado actual:** implementaciones repuestas y APK debug generado; no desplegar ni
+distribuir como entrega hasta completar revisión y verificaciones pendientes.
+[Comandos actuales](QUICKSTART_RECONSTRUCCION_LUIS.md) e [informe por lote](VERIFICACION_RECONSTRUCCION_LUIS.md).
+La release ya no usa el marcador temporal: exige HTTPS, cuentas del servidor y clave
+propia validada; sin clave de entrega falla. No se usa firma debug como sustituto.
+
+## Antecedente del retiro (conservado para trazabilidad)
+
+En el reinicio inicial se retiran
 implementaciones correspondientes al reparto de Luis para que pueda realizarlas
 y verificarlas. Se conservan las firmas y las dependencias compartidas que necesita
 el trabajo de Samuel y Juan. El reparto de tareas no demuestra quién escribió el
@@ -140,3 +148,17 @@ Actualización del lote 2: T118/T205 ya tienen implementación definitiva;
 `backend/app/pending_luis.py` fue sustituido por DocumentUser y pruebas de
 autorización. Los detalles anteriores describen el retiro histórico. El marcador
 `frontend/LUIS_PENDIENTE` continúa vigente hasta completar Flutter y T409.
+
+## Comportamiento definitivo de seguridad
+
+`pending_luis.py` fue sustituido por autorización real y pruebas de credenciales
+sin/incorrectas/válidas; las rutas de cuentas nunca admiten token de desarrollo.
+`LUIS_PENDIENTE` fue sustituido por checkReleaseConfiguration y diez pruebas de la
+política Gradle con certificados sintéticos: HTTPS sin credenciales, cuentas del
+servidor, rechazo de token local/HTTP, ausencia de clave y firma debug. Se mantiene
+usesCleartextTraffic=false para release. No hay clave de entrega en este equipo.
+Las verificaciones físicas y la firma real no se acreditan con las pruebas sintéticas.
+
+No quedan cuerpos UnimplementedError/NotImplementedError del reinicio. Los resultados
+históricos no se cuentan. Las 72 issues siguen abiertas mientras falte la revisión
+exigida de otro integrante. El inventario distingue verificación técnica de cierre.

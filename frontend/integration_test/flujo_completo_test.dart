@@ -234,7 +234,25 @@ void main() {
 
     // [PP-H2-E1] Cerrar sesión, volver a entrar y encontrarlo.
     await step('cerrar sesión, volver y encontrarlo', () async {
-      throw UnimplementedError('T1102 pendiente de LUISDACA');
+      // El historial pertenece al ID, no a la instancia del controlador.
+      final previousId = auth.user!.id;
+      await _tapTooltip(tester, es.accountTooltip);
+      await _tap(tester, es.signOut);
+      await _waitFor(tester, find.text(es.haveAccount));
+      expect(auth.token, isNull);
+      expect(await sessions.read(), isNull);
+      await _tap(tester, es.haveAccount);
+      await _type(tester, es.emailLabel, email);
+      await _type(tester, es.passwordLabel, password);
+      await _tap(tester, es.signIn);
+      await _waitFor(tester, find.text(es.greeting('Robot')));
+      expect(auth.user!.id, previousId);
+      await _tap(tester, es.historyTitle);
+      await _waitFor(tester, find.text('Apuntes de prueba'));
+      expect(history.entries.single.text, _corrected);
+      expect(history.entries.single.formats, {ExportFormat.docx});
+      // Releer el archivo evita confundir estado de memoria con persistencia.
+      expect((await historyStore.load()).single.text, _corrected);
     });
 
     final documentFlowDuration = total.elapsed;

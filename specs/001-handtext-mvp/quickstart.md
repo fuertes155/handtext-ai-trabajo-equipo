@@ -1,3 +1,9 @@
+> **Reconstrucción actual · 2026-11-17:** use primero
+> [la guía reproducible](../../docs/QUICKSTART_RECONSTRUCCION_LUIS.md).
+> Los pasos y evidencias anteriores que siguen requieren su configuración indicada;
+> no acreditan pruebas físicas ni una firma de la revisión actual. Release exige
+> cuentas del servidor, HTTPS y clave propia; no admite firma debug ni HTTP local.
+
 > Entrega 2026-11-16. La [especificación 013](../013-entrega-railway/spec.md) amplía este alcance para Railway, HTTPS y cuentas del servidor. Consultar la [guía final](../../docs/ENTREGA_FINAL.md). El modo local conserva su configuración de desarrollo.
 
 # Guía de ejecución y validación del MVP

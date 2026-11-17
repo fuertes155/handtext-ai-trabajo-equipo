@@ -163,3 +163,11 @@ T803, T806, T903, T906, T606, T612: alcance técnico verificado. 52 pruebas apro
 por cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.
 
 Revisión del equipo pendiente. Total técnico: 60/72. Evidencia: `docs/VERIFICACION_RECONSTRUCCION_LUIS.md`.
+
+## Reconstrucción actual — lote 11 (2026-11-17)
+
+T016, T054, T057, T137, T708, T1103: alcance técnico verificado. Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.
+Flutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin
+incidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.
+
+Revisión del equipo pendiente. Total técnico: 66/72. Evidencia: `docs/VERIFICACION_RECONSTRUCCION_LUIS.md`.

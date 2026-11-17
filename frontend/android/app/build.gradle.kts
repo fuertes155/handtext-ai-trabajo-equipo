@@ -1,8 +1,11 @@
-// Reinicio autorizado 2026-11-17. T409 pendiente de LUISDACA.
-// Firma retirada; release bloqueada mientras exista frontend/LUIS_PENDIENTE.
-// Se conservan los identificadores Android y las comprobaciones de URL compartidas.
-
+// T409: distribución exige HTTPS, cuentas del servidor y firma propia.
+// Credenciales solo en archivo local excluido de Git; nunca se incluyen en Dart.
+import java.net.URI
+import java.security.KeyStore
+import java.security.PrivateKey
+import java.security.cert.X509Certificate
 import java.util.Base64
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -12,67 +15,68 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-// T409: Luis debe implementar y revisar la firma. No se modifican sus claves locales.
-// El reinicio de tareas no es una versión que pueda entregarse.
-val checkLuisReleaseReady = tasks.register("checkLuisReleaseReady") {
-    val pending = rootProject.file("../LUIS_PENDIENTE")
-    doLast {
-        if (pending.exists()) {
-            throw GradleException(
-                "HandText: release bloqueada. Implementar y verificar las tareas de " +
-                    "LUISDACA antes de retirar frontend/LUIS_PENDIENTE.",
-            )
-        }
-    }
-}
 
-// Versión de demostración con la API local por HTTP (petición explícita, R8).
-val allowLocalHttp = project.findProperty("permitirHttpLocal") == "true"
-
-// URL de la API con la que se compila (--dart-define=API_BASE_URL=...). Flutter entrega
-// los --dart-define a Gradle en la propiedad «dart-defines»: cada uno en base64 y
-// separados por comas.
-val apiBaseUrl: String? = project.findProperty("dart-defines")?.toString()
-    ?.split(",")
-    ?.mapNotNull { encoded ->
+val dartDefines = project.findProperty("dart-defines")?.toString()
+    ?.split(",")?.mapNotNull { encoded ->
         runCatching { String(Base64.getDecoder().decode(encoded), Charsets.UTF_8) }.getOrNull()
-    }
-    ?.firstOrNull { it.startsWith("API_BASE_URL=") }
-    ?.removePrefix("API_BASE_URL=")
-    ?.trim()
+    }?.mapNotNull { value ->
+        val index = value.indexOf('=')
+        if (index < 1) null else value.substring(0, index) to value.substring(index + 1)
+    }?.toMap() ?: emptyMap()
 
-// Una versión release que no puede hablar con la API no debe entregarse. Sin
-// API_BASE_URL la app usaría http://10.0.2.2:8001/, que solo existe dentro del
-// emulador; y con HTTP sin permitirHttpLocal, Android bloquea la conexión. En los dos
-// casos el reconocimiento y la exportación no podrían conectarse; las cuentas son locales. Se comprueba
-// antes de compilar la release (debug y las pruebas no cambian).
-val checkReleaseApiUrl = tasks.register("checkReleaseApiUrl") {
-    val url = apiBaseUrl
-    val allowHttp = allowLocalHttp
+// La ruta alternativa permite CI y pruebas con claves sintéticas en /tmp.
+val signingPropertiesFile = rootProject.file(
+    project.findProperty("handtextSigningProperties")?.toString() ?: "key.properties",
+)
+val signingProperties = Properties().apply {
+    if (signingPropertiesFile.isFile) signingPropertiesFile.inputStream().use { load(it) }
+}
+val signingFields = listOf("storeFile", "storePassword", "keyAlias", "keyPassword")
+val hasSigningFields = signingFields.all { !signingProperties.getProperty(it).isNullOrBlank() }
+val releaseStore = signingProperties.getProperty("storeFile")?.let { rootProject.file(it) }
+
+val checkReleaseConfiguration = tasks.register("checkReleaseConfiguration") {
     doLast {
-        val problem = when {
-            url.isNullOrEmpty() ->
-                "falta --dart-define=API_BASE_URL=<dirección de la API>. Sin ella, la app " +
-                    "usaría http://10.0.2.2:8001/, que solo existe dentro del emulador."
-            url.startsWith("https://") -> null
-            url.startsWith("http://") && allowHttp -> null
-            url.startsWith("http://") ->
-                "API_BASE_URL=$url usa HTTP, y la versión release solo permite HTTPS. " +
-                    "Use una dirección HTTPS o, para una demostración local, agregue " +
-                    "-P permitirHttpLocal=true."
-            else -> "API_BASE_URL=$url debe empezar por https:// (o http:// en una demostración)."
+        val uri = runCatching { URI(dartDefines["API_BASE_URL"] ?: "") }.getOrNull()
+        if (uri == null || uri.scheme != "https" || uri.host.isNullOrEmpty() ||
+            uri.rawUserInfo != null || uri.rawQuery != null || uri.rawFragment != null ||
+            uri.host in setOf("localhost", "127.0.0.1", "10.0.2.2", "[::1]")) {
+            throw GradleException("API_HTTPS_REQUIRED: API_BASE_URL HTTPS explícita sin credenciales.")
         }
-        if (problem != null) {
-            throw GradleException("HandText AI: este APK no podría conectarse a la API: $problem")
+        if (dartDefines["HOSTED_ACCOUNTS"] != "true") {
+            throw GradleException("HOSTED_REQUIRED: la distribución usa cuentas del servidor.")
         }
-        if (url != null && url.contains("10.0.2.2")) {
-            logger.warn("HandText AI: API_BASE_URL=$url solo funciona dentro del emulador.")
+        if (!dartDefines["LOCAL_DEV_API_TOKEN"].isNullOrEmpty() ||
+            project.findProperty("permitirHttpLocal") == "true") {
+            throw GradleException("LOCAL_DEV_FORBIDDEN: use debug para desarrollo local.")
+        }
+        if (!hasSigningFields || releaseStore?.isFile != true) {
+            throw GradleException("SIGNING_REQUIRED: configure key.properties y la clave de entrega autorizada.")
+        }
+        try {
+            val store = KeyStore.getInstance(releaseStore, signingProperties.getProperty("storePassword").toCharArray())
+            val alias = signingProperties.getProperty("keyAlias")
+            val certificate = store.getCertificate(alias) as? X509Certificate
+                ?: throw IllegalStateException()
+            if (alias.equals("androiddebugkey", ignoreCase = true) ||
+                certificate.subjectX500Principal.name.contains("CN=Android Debug", ignoreCase = true)) {
+                throw GradleException("DEBUG_SIGNING_FORBIDDEN: la firma debug no es una firma de entrega.")
+            }
+            certificate.checkValidity()
+            if (store.getKey(alias, signingProperties.getProperty("keyPassword").toCharArray()) !is PrivateKey) {
+                throw IllegalStateException()
+            }
+        } catch (error: GradleException) {
+            throw error
+        } catch (_: Exception) {
+            // No divulgar contraseñas, alias, rutas o detalles del almacén.
+            throw GradleException("SIGNING_INVALID: no se pudo validar la clave de entrega.")
         }
     }
 }
-// Antes de compilar el código Dart, para avisar en segundos y no al final.
+// Fallar antes de compilar Dart, sin ruta de firma debug alternativa.
 tasks.matching { it.name in setOf("preReleaseBuild", "compileFlutterBuildRelease") }
-    .configureEach { dependsOn(checkLuisReleaseReady, checkReleaseApiUrl) }
+    .configureEach { dependsOn(checkReleaseConfiguration) }
 
 android {
     namespace = "com.handtextai.handtext_ai"
@@ -104,6 +108,17 @@ android {
         manifestPlaceholders["usesCleartextTraffic"] = "false"
     }
 
+    signingConfigs {
+        if (hasSigningFields && releaseStore?.isFile == true) {
+            create("release") {
+                storeFile = releaseStore
+                storePassword = signingProperties.getProperty("storePassword")
+                keyAlias = signingProperties.getProperty("keyAlias")
+                keyPassword = signingProperties.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
@@ -111,8 +126,10 @@ android {
             manifestPlaceholders["usesCleartextTraffic"] = "true"
         }
         release {
-            // T409 pendiente: sin firma de depuración como sustituto de una entrega.
-            // Se conserva la restricción segura de HTTPS incluso durante el reinicio.
+            if (hasSigningFields && releaseStore?.isFile == true) {
+                signingConfig = signingConfigs.getByName("release")
+            }
+            // No se permite HTTP ni se usa firma debug como sustituto.
             manifestPlaceholders["usesCleartextTraffic"] = "false"
         }
     }

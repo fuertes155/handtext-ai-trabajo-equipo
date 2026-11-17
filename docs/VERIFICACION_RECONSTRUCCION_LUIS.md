@@ -415,3 +415,42 @@ dart format --output=none --set-exit-if-changed lib/presentation/screens/history
 ```
 
 Revisión del equipo y selectores/Play Services/TalkBack físicos pendientes.
+
+## Lote 11: T016, T054, T057, T137, T708, T1103
+
+Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.
+Flutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin
+incidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.
+
+T016 revisa el manifiesto fusionado: Internet/cámara/biometría, sin permiso general
+de almacenamiento, allowBackup=false, exclusión de nube/transferencia y uCrop privado.
+Release nunca permite HTTP. T054/T1103 actualizan mapa, README, reinicio y quickstarts,
+con requisitos actuales, procedencia, comandos, resultados y límites históricos.
+T708 conserva y ejecuta todo el recorrido inglés 100/200 %, errores y títulos nativos;
+solo se migra el matcher semántico deprecado al equivalente sin cambiar condiciones.
+
+T137 integra contratos reales. Detectaron que un 401 sin Bearer expulsaba cuentas
+locales: ahora se distingue falta de autorización remota de sesión vencida usando
+las cabeceras enviadas, incluso si el token cambia antes de la respuesta. Se amplía
+la regresión y se mantiene la expectativa específica del contrato compartido.
+La API reproducible tools/serve_contract_test.py usa PostgreSQL efímero y no toma
+credenciales/URL de producción. No hay llamadas OCR externas.
+
+T057 genera APK debug actual 1.0.0 (1), minSdk24/target36, guardado en
+frontend/build/verification/handtext-debug-20261117.apk. SHA-256:
+acf454c15ed67ddba9ef3e1c05dc61c89751a5fabae57ed2764a3946b9b352ea.
+Gradle 8.12 usa JDK17 aislado. Se desactiva Jetifier con dependencias AndroidX y se
+limitan trabajadores tras un fallo real de heap; no se ocultan errores. Compilación
+posterior y repetición final correctas. Flutter avisa de futuras retiradas de soporte
+para Gradle/AGP/Kotlin actuales, sin impedir la compilación ni saltar validaciones.
+
+Dependencia T409: firma propia implementada, diez pruebas de política Gradle reales
+con certificados sintéticos aprobadas. Se sustituye LUIS_PENDIENTE por reglas finales
+contra URL insegura, cuentas locales, token dev, clave ausente/inválida y firma debug.
+Release por arquitectura falla con SIGNING_REQUIRED por falta de clave autorizada;
+T409/T411 no se cuentan concluidas sin firma/instalación reales. T1102 ya tiene su
+paso de reingreso/persistencia implementado y analizado; espera ejecución Android.
+
+Comandos exactos, rutas absolutas, configuración local y recursos pendientes:
+[QUICKSTART_RECONSTRUCCION_LUIS.md](QUICKSTART_RECONSTRUCCION_LUIS.md).
+Revisión del equipo pendiente en las 72 issues. No se despliega ni modifica producción.
