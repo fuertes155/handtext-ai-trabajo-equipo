@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Tarjeta de acción grande del inicio (tareas T132 y T142): ícono en una insignia azul,
 // título, subtítulo y flecha. Se usa para las opciones del inicio y para los consejos
 // en Ajustes.
@@ -35,6 +33,54 @@ class ActionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T142 pendiente de LUISDACA");
+    return SurfaceCard(
+      padding: EdgeInsets.zero,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                ExcludeSemantics(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Aurora.iconBadge,
+                      borderRadius: BorderRadius.circular(Aurora.radiusSmall),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Icon(icon, color: Aurora.blueLight),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        subtitle,
+                        style: const TextStyle(color: Aurora.textSecondary),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                const ExcludeSemantics(
+                  child: Icon(Icons.chevron_right, color: Aurora.textMuted),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

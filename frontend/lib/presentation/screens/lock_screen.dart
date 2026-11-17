@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Pantalla de bloqueo (tarea T1005; spec 011, Historia 2; research.md de 011, R4).
 //
 // AppLockGate envuelve toda la app (encima del Navigator, así también tapa Ajustes, Mis
@@ -33,7 +31,28 @@ class AppLockGate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T1005 pendiente de LUISDACA");
+    return ListenableBuilder(
+      listenable: lock,
+      builder: (context, _) {
+        final locked = lock.isLocked;
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            Offstage(
+              offstage: locked,
+              child: ExcludeFocus(
+                excluding: locked,
+                child: ExcludeSemantics(
+                  excluding: locked,
+                  child: TickerMode(enabled: !locked, child: child),
+                ),
+              ),
+            ),
+            if (locked) LockScreen(lock: lock),
+          ],
+        );
+      },
+    );
   }
 }
 
@@ -46,22 +65,77 @@ class LockScreen extends StatefulWidget {
 
   @override
   State<LockScreen> createState() {
-    throw UnimplementedError("T1005 pendiente de LUISDACA");
+    return _LockScreenState();
   }
 }
 
 class _LockScreenState extends State<LockScreen> {
   @override
   void initState() {
-    throw UnimplementedError("T1005 pendiente de LUISDACA");
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _unlock();
+    });
   }
 
   Future<void> _unlock() async {
-    throw UnimplementedError("T1005 pendiente de LUISDACA");
+    await widget.lock.unlock(context.strings.unlockReason);
   }
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T1005 pendiente de LUISDACA");
+    final strings = context.strings;
+    return AuroraScaffold(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: (constraints.maxHeight - 48).clamp(
+                  0,
+                  double.infinity,
+                ),
+              ),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 440),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Center(child: ScannerLogo(size: 100)),
+                      const SizedBox(height: 24),
+                      const BrandTitle(),
+                      const SizedBox(height: 24),
+                      Semantics(
+                        header: true,
+                        child: Text(
+                          strings.lockedTitle,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        strings.lockedMessage,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Aurora.textSecondary),
+                      ),
+                      const SizedBox(height: 24),
+                      PrimaryButton(
+                        label: strings.unlock,
+                        onPressed: _unlock,
+                        icon: Icons.lock_open,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 }

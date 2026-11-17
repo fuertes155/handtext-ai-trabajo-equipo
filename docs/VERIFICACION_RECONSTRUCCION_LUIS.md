@@ -71,8 +71,8 @@ ADB no mostró dispositivos conectados. No se han realizado recorridos manuales,
 configurado PIN/huella, instalado APK ni modificado datos de un teléfono. No se ha
 generado APK actual ni verificado una firma de distribución. Producción intacta.
 
-Tareas con alcance técnico verificado: 24/72; cierre formal: 0/72 por revisión pendiente.
-Las otras 48 tareas requieren implementación/revisión y sus verificaciones actuales.
+Tareas con alcance técnico verificado: 30/72; cierre formal: 0/72 por revisión pendiente.
+Las otras 42 tareas requieren implementación/revisión y sus verificaciones actuales.
 
 ## Lote 2: T021, T032, T050, T051, T118, T205
 
@@ -198,3 +198,45 @@ Las pruebas Flutter también necesitan sockets locales; cuando el aislamiento lo
 rechaza se ejecutan fuera de él. No se prueba galería física ni persistencia real
 del Android Keystore hasta contar con dispositivo. La revisión del equipo sigue
 pendiente en todas las issues.
+
+## Lote 5: T139, T401, T704, T1003, T1005, T1006
+
+Persistencia de idioma/bloqueo con lectura compatible de archivos antiguos; MaterialApp
+resuelve español, inglés y el idioma automático con español de respaldo. La elección
+se verifica en el MaterialApp real mientras se comprueba una sesión simulada, sin
+atribuir aprobación a las pantallas del flujo aún pendientes.
+
+El bloqueo exige verificar y persistir antes de anunciar activación. Cancelar o
+fallar mantiene el cierre. La vuelta tras más de 60 segundos bloquea; el caso exacto
+de 60 segundos no. Se conserva el primer instante de salida entre inactive/hidden/
+paused, y se evita lanzar verificaciones duplicadas. La desactivación persistida
+impide volver a bloquear. El gate oculta documentos y foco/semántica, conservando
+el árbol y el texto para el desbloqueo. El PIN y la huella los sigue verificando
+Android mediante el adaptador compartido: en las pruebas se simula su resultado.
+
+T401 aporta pruebas nuevas de JSON, todas las combinaciones de ajustes, archivo
+privado temporal, escritura atómica, valores dañados y fallo de persistencia. T139
+comprueba AA para texto (4.5:1), foco/iconos (3:1), estados y botones, conservando
+la paleta de Samuel. El interruptor de bloqueo real se prueba al 100 % y 200 %.
+
+**44 pruebas aprobadas**; análisis del alcance sin incidencias, formato correcto.
+No se verifican PIN/huella reales, TalkBack físico ni pantallas completas. T404,
+T126 y T142 incluyen solo dependencias necesarias para este lote (Ajustes, header,
+splash, logo y tarjeta de acción); aún no se cuentan terminadas. No se restauró
+código histórico. SurfaceCard compartida conserva su diseño y añade un Material
+transparente: el SDK 3.44 detectó que ListTile no podía pintar sobre su DecoratedBox.
+Se corrigió esa incompatibilidad sin quitar la comprobación ni cambiar la paleta.
+
+Comandos desde frontend:
+
+```bash
+flutter test --no-pub test/state/settings_test.dart test/state/lock_controller_test.dart test/theme/aurora_contrast_test.dart test/presentation/settings_foundations_test.dart
+flutter analyze --no-pub lib/app.dart lib/services/settings_store.dart lib/state/settings_controller.dart lib/state/app_lock_controller.dart lib/presentation/app_lock_scope.dart lib/presentation/screens/settings_screen.dart lib/presentation/screens/lock_screen.dart lib/presentation/screens/splash_screen.dart lib/presentation/widgets/aurora_header.dart lib/presentation/widgets/scanner_logo.dart lib/presentation/widgets/action_tile.dart lib/presentation/widgets/surface_card.dart test/state/settings_test.dart test/state/lock_controller_test.dart test/theme/aurora_contrast_test.dart test/presentation/settings_foundations_test.dart
+dart format --output=none --set-exit-if-changed lib/app.dart lib/services/settings_store.dart lib/state/settings_controller.dart lib/state/app_lock_controller.dart lib/presentation/app_lock_scope.dart lib/presentation/screens/settings_screen.dart lib/presentation/screens/lock_screen.dart lib/presentation/screens/splash_screen.dart lib/presentation/widgets/aurora_header.dart lib/presentation/widgets/scanner_logo.dart lib/presentation/widgets/action_tile.dart lib/presentation/widgets/surface_card.dart test/state/settings_test.dart test/state/lock_controller_test.dart test/theme/aurora_contrast_test.dart test/presentation/settings_foundations_test.dart
+```
+
+Recursos inspeccionados: sin teléfono, sin AVD ni imagen de sistema instalada y sin
+/dev/kvm; no se acredita recorrido en emulador. No existe directorio .handtext con
+clave de firma en esta máquina. Java disponible en Android Studio es versión 25;
+la compatibilidad de herramientas para APK se resolverá al llegar a la compilación.
+GitHub confirma que el commit 6a0cb1b se asocia a la cuenta LUISDACA y su noreply.

@@ -44,7 +44,12 @@ class SurfaceCard extends StatelessWidget {
       // Recorta el efecto al tocar (InkWell) con la forma de la tarjeta.
       child: ClipRRect(
         borderRadius: shape,
-        child: Padding(padding: padding, child: child),
+        // Material bajo el contenido permite pintar ListTile/InkWell sobre la
+        // superficie decorada; Flutter 3.44 comprueba explícitamente ese contrato.
+        child: Material(
+          type: MaterialType.transparency,
+          child: Padding(padding: padding, child: child),
+        ),
       ),
     );
   }

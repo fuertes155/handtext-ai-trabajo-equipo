@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Widget raíz de la app (tareas T044 y T127).
 //
 // - Aplica los temas centralizados: claro u oscuro según el sistema [CU-H3-E4]
@@ -90,7 +88,11 @@ class _HandTextAppState extends State<HandTextApp> {
               ThemePreference.dark => ThemeMode.dark,
             },
             // [IE-H1-E1] [IE-H1-E2] Idioma elegido; con «Automático», el del teléfono.
-            locale: throw UnimplementedError('T704 pendiente de LUISDACA'),
+            locale: switch (widget.settings.settings.language) {
+              AppLanguage.spanish => const Locale('es'),
+              AppLanguage.english => const Locale('en'),
+              AppLanguage.system => null,
+            },
             supportedLocales: AppStrings.supportedLocales,
             localizationsDelegates: [
               AppStrings.delegate(usesLocalAccounts: widget.usesLocalAccounts),
@@ -99,7 +101,7 @@ class _HandTextAppState extends State<HandTextApp> {
             // [IE-H1-E3] Inglés si el teléfono está en inglés; español en cualquier
             // otro caso (research.md de 008, R5).
             localeResolutionCallback: (locale, _) =>
-                throw UnimplementedError('T704 pendiente de LUISDACA'),
+                Locale(locale?.languageCode == 'en' ? 'en' : 'es'),
             // [BL-H2-E1] La pantalla de bloqueo tapa todo, también Ajustes y los
             // diálogos (research.md de 011, R4).
             builder: (context, child) =>

@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Logo animado «hoja que se escanea» (tareas T111 y T142; spec 002, módulo 5).
 //
 // Se dibuja con CustomPainter (sin imágenes), con la forma de un ícono de app:
@@ -25,7 +23,7 @@ class ScannerLogo extends StatefulWidget {
 
   @override
   State<ScannerLogo> createState() {
-    throw UnimplementedError("T142 pendiente de LUISDACA");
+    return _ScannerLogoState();
   }
 }
 
@@ -38,7 +36,8 @@ class _ScannerLogoState extends State<ScannerLogo>
 
   @override
   void didChangeDependencies() {
-    throw UnimplementedError("T142 pendiente de LUISDACA");
+    super.didChangeDependencies();
+    syncLoopingAnimation(context, _controller, reverse: true);
   }
 
   @override
@@ -49,7 +48,17 @@ class _ScannerLogoState extends State<ScannerLogo>
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T142 pendiente de LUISDACA");
+    return ExcludeSemantics(
+      child: SizedBox.square(
+        dimension: widget.size,
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, _) => CustomPaint(
+            painter: _ScannerPainter(progress: _controller.value),
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -61,11 +70,65 @@ class _ScannerPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    throw UnimplementedError("T142 pendiente de LUISDACA");
+    canvas.save();
+    canvas.scale(size.width / 128, size.height / 128);
+    final background = RRect.fromRectAndRadius(
+      const Rect.fromLTWH(2, 2, 124, 124),
+      const Radius.circular(26),
+    );
+    canvas.drawRRect(background, Paint()..color = Aurora.blue);
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        const Rect.fromLTWH(35, 24, 58, 80),
+        const Radius.circular(5),
+      ),
+      Paint()..color = Colors.white,
+    );
+    final ink = Paint()
+      ..color = Aurora.lightOutline
+      ..strokeWidth = 2
+      ..strokeCap = StrokeCap.round;
+    for (var i = 0; i < 5; i++) {
+      canvas.drawLine(
+        Offset(45, 43.0 + i * 10),
+        Offset(i.isEven ? 82 : 75, 43.0 + i * 10),
+        ink,
+      );
+    }
+    final frame = Paint()
+      ..color = Colors.white
+      ..strokeWidth = 3
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+    for (final corner in [
+      const Offset(25, 19),
+      const Offset(103, 19),
+      const Offset(25, 109),
+      const Offset(103, 109),
+    ]) {
+      final dx = corner.dx < 64 ? 10.0 : -10.0;
+      final dy = corner.dy < 64 ? 10.0 : -10.0;
+      canvas.drawPath(
+        Path()
+          ..moveTo(corner.dx + dx, corner.dy)
+          ..lineTo(corner.dx, corner.dy)
+          ..lineTo(corner.dx, corner.dy + dy),
+        frame,
+      );
+    }
+    final y = 30 + progress * 67;
+    canvas.drawLine(
+      Offset(28, y),
+      Offset(100, y),
+      Paint()
+        ..color = Aurora.sky
+        ..strokeWidth = 3,
+    );
+    canvas.restore();
   }
 
   @override
   bool shouldRepaint(_ScannerPainter oldDelegate) {
-    throw UnimplementedError("T142 pendiente de LUISDACA");
+    return progress != oldDelegate.progress;
   }
 }

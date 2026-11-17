@@ -259,9 +259,10 @@
     {
       "task": "T139",
       "issue": 100,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Prueba de contraste de la paleta [SC-208] en frontend/test/theme/aurora_contrast_test.dart · Dificultad Media."
+      "description": "Prueba de contraste de la paleta [SC-208] en frontend/test/theme/aurora_contrast_test.dart · Dificultad Media.",
+      "verification": "Lote 5: 44 pruebas Flutter; idioma real MaterialApp, ajustes, gate, bloqueo y contraste; revisión pendiente"
     },
     {
       "task": "T142",
@@ -340,9 +341,10 @@
     {
       "task": "T401",
       "issue": 139,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "Pruebas del almacén y del controlador de ajustes en frontend/test/state/settings_test.dart · Dificultad Media."
+      "description": "Pruebas del almacén y del controlador de ajustes en frontend/test/state/settings_test.dart · Dificultad Media.",
+      "verification": "Lote 5: 44 pruebas Flutter; idioma real MaterialApp, ajustes, gate, bloqueo y contraste; revisión pendiente"
     },
     {
       "task": "T404",
@@ -438,9 +440,10 @@
     {
       "task": "T704",
       "issue": 182,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "AppLanguage en AppSettings, almacén y controlador; locale y resolución en frontend/lib/app.dart · Dificultad Media."
+      "description": "AppLanguage en AppSettings, almacén y controlador; locale y resolución en frontend/lib/app.dart · Dificultad Media.",
+      "verification": "Lote 5: 44 pruebas Flutter; idioma real MaterialApp, ajustes, gate, bloqueo y contraste; revisión pendiente"
     },
     {
       "task": "T708",
@@ -494,23 +497,26 @@
     {
       "task": "T1003",
       "issue": 209,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "appLock en AppSettings, almacén y controlador; interruptor en frontend/lib/presentation/screens/settings_screen.dart · Dificultad Media."
+      "description": "appLock en AppSettings, almacén y controlador; interruptor en frontend/lib/presentation/screens/settings_screen.dart · Dificultad Media.",
+      "verification": "Lote 5: 44 pruebas Flutter; idioma real MaterialApp, ajustes, gate, bloqueo y contraste; revisión pendiente"
     },
     {
       "task": "T1005",
       "issue": 211,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "implementacion_o_suite_retirada",
-      "description": "AppLockController (R3) en frontend/lib/state/app_lock_controller.dart, pantalla frontend/lib/presentation/screens/lock_screen.dart y AppLockGate en frontend/lib/app.dart (R4); textos en español e inglés · Dificultad Alta."
+      "description": "AppLockController (R3) en frontend/lib/state/app_lock_controller.dart, pantalla frontend/lib/presentation/screens/lock_screen.dart y AppLockGate en frontend/lib/app.dart (R4); textos en español e inglés · Dificultad Alta.",
+      "verification": "Lote 5: 44 pruebas Flutter; idioma real MaterialApp, ajustes, gate, bloqueo y contraste; revisión pendiente"
     },
     {
       "task": "T1006",
       "issue": 212,
-      "state": "pending",
+      "state": "technically_verified_review_pending",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
-      "description": "Prueba: al desactivarlo, la app deja de bloquearse · Dificultad Baja."
+      "description": "Prueba: al desactivarlo, la app deja de bloquearse · Dificultad Baja.",
+      "verification": "Lote 5: 44 pruebas Flutter; idioma real MaterialApp, ajustes, gate, bloqueo y contraste; revisión pendiente"
     },
     {
       "task": "T1008",

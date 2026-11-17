@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Pantalla de Ajustes (tarea T404; spec 005, Historia 1).
 //
 // - Tema: automático, claro u oscuro [AV-H1-E2] [AV-H1-E3].
@@ -13,6 +11,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/app_settings.dart';
+import '../../models/app_failure.dart';
 import '../../theme/aurora.dart';
 import '../app_lock_scope.dart';
 import '../settings_scope.dart';
@@ -31,7 +30,88 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T404,T1003 pendiente de LUISDACA");
+    final controller = SettingsScope.of(context);
+    final settings = controller.settings;
+    final strings = context.strings;
+    Widget heading(String title) => Padding(
+      padding: const EdgeInsets.only(top: 24, bottom: 12),
+      child: Semantics(
+        header: true,
+        child: Text(
+          title,
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(color: Aurora.textPrimary),
+        ),
+      ),
+    );
+    return AuroraScaffold(
+      body: Column(
+        children: [
+          AuroraHeader(title: strings.settingsTitle),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
+              children: [
+                heading(strings.themeSection),
+                _OptionGroup<ThemePreference>(
+                  options: [
+                    (ThemePreference.system, strings.themeSystem),
+                    (ThemePreference.light, strings.themeLight),
+                    (ThemePreference.dark, strings.themeDark),
+                  ],
+                  selected: settings.theme,
+                  onSelected: controller.setTheme,
+                ),
+                const SizedBox(height: 8),
+                Text(strings.themeHint),
+                heading(strings.textSizeSection),
+                _OptionGroup<EditorTextSize>(
+                  options: [
+                    (EditorTextSize.normal, strings.textSizeNormal),
+                    (EditorTextSize.large, strings.textSizeLarge),
+                    (EditorTextSize.extraLarge, strings.textSizeExtraLarge),
+                  ],
+                  selected: settings.textSize,
+                  onSelected: controller.setTextSize,
+                ),
+                const SizedBox(height: 12),
+                Builder(
+                  builder: (context) => SurfaceCard(
+                    child: Text(
+                      strings.textSizePreview,
+                      style: editorTextStyle(context, settings.textSize),
+                    ),
+                  ),
+                ),
+                heading(strings.languageSection),
+                _OptionGroup<AppLanguage>(
+                  options: languageOptions(strings),
+                  selected: settings.language,
+                  onSelected: controller.setLanguage,
+                ),
+                const SizedBox(height: 8),
+                Text(strings.languageHint),
+                const SizedBox(height: 24),
+                const _AppLockCard(),
+                const SizedBox(height: 24),
+                ActionTile(
+                  icon: Icons.lightbulb_outline,
+                  title: strings.tipsLink,
+                  subtitle: strings.tipsLinkHint,
+                  onTap: () => TipsScreen.open(context),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  strings.settingsSavedHint,
+                  style: const TextStyle(color: Aurora.textMuted),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -58,12 +138,66 @@ class _OptionGroup<T> extends StatelessWidget {
 
   /// ¿Cada texto cabe en una línea dentro de su segmento, con la letra actual?
   bool _fitsInSegments(BuildContext context, double width) {
-    throw UnimplementedError("T404,T1003 pendiente de LUISDACA");
+    final slot = width / options.length - _segmentInsets;
+    for (final (_, text) in options) {
+      final painter = TextPainter(
+        text: TextSpan(
+          text: text,
+          style: Theme.of(context).textTheme.labelLarge,
+        ),
+        textDirection: Directionality.of(context),
+        textScaler: MediaQuery.textScalerOf(context),
+      );
+      try {
+        painter.layout();
+        if (painter.width > slot) return false;
+      } finally {
+        painter.dispose();
+      }
+    }
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T404,T1003 pendiente de LUISDACA");
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (_fitsInSegments(context, constraints.maxWidth)) {
+          return SegmentedButton<T>(
+            showSelectedIcon: false,
+            segments: [
+              for (final (value, label) in options)
+                ButtonSegment(value: value, label: Text(label)),
+            ],
+            selected: {selected},
+            onSelectionChanged: (values) => onSelected(values.single),
+          );
+        }
+        return SurfaceCard(
+          padding: EdgeInsets.zero,
+          child: Column(
+            children: [
+              for (final (value, label) in options)
+                MergeSemantics(
+                  child: Semantics(
+                    checked: selected == value,
+                    inMutuallyExclusiveGroup: true,
+                    child: ListTile(
+                      title: Text(label),
+                      leading: Icon(
+                        selected == value
+                            ? Icons.radio_button_checked
+                            : Icons.radio_button_unchecked,
+                      ),
+                      onTap: () => onSelected(value),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -77,7 +211,7 @@ class _AppLockCard extends StatefulWidget {
 
   @override
   State<_AppLockCard> createState() {
-    throw UnimplementedError("T404,T1003 pendiente de LUISDACA");
+    return _AppLockCardState();
   }
 }
 
@@ -89,12 +223,56 @@ class _AppLockCardState extends State<_AppLockCard> {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError("T404,T1003 pendiente de LUISDACA");
+    final lock = AppLockScope.of(context);
+    final strings = context.strings;
+    return FutureBuilder<bool>(
+      future: _available,
+      builder: (context, snapshot) {
+        final available = snapshot.data == true;
+        return SurfaceCard(
+          padding: EdgeInsets.zero,
+          child: SwitchListTile(
+            title: Text(strings.appLockTitle),
+            subtitle: Text(
+              available ? strings.appLockHint : strings.appLockUnavailable,
+            ),
+            value: SettingsScope.of(context).settings.appLock,
+            onChanged: available
+                ? (enabled) async {
+                    try {
+                      if (enabled) {
+                        await lock.enable(strings.enableLockReason);
+                      } else {
+                        await lock.disable();
+                      }
+                    } catch (_) {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              strings.failureText(
+                                const AppFailure(FailureKind.unexpected),
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                    }
+                  }
+                : null,
+          ),
+        );
+      },
+    );
   }
 }
 
 /// Estilo del texto del editor con el tamaño elegido (R3). Lo usan el editor y la
 /// muestra de Ajustes, así siempre coinciden.
 TextStyle? editorTextStyle(BuildContext context, EditorTextSize size) {
-  throw UnimplementedError("T404,T1003 pendiente de LUISDACA");
+  final base = Theme.of(context).textTheme.bodyLarge;
+  return base?.copyWith(
+    fontSize: (base.fontSize ?? 16) * size.scale,
+    height: 1.5,
+  );
 }

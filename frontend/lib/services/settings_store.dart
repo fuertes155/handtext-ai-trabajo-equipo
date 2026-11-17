@@ -1,5 +1,3 @@
-// Reinicio 2026-11-17: las regiones marcadas están pendientes de LUISDACA.
-// Los comentarios anteriores describen requisitos; no son verificación del código actual.
 // Almacén de los ajustes en el teléfono (tarea T402; spec 005; research.md de 005, R1).
 //
 // Un archivo settings.json en la carpeta privada de soporte de la app, con escritura
@@ -29,7 +27,8 @@ String encodeSettings(AppSettings settings) => jsonEncode({
   'theme': settings.theme.name,
   'textSize': settings.textSize.name,
   'tipsSeen': settings.tipsSeen,
-  // T704/T1003: persistencia de idioma y bloqueo pendiente de LUISDACA.
+  'language': settings.language.name,
+  'appLock': settings.appLock,
 });
 
 /// Lee los ajustes. Un valor desconocido o un JSON dañado vuelven al valor por omisión.
@@ -55,7 +54,8 @@ AppSettings decodeSettings(String content) {
       EditorTextSize.normal,
     ),
     tipsSeen: json['tipsSeen'] == true, // cualquier otro valor: no se vieron
-    // T704/T1003: lectura pendiente; se conservan los valores seguros por defecto.
+    language: byName(AppLanguage.values, json['language'], AppLanguage.spanish),
+    appLock: json['appLock'] == true,
   );
 }
 

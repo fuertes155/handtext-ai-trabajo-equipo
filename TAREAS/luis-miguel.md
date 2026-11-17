@@ -118,3 +118,11 @@ T038, T119, T124, T125, T206 y T303: alcance técnico verificado con 60 pruebas
 Flutter de servicios, sesión, galería y autenticación local. Se conserva Argon2id
 de Samuel; solo se unifica el cómputo Unicode de límites con el backend. Análisis
 y formato del alcance correctos. Revisión del equipo pendiente. Total: 24/72.
+
+## Reconstrucción actual — lote 5 (2026-11-17)
+
+T139, T401, T704, T1003, T1005 y T1006: verificación técnica con 44 pruebas
+Flutter de persistencia, idioma, contraste y bloqueo (controlador y widgets).
+Análisis/formato del alcance correctos. Sin certificación de biometría física.
+Se incluyen dependencias parciales T404/T126/T142, todavía sin contarlas terminadas.
+Revisión del equipo pendiente. Total técnico: 30/72.
