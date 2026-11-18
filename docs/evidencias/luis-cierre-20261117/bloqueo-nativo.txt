@@ -1,0 +1,13 @@
+00:00 +0: loading /home/luisdaca/Escritorio/handtext-ai-trabajo-equipo/frontend/integration_test/bloqueo_nativo_luis_test.dart
+Running Gradle task 'assembleDebug'...                             17.4s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...          699ms
+00:00 +0: T1008: cancelación, PIN, más de un minuto y huella Android reales
+NATIVE_EVENT {"phase":"enable_cancel"}
+NATIVE_EVENT {"phase":"enable_pin"}
+NATIVE_EVENT {"phase":"background_long"}
+NATIVE_EVENT {"phase":"unlock_fingerprint"}
+NATIVE_EVENT {"phase":"background_disabled"}
+NATIVE_EVENT {"phase":"complete"}
+01:31 +1: (tearDownAll)
+01:32 +1: All tests passed!

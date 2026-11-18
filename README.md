@@ -1,6 +1,6 @@
 # HandText AI · Trabajo en equipo
 
-> **Reconstrucción actual · 2026-11-17.** **68/72 tareas verificadas técnicamente**, cuatro pendientes de firma o dispositivo; [estado de las 72](docs/ESTADO_TAREAS_LUIS.md). Código de Luis repuesto y suites actuales registradas en [el informe](docs/VERIFICACION_RECONSTRUCCION_LUIS.md). [Comandos reproducibles](docs/QUICKSTART_RECONSTRUCCION_LUIS.md). Hay APK debug; release exige clave propia, cuentas del servidor y HTTPS. PR #221 en borrador; revisión del equipo y verificaciones nativas pendientes. Los APK y resultados del 16 de noviembre son históricos y no validan estos cambios.
+> **Entrega de Luis completada:** 72/72 tareas verificadas y aceptadas por Luis. [Cierre, APK release y pruebas nativas](docs/CIERRE_LUIS.md) · [Estado por tarea](docs/ESTADO_TAREAS_LUIS.md). Se usa una nueva clave de distribución autorizada; no actualiza APK firmados con la clave anterior. Las evidencias de 2026-11-16 siguen siendo históricas.
 
 HandText AI es una aplicación Flutter Android que escanea hojas, reconoce texto, permite corregirlo y exporta Word/PDF. La entrega conecta el APK por HTTPS con FastAPI y PostgreSQL en Railway. RapidOCR procesa las imágenes con modelos ONNX en el servidor.
 

@@ -1,0 +1,46 @@
+{
+  "apks": [
+    {
+      "abi": "armeabi-v7a",
+      "path": "/home/luisdaca/Escritorio/handtext-ai-trabajo-equipo/frontend/build/verification/release-luis/app-armeabi-v7a-release.apk",
+      "bytes": 18056525,
+      "sha256": "7c55fac39b1be4cde6905c64ae096f9088474ab05853d825673713abc4bb297d",
+      "certificate_sha256": "56b45df5fdbb2cc27e21a3497414763f1d7034c8fc3221c70ebb7d888ff50a0c",
+      "signature_verified": true,
+      "cleartext": false,
+      "backup": false,
+      "secrets_absent": true
+    },
+    {
+      "abi": "arm64-v8a",
+      "path": "/home/luisdaca/Escritorio/handtext-ai-trabajo-equipo/frontend/build/verification/release-luis/app-arm64-v8a-release.apk",
+      "bytes": 20496445,
+      "sha256": "a16afc49541f67503561119ed757ca4dfc44f9e01d147fe99cf01b397654c935",
+      "certificate_sha256": "56b45df5fdbb2cc27e21a3497414763f1d7034c8fc3221c70ebb7d888ff50a0c",
+      "signature_verified": true,
+      "cleartext": false,
+      "backup": false,
+      "secrets_absent": true
+    },
+    {
+      "abi": "x86_64",
+      "path": "/home/luisdaca/Escritorio/handtext-ai-trabajo-equipo/frontend/build/verification/release-luis/app-x86_64-release.apk",
+      "bytes": 21905119,
+      "sha256": "341c1ff42b29a629a309482dd9e7d33ffd61e7023a99972a55dcd4c90b790b0c",
+      "certificate_sha256": "56b45df5fdbb2cc27e21a3497414763f1d7034c8fc3221c70ebb7d888ff50a0c",
+      "signature_verified": true,
+      "cleartext": false,
+      "backup": false,
+      "secrets_absent": true
+    }
+  ],
+  "cold_start_ms": [
+    1343,
+    1103,
+    1228,
+    1303,
+    1634
+  ],
+  "installed_on": "HandText_Luis_20261117",
+  "physical_phone_touched": false
+}

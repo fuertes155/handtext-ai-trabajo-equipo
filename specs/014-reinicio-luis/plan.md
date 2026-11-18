@@ -1,5 +1,9 @@
 # Plan de reinicio
 
+> **Cierre posterior:** 72/72 tareas de Luis verificadas y aceptadas. Release firmada
+> con nueva clave autorizada, cinco arranques <5 s y pruebas Android nativas aprobadas.
+> [Evidencia final y comandos](../../docs/CIERRE_LUIS.md). Los estados pendientes anteriores son históricos.
+
 1. Usar la rama actual y registrar la base `098d4f6`, ya publicada, como referencia recuperable.
 2. Sustituir cuerpos de implementación asignados a Luis por `UnimplementedError` / `NotImplementedError`, conservando firmas compartidas. Separar las regiones de archivos mixtos con análisis AST y ediciones verificadas.
 3. Retirar las pruebas exclusivas de su alcance y conservar las pruebas compartidas como aceptación, con el estado incompleto documentado.

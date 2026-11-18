@@ -1,5 +1,9 @@
 # Reinicio de las tareas de Luis Miguel David Campo
 
+> **Cierre posterior:** 72/72 tareas de Luis verificadas y aceptadas. Release firmada
+> con nueva clave autorizada, cinco arranques <5 s y pruebas Android nativas aprobadas.
+> [Evidencia final y comandos](CIERRE_LUIS.md). Los estados pendientes anteriores son históricos.
+
 Solicitud del propietario: 2026-11-17. Cuenta prevista: `LUISDACA`.
 Repositorio: `fuertes155/handtext-ai-trabajo-equipo`.
 Rama existente: `entrega/railway-documentacion-20261116`. No se crea otra rama.

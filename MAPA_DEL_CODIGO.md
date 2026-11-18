@@ -1,5 +1,9 @@
 # Mapa del código
 
+> **Cierre posterior:** 72/72 tareas de Luis verificadas y aceptadas. Release firmada
+> con nueva clave autorizada, cinco arranques <5 s y pruebas Android nativas aprobadas.
+> [Evidencia final y comandos](docs/CIERRE_LUIS.md). Los estados pendientes anteriores son históricos.
+
 > **Mapa actual · reconstrucción 2026-11-17.** Consulte [comandos y recursos](docs/QUICKSTART_RECONSTRUCCION_LUIS.md) e [informe por lote](docs/VERIFICACION_RECONSTRUCCION_LUIS.md). Las secciones de integración posteriores conservan la procedencia histórica; no acreditan autoría nueva ni pruebas del código actual.
 
 | Componente | Responsabilidad |
