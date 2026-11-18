@@ -1,0 +1,11 @@
+00:00 +0: loading /home/luisdaca/Escritorio/handtext-ai-trabajo-equipo/frontend/integration_test/guardado_nativo_luis_test.dart
+Running Gradle task 'assembleDebug'...                             23.4s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...          801ms
+00:00 +0: T908: nombre propuesto, guardado Android real y cancelación
+NATIVE_EVENT {"phase":"save","name":"HandText nativo 1794959061936149.pdf"}
+NATIVE_EVENT {"phase":"saved","name":"HandText nativo 1794959061936149.pdf","sha256":"a20a90a49a1c4152f81852dbcb5dcb17d0cc2a42a7f91cabd287621cf2d97989","bytes":8190}
+NATIVE_EVENT {"phase":"cancel","name":"HandText_cancelado_1794959092296081.pdf"}
+NATIVE_EVENT {"phase":"complete"}
+00:36 +1: (tearDownAll)
+00:37 +1: All tests passed!

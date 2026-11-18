@@ -1,5 +1,9 @@
 # 014 · Reinicio de tareas de Luis
 
+> **Cierre posterior:** 72/72 tareas de Luis verificadas y aceptadas. Release firmada
+> con nueva clave autorizada, cinco arranques <5 s y pruebas Android nativas aprobadas.
+> [Evidencia final y comandos](../../docs/CIERRE_LUIS.md). Los estados pendientes anteriores son históricos.
+
 Solicitud de Samuel del 2026-11-17: retirar sus implementaciones correspondientes al reparto de Luis Miguel David Campo (`LUISDACA`) en el mismo repositorio y en la rama existente. Se limita a las 72 tareas de `TAREAS/luis-miguel.md`; no se crean otra rama ni otro repositorio.
 
 ## Comportamiento de esta fase

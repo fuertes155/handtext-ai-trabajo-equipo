@@ -3,583 +3,655 @@
   "repository": "fuertes155/handtext-ai-trabajo-equipo",
   "branch": "entrega/railway-documentacion-20261116",
   "reference": "098d4f65abf359515b2663562953624bf6f9e8c8",
-  "warning": "Código incompleto; no entregar ni desplegar. Asignación no acredita autoría del código previo.",
+  "warning": "Alcance de Luis verificado y aceptado; la nueva firma autorizada difiere de la histórica. Ver docs/CIERRE_LUIS.md.",
   "tasks": [
     {
       "task": "T002",
       "issue": 2,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
       "description": "Fijar las dependencias exactas en backend/requirements.txt y backend/requirements-dev.txt · Dificultad Baja.",
-      "verification": "Lote 1: 87 passed; Ruff y formato correctos; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 1: 87 passed; Ruff y formato correctos; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T006",
       "issue": 6,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Catálogo de errores con código, mensaje y request_id, y sus manejadores, en backend/app/errors.py · Dificultad Media.",
-      "verification": "Lote 1: 87 passed; Ruff y formato correctos; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 1: 87 passed; Ruff y formato correctos; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T010",
       "issue": 10,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Utilidades de prueba (imágenes sintéticas y OCR falso) en backend/tests/conftest.py · Dificultad Media.",
-      "verification": "Lote 1: 87 passed; Ruff y formato correctos; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 1: 87 passed; Ruff y formato correctos; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T012",
       "issue": 12,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Configuración de la app (URL del backend, tiempos y límites) en frontend/lib/config/app_config.dart · Dificultad Baja.",
-      "verification": "Lote 3: 10 pruebas Flutter y 3 escenarios de configuración; análisis/formato del alcance correctos; revisión pendiente"
+      "verification": "Lote 3: 10 pruebas Flutter y 3 escenarios de configuración; análisis/formato del alcance correctos; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T013",
       "issue": 13,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
       "description": "Tema centralizado en frontend/lib/theme/app_theme.dart · Dificultad Media.",
-      "verification": "Lote 3: 10 pruebas Flutter y 3 escenarios de configuración; análisis/formato del alcance correctos; revisión pendiente"
+      "verification": "Lote 3: 10 pruebas Flutter y 3 escenarios de configuración; análisis/formato del alcance correctos; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T016",
       "issue": 16,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
       "description": "Manifiestos Android (Internet, sin copias de seguridad y HTTP solo en debug) en frontend/android/app/src/main/AndroidManifest.xml, frontend/android/app/src/main/res/xml/data_extraction_rules.xml y frontend/android/app/src/debug/AndroidManifest.xml · Dificultad Media.",
-      "verification": "Lote 11: Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.\nFlutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin\nincidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 11: Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.\nFlutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin\nincidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T021",
       "issue": 21,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Exportación Word (contenido, párrafos, caracteres, texto vacío) en backend/tests/test_exports_docx.py · Dificultad Media.",
-      "verification": "Lote 2: suite backend 218 passed; Ruff y formato completos; revisión del equipo pendiente"
+      "verification": "Lote 2: suite backend 218 passed; Ruff y formato completos; revisión del equipo pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T022",
       "issue": 22,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Reglas de imagen de la app en frontend/test/services/image_rules_test.dart · Dificultad Media.",
-      "verification": "Lote 3: 10 pruebas Flutter y 3 escenarios de configuración; análisis/formato del alcance correctos; revisión pendiente"
+      "verification": "Lote 3: 10 pruebas Flutter y 3 escenarios de configuración; análisis/formato del alcance correctos; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T025",
       "issue": 25,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Controlador del flujo (autorización, duplicados, fallos y borrador) en frontend/test/state/document_flow_controller_test.dart · Dificultad Alta.",
-      "verification": "Lote 8: 58 pruebas aprobadas: controlador, permisos/captura, pantallas de flujo y cuentas,\ny varias páginas. Análisis y formato del alcance correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 8: 58 pruebas aprobadas: controlador, permisos/captura, pantallas de flujo y cuentas,\ny varias páginas. Análisis y formato del alcance correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T026",
       "issue": 26,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
       "description": "Pantallas y diálogos del flujo en frontend/test/presentation/flow_screen_test.dart · Dificultad Media.",
-      "verification": "Lote 8: 58 pruebas aprobadas: controlador, permisos/captura, pantallas de flujo y cuentas,\ny varias páginas. Análisis y formato del alcance correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 8: 58 pruebas aprobadas: controlador, permisos/captura, pantallas de flujo y cuentas,\ny varias páginas. Análisis y formato del alcance correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T032",
       "issue": 32,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Reglas del texto exportable (vacío, tamaño y caracteres XML) en backend/app/services/documents/text_rules.py · Dificultad Media.",
-      "verification": "Lote 2: suite backend 218 passed; Ruff y formato completos; revisión del equipo pendiente"
+      "verification": "Lote 2: suite backend 218 passed; Ruff y formato completos; revisión del equipo pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T035",
       "issue": 35,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Reglas y lectura de dimensiones de imagen en frontend/lib/services/image_rules.dart · Dificultad Media.",
-      "verification": "Lote 3: 10 pruebas Flutter y 3 escenarios de configuración; análisis/formato del alcance correctos; revisión pendiente"
+      "verification": "Lote 3: 10 pruebas Flutter y 3 escenarios de configuración; análisis/formato del alcance correctos; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T038",
       "issue": 38,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Cliente de la API en frontend/lib/services/handtext_api_client.dart · Dificultad Media.",
-      "verification": "Lote 4: 60 pruebas Flutter de servicios/sesión y Argon2id local; análisis y formato del alcance correctos; revisión pendiente"
+      "verification": "Lote 4: 60 pruebas Flutter de servicios/sesión y Argon2id local; análisis y formato del alcance correctos; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T042",
       "issue": 42,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Widgets de estado, autorización y confirmación en frontend/lib/presentation/widgets/ (status_message.dart, consent_dialog.dart, confirm_dialog.dart) · Dificultad Media.",
-      "verification": "Lote 6: 25 pruebas de componentes/sesión y 8 escenarios compartidos; análisis y formato del alcance; revisión pendiente"
+      "verification": "Lote 6: 25 pruebas de componentes/sesión y 8 escenarios compartidos; análisis y formato del alcance; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T043",
       "issue": 43,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Pantallas en frontend/lib/presentation/screens/ (flow_screen.dart, start_screen.dart, preview_screen.dart, editor_screen.dart) · Dificultad Alta.",
-      "verification": "Lote 7: 38 pruebas de pantallas, revisión, recorte, compartir, nombres y accesibilidad 100/200; revisión pendiente"
+      "verification": "Lote 7: 38 pruebas de pantallas, revisión, recorte, compartir, nombres y accesibilidad 100/200; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T045",
       "issue": 45,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Pruebas de captura y permisos en frontend/test/state/camera_flow_test.dart · Dificultad Media.",
-      "verification": "Lote 8: 58 pruebas aprobadas: controlador, permisos/captura, pantallas de flujo y cuentas,\ny varias páginas. Análisis y formato del alcance correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 8: 58 pruebas aprobadas: controlador, permisos/captura, pantallas de flujo y cuentas,\ny varias páginas. Análisis y formato del alcance correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T050",
       "issue": 50,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Fuente DejaVu Sans y su licencia en backend/app/assets/fonts/ · Dificultad Baja.",
-      "verification": "Lote 2: suite backend 218 passed; Ruff y formato completos; revisión del equipo pendiente"
+      "verification": "Lote 2: suite backend 218 passed; Ruff y formato completos; revisión del equipo pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T051",
       "issue": 51,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Generador de PDF en backend/app/services/documents/pdf_builder.py · Dificultad Media.",
-      "verification": "Lote 2: suite backend 218 passed; Ruff y formato completos; revisión del equipo pendiente"
+      "verification": "Lote 2: suite backend 218 passed; Ruff y formato completos; revisión del equipo pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T054",
       "issue": 54,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
       "description": "Mapa de requisitos → código → pruebas en MAPA_DEL_CODIGO.md · Dificultad Baja.",
-      "verification": "Lote 11: Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.\nFlutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin\nincidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 11: Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.\nFlutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin\nincidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T057",
       "issue": 57,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
       "description": "Compilar el APK de depuración con flutter build apk --debug en frontend/ · Dificultad Baja.",
-      "verification": "Lote 11: Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.\nFlutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin\nincidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 11: Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.\nFlutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin\nincidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T104",
       "issue": 65,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Configuración de la base, la duración de la sesión, el bloqueo y los límites en backend/app/config.py · Dificultad Baja.",
-      "verification": "Lote 1: 87 passed; Ruff y formato correctos; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 1: 87 passed; Ruff y formato correctos; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T108",
       "issue": 69,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Ejecutor de migraciones en backend/app/persistence/migrations.py · Dificultad Media.",
-      "verification": "Lote 1: 87 passed; Ruff y formato correctos; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 1: 87 passed; Ruff y formato correctos; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T110",
       "issue": 71,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
       "description": "Colores, degradados y temas Aurora en frontend/lib/theme/aurora.dart y frontend/lib/theme/app_theme.dart · Dificultad Media.",
-      "verification": "Lote 3: 10 pruebas Flutter y 3 escenarios de configuración; análisis/formato del alcance correctos; revisión pendiente"
+      "verification": "Lote 3: 10 pruebas Flutter y 3 escenarios de configuración; análisis/formato del alcance correctos; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T114",
       "issue": 75,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Contraseñas Argon2id y tokens en backend/app/services/accounts/passwords.py y backend/app/services/accounts/tokens.py · Dificultad Alta.",
-      "verification": "Lote 1: 87 passed; Ruff y formato correctos; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 1: 87 passed; Ruff y formato correctos; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T118",
       "issue": 79,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Protección de reconocimiento y exportación en backend/app/api/recognitions.py y backend/app/api/exports.py · Dificultad Media.",
-      "verification": "Lote 2: suite backend 218 passed; Ruff y formato completos; revisión del equipo pendiente"
+      "verification": "Lote 2: suite backend 218 passed; Ruff y formato completos; revisión del equipo pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T119",
       "issue": 80,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Pruebas de la app en frontend/test/services/auth_api_client_test.dart, frontend/test/services/account_rules_test.dart y frontend/test/state/auth_controller_test.dart · Dificultad Media.",
-      "verification": "Lote 4: 60 pruebas Flutter de servicios/sesión y Argon2id local; análisis y formato del alcance correctos; revisión pendiente"
+      "verification": "Lote 4: 60 pruebas Flutter de servicios/sesión y Argon2id local; análisis y formato del alcance correctos; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T124",
       "issue": 85,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Reglas de formulario en frontend/lib/services/account_rules.dart · Dificultad Media.",
-      "verification": "Lote 4: 60 pruebas Flutter de servicios/sesión y Argon2id local; análisis y formato del alcance correctos; revisión pendiente"
+      "verification": "Lote 4: 60 pruebas Flutter de servicios/sesión y Argon2id local; análisis y formato del alcance correctos; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T125",
       "issue": 86,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Controlador de sesión en frontend/lib/state/auth_controller.dart · Dificultad Alta.",
-      "verification": "Lote 4: 60 pruebas Flutter de servicios/sesión y Argon2id local; análisis y formato del alcance correctos; revisión pendiente"
+      "verification": "Lote 4: 60 pruebas Flutter de servicios/sesión y Argon2id local; análisis y formato del alcance correctos; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T126",
       "issue": 87,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Pantallas de presentación, bienvenida, ingreso y registro en frontend/lib/presentation/screens/auth/ · Dificultad Alta.",
-      "verification": "Lote 6: 25 pruebas de componentes/sesión y 8 escenarios compartidos; análisis y formato del alcance; revisión pendiente"
+      "verification": "Lote 6: 25 pruebas de componentes/sesión y 8 escenarios compartidos; análisis y formato del alcance; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T128",
       "issue": 89,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
       "description": "Pruebas de pantallas de cuentas en frontend/test/presentation/auth_screens_test.dart · Dificultad Media.",
-      "verification": "Lote 8: 58 pruebas aprobadas: controlador, permisos/captura, pantallas de flujo y cuentas,\ny varias páginas. Análisis y formato del alcance correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 8: 58 pruebas aprobadas: controlador, permisos/captura, pantallas de flujo y cuentas,\ny varias páginas. Análisis y formato del alcance correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T130",
       "issue": 91,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Menú de cuenta y diálogo de eliminación en frontend/lib/presentation/widgets/account_menu.dart · Dificultad Media.",
-      "verification": "Lote 6: 25 pruebas de componentes/sesión y 8 escenarios compartidos; análisis y formato del alcance; revisión pendiente"
+      "verification": "Lote 6: 25 pruebas de componentes/sesión y 8 escenarios compartidos; análisis y formato del alcance; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T134",
       "issue": 95,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Animación de escaneo sobre la imagen en frontend/lib/presentation/widgets/scan_overlay.dart · Dificultad Media.",
-      "verification": "Lote 8: 58 pruebas aprobadas: controlador, permisos/captura, pantallas de flujo y cuentas,\ny varias páginas. Análisis y formato del alcance correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 8: 58 pruebas aprobadas: controlador, permisos/captura, pantallas de flujo y cuentas,\ny varias páginas. Análisis y formato del alcance correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T137",
       "issue": 98,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
       "description": "Formateadores, analizadores y todas las pruebas; registro de verificación al final de este archivo · Dificultad Baja.",
-      "verification": "Lote 11: Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.\nFlutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin\nincidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 11: Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.\nFlutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin\nincidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T139",
       "issue": 100,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Prueba de contraste de la paleta [SC-208] en frontend/test/theme/aurora_contrast_test.dart · Dificultad Media.",
-      "verification": "Lote 5: 44 pruebas Flutter; idioma real MaterialApp, ajustes, gate, bloqueo y contraste; revisión pendiente"
+      "verification": "Lote 5: 44 pruebas Flutter; idioma real MaterialApp, ajustes, gate, bloqueo y contraste; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T142",
       "issue": 103,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Logo-escáner, animación de escaneo, avisos, menú de cuenta, diálogo de autorización y campo de contraseña con la nueva paleta en frontend/lib/presentation/widgets/ · Dificultad Media.",
-      "verification": "Lote 6: 25 pruebas de componentes/sesión y 8 escenarios compartidos; análisis y formato del alcance; revisión pendiente"
+      "verification": "Lote 6: 25 pruebas de componentes/sesión y 8 escenarios compartidos; análisis y formato del alcance; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T201",
       "issue": 108,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Dependencias image_cropper 12.2.1 y share_plus 12.0.2 en frontend/pubspec.yaml; UCropActivity en frontend/android/app/src/main/AndroidManifest.xml · Dificultad Baja.",
-      "verification": "Lote 3: 10 pruebas Flutter y 3 escenarios de configuración; análisis/formato del alcance correctos; revisión pendiente"
+      "verification": "Lote 3: 10 pruebas Flutter y 3 escenarios de configuración; análisis/formato del alcance correctos; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T205",
       "issue": 112,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
       "description": "Campo uncertain_words en backend/app/schemas.py y backend/app/api/recognitions.py, con su prueba en backend/tests/test_recognitions_api.py · Dificultad Media.",
-      "verification": "Lote 2: suite backend 218 passed; Ruff y formato completos; revisión del equipo pendiente"
+      "verification": "Lote 2: suite backend 218 passed; Ruff y formato completos; revisión del equipo pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T206",
       "issue": 113,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Pruebas de conversión, validación y ajuste de marcas en frontend/test/services/uncertain_ranges_test.dart · Dificultad Media.",
-      "verification": "Lote 4: 60 pruebas Flutter de servicios/sesión y Argon2id local; análisis y formato del alcance correctos; revisión pendiente"
+      "verification": "Lote 4: 60 pruebas Flutter de servicios/sesión y Argon2id local; análisis y formato del alcance correctos; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T210",
       "issue": 117,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "ReviewTextController en frontend/lib/presentation/widgets/review_text_controller.dart y barra de revisión en frontend/lib/presentation/screens/editor_screen.dart, con pruebas de pantalla · Dificultad Alta.",
-      "verification": "Lote 7: 38 pruebas de pantallas, revisión, recorte, compartir, nombres y accesibilidad 100/200; revisión pendiente"
+      "verification": "Lote 7: 38 pruebas de pantallas, revisión, recorte, compartir, nombres y accesibilidad 100/200; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T213",
       "issue": 120,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Acciones «Recortar o girar» y «Usar la imagen original» en frontend/lib/presentation/screens/preview_screen.dart, con pruebas de pantalla · Dificultad Media.",
-      "verification": "Lote 7: 38 pruebas de pantallas, revisión, recorte, compartir, nombres y accesibilidad 100/200; revisión pendiente"
+      "verification": "Lote 7: 38 pruebas de pantallas, revisión, recorte, compartir, nombres y accesibilidad 100/200; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T216",
       "issue": 123,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Botón «Compartir» en el aviso de éxito del editor, con prueba de pantalla · Dificultad Media.",
-      "verification": "Lote 7: 38 pruebas de pantallas, revisión, recorte, compartir, nombres y accesibilidad 100/200; revisión pendiente"
+      "verification": "Lote 7: 38 pruebas de pantallas, revisión, recorte, compartir, nombres y accesibilidad 100/200; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T303",
       "issue": 129,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "pickMultipleFromGallery en frontend/lib/services/image_source_service.dart y en el servicio falso de las pruebas · Dificultad Media.",
-      "verification": "Lote 4: 60 pruebas Flutter de servicios/sesión y Argon2id local; análisis y formato del alcance correctos; revisión pendiente"
+      "verification": "Lote 4: 60 pruebas Flutter de servicios/sesión y Argon2id local; análisis y formato del alcance correctos; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T305",
       "issue": 131,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
       "description": "Pruebas del controlador con varias páginas en frontend/test/state/pages_flow_test.dart · Dificultad Media.",
-      "verification": "Lote 8: 58 pruebas aprobadas: controlador, permisos/captura, pantallas de flujo y cuentas,\ny varias páginas. Análisis y formato del alcance correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 8: 58 pruebas aprobadas: controlador, permisos/captura, pantallas de flujo y cuentas,\ny varias páginas. Análisis y formato del alcance correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T312",
       "issue": 138,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
       "description": "Formateadores, analizadores, todas las pruebas, APK y recorrido en el emulador; registro de verificación al final de este archivo · Dificultad Baja.",
-      "verification": "Lote final: 351 pruebas Flutter, 218 backend, 7 checks, 10 políticas Gradle y recorrido Android ampliado aprobado en 30.3 s; revisión del equipo pendiente."
+      "verification": "Lote final: 351 pruebas Flutter, 218 backend, 7 checks, 10 políticas Gradle y recorrido Android ampliado aprobado en 30.3 s; revisión del equipo pendiente.",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T401",
       "issue": 139,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Pruebas del almacén y del controlador de ajustes en frontend/test/state/settings_test.dart · Dificultad Media.",
-      "verification": "Lote 5: 44 pruebas Flutter; idioma real MaterialApp, ajustes, gate, bloqueo y contraste; revisión pendiente"
+      "verification": "Lote 5: 44 pruebas Flutter; idioma real MaterialApp, ajustes, gate, bloqueo y contraste; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T404",
       "issue": 142,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Pantalla de Ajustes en frontend/lib/presentation/screens/settings_screen.dart y tamaño de letra en el editor · Dificultad Media.",
-      "verification": "Lote 9: 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),\nincluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 9: 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),\nincluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T406",
       "issue": 144,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Prueba de la versión contra pubspec.yaml y pruebas de pantalla de «Acerca de» · Dificultad Media.",
-      "verification": "Lote 9: 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),\nincluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 9: 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),\nincluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T409",
       "issue": 147,
-      "state": "implemented_verification_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Firma con key.properties y HTTP según el tipo de compilación en frontend/android/app/build.gradle.kts y en el manifiesto · Dificultad Alta.",
-      "verification": "Política y configuración de firma implementadas; 10 pruebas Gradle con certificados sintéticos aprobadas. Falta clave autorizada del proyecto para comprobar firma real."
+      "verification": "Cierre final: release 3 ABI firmadas; cinco arranques <5s; SAF/PIN/huella Android reales aprobados; docs/CIERRE_LUIS.md.",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T411",
       "issue": 149,
-      "state": "implemented_verification_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
       "description": "Compilar la versión final por procesador, instalarla y medir el arranque (SC-504) · Dificultad Baja.",
-      "verification": "Release por arquitectura intentada: SIGNING_REQUIRED. Falta clave de entrega; no hay APK release, instalación ni medición de arranque SC-504."
+      "verification": "Cierre final: release 3 ABI firmadas; cinco arranques <5s; SAF/PIN/huella Android reales aprobados; docs/CIERRE_LUIS.md.",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T503",
       "issue": 154,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Pruebas de pantalla de los consejos (primera vez, Siguiente, Empezar, Saltar, atrás, cambio de cuenta, abrir desde el inicio y Ajustes) en frontend/test/presentation/tips_screen_test.dart · Dificultad Media.",
-      "verification": "Lote 9: 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),\nincluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 9: 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),\nincluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T505",
       "issue": 156,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Consejos la primera vez en frontend/lib/presentation/screens/app_root.dart; enlaces en start_screen.dart y settings_screen.dart; arnés de pruebas con tipsSeen · Dificultad Media.",
-      "verification": "Lote 9: 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),\nincluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 9: 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),\nincluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T507",
       "issue": 158,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Avatar sin la inicial en la lectura (R9) en frontend/lib/presentation/widgets/account_menu.dart · Dificultad Baja.",
-      "verification": "Lote 6: 25 pruebas de componentes/sesión y 8 escenarios compartidos; análisis y formato del alcance; revisión pendiente"
+      "verification": "Lote 6: 25 pruebas de componentes/sesión y 8 escenarios compartidos; análisis y formato del alcance; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T511",
       "issue": 162,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Avatar de 48 dp (R9) y diálogo de eliminar cuenta desplazable (R6) en frontend/lib/presentation/widgets/account_menu.dart · Dificultad Baja.",
-      "verification": "Lote 6: 25 pruebas de componentes/sesión y 8 escenarios compartidos; análisis y formato del alcance; revisión pendiente"
+      "verification": "Lote 6: 25 pruebas de componentes/sesión y 8 escenarios compartidos; análisis y formato del alcance; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T512",
       "issue": 163,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Avisos del editor en un área desplazable y encabezado más corto con letra grande (R5) en frontend/lib/presentation/screens/editor_screen.dart; hoja de exportar desplazable (R6) en frontend/lib/presentation/widgets/export_format_sheet.dart · Dificultad Media.",
-      "verification": "Lote 7: 38 pruebas de pantallas, revisión, recorte, compartir, nombres y accesibilidad 100/200; revisión pendiente"
+      "verification": "Lote 7: 38 pruebas de pantallas, revisión, recorte, compartir, nombres y accesibilidad 100/200; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T604",
       "issue": 169,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
       "description": "Pruebas del controlador: registrar al guardar, actualizar sin duplicar, no registrar cancelados ni fallidos, fallo del historial sin afectar el guardado, en frontend/test/state/history_flow_test.dart · Dificultad Media.",
-      "verification": "Lote 9: 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),\nincluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 9: 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),\nincluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T606",
       "issue": 171,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
       "description": "Pruebas de pantalla (lista, vacío, orden, otra cuenta) en frontend/test/presentation/history_screen_test.dart · Dificultad Media.",
-      "verification": "Lote 10: 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento\npor cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 10: 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento\npor cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T610",
       "issue": 175,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
       "description": "Pruebas de eliminar, borrar todo, cancelar y eliminar la cuenta · Dificultad Media.",
-      "verification": "Lote 9: 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),\nincluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 9: 40 pruebas aprobadas: consejos, ajustes, versión e historial (controlador y UI),\nincluidas cancelaciones y guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T612",
       "issue": 177,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
       "description": "Privacidad («Historial»), quickstart.md, README.md y MAPA_DEL_CODIGO.md; guías de accesibilidad de 006 (nombres y 48 dp, al 100 % y al 200 %) en history_screen_test.dart · Dificultad Baja.",
-      "verification": "Lote 10: 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento\npor cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 10: 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento\npor cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T704",
       "issue": 182,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "AppLanguage en AppSettings, almacén y controlador; locale y resolución en frontend/lib/app.dart · Dificultad Media.",
-      "verification": "Lote 5: 44 pruebas Flutter; idioma real MaterialApp, ajustes, gate, bloqueo y contraste; revisión pendiente"
+      "verification": "Lote 5: 44 pruebas Flutter; idioma real MaterialApp, ajustes, gate, bloqueo y contraste; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T708",
       "issue": 186,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
       "description": "Recorrido de todas las pantallas en inglés al 100 % y al 200 % sin textos en español (SC-802, SC-805), fallos y títulos de servicios · Dificultad Media.",
-      "verification": "Lote 11: Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.\nFlutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin\nincidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 11: Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.\nFlutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin\nincidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T803",
       "issue": 192,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "ImageOrigin.scanner, scanDocument y el origen en _addImages en frontend/lib/state/document_flow_controller.dart; conexión en frontend/lib/main.dart · Dificultad Media.",
-      "verification": "Lote 10: 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento\npor cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 10: 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento\npor cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T806",
       "issue": 195,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "scannerUnavailable y scannerFailed, StatusAction.takePhoto y el aviso con acción en el inicio · Dificultad Media.",
-      "verification": "Lote 10: 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento\npor cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 10: 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento\npor cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T902",
       "issue": 200,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "suggestedFileName con el título y su uso en DocumentFlowController.export (frontend/lib/state/document_flow_controller.dart) · Dificultad Media.",
-      "verification": "Lote 7: 38 pruebas de pantallas, revisión, recorte, compartir, nombres y accesibilidad 100/200; revisión pendiente"
+      "verification": "Lote 7: 38 pruebas de pantallas, revisión, recorte, compartir, nombres y accesibilidad 100/200; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T903",
       "issue": 201,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "«Copiar todo el texto» en el menú del editor (frontend/lib/presentation/screens/editor_screen.dart), textos en español e inglés y privacidad; pruebas de pantalla en frontend/test/presentation/organize_test.dart · Dificultad Baja.",
-      "verification": "Lote 10: 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento\npor cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 10: 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento\npor cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T906",
       "issue": 204,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Búsqueda y «Renombrar» en frontend/lib/presentation/screens/history_screen.dart · Dificultad Media.",
-      "verification": "Lote 10: 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento\npor cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 10: 52 pruebas aprobadas: escáner, organización, historial, almacenamiento y aislamiento\npor cuenta, incluidas guías de accesibilidad 100/200 %. Análisis/formato correctos.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T908",
       "issue": 206,
-      "state": "implemented_verification_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
       "description": "Formateador, analizador, todas las pruebas y recorrido en el emulador; registro de verificación al final de este archivo (parcial: falta el recorrido en un teléfono; ver el registro) · Dificultad Baja.",
-      "verification": "Formato/análisis, 351 pruebas Flutter y recorrido Android automatizado de copiar/buscar/renombrar aprobados. Sigue pendiente el recorrido físico en teléfono exigido en la tarea."
+      "verification": "Cierre final: release 3 ABI firmadas; cinco arranques <5s; SAF/PIN/huella Android reales aprobados; docs/CIERRE_LUIS.md.",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T1003",
       "issue": 209,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "appLock en AppSettings, almacén y controlador; interruptor en frontend/lib/presentation/screens/settings_screen.dart · Dificultad Media.",
-      "verification": "Lote 5: 44 pruebas Flutter; idioma real MaterialApp, ajustes, gate, bloqueo y contraste; revisión pendiente"
+      "verification": "Lote 5: 44 pruebas Flutter; idioma real MaterialApp, ajustes, gate, bloqueo y contraste; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T1005",
       "issue": 211,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "AppLockController (R3) en frontend/lib/state/app_lock_controller.dart, pantalla frontend/lib/presentation/screens/lock_screen.dart y AppLockGate en frontend/lib/app.dart (R4); textos en español e inglés · Dificultad Alta.",
-      "verification": "Lote 5: 44 pruebas Flutter; idioma real MaterialApp, ajustes, gate, bloqueo y contraste; revisión pendiente"
+      "verification": "Lote 5: 44 pruebas Flutter; idioma real MaterialApp, ajustes, gate, bloqueo y contraste; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T1006",
       "issue": 212,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "contrato_o_prueba_compartida_conservada_requiere_revision_e_implementacion_de_regiones_pendientes",
       "description": "Prueba: al desactivarlo, la app deja de bloquearse · Dificultad Baja.",
-      "verification": "Lote 5: 44 pruebas Flutter; idioma real MaterialApp, ajustes, gate, bloqueo y contraste; revisión pendiente"
+      "verification": "Lote 5: 44 pruebas Flutter; idioma real MaterialApp, ajustes, gate, bloqueo y contraste; revisión pendiente",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T1008",
       "issue": 214,
-      "state": "implemented_verification_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
       "description": "Formateador, analizador, todas las pruebas y recorrido en el emulador con PIN y huella simulada; registro de verificación al final de este archivo (parcial: falta el recorrido en un teléfono; ver el registro) · Dificultad Baja.",
-      "verification": "Controlador/widgets de bloqueo verificados en la suite. Falta recorrido con PIN/huella simulada configurados y comprobación física. No se modificó PIN ni seguridad del teléfono."
+      "verification": "Cierre final: release 3 ABI firmadas; cinco arranques <5s; SAF/PIN/huella Android reales aprobados; docs/CIERRE_LUIS.md.",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T1102",
       "issue": 216,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "implementacion_o_suite_retirada",
       "description": "Cerrar sesión, volver a entrar y encontrar el documento, en el mismo recorrido · Dificultad Media.",
-      "verification": "Lote final: 351 pruebas Flutter, 218 backend, 7 checks, 10 políticas Gradle y recorrido Android ampliado aprobado en 30.3 s; revisión del equipo pendiente."
+      "verification": "Lote final: 351 pruebas Flutter, 218 backend, 7 checks, 10 políticas Gradle y recorrido Android ampliado aprobado en 30.3 s; revisión del equipo pendiente.",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     },
     {
       "task": "T1103",
       "issue": 217,
-      "state": "technically_verified_review_pending",
+      "state": "completed_accepted_by_luis",
       "disposition": "documentacion_compilacion_o_recorrido_requiere_nueva_verificacion",
       "description": "quickstart.md (el comando), README.md y MAPA_DEL_CODIGO.md · Dificultad Baja.",
-      "verification": "Lote 11: Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.\nFlutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin\nincidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md"
+      "verification": "Lote 11: Backend: 218 pruebas + siete checks aprobados; Ruff/formato y pip check correctos.\nFlutter: 350 pruebas sin omisiones contra API/PostgreSQL temporales, análisis sin\nincidencias y 126 archivos con formato correcto. APK debug generado y firma v2 válida.; docs/VERIFICACION_RECONSTRUCCION_LUIS.md",
+      "acceptance": "Aceptación explícita de Luis; sustituye la revisión externa, sin atribuirla a terceros."
     }
   ],
   "files_changed": [
@@ -667,9 +739,10 @@
     "specs/014-reinicio-luis/tasks.md"
   ],
   "current_summary": {
-    "technically_verified": 68,
-    "pending_verification": 4,
-    "formally_closed": 0,
-    "reason": "Las 72 issues requieren revisión de otro integrante del PR."
+    "technically_verified": 72,
+    "pending_verification": 0,
+    "closed_by_luis_acceptance": 72,
+    "external_review_claimed": false,
+    "other_team_issues_unchanged": true
   }
 }

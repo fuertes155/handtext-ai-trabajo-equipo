@@ -1,4 +1,8 @@
 > **Reconstrucción actual · 2026-11-17:** use primero
+
+> **Cierre posterior:** 72/72 tareas de Luis verificadas y aceptadas. Release firmada
+> con nueva clave autorizada, cinco arranques <5 s y pruebas Android nativas aprobadas.
+> [Evidencia final y comandos](../../docs/CIERRE_LUIS.md). Los estados pendientes anteriores son históricos.
 > [la guía reproducible](../../docs/QUICKSTART_RECONSTRUCCION_LUIS.md).
 > Los pasos y evidencias anteriores que siguen requieren su configuración indicada;
 > no acreditan pruebas físicas ni una firma de la revisión actual. Release exige

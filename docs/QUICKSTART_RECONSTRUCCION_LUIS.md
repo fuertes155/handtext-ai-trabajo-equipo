@@ -1,5 +1,9 @@
 # Reproducir la reconstrucción de Luis
 
+> **Cierre posterior:** 72/72 tareas de Luis verificadas y aceptadas. Release firmada
+> con nueva clave autorizada, cinco arranques <5 s y pruebas Android nativas aprobadas.
+> [Evidencia final y comandos](CIERRE_LUIS.md). Los estados pendientes anteriores son históricos.
+
 Resultados actuales del 2026-11-17, separados de la entrega del 16. Repositorio:
 `/home/luisdaca/Escritorio/handtext-ai-trabajo-equipo`, rama
 `entrega/railway-documentacion-20261116`, PR #221 en borrador.
